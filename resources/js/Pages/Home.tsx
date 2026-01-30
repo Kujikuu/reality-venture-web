@@ -8,6 +8,7 @@ import { Ventures } from '../Components/Ventures';
 import { Programs } from '../Components/Programs';
 import { Process } from '../Components/Process';
 import { Team } from '../Components/Team';
+import { Head } from '@inertiajs/react';
 
 export default function Home() {
   return (

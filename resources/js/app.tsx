@@ -9,7 +9,7 @@ import { DirectionProvider } from './Components/DirectionProvider';
 import { LenisProvider } from './Components/LenisProvider';
 
 createInertiaApp({
-    title: (title) => `${title} - Reality Venture`,
+    title: (title) => (title ? `${title} - Reality Venture` : 'Reality Venture'),
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.tsx`,

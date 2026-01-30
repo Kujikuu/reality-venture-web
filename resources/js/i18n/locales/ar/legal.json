@@ -1,5 +1,10 @@
 {
+  "pageTitle": "شروط الخدمة",
+  "legal": {
+    "pageTitle": "شروط الخدمة"
+  },
   "privacyPolicy": {
+    "pageTitle": "سياسة الخصوصية",
     "hero": {
       "badge": "السياسة",
       "title": "سياسة <span class='text-primary'>الخصوصية</span>",

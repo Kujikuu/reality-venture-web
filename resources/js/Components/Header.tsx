@@ -58,7 +58,7 @@ export const Header = () => {
         <div className="hidden lg:flex items-center gap-4">
           <LanguageSwitcher />
           <Link href="/application-form">
-            <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-background-dark transition-all rounded-md uppercase sm:normal-case">
+            <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 transition-all rounded-md uppercase sm:normal-case">
               {t('buttons.getStarted')}
             </button>
           </Link>

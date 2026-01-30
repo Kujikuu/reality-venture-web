@@ -1,5 +1,10 @@
 {
+  "pageTitle": "Terms of Service",
+  "legal": {
+    "pageTitle": "Terms of Service"
+  },
   "privacyPolicy": {
+    "pageTitle": "Privacy Policy",
     "hero": {
       "badge": "Policy",
       "title": "Privacy <span class='text-primary'>Policy</span>",

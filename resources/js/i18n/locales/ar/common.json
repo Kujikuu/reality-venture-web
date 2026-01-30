@@ -34,5 +34,8 @@
     "privacyPolicy": "سياسة الخصوصية",
     "termsOfService": "شروط الخدمة"
   },
+  "apply": {
+    "pageTitle": "التقديم"
+  },
   "and": "و"
 }

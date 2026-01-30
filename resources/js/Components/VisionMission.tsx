@@ -37,7 +37,7 @@ export const VisionMission: React.FC = () => {
                    <div className="w-full h-px bg-gray-100"></div>
 
                    <div>
-                       <div className="w-12 h-12 bg-primary-50 rounded-md flex items-center justify-center mb-6 text-primary">
+                       <div className="w-12 h-12 bg-secondary-50 rounded-md flex items-center justify-center mb-6 text-primary">
                         <Flag className="w-6 h-6" />
                       </div>
                       <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('visionMission.mission')}</h3>
@@ -60,7 +60,7 @@ export const VisionMission: React.FC = () => {
             <div className="flex flex-col gap-4">
               {featureList.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-md bg-green-100 flex items-center justify-center text-green-600 shrink-0">
+                  <div className="w-6 h-6 rounded-md bg-secondary-50 flex items-center justify-center text-secondary shrink-0">
                     <Target className="w-3 h-3" />
                   </div>
                   <span className="font-semibold text-gray-700">{item}</span>
