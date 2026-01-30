@@ -1,0 +1,31 @@
+{
+  "badge": "Our Expertise",
+  "title": "Comprehensive Services",
+  "description": "Everything you need to go from idea to scale, all under one roof.",
+  "items": {
+    "businessModeling": {
+      "title": "Business Modeling",
+      "description": "We define how the business actually works: pricing, margins, unit economics, operating assumptions, and growth levers—clear, measurable, and testable."
+    },
+    "management": {
+      "title": "Management & Operations",
+      "description": "Hands-on operational support covering hiring, organizational design, KPIs, governance, and execution cadence as the company scales."
+    },
+    "franchising": {
+      "title": "Franchising & Expansion",
+      "description": "We design frameworks to replicate what works: standardized operations, franchising models, and scalable expansion strategies."
+    },
+    "marketing": {
+      "title": "Marketing & Growth",
+      "description": "Market positioning, distribution strategy, and growth execution focused on measurable traction and repeatability."
+    },
+    "technology": {
+      "title": "Technology & Product",
+      "description": "MVP development, product roadmaps, scalable architecture, and AI-ready systems built for speed and long-term performance."
+    },
+    "investment": {
+      "title": "Investment & Capital",
+      "description": "Fundraising readiness and capital access, including investor narrative, metrics, valuation, and introductions to our network."
+    }
+  }
+}

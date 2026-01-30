@@ -1,0 +1,97 @@
+{
+  "privacyPolicy": {
+    "hero": {
+      "badge": "Policy",
+      "title": "Privacy <span class='text-primary'>Policy</span>",
+      "description": "We respect your data and are committed to protecting it with clear, transparent practices.",
+      "lastUpdatedLabel": "Last updated",
+      "lastUpdated": "January 2026",
+      "contactLabel": "For questions, contact",
+      "contactEmail": "privacy@rv.com.sa"
+    },
+    "intro": "At Reality Venture, we take your privacy seriously. This policy describes how we collect, use, and protect your personal information when you use our website and apply to our programs.",
+    "sections": [
+      {
+        "id": "information-we-collect",
+        "title": "1. Information We Collect",
+        "content": "We collect information you provide directly to us, such as when you apply for our accelerator, join our network, or communicate with us. This may include your name, email address, LinkedIn profile, and details about your venture."
+      },
+      {
+        "id": "how-we-use",
+        "title": "2. How We Use Your Information",
+        "contentIntro": "We use the information we collect to:",
+        "contentList": [
+          "Process and evaluate your applications for our programs.",
+          "Communicate with you about your application status.",
+          "Send you newsletters and updates (if you opt in).",
+          "Improve our website and services."
+        ]
+      },
+      {
+        "id": "information-sharing",
+        "title": "3. Information Sharing",
+        "contentIntro": "We do not sell your personal information. We may share your information with:",
+        "contentList": [
+          "Service providers who perform services on our behalf.",
+          "Our network of advisors and mentors, specifically for the purpose of evaluating your application.",
+          "Legal authorities if required by law."
+        ]
+      },
+      {
+        "id": "data-security",
+        "title": "4. Data Security",
+        "content": "We implement reasonable security measures to protect your information. However, no method of transmission over the Internet is 100% secure."
+      },
+      {
+        "id": "contact-us",
+        "title": "5. Contact Us",
+        "content": "If you have questions about this policy, please contact us at",
+        "email": "privacy@rv.com.sa"
+      }
+    ]
+  },
+  "termsOfService": {
+    "hero": {
+      "badge": "Terms",
+      "title": "Terms of <span class='text-primary'>Service</span>",
+      "description": "These terms outline the rules, responsibilities, and limitations for using our site and services.",
+      "lastUpdatedLabel": "Last updated",
+      "lastUpdated": "January 2026",
+      "contactLabel": "For questions, contact",
+      "contactEmail": "legal@rv.com.sa"
+    },
+    "intro": "Welcome to Reality Venture. By accessing our website and services, you agree to be bound by these Terms of Service.",
+    "sections": [
+      {
+        "id": "acceptance",
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing or using our website, you agree to these Terms. If you do not agree, you may not use our services."
+      },
+      {
+        "id": "use-of-services",
+        "title": "2. Use of Services",
+        "content": "You agree to use our website only for lawful purposes. You must not use our website to transmit any malicious code, spam, or engage in any activity that interferes with the proper working of the site."
+      },
+      {
+        "id": "intellectual-property",
+        "title": "3. Intellectual Property",
+        "content": "The content, features, and functionality of this website, including text, graphics, logos, and software, are the exclusive property of Reality Venture and are protected by copyright and other intellectual property laws."
+      },
+      {
+        "id": "applications",
+        "title": "4. Applications",
+        "content": "Submission of an application does not guarantee acceptance into any Reality Venture program. We reserve the right to accept or reject any applicant at our sole discretion."
+      },
+      {
+        "id": "limitation",
+        "title": "5. Limitation of Liability",
+        "content": "Reality Venture shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of, or inability to access or use, our services."
+      },
+      {
+        "id": "changes",
+        "title": "6. Changes to Terms",
+        "content": "We reserve the right to modify these terms at any time. We will provide notice of significant changes by updating the date at the top of this policy."
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "buttons": {
+    "getStarted": "ابدأ الآن",
+    "applyNow": "قدم الآن",
+    "viewPrograms": "عرض البرامج",
+    "submit": "إرسال",
+    "learnMore": "اعرف المزيد",
+    "close": "إغلاق"
+  },
+  "labels": {
+    "email": "عنوان البريد الإلكتروني",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "phone": "رقم الهاتف",
+    "company": "اسم الشركة",
+    "website": "الموقع الإلكتروني",
+    "linkedin": "ملف لينكدإن"
+  },
+  "status": {
+    "loading": "جاري التحميل...",
+    "success": "نجح",
+    "error": "خطأ",
+    "noSpam": "لا رسائل مزعجة، نعدك بذلك!"
+  },
+  "company": {
+    "name": "رياليتي فينتشر",
+    "tagline": "نحن نبني. نحن ننفذ. نحن نطور شركات حقيقية.",
+    "slogan": "بناء شركات حقيقية",
+    "executionFirst": "مسرع التنفيذ أولاً",
+    "ventureBuilder": "بناء المشاريع",
+    "accelerator": "المسرع"
+  },
+  "footer": {
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة"
+  },
+  "and": "و"
+}

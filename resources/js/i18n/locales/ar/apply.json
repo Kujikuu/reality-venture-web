@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "badge": "انضم إلى برنامجنا",
+    "title": "هل أنت مستعد لبناء شيء",
+    "titleHighlighted": "حقيقي؟",
+    "subtitle": "قدم للانضمام إلى برنامج مسرعنا أو بناء المشاريع",
+    "rollingReview": "مراجعة مستمرة",
+    "responseTime": "استجابة خلال 5-7 أيام",
+    "founderFirst": "المؤسس أولاً"
+  },
+  "whatWeLookFor": {
+    "title": "ما نبحث عنه",
+    "subtitle": "نبحث عن مؤسسين طموحين لديهم أفكار مبتكرة",
+    "innovative": {
+      "title": "فكرة مبتكرة",
+      "description": "حل فريد لمشكلة حقيقية"
+    },
+    "committed": {
+      "title": "فريق ملتزم",
+      "description": "مؤسسون ملتزمون لديهم الدافع"
+    },
+    "scalable": {
+      "title": "نموذج قابل للتوسع",
+      "description": "إمكانية نمو كبيرة"
+    }
+  },
+  "form": {
+    "title": "نموذج التقديم",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "عنوان البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "company": "اسم الشركة",
+    "website": "الموقع الإلكتروني (اختياري)",
+    "linkedin": "ملف لينكدإن",
+    "program": "أي برنامج يهمك؟",
+    "programAccelerator": "برنامج المسرع",
+    "programVenture": "بناء المشاريع",
+    "programCorporate": "الابتكار المؤسسي",
+    "describe": "صف مشروعك أو فكرتك",
+    "messagePlaceholder": "صف بإيجاز مشكلتك وحلك أو مجال خبرتك...",
+    "emailPlaceholder": "email@example.com",
+    "linkedinPlaceholder": "linkedin.com/in/username",
+    "submit": "إرسال الطلب",
+    "submitting": "جاري الإرسال...",
+    "agreement": "بإرسال هذا النموذج، أنت توافق على"
+  },
+  "sidebar": {
+    "title": "تحتاج مساعدة؟",
+    "description": "اتصل بنا إذا كان لديك أي أسئلة حول عملية التقديم.",
+    "email": "be@rv.com.sa",
+    "emailUs": "راسلنا بالبريد الإلكتروني",
+    "reviewProcess": "يتم مراجعة الطلبات بشكل مستمر من قبل لجنة الاستثمار لدينا.",
+    "ndaPolicy": "نوقع اتفاقيات عدم الإفشاء فقط بعد اجتياز مرحلة الفرز الأولي.",
+    "responseTime": "وقت الاستجابة عادة خلال 5-7 أيام عمل."
+  }
+}

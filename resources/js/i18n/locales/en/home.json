@@ -1,0 +1,264 @@
+{
+  "hero": {
+    "badge": "EXECUTION-FIRST ACCELERATOR",
+    "title": "We build. We execute. We scale real ventures.",
+    "titleHighlighted": "We scale real ventures.",
+    "description": "Reality Venture is an execution-first accelerator and venture builder focused on creating scalable, investment-ready companies. We work hands-on with founders and partners to turn real problems into real businesses.",
+    "card": {
+      "badge": "EXECUTION-FIRST",
+      "building": "Building Real",
+      "ventures": "Ventures"
+    }
+  },
+  "visionMission": {
+    "vision": "Our Vision",
+    "mission": "Our Mission",
+    "visionText": "To be the leading execution-first accelerator in the region, transforming innovative ideas into sustainable businesses.",
+    "missionText": "We work hand-in-hand with founders, providing the resources, expertise, and network needed to build scalable companies.",
+    "whyWeExistBadge": "Why We Exist",
+    "whyWeExistTitle": "Bridging the gap between strategy and <span class='text-primary'>reality</span>.",
+    "whyWeExistDescription": "We don't just advise; we execute. Reality Venture was built to solve the execution gap that kills most early-stage ventures. We combine capital with hands-on operational support to ensure success.",
+    "features": [
+      "Execution-First Approach",
+      "Deep Operational Expertise",
+      "Global Network Access"
+    ]
+  },
+  "strategicGoals": {
+    "badge": "Our Mandate",
+    "title": "We don't move forward until the execution boxes are ticked.",
+    "description": "Our strategic focus allows founders to build with confidence and speed.",
+    "goals": [
+      {
+        "title": "Accelerate fit",
+        "description": "Accelerate time to product–market fit"
+      },
+      {
+        "title": "Reduce Risk",
+        "description": "Reduce early-stage execution and operational risk"
+      },
+      {
+        "title": "Ship Products",
+        "description": "Transform ideas into shipped, market-tested products"
+      },
+      {
+        "title": "Get Investment",
+        "description": "Convert validated traction into institutional-grade investment opportunities"
+      },
+      {
+        "title": "Build Companies",
+        "description": "Build companies, not presentations"
+      }
+    ],
+    "statCard": {
+      "percentage": "98%",
+      "label": "Execution Success Rate"
+    }
+  },
+  "targetAudience": {
+    "badge": "Our Ecosystem",
+    "title": "Who We Work With",
+    "description": "Connecting the key pillars of the venture ecosystem in one unified platform.",
+    "founders": {
+      "label": "01 For Founders",
+      "title": "Founders",
+      "headline": "Founders stage",
+      "description": "Pre-seed and seed-stage teams building scalable, technology-enabled businesses globally."
+    },
+    "operators": {
+      "label": "02 For Operators",
+      "title": "Operators & Experts",
+      "headline": "Advise & Operate",
+      "description": "Experienced professionals seeking to advise, operate, or co-build ventures."
+    },
+    "investors": {
+      "label": "03 For Investors",
+      "title": "Investors & Partners",
+      "headline": "Strategic Partners",
+      "description": "Funds, corporates, and institutions looking for high-quality, execution-ready ventures."
+    }
+  },
+  "services": {
+    "title": "Our Expertise",
+    "subtitle": "Comprehensive Services",
+    "description": "Everything you need to go from idea to scale",
+    "businessModeling": {
+      "title": "Business Modeling",
+      "description": "We help you create robust business models that validate your market fit and revenue streams."
+    },
+    "management": {
+      "title": "Management & Operations",
+      "description": "Our team supports you in setting up efficient operational processes and management structures."
+    },
+    "fundraising": {
+      "title": "Fundraising Readiness",
+      "description": "We prepare you for investment by refining your pitch, financials, and growth strategy."
+    },
+    "mentorship": {
+      "title": "Strategic Mentorship",
+      "description": "Access to industry experts who provide guidance on scaling, strategy, and execution."
+    },
+    "network": {
+      "title": "Network Access",
+      "description": "Connect with our network of partners, investors, and fellow entrepreneurs."
+    },
+    "technology": {
+      "title": "Technology & Innovation",
+      "description": "Leverage cutting-edge technology to build scalable and innovative solutions."
+    }
+  },
+  "programs": {
+    "title": "Programs",
+    "subtitle": "Choose the right path for your journey",
+    "description": "Whether you're starting from scratch or ready to scale, we have a program tailored to your needs.",
+    "accelerator": {
+      "title": "Accelerator Program",
+      "description": "For early-stage startups with a validated concept ready to scale.",
+      "duration": "3-6 months",
+      "benefits": [
+        "Mentorship from industry experts",
+        "Access to investor network",
+        "Business model refinement",
+        "Go-to-market strategy"
+      ]
+    },
+    "ventureBuilder": {
+      "title": "Venture Builder",
+      "description": "For entrepreneurs with innovative ideas who need hands-on support to build.",
+      "duration": "6-12 months",
+      "benefits": [
+        "Co-building from idea to MVP",
+        "Technical and business support",
+        "Initial funding and resources",
+        "Equity partnership model"
+      ]
+    },
+    "corporate": {
+      "title": "Corporate Innovation",
+      "description": "For established companies seeking to innovate through new ventures.",
+      "duration": "Custom",
+      "benefits": [
+        "Innovation strategy consulting",
+        "Venture validation and testing",
+        "Startup partnership opportunities",
+        "Access to startup ecosystem"
+      ]
+    }
+  },
+  "process": {
+    "title": "How It Works",
+    "description": "A simplified, execution-focused engagement model designed for velocity.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Apply",
+        "description": "Submit a focused application highlighting the problem, solution, and execution capability."
+      },
+      {
+        "number": "02",
+        "title": "Selection",
+        "description": "Fast evaluation and alignment on scope, objectives, and expectations."
+      },
+      {
+        "number": "03",
+        "title": "Build & Execute",
+        "description": "Rapid product development, market testing, and weekly execution support."
+      },
+      {
+        "number": "04",
+        "title": "Scale or Raise",
+        "description": "Support for operational scaling or capital raising based on company readiness."
+      }
+    ]
+  },
+  "ventures": {
+    "badge": "Specialized Division",
+    "title": "PropTech Reality Venture",
+    "subtitle": "Real Estate & Hospitality Venture Building",
+    "description": "PropTech Reality Venture Accelerator is the venture-building arm of Reality Venture, focused on co-creating companies in real estate and hospitality technology.",
+    "approach": "We act as a long-term venture partner—not a traditional accelerator—working hands-on from ideation through launch, scaling, and capital formation.",
+    "coreFocusTitle": "Core Focus Areas",
+    "focusSector": "Focus Sector",
+    "sectorTitle": "Real Estate &Hospitality",
+    "tags": ["Hotels", "Asset Mgmt", "Developers", "Tourism"],
+    "focusAreas": [
+      {
+        "text": "Property and asset management platforms"
+      },
+      {
+        "text": "Hotel and accommodation operations technology"
+      },
+      {
+        "text": "Booking, pricing, and revenue management systems"
+      },
+      {
+        "text": "Guest experience, service automation, and digital concierge solutions"
+      },
+      {
+        "text": "Smart buildings, facilities management, and energy optimization"
+      },
+      {
+        "text": "Franchising systems and scalable hospitality operating models"
+      }
+    ],
+    "servingTitle": "We Build Ventures Serving",
+    "serving": [
+      "Hotels and hospitality groups",
+      "Accommodation providers and serviced apartments",
+      "Real estate developers and operators",
+      "Property and asset management companies",
+      "Tourism and destination operators"
+    ],
+    "supportingTechTitle": "Supporting Technology Verticals",
+    "supportingTechDesc": "To enable strong PropTech ventures, we actively build and support companies in adjacent technology verticals.",
+    "verticals": [
+      {
+        "title": "FinTech",
+        "desc": "Payments, embedded finance, lending, and cash-flow infrastructure"
+      },
+      {
+        "title": "SaaS",
+        "desc": "Core operational and management platforms"
+      },
+      {
+        "title": "AI & Data",
+        "desc": "Predictive analytics, demand forecasting, pricing intelligence"
+      },
+      {
+        "title": "Marketplaces",
+        "desc": "Platforms connecting owners, operators, service providers"
+      },
+      {
+        "title": "IoT",
+        "desc": "Smart devices and systems for buildings and asset monitoring"
+      }
+    ]
+  },
+  "team": {
+    "badge": "The Builders",
+    "title": "Meet the Team",
+    "description": "We are a collective of founders, operators, and product experts. No career consultants—only builders who have done it before.",
+    "joinTeam": "Join the team",
+    "ceo": {
+      "role": "FOUNDER & CEO",
+      "name": "Executive Leadership",
+      "position": "Founder & CEO",
+      "bio": "Responsible for strategy, venture outcomes, and long-term value creation."
+    },
+    "headOfAcceleration": {
+      "title": "Head of Acceleration",
+      "department": "Venture & Program Team",
+      "bio": "Leads accelerator programs and execution quality."
+    },
+    "headOfVentureBuilding": {
+      "title": "Head of Venture Building",
+      "department": "Venture & Program Team",
+      "bio": "Oversees venture creation from inception to scale."
+    },
+    "advisors": {
+      "title": "Advisors & Operators",
+      "description": "A network of senior product, technology, growth, and operations leaders.",
+      "viewButton": "View Advisors"
+    }
+  }
+}

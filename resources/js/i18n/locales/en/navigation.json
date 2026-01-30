@@ -1,0 +1,30 @@
+{
+  "buttons": {
+    "getStarted": "Get Started",
+    "applyNow": "Apply Now"
+  },
+  "header": {
+    "about": "About",
+    "services": "Services",
+    "realityVenture": "Reality Venture",
+    "programs": "Programs"
+  },
+  "footer": {
+    "explore": "Explore",
+    "home": "Home",
+    "programs": "Programs",
+    "process": "Process",
+    "team": "Team",
+    "location": "Location",
+    "riyadh": "Riyadh, Saudi Arabia",
+    "globalOperations": "Global Operations",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "copyright": "© 2026 Reality Venture. All rights reserved.",
+    "newsletter": {
+      "heading": "Ready to turn your vision into reality?",
+      "description": "Join our accelerator program or venture builder. We provide the capital, expertise, and network to help you scale.",
+      "cta": "Apply Now"
+    }
+  }
+}

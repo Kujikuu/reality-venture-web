@@ -1,0 +1,38 @@
+{
+  "buttons": {
+    "getStarted": "Get Started",
+    "applyNow": "Apply Now",
+    "viewPrograms": "View Programs",
+    "submit": "Submit",
+    "learnMore": "Learn More",
+    "close": "Close"
+  },
+  "labels": {
+    "email": "Email Address",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "company": "Company Name",
+    "website": "Website",
+    "linkedin": "LinkedIn Profile"
+  },
+  "status": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "noSpam": "No Spam, Promise!"
+  },
+  "company": {
+    "name": "Reality Venture",
+    "tagline": "We build. We execute. We scale real ventures.",
+    "slogan": "Building Real Ventures",
+    "executionFirst": "EXECUTION-FIRST ACCELERATOR",
+    "ventureBuilder": "Venture Builder",
+    "accelerator": "Accelerator"
+  },
+  "footer": {
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "and": "and"
+}

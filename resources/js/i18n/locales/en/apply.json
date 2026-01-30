@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "badge": "Join Our Program",
+    "title": "Ready to Build Something",
+    "titleHighlighted": "Real?",
+    "subtitle": "Apply to join our accelerator or venture builder program",
+    "rollingReview": "Rolling review",
+    "responseTime": "5–7 day response",
+    "founderFirst": "Founder-first"
+  },
+  "whatWeLookFor": {
+    "title": "What We Look For",
+    "subtitle": "We seek ambitious founders with innovative ideas",
+    "innovative": {
+      "title": "Innovative Idea",
+      "description": "Unique solution to a real problem"
+    },
+    "committed": {
+      "title": "Committed Team",
+      "description": "Dedicated founders with drive"
+    },
+    "scalable": {
+      "title": "Scalable Model",
+      "description": "Potential for significant growth"
+    }
+  },
+  "form": {
+    "title": "Application Form",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "company": "Company Name",
+    "website": "Website (Optional)",
+    "linkedin": "LinkedIn Profile",
+    "program": "Which program interests you?",
+    "programAccelerator": "Accelerator Program",
+    "programVenture": "Venture Builder",
+    "programCorporate": "Corporate Innovation",
+    "describe": "Describe your venture or idea",
+    "messagePlaceholder": "Briefly describe your problem statement, solution, or area of expertise...",
+    "emailPlaceholder": "email@example.com",
+    "linkedinPlaceholder": "linkedin.com/in/username",
+    "submit": "Submit Application",
+    "submitting": "Submitting...",
+    "agreement": "By submitting this form, you agree to our"
+  },
+  "sidebar": {
+    "title": "Need Help?",
+    "description": "Contact us if you have any questions about the application process.",
+    "email": "be@rv.com.sa",
+    "emailUs": "Email Us",
+    "reviewProcess": "Applications are reviewed on a rolling basis by our investment committee.",
+    "ndaPolicy": "We sign NDAs only after the initial screening phase is passed.",
+    "responseTime": "Response time is typically within 5–7 business days."
+  }
+}

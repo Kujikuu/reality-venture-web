@@ -1,0 +1,49 @@
+{
+  "title": "Programs",
+  "subtitle": "Choose the right path for your journey. Whether you're an operator or a founder.",
+  "advisor": {
+    "title": "Advisor Reality Program",
+    "subtitle": "For Experienced Operators & Experts",
+    "description": "For experienced operators and domain experts who want to work hands-on with early-stage ventures. Advisors contribute directly to execution and decision-making within companies that require deep operational support.",
+    "cta": "Apply as an Advisor",
+    "benefits": {
+      "title": "Program benefits:",
+      "items": [
+        "Hands-on execution work",
+        "Decision-making contribution",
+        "Access to early-stage ventures",
+        "Strategic influence"
+      ]
+    }
+  },
+  "accelerator": {
+    "title": "Reality Venture Program",
+    "subtitle": "For Startups",
+    "description": "Our core program for early-stage startups focused on product execution, market validation, and investment readiness.",
+    "cta": "Apply to the Accelerator",
+    "includes": {
+      "title": "Program Includes:",
+      "items": [
+        "Structured execution reviews",
+        "Direct access to operators and experts",
+        "Clear operational milestones",
+        "Investor exposure"
+      ],
+      "duration": "Duration: 8–12 weeks"
+    }
+  },
+  "ventureBuilder": {
+    "title": "Reality Venture Builder",
+    "subtitle": "For Ideas",
+    "description": "For ideas and founders that require a team, capital, and execution power. We co-build companies from the ground up and remain involved long-term.",
+    "cta": "Pitch an Idea",
+    "provider": {
+      "title": "We provide:",
+      "items": [
+        "Dedicated venture team (product, tech, growth, operations)",
+        "Initial capital",
+        "Hands-on execution and governance"
+      ]
+    }
+  }
+}

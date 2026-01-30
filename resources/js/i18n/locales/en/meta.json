@@ -1,0 +1,24 @@
+{
+  "site": {
+    "title": "Reality Venture",
+    "description": "We build, execute, and scale real ventures."
+  },
+  "pages": {
+    "home": {
+      "title": "Reality Venture | Execution-First Venture Builder",
+      "description": "We build. We execute. We scale real ventures. Join our accelerator or venture builder program."
+    },
+    "apply": {
+      "title": "Apply Now | Reality Venture",
+      "description": "Apply to join our accelerator or venture builder program. Turn your vision into reality."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Reality Venture",
+      "description": "Learn about how Reality Venture collects, uses, and protects your personal information."
+    },
+    "terms": {
+      "title": "Terms of Service | Reality Venture",
+      "description": "Read our Terms of Service to understand your rights and responsibilities when using our platform."
+    }
+  }
+}
