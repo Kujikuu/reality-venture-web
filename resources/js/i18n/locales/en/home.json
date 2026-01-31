@@ -241,18 +241,18 @@
     "joinTeam": "Join the team",
     "ceo": {
       "role": "FOUNDER & CEO",
-      "name": "Executive Leadership",
+      "name": "Yousif Al Harbi",
       "position": "Founder & CEO",
       "bio": "Responsible for strategy, venture outcomes, and long-term value creation."
     },
     "headOfAcceleration": {
-      "title": "Head of Acceleration",
-      "department": "Venture & Program Team",
+      "title": "Names goes here",
+      "department": "Co-Founder & Business Partner",
       "bio": "Leads accelerator programs and execution quality."
     },
     "headOfVentureBuilding": {
-      "title": "Head of Venture Building",
-      "department": "Venture & Program Team",
+      "title": "Names goes here",
+      "department": "Co-Founder & Business Partner",
       "bio": "Oversees venture creation from inception to scale."
     },
     "advisors": {

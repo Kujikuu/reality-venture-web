@@ -22,7 +22,7 @@ export const StrategicGoals: React.FC = () => {
       backgroundPosition: '0 0, 10px 10px',
       backgroundSize: '20px 20px',
     }}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-8" >
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8" >
 
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-3">{t('strategicGoals.badge')}</h2>

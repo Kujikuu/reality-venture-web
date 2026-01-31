@@ -11,7 +11,7 @@ export const VisionMission: React.FC = () => {
 
   return (
     <section id="vision" className="py-24 bg-gray-50 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center"
           variants={staggerContainer}

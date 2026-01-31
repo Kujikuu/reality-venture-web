@@ -9,7 +9,7 @@ export const Programs: React.FC = () => {
 
   return (
     <section id="programs" className="bg-gray-50 py-24 scroll-mt-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">{t('title')}</h2>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">

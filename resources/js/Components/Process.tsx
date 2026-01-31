@@ -6,16 +6,32 @@ export const Process: React.FC = () => {
   const { t } = useTranslation('home');
 
   const steps: ProcessStep[] = [
-    { number: "01" },
-    { number: "02" },
-    { number: "03" },
-    { number: "04" },
+    {
+      number: "01",
+      title: '',
+      description: ''
+    },
+    {
+      number: "02",
+      title: '',
+      description: ''
+    },
+    {
+      number: "03",
+      title: '',
+      description: ''
+    },
+    {
+      number: "04",
+      title: '',
+      description: ''
+    },
   ];
 
   return (
 
     <section id="process" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
           <div className="max-w-xl">
              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">{t('process.title')}</h2>

@@ -75,7 +75,7 @@ export const TargetAudience: React.FC = () => {
 
   return (
     <section className="py-24 bg-gray-50 overflow-hidden" id="community">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
 
         <div className="text-center max-w-3xl mx-auto mb-12">
            <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('targetAudience.badge')}</span>

@@ -21,7 +21,7 @@ export const Footer = () => {
     <footer className="bg-white border-t border-gray-100 pt-16 pb-12 relative overflow-hidden">
 
       {/* Newsletter CTA */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-24">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8 mb-24">
         <div className="relative bg-gray-50 rounded-lg p-8 md:p-20 text-center overflow-hidden border border-gray-100">
 
           <div className="relative z-10 max-w-2xl mx-auto">
@@ -46,7 +46,7 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20 border-b border-gray-100 pb-12">
 

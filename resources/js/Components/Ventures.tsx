@@ -9,7 +9,7 @@ export const Ventures: React.FC = () => {
 
   return (
     <section id="proptech" className="relative bg-white py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
 
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">

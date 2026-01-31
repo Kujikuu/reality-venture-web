@@ -19,7 +19,7 @@ export const Services: React.FC = () => {
 
   return (
     <section id="services" className="py-24 bg-white scroll-mt-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
         <div className="text-center mb-20">
           <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('badge')}</span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
