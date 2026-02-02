@@ -90,6 +90,7 @@ export const Team: React.FC = () => {
   const [visibleSlides, setVisibleSlides] = useState(1);
 
   const maxIndex = Math.max(teamMembers.length - visibleSlides, 0);
+  const forwardStep = isRTL ? 1 : 1; // keep autoplay moving in the perceived forward direction for both LTR and RTL
 
   useEffect(() => {
     const computeVisible = () => {
@@ -108,8 +109,7 @@ export const Team: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => {
-        const step = isRTL ? -1 : 1;
-        const next = prev + step;
+        const next = prev + forwardStep;
         if (next > maxIndex) return 0;
         if (next < 0) return maxIndex;
         return next;
@@ -117,10 +117,10 @@ export const Team: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [isRTL, maxIndex]);
+  }, [forwardStep, maxIndex]);
 
   const handlePrev = () => {
-    const step = isRTL ? 1 : -1;
+    const step = -forwardStep;
     setCurrent((prev) => {
       const next = prev + step;
       if (next > maxIndex) return 0;
@@ -130,7 +130,7 @@ export const Team: React.FC = () => {
   };
 
   const handleNext = () => {
-    const step = isRTL ? -1 : 1;
+    const step = forwardStep;
     setCurrent((prev) => {
       const next = prev + step;
       if (next > maxIndex) return 0;
