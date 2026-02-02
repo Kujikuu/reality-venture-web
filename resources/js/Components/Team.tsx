@@ -191,7 +191,7 @@ export const Team: React.FC = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-2">
             <button
               type="button"
-              onClick={handlePrev}
+              onClick={isRTL ? handleNext : handlePrev}
               className="p-3 rounded-full bg-white shadow-md border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition"
               aria-label="Previous slide"
             >
@@ -202,7 +202,7 @@ export const Team: React.FC = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2">
             <button
               type="button"
-              onClick={handleNext}
+              onClick={isRTL ? handlePrev : handleNext}
               className="p-3 rounded-full bg-white shadow-md border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition"
               aria-label="Next slide"
             >
