@@ -13,17 +13,17 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '' }) 
   // For now, we'll use placeholders
   const adContent = {
     top: {
-      image: "https://placehold.co/1200x400/4d3070/ffffff?text=Advertising+Space+(Top)",
+      image: "https://placehold.co/1200x400/4d3070/ffffff?text=Advertising+Space",
       link: "#",
       alt: "Top Banner Ad"
     },
     middle: {
-      image: "https://placehold.co/1200x400/e6a319/ffffff?text=Advertising+Space+(Middle)",
+      image: "https://placehold.co/1200x400/e6a319/ffffff?text=Advertising+Space",
       link: "#",
       alt: "Middle Banner Ad"
     },
     bottom: {
-      image: "https://placehold.co/1200x250/181411/ffffff?text=Advertising+Space+(Bottom)",
+      image: "https://placehold.co/1200x250/181411/ffffff?text=Advertising+Space",
       link: "#",
       alt: "Bottom Banner Ad"
     }
