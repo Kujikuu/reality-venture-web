@@ -13,12 +13,12 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '' }) 
   // For now, we'll use placeholders
   const adContent = {
     top: {
-      image: "https://placehold.co/1200x200/4d3070/ffffff?text=Advertising+Space+(Top)",
+      image: "https://placehold.co/1200x400/4d3070/ffffff?text=Advertising+Space+(Top)",
       link: "#",
       alt: "Top Banner Ad"
     },
     middle: {
-      image: "https://placehold.co/1200x300/e6a319/ffffff?text=Advertising+Space+(Middle)",
+      image: "https://placehold.co/1200x400/e6a319/ffffff?text=Advertising+Space+(Middle)",
       link: "#",
       alt: "Middle Banner Ad"
     },
@@ -40,12 +40,12 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '' }) 
           rel="noopener noreferrer"
           className="block w-full overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 group"
         >
-          <div className="relative aspect-[4/1] md:aspect-[6/1] w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+          <div className="relative aspect-[4/2] md:aspect-[6/2] w-full bg-gray-100 flex items-center justify-center overflow-hidden">
             {/* Replace this img with your actual ad image */}
             <img 
               src={content.image} 
               alt={content.alt} 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
             

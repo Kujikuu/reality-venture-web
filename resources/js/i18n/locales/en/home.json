@@ -239,26 +239,60 @@
     "title": "Meet the Team",
     "description": "We are a collective of founders, operators, and product experts. No career consultants—only builders who have done it before.",
     "joinTeam": "Join the team",
-    "ceo": {
-      "role": "FOUNDER & CEO",
-      "name": "Yousif Al Harbi",
-      "position": "Founder & CEO",
-      "bio": "Responsible for strategy, venture outcomes, and long-term value creation."
-    },
-    "headOfAcceleration": {
-      "title": "Names goes here",
-      "department": "Co-Founder & Business Partner",
-      "bio": "Leads accelerator programs and execution quality."
-    },
-    "headOfVentureBuilding": {
-      "title": "Names goes here",
-      "department": "Co-Founder & Business Partner",
-      "bio": "Oversees venture creation from inception to scale."
-    },
     "advisors": {
       "title": "Advisors & Operators",
       "description": "A network of senior product, technology, growth, and operations leaders.",
       "viewButton": "View Advisors"
+    },
+    "members": {
+      "ceo": {
+        "name": "Yousif Al Harbi",
+        "title": "Founder & CEO",
+        "department": "Founder & CEO",
+        "bio": "Responsible for strategy, venture outcomes, and long-term value creation."
+      },
+      "headOfAcceleration": {
+        "name": "Saad Altwaim",
+        "title": "Co-Founder & Business Partner",
+        "department": "Co-Founder & Business Partner",
+        "bio": "Leads accelerator programs and execution quality."
+      },
+      "headOfVentureBuilding": {
+        "name": "Hamad Alsuliman",
+        "title": "Co-Founder & Business Partner",
+        "department": "Co-Founder & Business Partner",
+        "bio": "Oversees venture creation from inception to scale."
+      },
+      "investmentManager": {
+        "name": "Badryah Hanbashi",
+        "title": "Investment Manager",
+        "department": "Investment",
+        "bio": "Leads investment strategy, diligence, and portfolio capital plans."
+      },
+      "investorRelationsManager": {
+        "name": "Agad Alnemri",
+        "title": "Investors Relation Manager",
+        "department": "Investor Relations",
+        "bio": "Builds trusted LP relationships and orchestrates transparent reporting."
+      },
+      "operationsManager": {
+        "name": "Fahad Alharbi",
+        "title": "Operation Manager",
+        "department": "Operations",
+        "bio": "Runs day-to-day venture operations with precision and accountability."
+      },
+      "marketingManager": {
+        "name": "Dalal Alnasser",
+        "title": "Marketing Manager",
+        "department": "Marketing",
+        "bio": "Shapes go-to-market stories and demand programs across ventures."
+      },
+      "cto": {
+        "name": "Ahmed Afifi",
+        "title": "CTO",
+        "department": "Technology",
+        "bio": "Leads engineering standards, platform strategy, and technical governance."
+      }
     }
   }
 }

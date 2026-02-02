@@ -1,12 +1,143 @@
-import React from 'react';
-import { ArrowRight, Linkedin, Twitter, TwitterIcon, X, XIcon, XSquareIcon } from 'lucide-react';
-
-
+import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { useTranslation } from 'react-i18next';
 
+const MEMBER_CONFIG = [
+  {
+    key: 'ceo',
+    image: '/assets/images/team-ceo.jpeg',
+    fallbackName: 'Yousif Al Harbi',
+    fallbackTitle: 'Founder & CEO',
+    fallbackDepartment: 'Founder & CEO',
+    fallbackBio: 'Responsible for strategy, venture outcomes, and long-term value creation.',
+  },
+  {
+    key: 'headOfAcceleration',
+    image: '/assets/images/team-cofounder.jpeg',
+    fallbackName: 'Names goes here',
+    fallbackTitle: 'Head of Acceleration',
+    fallbackDepartment: 'Co-Founder & Business Partner',
+    fallbackBio: 'Leads accelerator programs and execution quality.',
+  },
+  {
+    key: 'headOfVentureBuilding',
+    image: '/assets/images/team-cofounder2.jpeg',
+    fallbackName: 'Names goes here',
+    fallbackTitle: 'Head of Venture Building',
+    fallbackDepartment: 'Co-Founder & Business Partner',
+    fallbackBio: 'Oversees venture creation from inception to scale.',
+  },
+  {
+    key: 'investmentManager',
+    image: '/assets/images/team-investment.jpg',
+    fallbackName: 'Badryah Hanbashi',
+    fallbackTitle: 'Investment Manager',
+    fallbackDepartment: 'Investment',
+    fallbackBio: 'Leads investment strategy, diligence, and portfolio capital plans.',
+  },
+  {
+    key: 'investorRelationsManager',
+    image: '/assets/images/team-investor-relations.jpg',
+    fallbackName: 'Agad Alnemri',
+    fallbackTitle: 'Investors Relation Manager',
+    fallbackDepartment: 'Investor Relations',
+    fallbackBio: 'Builds trusted LP relationships and orchestrates transparent reporting.',
+  },
+  {
+    key: 'operationsManager',
+    image: '/assets/images/team-operations.jpg',
+    fallbackName: 'Fahad Alharbi',
+    fallbackTitle: 'Operation Manager',
+    fallbackDepartment: 'Operations',
+    fallbackBio: 'Runs day-to-day venture operations with precision and accountability.',
+  },
+  {
+    key: 'marketingManager',
+    image: '/assets/images/team-marketing.jpg',
+    fallbackName: 'Dalal Alnasser',
+    fallbackTitle: 'Marketing Manager',
+    fallbackDepartment: 'Marketing',
+    fallbackBio: 'Shapes go-to-market stories and demand programs across ventures.',
+  },
+  {
+    key: 'cto',
+    image: '/assets/images/team-cto.jpg',
+    fallbackName: 'Ahmed Afifi',
+    fallbackTitle: 'CTO',
+    fallbackDepartment: 'Technology',
+    fallbackBio: 'Leads engineering standards, platform strategy, and technical governance.',
+  },
+];
+
 export const Team: React.FC = () => {
-  const { t } = useTranslation('home');
+  const { t, i18n } = useTranslation('home');
+  const isRTL = i18n.dir() === 'rtl';
+
+  const teamMembers = useMemo(
+    () =>
+      MEMBER_CONFIG.map((member) => ({
+        ...member,
+        name: t(`team.members.${member.key}.name`, { defaultValue: member.fallbackName }),
+        title: t(`team.members.${member.key}.title`, { defaultValue: member.fallbackTitle }),
+        department: t(`team.members.${member.key}.department`, { defaultValue: member.fallbackDepartment }),
+        bio: t(`team.members.${member.key}.bio`, { defaultValue: member.fallbackBio }),
+      })),
+    [t]
+  );
+
+  const [current, setCurrent] = useState(0);
+  const [visibleSlides, setVisibleSlides] = useState(1);
+
+  const maxIndex = Math.max(teamMembers.length - visibleSlides, 0);
+
+  useEffect(() => {
+    const computeVisible = () => {
+      if (typeof window === 'undefined') return 1;
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    };
+
+    const updateVisible = () => setVisibleSlides(computeVisible());
+    updateVisible();
+    window.addEventListener('resize', updateVisible);
+    return () => window.removeEventListener('resize', updateVisible);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => {
+        const step = isRTL ? -1 : 1;
+        const next = prev + step;
+        if (next > maxIndex) return 0;
+        if (next < 0) return maxIndex;
+        return next;
+      });
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [isRTL, maxIndex]);
+
+  const handlePrev = () => {
+    const step = isRTL ? 1 : -1;
+    setCurrent((prev) => {
+      const next = prev + step;
+      if (next > maxIndex) return 0;
+      if (next < 0) return maxIndex;
+      return next;
+    });
+  };
+
+  const handleNext = () => {
+    const step = isRTL ? -1 : 1;
+    setCurrent((prev) => {
+      const next = prev + step;
+      if (next > maxIndex) return 0;
+      if (next < 0) return maxIndex;
+      return next;
+    });
+  };
 
   return (
     <section id="team" className="py-24 bg-white scroll-mt-24">
@@ -22,99 +153,62 @@ export const Team: React.FC = () => {
               {t('team.description')}
             </p>
           </div>
-          {/* <button className="hidden md:flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-primary transition-colors">
-            {t('team.joinTeam')} <ArrowRight className="w-4 h-4 rtl:-scale-x-100" />
-          </button> */}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* CEO Card - Featured */}
-          {/* <div className="lg:col-span-3 bg-surface rounded-lg p-8 md:p-12 flex flex-col md:flex-row gap-10 items-center">
-            <div className="w-48 h-48 md:w-64 md:h-64 rounded-lg overflow-hidden shrink-0">
-              <img
-                src="/assets/images/team-ceo.jpeg"
-                alt={t('team.ceo.position')}
-                className="w-full h-full object-cover"
-              />
+        <div className="relative">
+          <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-500"
+              style={{
+                transform: `translateX(${(isRTL ? 1 : -1) * ((100 / visibleSlides) * current)}%)`,
+              }}
+            >
+              {teamMembers.map((member, idx) => (
+                <div
+                  key={member.name + idx}
+                  className="flex-shrink-0 box-border p-4"
+                  style={{ width: `${100 / visibleSlides}%` }}
+                >
+                  <div className="bg-gray-50 rounded-lg p-8 h-full hover:bg-white transition-all duration-300 border border-gray-100 group">
+                    <div className="w-32 h-32 rounded-md overflow-hidden mb-6 group-hover:scale-105 transition-transform">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover grayscale transition-all duration-300"
+                      />
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h4>
+                    <p className="text-primary text-sm font-bold mb-4 uppercase tracking-wide">{member.title}</p>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      {member.bio}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex-1 text-center md:text-start">
-              <div className="inline-block px-3 py-1 bg-white rounded-md text-xs font-bold text-primary mb-4 border border-gray-100">{t('team.ceo.role')}</div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">{t('team.ceo.name')}</h3>
-              <p className="text-xl text-gray-500 mb-6 font-medium">{t('team.ceo.position')}</p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-2xl">
-                {t('team.ceo.bio')}
-              </p>
-              <div className="flex gap-4 justify-center md:justify-start">
-                <a href='https://www.linkedin.com/in/yousif-alharbi-00510717' target="_blank" className="p-2 rounded-md bg-white hover:bg-gray-100 transition-colors text-gray-600">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a href='https://x.com/YALHARBY' target="_blank" className="p-2 rounded-md bg-white hover:bg-gray-100 transition-colors text-gray-600">
-                  <Twitter className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Program Leads */}
-          <div className="bg-gray-50 rounded-lg p-8 hover:bg-white transition-all duration-300 border border-gray-100 group">
-            <div className="w-32 h-32 rounded-md overflow-hidden mb-6 group-hover:scale-105 transition-transform">
-              <img
-                src="/assets/images/team-ceo.jpeg"
-                alt={t('team.ceo.name')}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h4 className="text-xl font-bold text-gray-900 mb-1">{t('team.ceo.name')}</h4>
-            <p className="text-primary text-sm font-bold mb-4 uppercase tracking-wide">{t('team.ceo.position')}</p>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              {t('team.ceo.bio')}
-            </p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-8 hover:bg-white transition-all duration-300 border border-gray-100 group">
-            <div className="w-32 h-32 rounded-md overflow-hidden mb-6 group-hover:scale-105 transition-transform">
-              <img
-                src="/assets/images/team-cofounder.jpeg"
-                alt={t('team.headOfAcceleration.title')}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h4 className="text-xl font-bold text-gray-900 mb-1">{t('team.headOfAcceleration.title')}</h4>
-            <p className="text-primary text-sm font-bold mb-4 uppercase tracking-wide">{t('team.headOfAcceleration.department')}</p>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              {t('team.headOfAcceleration.bio')}
-            </p>
+          <div className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="p-3 rounded-full bg-white shadow-md border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition"
+              aria-label="Previous slide"
+            >
+              <ArrowLeft size={18} />
+            </button>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-8 hover:bg-white transition-all duration-300 border border-gray-100 group">
-            <div className="w-32 h-32 rounded-md overflow-hidden mb-6 group-hover:scale-105 transition-transform">
-              <img
-                src="/assets/images/team-cofounder2.jpeg"
-                alt={t('team.headOfVentureBuilding.title')}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h4 className="text-xl font-bold text-gray-900 mb-1">{t('team.headOfVentureBuilding.title')}</h4>
-            <p className="text-primary text-sm font-bold mb-4 uppercase tracking-wide">{t('team.headOfVentureBuilding.department')}</p>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              {t('team.headOfVentureBuilding.bio')}
-            </p>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <button
+              type="button"
+              onClick={handleNext}
+              className="p-3 rounded-full bg-white shadow-md border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition"
+              aria-label="Next slide"
+            >
+              <ArrowRight size={18} />
+            </button>
           </div>
-
-          {/* Advisors Card */}
-          {/* <div className="bg-primary rounded-lg p-8 flex flex-col justify-between text-white">
-            <div>
-              <h3 className="text-2xl font-bold mb-2">{t('team.advisors.title')}</h3>
-              <p className="text-white/80 text-sm mb-8 leading-relaxed">
-                {t('team.advisors.description')}
-              </p>
-            </div>
-             <button className="flex items-center gap-2 font-bold text-sm bg-white/20 hover:bg-white hover:text-primary transition-all p-3 rounded-md w-fit backdrop-blur-sm">
-               {t('team.advisors.viewButton')} <ArrowRight className="w-4 h-4 rtl:-scale-x-100" />
-             </button> 
-          </div> */}
-
         </div>
       </div>
     </section>
