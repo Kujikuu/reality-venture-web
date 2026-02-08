@@ -44,6 +44,7 @@
     "linkedinPlaceholder": "linkedin.com/in/username",
     "submit": "إرسال الطلب",
     "submitting": "جاري الإرسال...",
+    "success": "تم تقديم الطلب بنجاح!",
     "agreement": "بإرسال هذا النموذج، أنت توافق على"
   },
   "sidebar": {

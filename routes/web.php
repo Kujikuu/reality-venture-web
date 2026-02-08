@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdBannerController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Route;
 
 // Static pages
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -12,6 +13,9 @@ Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name
 
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+
+// Banner click tracking
+Route::post('/banners/{adBanner}/click', [AdBannerController::class, 'trackClick'])->name('banners.click');
 
 // 404 fallback
 Route::fallback([PageController::class, 'notFound']);

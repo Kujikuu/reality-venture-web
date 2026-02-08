@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewApplicationSubmitted;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
@@ -18,7 +20,9 @@ class ApplicationController extends Controller
             'description' => 'required|string|max:5000',
         ]);
 
-        Application::create($validated);
+        $application = Application::create($validated);
+
+        Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
 
         return back()->with('success', 'Application submitted successfully!');
     }

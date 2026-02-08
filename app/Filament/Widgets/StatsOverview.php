@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Filament\Widgets;
+
+use App\Enums\ApplicationStatus;
+use App\Models\AdBanner;
+use App\Models\Application;
+use Filament\Widgets\StatsOverviewWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+
+class StatsOverview extends StatsOverviewWidget
+{
+    protected function getStats(): array
+    {
+        $totalApplications = Application::count();
+        $pendingApplications = Application::where('status', ApplicationStatus::Pending)->count();
+        $activeBanners = AdBanner::where('is_active', true)->count();
+        $totalClicks = AdBanner::sum('click_count');
+
+        return [
+            Stat::make('Total Applications', $totalApplications)
+                ->description($pendingApplications.' pending review')
+                ->descriptionIcon('heroicon-o-clock')
+                ->color('primary'),
+            Stat::make('Pending Applications', $pendingApplications)
+                ->description('Awaiting review')
+                ->descriptionIcon('heroicon-o-exclamation-circle')
+                ->color('warning'),
+            Stat::make('Active Banners', $activeBanners)
+                ->description('Currently displayed')
+                ->descriptionIcon('heroicon-o-megaphone')
+                ->color('success'),
+            Stat::make('Banner Clicks', number_format($totalClicks))
+                ->description('Total clicks across all banners')
+                ->descriptionIcon('heroicon-o-cursor-arrow-rays')
+                ->color('info'),
+        ];
+    }
+}

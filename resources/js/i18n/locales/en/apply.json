@@ -44,6 +44,7 @@
     "linkedinPlaceholder": "linkedin.com/in/username",
     "submit": "Submit Application",
     "submitting": "Submitting...",
+    "success": "Application submitted successfully!",
     "agreement": "By submitting this form, you agree to our"
   },
   "sidebar": {
