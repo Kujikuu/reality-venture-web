@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Applications\Tables;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ProgramInterest;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\FontWeight;
@@ -60,6 +61,7 @@ class ApplicationsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()->label('Update Status'),
+                DeleteAction::make(),
             ])
             ->toolbarActions([])
             ->emptyStateHeading('No applications yet')
