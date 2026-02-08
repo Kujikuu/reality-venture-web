@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->topNavigation()
+            ->profile(isSimple: false)
             ->brandLogo(asset('assets/images/RVHorizonal.png'))
             ->darkModeBrandLogo(asset('assets/images/RVHorizonal-White.png'))
             ->brandName('Reality Venture Admin')
