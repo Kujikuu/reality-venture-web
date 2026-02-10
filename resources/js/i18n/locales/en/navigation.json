@@ -26,9 +26,11 @@
     "termsOfService": "Terms of Service",
     "copyright": "© 2026 Reality Venture. All rights reserved.",
     "newsletter": {
-      "heading": "Ready to turn your vision into reality?",
-      "description": "Join our accelerator program or venture builder. We provide the capital, expertise, and network to help you scale.",
-      "cta": "Apply Now"
+      "heading": "Stay in the loop",
+      "description": "Get the latest insights on startups, venture building, and PropTech delivered to your inbox.",
+      "placeholder": "Enter your email address",
+      "subscribe": "Subscribe",
+      "success": "You're subscribed! Thank you."
     }
   }
 }

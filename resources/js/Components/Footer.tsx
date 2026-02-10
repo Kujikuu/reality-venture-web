@@ -1,10 +1,21 @@
 import React from 'react';
-import { ArrowUpRight, Mail, MapPin, Linkedin, Twitter, Send } from 'lucide-react';
-import { Link } from '@inertiajs/react';
+import { CheckCircle2, Mail, MapPin, Linkedin, Twitter, Send } from 'lucide-react';
+import { Link, useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
   const { t } = useTranslation(['navigation', 'common']);
+  const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+    email: '',
+  });
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    post('/newsletter/subscribe', {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
 
   const smoothScrollTo = (e: React.MouseEvent<Element>, targetId: string) => {
     // Only handle smooth scroll if we're on the home page
@@ -20,7 +31,7 @@ export const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-100 pt-16 pb-12 relative overflow-hidden">
 
-      {/* Newsletter CTA */}
+      {/* Newsletter Subscribe */}
       <div className="max-w-[1440px] mx-auto px-6 lg:px-8 mb-24">
         <div className="relative bg-gray-50 rounded-lg p-8 md:p-20 text-center overflow-hidden border border-gray-100">
 
@@ -37,11 +48,35 @@ export const Footer = () => {
               {t('navigation:footer.newsletter.description')}
             </p>
 
-            <div className="flex justify-center">
-              <Link href="/application-form" className="px-10 py-4 bg-primary hover:bg-primary-800 text-white font-bold rounded-md transition-all inline-flex items-center gap-2">
-                {t('navigation:footer.newsletter.cta')} <ArrowUpRight className="w-5 h-5" />
-              </Link>
-            </div>
+            {recentlySuccessful ? (
+              <div className="flex items-center justify-center gap-2 text-green-600 font-medium">
+                <CheckCircle2 className="w-5 h-5" />
+                {t('navigation:footer.newsletter.success')}
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    value={data.email}
+                    onChange={(e) => setData('email', e.target.value)}
+                    placeholder={t('navigation:footer.newsletter.placeholder')}
+                    className="flex-1 px-4 py-3 rounded-md border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm"
+                  />
+                  <button
+                    type="submit"
+                    disabled={processing}
+                    className="px-8 py-3 bg-primary hover:bg-primary-800 text-white font-bold rounded-md transition-all whitespace-nowrap inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    <Send className="w-4 h-4" />
+                    {t('navigation:footer.newsletter.subscribe')}
+                  </button>
+                </div>
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-2">{errors.email}</p>
+                )}
+              </form>
+            )}
           </div>
         </div>
       </div>

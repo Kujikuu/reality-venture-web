@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdBannerController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,10 @@ Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name
 
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
 // Banner click tracking
 Route::post('/banners/{adBanner}/click', [AdBannerController::class, 'trackClick'])->name('banners.click');

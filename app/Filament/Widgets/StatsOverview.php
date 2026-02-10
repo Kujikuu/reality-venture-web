@@ -7,6 +7,7 @@ use App\Enums\PostStatus;
 use App\Models\AdBanner;
 use App\Models\Application;
 use App\Models\Post;
+use App\Models\Subscriber;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -19,6 +20,7 @@ class StatsOverview extends StatsOverviewWidget
         $activeBanners = AdBanner::where('is_active', true)->count();
         $totalClicks = AdBanner::sum('click_count');
         $publishedPosts = Post::where('status', PostStatus::Published)->count();
+        $activeSubscribers = Subscriber::where('is_active', true)->count();
 
         return [
             Stat::make('Total Applications', $totalApplications)
@@ -41,6 +43,10 @@ class StatsOverview extends StatsOverviewWidget
                 ->description('Blog posts')
                 ->descriptionIcon('heroicon-o-newspaper')
                 ->color('primary'),
+            Stat::make('Newsletter Subscribers', $activeSubscribers)
+                ->description('Active subscribers')
+                ->descriptionIcon('heroicon-o-envelope')
+                ->color('info'),
         ];
     }
 }
