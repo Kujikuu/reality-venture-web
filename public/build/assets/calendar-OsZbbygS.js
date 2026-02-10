@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/calendar-DEdn6JYc.js
-import{c as e}from"./app-BNuTOOi5.js";/**
-========
-import{c as e}from"./app-D7lymKNo.js";/**
->>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support):public/build/assets/calendar-WJyEJDMK.js
+import{c as e}from"./app-CReI0g-3.js";/**
  * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.

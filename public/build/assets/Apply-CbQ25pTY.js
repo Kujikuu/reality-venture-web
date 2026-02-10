@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/Apply-CBes6TpD.js
-import{c as g,u as h,a as y,j as e,H as u,M as d}from"./app-BNuTOOi5.js";import{B as b}from"./Button-CwUTgl5Y.js";import{m as i,h as f,a as n}from"./HeroAnimations-W_DlfzYw.js";/**
-========
-import{c as g,u as h,a as y,j as e,H as u,M as d}from"./app-D7lymKNo.js";import{B as f}from"./Button-zvAbf5sO.js";import{h as b,a as n}from"./HeroAnimations-Xo1Sk4-T.js";import{m as i}from"./proxy-BeFWyDV-.js";/**
->>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support):public/build/assets/Apply-jlubsKW-.js
+import{c as g,u as h,a as y,j as e,H as u,M as d}from"./app-CReI0g-3.js";import{B as f}from"./Button-BPI2BXRY.js";import{h as b,a as n}from"./HeroAnimations-Xo1Sk4-T.js";import{m as i}from"./proxy-CwP6kXCo.js";/**
  * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.

@@ -54,19 +54,6 @@ export const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
-<<<<<<< HEAD
-          {navLinks.map((item) => (
-            <a
-              key={item.nameKey}
-              href={`/#${item.link}`}
-              onClick={(e) => handleNavClick(e, item.link)}
-              className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-            >
-              {t(`header.${item.nameKey}`)}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
-=======
           {navLinks.map((item) =>
             item.isPage ? (
               <Link
@@ -81,7 +68,7 @@ export const Header = () => {
               <a
                 key={item.nameKey}
                 href={`/#${item.link}`}
-                onClick={(e) => smoothScrollTo(e, item.link)}
+                onClick={(e) => handleNavClick(e, item.link)}
                 className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
               >
                 {t(`header.${item.nameKey}`)}
@@ -89,7 +76,6 @@ export const Header = () => {
               </a>
             )
           )}
->>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
         </nav>
 
         {/* Actions: Language Switcher + CTA */}
@@ -117,21 +103,6 @@ export const Header = () => {
       {/* Mobile Nav Dropdown */}
       {isMenuOpen && (
         <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col gap-4">
-<<<<<<< HEAD
-          {navLinks.map((item) => (
-            <a
-              key={item.nameKey}
-              href={`/#${item.link}`}
-              className="text-lg font-bold uppercase tracking-wide hover:text-primary"
-              onClick={(e) => {
-                handleNavClick(e, item.link);
-                setIsMenuOpen(false);
-              }}
-            >
-              {t(`header.${item.nameKey}`)}
-            </a>
-          ))}
-=======
           {navLinks.map((item) =>
             item.isPage ? (
               <Link
@@ -148,7 +119,7 @@ export const Header = () => {
                 href={`/#${item.link}`}
                 className="text-lg font-bold uppercase tracking-wide hover:text-primary"
                 onClick={(e) => {
-                  smoothScrollTo(e, item.link);
+                  handleNavClick(e, item.link);
                   setIsMenuOpen(false);
                 }}
               >
@@ -156,7 +127,6 @@ export const Header = () => {
               </a>
             )
           )}
->>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
           <Link href="/application-form" onClick={() => setIsMenuOpen(false)}>
             <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm mt-4">
               {t('buttons.applyNow')}
