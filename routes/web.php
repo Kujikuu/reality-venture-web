@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdBannerController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,10 @@ Route::post('/applications', [ApplicationController::class, 'store'])->name('app
 
 // Banner click tracking
 Route::post('/banners/{adBanner}/click', [AdBannerController::class, 'trackClick'])->name('banners.click');
+
+// Blog
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // 404 fallback
 Route::fallback([PageController::class, 'notFound']);

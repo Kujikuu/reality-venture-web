@@ -7,10 +7,12 @@
     "about": "من نحن",
     "services": "الخدمات",
     "realityVenture": "رياليتي فينتشر",
-    "programs": "البرامج"
+    "programs": "البرامج",
+    "blog": "المدونة"
   },
   "footer": {
     "explore": "استكشف",
+    "blog": "المدونة",
     "services": "الخدمات",
     "realityVenture": "رياليتي فينتشر",
     "home": "الرئيسية",

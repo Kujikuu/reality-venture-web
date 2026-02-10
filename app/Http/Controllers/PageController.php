@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdBanner;
+use App\Models\Post;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -24,8 +25,17 @@ class PageController extends Controller
                 'position' => $banner->position->value,
             ]));
 
+        $latestPosts = Post::query()
+            ->published()
+            ->with(['author:id,name', 'category:id,name_en,name_ar,slug'])
+            ->latest('published_at')
+            ->limit(3)
+            ->get()
+            ->map(fn (Post $post) => $post->toCardArray());
+
         return Inertia::render('Home', [
             'banners' => $banners,
+            'latestPosts' => $latestPosts,
         ]);
     }
 

@@ -1,91 +1,213 @@
 {
+<<<<<<< HEAD
   "_Button-CwUTgl5Y.js": {
     "file": "assets/Button-CwUTgl5Y.js",
+=======
+  "_BlogCard-Dwdj2CAv.js": {
+    "file": "assets/BlogCard-Dwdj2CAv.js",
+    "name": "BlogCard",
+    "imports": [
+      "resources/js/app.tsx",
+      "_proxy-BeFWyDV-.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "_Button-zvAbf5sO.js": {
+    "file": "assets/Button-zvAbf5sO.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "Button",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
+<<<<<<< HEAD
   "_HeroAnimations-W_DlfzYw.js": {
     "file": "assets/HeroAnimations-W_DlfzYw.js",
     "name": "HeroAnimations",
+=======
+  "_HeroAnimations-Xo1Sk4-T.js": {
+    "file": "assets/HeroAnimations-Xo1Sk4-T.js",
+    "name": "HeroAnimations"
+  },
+  "_arrow-left-C48qQ5Z4.js": {
+    "file": "assets/arrow-left-C48qQ5Z4.js",
+    "name": "arrow-left",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "imports": [
       "resources/js/app.tsx"
     ]
   },
+<<<<<<< HEAD
   "_calendar-DEdn6JYc.js": {
     "file": "assets/calendar-DEdn6JYc.js",
+=======
+  "_calendar-WJyEJDMK.js": {
+    "file": "assets/calendar-WJyEJDMK.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "calendar",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
+  "_proxy-BeFWyDV-.js": {
+    "file": "assets/proxy-BeFWyDV-.js",
+    "name": "proxy",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
   "resources/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-zSFbxsfW.css",
+=======
+    "file": "assets/app-pzc0L0Ja.css",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/Pages/Apply.tsx": {
+<<<<<<< HEAD
     "file": "assets/Apply-CBes6TpD.js",
+=======
+    "file": "assets/Apply-jlubsKW-.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "Apply",
     "src": "resources/js/Pages/Apply.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
+<<<<<<< HEAD
       "_Button-CwUTgl5Y.js",
       "_HeroAnimations-W_DlfzYw.js"
     ]
   },
   "resources/js/Pages/Home.tsx": {
     "file": "assets/Home-DN813wNt.js",
+=======
+      "_Button-zvAbf5sO.js",
+      "_HeroAnimations-Xo1Sk4-T.js",
+      "_proxy-BeFWyDV-.js"
+    ]
+  },
+  "resources/js/Pages/Blog.tsx": {
+    "file": "assets/Blog-C13lmiSI.js",
+    "name": "Blog",
+    "src": "resources/js/Pages/Blog.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_BlogCard-Dwdj2CAv.js",
+      "_proxy-BeFWyDV-.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "resources/js/Pages/BlogPost.tsx": {
+    "file": "assets/BlogPost-BzABKiJo.js",
+    "name": "BlogPost",
+    "src": "resources/js/Pages/BlogPost.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_BlogCard-Dwdj2CAv.js",
+      "_proxy-BeFWyDV-.js",
+      "_arrow-left-C48qQ5Z4.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "resources/js/Pages/Home.tsx": {
+    "file": "assets/Home-wVlPwYJw.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "Home",
     "src": "resources/js/Pages/Home.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
+<<<<<<< HEAD
       "_Button-CwUTgl5Y.js",
       "_HeroAnimations-W_DlfzYw.js"
     ]
   },
   "resources/js/Pages/NotFound.tsx": {
     "file": "assets/NotFound-Dm7Tf3Qa.js",
+=======
+      "_Button-zvAbf5sO.js",
+      "_HeroAnimations-Xo1Sk4-T.js",
+      "_proxy-BeFWyDV-.js",
+      "_BlogCard-Dwdj2CAv.js",
+      "_arrow-left-C48qQ5Z4.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "resources/js/Pages/NotFound.tsx": {
+    "file": "assets/NotFound-De-wPR5s.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "NotFound",
     "src": "resources/js/Pages/NotFound.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
+<<<<<<< HEAD
       "_Button-CwUTgl5Y.js"
     ]
   },
   "resources/js/Pages/PrivacyPolicy.tsx": {
     "file": "assets/PrivacyPolicy-CMLf9vT2.js",
+=======
+      "_Button-zvAbf5sO.js"
+    ]
+  },
+  "resources/js/Pages/PrivacyPolicy.tsx": {
+    "file": "assets/PrivacyPolicy-CkBKvN-o.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "PrivacyPolicy",
     "src": "resources/js/Pages/PrivacyPolicy.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
+<<<<<<< HEAD
       "_HeroAnimations-W_DlfzYw.js",
       "_calendar-DEdn6JYc.js"
     ]
   },
   "resources/js/Pages/TermsOfService.tsx": {
     "file": "assets/TermsOfService-DSrglcwL.js",
+=======
+      "_HeroAnimations-Xo1Sk4-T.js",
+      "_proxy-BeFWyDV-.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "resources/js/Pages/TermsOfService.tsx": {
+    "file": "assets/TermsOfService-2yhHsqma.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "TermsOfService",
     "src": "resources/js/Pages/TermsOfService.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
+<<<<<<< HEAD
       "_HeroAnimations-W_DlfzYw.js",
       "_calendar-DEdn6JYc.js"
     ]
   },
   "resources/js/app.tsx": {
     "file": "assets/app-BNuTOOi5.js",
+=======
+      "_HeroAnimations-Xo1Sk4-T.js",
+      "_proxy-BeFWyDV-.js",
+      "_calendar-WJyEJDMK.js"
+    ]
+  },
+  "resources/js/app.tsx": {
+    "file": "assets/app-D7lymKNo.js",
+>>>>>>> c6efa07 (feat(blog): implement blog components and pages with localization support)
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
     "dynamicImports": [
       "resources/js/Pages/Apply.tsx",
+      "resources/js/Pages/Blog.tsx",
+      "resources/js/Pages/BlogPost.tsx",
       "resources/js/Pages/Home.tsx",
       "resources/js/Pages/NotFound.tsx",
       "resources/js/Pages/PrivacyPolicy.tsx",

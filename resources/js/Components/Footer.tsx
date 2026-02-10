@@ -84,6 +84,7 @@ export const Footer = () => {
               <li><Link href="/#services" onClick={(e) => smoothScrollTo(e, 'services')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.services')}</Link></li>
               <li><Link href="/#proptech" onClick={(e) => smoothScrollTo(e, 'proptech')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.realityVenture')}</Link></li>
               <li><Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.programs')}</Link></li>
+              <li><Link href="/blog" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.blog')}</Link></li>
             </ul>
           </div>
 

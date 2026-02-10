@@ -6,6 +6,8 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@tailwindcss/typography": "^0.5.19",
+        "@types/dompurify": "^3.0.5",
         "@types/node": "^22.19.7",
         "@types/react": "^19.2.10",
         "@types/react-dom": "^19.2.3",
@@ -22,6 +24,7 @@
     },
     "dependencies": {
         "@inertiajs/react": "^2.0.20",
+        "dompurify": "^3.3.1",
         "framer-motion": "^12.29.2",
         "i18next": "^25.8.0",
         "i18next-browser-languagedetector": "^8.2.0",

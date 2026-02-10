@@ -1,0 +1,23 @@
+{
+  "pageTitle": "Blog",
+  "heroTitle": "Insights & Updates",
+  "heroSubtitle": "Explore the latest news, insights, and thought leadership from Reality Venture.",
+  "allCategories": "All",
+  "readMore": "Read More",
+  "noPostsFound": "No posts found",
+  "noPostsDescription": "Check back later for new content.",
+  "publishedOn": "Published on",
+  "by": "By",
+  "relatedPosts": "Related Posts",
+  "sharePost": "Share this post",
+  "backToBlog": "Back to Blog",
+  "searchPlaceholder": "Search posts...",
+  "tags": "Tags",
+  "category": "Category",
+  "latestPosts": {
+    "badge": "FROM OUR BLOG",
+    "title": "Latest Insights",
+    "subtitle": "Stay updated with our latest articles, news, and thought leadership.",
+    "viewAll": "View All Posts"
+  }
+}

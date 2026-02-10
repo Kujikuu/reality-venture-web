@@ -7,10 +7,12 @@
     "about": "About",
     "services": "Services",
     "realityVenture": "Reality Venture",
-    "programs": "Programs"
+    "programs": "Programs",
+    "blog": "Blog"
   },
   "footer": {
     "explore": "Explore",
+    "blog": "Blog",
     "services": "Services",
     "realityVenture": "Reality Venture",
     "home": "Home",

@@ -8,6 +8,7 @@ import { Ventures } from '../Components/Ventures';
 import { Programs } from '../Components/Programs';
 import { Process } from '../Components/Process';
 import { Team } from '../Components/Team';
+import { LatestPosts } from '../Components/LatestPosts';
 import { Head } from '@inertiajs/react';
 import { AdBanner } from '../Components/AdBanner';
 
@@ -42,6 +43,7 @@ export default function Home() {
       <Programs />
       <Process />
       <Team />
+      <LatestPosts />
     </>
   );
 }

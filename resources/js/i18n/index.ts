@@ -11,6 +11,7 @@ import enPrograms from './locales/en/programs.json';
 import enApply from './locales/en/apply.json';
 import enLegal from './locales/en/legal.json';
 import enMeta from './locales/en/meta.json';
+import enBlog from './locales/en/blog.json';
 
 import arCommon from './locales/ar/common.json';
 import arNavigation from './locales/ar/navigation.json';
@@ -20,6 +21,7 @@ import arPrograms from './locales/ar/programs.json';
 import arApply from './locales/ar/apply.json';
 import arLegal from './locales/ar/legal.json';
 import arMeta from './locales/ar/meta.json';
+import arBlog from './locales/ar/blog.json';
 
 // Configure i18next
 i18n
@@ -36,6 +38,7 @@ i18n
         apply: enApply,
         legal: enLegal,
         meta: enMeta,
+        blog: enBlog,
       },
       ar: {
         common: arCommon,
@@ -46,6 +49,7 @@ i18n
         apply: arApply,
         legal: arLegal,
         meta: arMeta,
+        blog: arBlog,
       },
     },
     fallbackLng: 'en', // Use English if translation is missing
