@@ -15,15 +15,18 @@ export const Header = () => {
     { nameKey: 'programs', link: 'programs' },
   ];
 
-  const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     if (window.location.pathname === '/') {
       e.preventDefault();
       const element = document.getElementById(targetId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+      return;
     }
-    // If not on home, let the href navigate to /#targetId
+
+    e.preventDefault();
+    window.location.href = `/#${targetId}`;
   };
 
   const scrollToTop = () => {
@@ -48,7 +51,7 @@ export const Header = () => {
             <a
               key={item.nameKey}
               href={`/#${item.link}`}
-              onClick={(e) => smoothScrollTo(e, item.link)}
+              onClick={(e) => handleNavClick(e, item.link)}
               className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
             >
               {t(`header.${item.nameKey}`)}
@@ -88,7 +91,7 @@ export const Header = () => {
               href={`/#${item.link}`}
               className="text-lg font-bold uppercase tracking-wide hover:text-primary"
               onClick={(e) => {
-                smoothScrollTo(e, item.link);
+                handleNavClick(e, item.link);
                 setIsMenuOpen(false);
               }}
             >
