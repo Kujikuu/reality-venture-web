@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\PostStatus;
 use App\Models\Category;
 use App\Models\Post;
+use Digitonic\FilamentRichEditorTools\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\VideoBlock;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -90,8 +92,14 @@ class BlogController extends Controller
                 'slug' => $post->slug,
                 'excerpt_en' => $post->excerpt_en,
                 'excerpt_ar' => $post->excerpt_ar,
-                'content_en' => $post->content_en,
-                'content_ar' => $post->content_ar,
+                'content_en' => RichContentRenderer::make($post->content_en)
+                    ->customBlocks([VideoBlock::class])
+                    ->fileAttachmentsDisk('public')
+                    ->toUnsafeHtml(),
+                'content_ar' => RichContentRenderer::make($post->content_ar)
+                    ->customBlocks([VideoBlock::class])
+                    ->fileAttachmentsDisk('public')
+                    ->toUnsafeHtml(),
                 'featured_image' => $post->featured_image
                     ? asset('storage/'.$post->featured_image)
                     : null,

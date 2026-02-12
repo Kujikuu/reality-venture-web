@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94f54ffd8e0ee1c977539df766492d10",
+    "content-hash": "a76057b630d7bfd5dbd7911cabdc8fad",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -689,6 +689,77 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
             "time": "2024-07-08T12:26:09+00:00"
+        },
+        {
+            "name": "digitonic/filament-rich-editor-tools",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/digitonic/filament-rich-editor-tools.git",
+                "reference": "e9492eae810f1617bf5be99817756618f08f2efa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digitonic/filament-rich-editor-tools/zipball/e9492eae810f1617bf5be99817756618f08f2efa",
+                "reference": "e9492eae810f1617bf5be99817756618f08f2efa",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0|^5.0",
+                "illuminate/contracts": "^11.0||^12.0",
+                "php": "^8.2|^8.3|^8.4|^8.5",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.7",
+                "laravel/framework": "^11.0|^12.0",
+                "laravel/pint": "^1.21",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^4.0|^3.8",
+                "pestphp/pest-plugin-arch": "^3.1",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/extension-installer": "^1.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FilamentRichEditorTools": "Digitonic\\FilamentRichEditorTools\\Facades\\FilamentRichEditorTools"
+                    },
+                    "providers": [
+                        "Digitonic\\FilamentRichEditorTools\\FilamentRichEditorToolsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Digitonic\\FilamentRichEditorTools\\": "src/",
+                    "Digitonic\\FilamentRichEditorTools\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sean O'Donnell",
+                    "email": "sean.odonnell@digitonic.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package designed to improve the existing Filament Rich Editor",
+            "homepage": "https://github.com/digitonic/filament-rich-editor-tools",
+            "keywords": [
+                "digitonic",
+                "filament-rich-editor-tools",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/digitonic/filament-rich-editor-tools/issues",
+                "source": "https://github.com/digitonic/filament-rich-editor-tools/tree/2.0.0"
+            },
+            "time": "2026-02-11T11:23:49+00:00"
         },
         {
             "name": "doctrine/inflector",

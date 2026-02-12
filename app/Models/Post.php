@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use App\Enums\PostStatus;
+use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
+use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Post extends Model
+class Post extends Model implements HasRichContent
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+
+    use InteractsWithRichContent;
 
     protected $fillable = [
         'user_id',
@@ -38,6 +42,15 @@ class Post extends Model
             'status' => PostStatus::class,
             'published_at' => 'datetime',
         ];
+    }
+
+    protected function setUpRichContent(): void
+    {
+        $this->registerRichContent('content_en')
+            ->fileAttachmentsDisk('public');
+
+        $this->registerRichContent('content_ar')
+            ->fileAttachmentsDisk('public');
     }
 
     /**

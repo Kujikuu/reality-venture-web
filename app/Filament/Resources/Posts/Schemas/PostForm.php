@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Posts\Schemas;
 
 use App\Enums\PostStatus;
+use App\Filament\Plugins\InsertImagePlugin;
+use App\Filament\Plugins\InsertVideoPlugin;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -49,6 +51,19 @@ class PostForm
                                     ->required()
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('blog-attachments')
+                                    ->toolbarButtons([
+                                        ['bold', 'italic', 'underline', 'strike', 'link'],
+                                        ['h2', 'h3', 'lead', 'small'],
+                                        ['alignStart', 'alignCenter', 'alignEnd'],
+                                        ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
+                                        ['table', 'grid', 'horizontalRule'],
+                                        ['insertImage', 'insertVideo'],
+                                        ['undo', 'redo', 'clearFormatting'],
+                                    ])
+                                    ->plugins([
+                                        InsertImagePlugin::make(),
+                                        InsertVideoPlugin::make(),
+                                    ])
                                     ->columnSpanFull(),
                             ]),
                         Tab::make('Arabic Content')
@@ -69,6 +84,20 @@ class PostForm
                                     ->required()
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('blog-attachments')
+                                    ->toolbarButtons([
+                                        ['bold', 'italic', 'underline', 'strike', 'link'],
+                                        ['h2', 'h3', 'lead', 'small'],
+                                        ['alignStart', 'alignCenter', 'alignEnd'],
+                                        ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
+                                        ['table', 'grid', 'horizontalRule'],
+                                        ['insertImage', 'insertVideo'],
+                                        ['undo', 'redo', 'clearFormatting'],
+                                    ])
+                                    ->plugins([
+                                        InsertImagePlugin::make(),
+                                        InsertVideoPlugin::make(),
+                                    ])
+                                    ->extraInputAttributes(['dir' => 'rtl'])
                                     ->columnSpanFull(),
                             ]),
                     ]),

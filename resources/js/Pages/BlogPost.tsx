@@ -28,7 +28,39 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
     { year: 'numeric', month: 'long', day: 'numeric' }
   );
 
-  const sanitizedContent = DOMPurify.sanitize(content || '');
+  const trustedDomains = [
+    'www.youtube.com',
+    'youtube.com',
+    'www.youtube-nocookie.com',
+    'player.vimeo.com',
+  ];
+
+  DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+    if (data.tagName === 'iframe') {
+      const el = node as Element;
+      const src = el.getAttribute('src') || '';
+      try {
+        const url = new URL(src);
+        if (!trustedDomains.includes(url.hostname)) {
+          el.remove();
+        }
+      } catch {
+        el.remove();
+      }
+    }
+  });
+
+  const sanitizedContent = DOMPurify.sanitize(content || '', {
+    ADD_TAGS: ['iframe', 'video', 'source', 'figure', 'figcaption'],
+    ADD_ATTR: [
+      'allow', 'allowfullscreen', 'frameborder', 'scrolling',
+      'src', 'width', 'height', 'loading', 'title',
+      'controls', 'autoplay', 'muted', 'loop', 'poster',
+      'type', 'referrerpolicy',
+    ],
+  });
+
+  DOMPurify.removeHook('uponSanitizeElement');
 
   const handleShare = async () => {
     try {

@@ -59,3 +59,16 @@
 .shape:nth-child(3) {
     animation-delay: 4s;
 }
+
+/* Rich content: responsive video embeds */
+.prose iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.prose video {
+    width: 100%;
+    border-radius: 0.5rem;
+}
