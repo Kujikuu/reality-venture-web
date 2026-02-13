@@ -36,15 +36,8 @@ export const Hero: React.FC = () => {
             </motion.span>
 
             <motion.h1 variants={heroItemVariants} className="max-w-4xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8 leading-[1.1]">
-              {t('home:hero.title').split('. ').map((part: string, i: number, arr: string[]) => (
-                <React.Fragment key={i}>
-                  {i === arr.length - 1 ? (
-                    <span className="text-primary">{part}</span>
-                  ) : (
-                    <>{part}. </>
-                  )}
-                </React.Fragment>
-              ))}
+              {t('home:hero.title')}{' '}
+              <span className="text-primary">{t('home:hero.titleHighlighted')}</span>
             </motion.h1>
 
             <motion.p variants={heroItemVariants} className="max-w-2xl text-lg sm:text-xl text-gray-500 mb-10 leading-relaxed">
