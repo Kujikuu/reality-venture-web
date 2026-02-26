@@ -7,8 +7,12 @@
     "guidelines": true,
     "herd_mcp": true,
     "mcp": true,
+    "packages": [
+        "filament/filament"
+    ],
     "sail": false,
     "skills": [
+        "inertia-react-development",
         "tailwindcss-development"
     ]
 }

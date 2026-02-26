@@ -35,12 +35,12 @@ export const Hero: React.FC = () => {
               {t('home:hero.badge')}
             </motion.span>
 
-            <motion.h1 variants={heroItemVariants} className="max-w-4xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8 leading-[1.1]">
+            <motion.h1 variants={heroItemVariants} className="max-w-4xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8">
               {t('home:hero.title')}{' '}
-              <span className="text-primary">{t('home:hero.titleHighlighted')}</span>
+              <span className="text-primary leading-normal">{t('home:hero.titleHighlighted')}</span>
             </motion.h1>
 
-            <motion.p variants={heroItemVariants} className="max-w-2xl text-lg sm:text-xl text-gray-500 mb-10 leading-relaxed">
+            <motion.p variants={heroItemVariants} className="max-w-2xl text-lg sm:text-xl text-gray-500 mb-10 leading-normal">
               {t('home:hero.description')}
             </motion.p>
 

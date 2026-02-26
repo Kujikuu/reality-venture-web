@@ -1,14 +1,19 @@
 {
   "buttons": {
     "getStarted": "ابدأ الآن",
-    "applyNow": "قدم الآن"
+    "applyNow": "قدم الآن",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "home": "الرئيسية"
   },
   "header": {
     "about": "من نحن",
     "services": "الخدمات",
     "realityVenture": "رياليتي فينتشر",
     "programs": "البرامج",
-    "blog": "المدونة"
+    "blog": "المدونة",
+    "consultants": "المستشارون"
   },
   "footer": {
     "explore": "استكشف",

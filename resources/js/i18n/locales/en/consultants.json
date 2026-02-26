@@ -1,0 +1,28 @@
+{
+  "index": {
+    "title": "Expert Consultants",
+    "subtitle": "Connect with industry leaders and accelerate your growth",
+    "filterBySpecialization": "Filter by Specialization",
+    "allSpecializations": "All",
+    "noResults": "No consultants found",
+    "noResultsDesc": "Try adjusting your filters",
+    "bookSession": "Book a Session",
+    "yearsExp": "years experience",
+    "perHour": "/hr",
+    "reviews": "reviews"
+  },
+  "show": {
+    "about": "About",
+    "specializations": "Specializations",
+    "languages": "Languages",
+    "experience": "Experience",
+    "responseTime": "Response Time",
+    "timezone": "Timezone",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "bookingCard": "Book a Session",
+    "hourlyRate": "Hourly Rate",
+    "loginToBook": "Log in to book a session",
+    "consultantNotice": "You are viewing this profile as a consultant"
+  }
+}

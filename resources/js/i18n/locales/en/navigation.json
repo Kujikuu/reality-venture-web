@@ -1,14 +1,19 @@
 {
   "buttons": {
     "getStarted": "Get Started",
-    "applyNow": "Apply Now"
+    "applyNow": "Apply Now",
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "home": "Home"
   },
   "header": {
     "about": "About",
     "services": "Services",
     "realityVenture": "Reality Venture",
     "programs": "Programs",
-    "blog": "Blog"
+    "blog": "Blog",
+    "consultants": "Consultants"
   },
   "footer": {
     "explore": "Explore",

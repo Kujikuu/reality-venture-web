@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Billable, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +28,8 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'is_admin',
+        'role',
+        'avatar',
     ];
 
     /**
@@ -47,6 +53,7 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'role' => UserRole::class,
         ];
     }
 
@@ -58,5 +65,35 @@ class User extends Authenticatable implements FilamentUser
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function consultantProfile(): HasOne
+    {
+        return $this->hasOne(ConsultantProfile::class);
+    }
+
+    public function clientBookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'client_user_id');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar ? Storage::disk('public')->url($this->avatar) : null;
+    }
+
+    public function isClient(): bool
+    {
+        return $this->role === UserRole::Client;
+    }
+
+    public function isConsultant(): bool
+    {
+        return $this->role === UserRole::Consultant;
     }
 }

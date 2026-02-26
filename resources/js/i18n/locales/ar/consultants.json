@@ -1,0 +1,28 @@
+{
+  "index": {
+    "title": "مستشارون خبراء",
+    "subtitle": "تواصل مع قادة الصناعة وسرّع نموك",
+    "filterBySpecialization": "تصفية حسب التخصص",
+    "allSpecializations": "الكل",
+    "noResults": "لم يتم العثور على مستشارين",
+    "noResultsDesc": "حاول تعديل الفلاتر",
+    "bookSession": "احجز جلسة",
+    "yearsExp": "سنوات خبرة",
+    "perHour": "/ساعة",
+    "reviews": "تقييمات"
+  },
+  "show": {
+    "about": "نبذة",
+    "specializations": "التخصصات",
+    "languages": "اللغات",
+    "experience": "الخبرة",
+    "responseTime": "وقت الاستجابة",
+    "timezone": "المنطقة الزمنية",
+    "reviews": "التقييمات",
+    "noReviews": "لا توجد تقييمات بعد",
+    "bookingCard": "احجز جلسة",
+    "hourlyRate": "السعر بالساعة",
+    "loginToBook": "سجل دخولك لحجز جلسة",
+    "consultantNotice": "أنت تشاهد هذا الملف كمستشار"
+  }
+}

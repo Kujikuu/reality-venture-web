@@ -9,20 +9,26 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.17
+- php - 8.4.18
+- filament/filament (FILAMENT) - v5
 - inertiajs/inertia-laravel (INERTIA) - v2
+- laravel/cashier (CASHIER) - v16
 - laravel/framework (LARAVEL) - v11
 - laravel/prompts (PROMPTS) - v0
+- livewire/livewire (LIVEWIRE) - v4
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - phpunit/phpunit (PHPUNIT) - v11
+- @inertiajs/react (INERTIA) - v2
+- react (REACT) - v19
 - tailwindcss (TAILWINDCSS) - v3
 
 ## Skills Activation
 
 This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
+- `inertia-react-development` — Develops Inertia.js v2 React client-side applications. Activates when creating React pages, forms, or navigation; using &lt;Link&gt;, &lt;Form&gt;, useForm, or router; working with deferred props, prefetching, or polling; or when user mentions React with Inertia, React pages, React forms, or React navigation.
 - `tailwindcss-development` — Styles applications using Tailwind CSS v3 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
 
 ## Conventions
@@ -52,6 +58,41 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
 
+## i18n — Backend Message Localization
+
+This project uses i18next on the frontend (locale stored in `localStorage` as `i18nextLng`). The Laravel backend has no knowledge of the active locale, so **never translate backend messages with `__()`** before sending them to the frontend.
+
+### Rule: pass raw keys, translate on the frontend
+
+**Backend controllers** — pass the raw Laravel message key, never the translated string:
+```php
+// CORRECT — raw key
+return back()->withErrors(['email' => 'auth.failed']);
+return back()->with('status', $status); // e.g. 'passwords.sent'
+
+// WRONG — already translated to English, i18next can't localize it
+return back()->withErrors(['email' => __('auth.failed')]);
+```
+
+**Frontend components** — call `t()` on any error or flash value received from the backend, with the raw value as fallback (so standard Laravel validation messages still display as-is):
+```tsx
+// errors from withErrors()
+{errors.email && <p>{t(errors.email, errors.email)}</p>}
+
+// flash messages from ->with('status', ...)
+{flash.status && <div>{t(flash.status, flash.status)}</div>}
+```
+
+**Locale files** — add all known backend message keys to `resources/js/i18n/locales/{en,ar}/auth.json` under their Laravel group name:
+```json
+{
+  "auth": { "failed": "..." },
+  "passwords": { "sent": "...", "reset": "...", "throttled": "...", "token": "...", "user": "..." }
+}
+```
+
+Known backend keys already mapped in `auth.json`: `auth.failed`, `auth.throttle`, `passwords.sent`, `passwords.reset`, `passwords.throttled`, `passwords.token`, `passwords.user`.
+
 === boost rules ===
 
 # Laravel Boost
@@ -70,6 +111,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - You should use the `tinker` tool when you need to execute PHP to debug code or query Eloquent models directly.
 - Use the `database-query` tool when you only need to read from the database.
+- Use the `database-schema` tool to inspect table structure before writing migrations or models.
 
 ## Reading Browser Logs With the `browser-logs` Tool
 
@@ -100,7 +142,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 ## Constructors
 
 - Use PHP 8 constructor property promotion in `__construct()`.
-    - <code-snippet>public function __construct(public GitHub $github) { }</code-snippet>
+    - `public function __construct(public GitHub $github) { }`
 - Do not allow empty `__construct()` methods with zero parameters unless the constructor is private.
 
 ## Type Declarations
@@ -108,12 +150,13 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Always use explicit return type declarations for methods and functions.
 - Use appropriate PHP type hints for method parameters.
 
-<code-snippet name="Explicit Return Types and Method Params" lang="php">
+<!-- Explicit Return Types and Method Params -->
+```php
 protected function isAccessible(User $user, ?string $path = null): bool
 {
     ...
 }
-</code-snippet>
+```
 
 ## Enums
 
@@ -127,6 +170,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 - Add useful array shape type definitions when appropriate.
 
+=== tests rules ===
+
+# Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+
 === inertia-laravel/core rules ===
 
 # Inertia
@@ -134,6 +184,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Inertia creates fully client-side rendered SPAs without modern SPA complexity, leveraging existing server-side patterns.
 - Components live in `resources/js/Pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
 - ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
+- IMPORTANT: Activate `inertia-react-development` when working with Inertia client-side patterns.
 
 === inertia-laravel/v2 rules ===
 
@@ -234,8 +285,8 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 # Laravel Pint Code Formatter
 
-- You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
+- You must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
+- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
 
 === phpunit/core rules ===
 
@@ -255,6 +306,12 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - To run all tests in a file: `php artisan test --compact tests/Feature/ExampleTest.php`.
 - To filter on a particular test name: `php artisan test --compact --filter=testName` (recommended after making a change to a related file).
 
+=== inertia-react/core rules ===
+
+# Inertia + React
+
+- IMPORTANT: Activate `inertia-react-development` when working with Inertia React client-side patterns.
+
 === tailwindcss/core rules ===
 
 # Tailwind CSS
@@ -262,4 +319,139 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Always use existing Tailwind conventions; check project patterns before adding new ones.
 - IMPORTANT: Always use `search-docs` tool for version-specific Tailwind CSS documentation and updated code examples. Never rely on training data.
 - IMPORTANT: Activate `tailwindcss-development` every time you're working with a Tailwind CSS or styling-related task.
+
+=== filament/filament rules ===
+
+## Filament
+
+- Filament is used by this application. Follow existing conventions for how and where it's implemented.
+- Filament is a Server-Driven UI (SDUI) framework for Laravel that lets you define user interfaces in PHP using structured configuration objects. Built on Livewire, Alpine.js, and Tailwind CSS.
+- Use the `search-docs` tool for official documentation on Artisan commands, code examples, testing, relationships, and idiomatic practices.
+
+### Artisan
+
+- Use Filament-specific Artisan commands to create files. Find them with `list-artisan-commands` or `php artisan --help`.
+- Inspect required options and always pass `--no-interaction`.
+
+### Patterns
+
+Use static `make()` methods to initialize components. Most configuration methods accept a `Closure` for dynamic values.
+
+Use `Get $get` to read other form field values for conditional logic:
+
+<code-snippet name="Conditional form field" lang="php">
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+
+Select::make('type')
+    ->options(CompanyType::class)
+    ->required()
+    ->live(),
+
+TextInput::make('company_name')
+    ->required()
+    ->visible(fn (Get $get): bool => $get('type') === 'business'),
+
+</code-snippet>
+
+Use `state()` with a `Closure` to compute derived column values:
+
+<code-snippet name="Computed table column" lang="php">
+use Filament\Tables\Columns\TextColumn;
+
+TextColumn::make('full_name')
+    ->state(fn (User $record): string => "{$record->first_name} {$record->last_name}"),
+
+</code-snippet>
+
+Actions encapsulate a button with optional modal form and logic:
+
+<code-snippet name="Action with modal form" lang="php">
+use Filament\Actions\Action;
+use Filament\Forms\Components\TextInput;
+
+Action::make('updateEmail')
+    ->form([
+        TextInput::make('email')->email()->required(),
+    ])
+    ->action(fn (array $data, User $record): void => $record->update($data)),
+
+</code-snippet>
+
+### Testing
+
+Authenticate before testing panel functionality. Filament uses Livewire, so use `livewire()` or `Livewire::test()`:
+
+<code-snippet name="Filament Table Test" lang="php">
+    livewire(ListUsers::class)
+        ->assertCanSeeTableRecords($users)
+        ->searchTable($users->first()->name)
+        ->assertCanSeeTableRecords($users->take(1))
+        ->assertCanNotSeeTableRecords($users->skip(1));
+
+</code-snippet>
+
+<code-snippet name="Filament Create Resource Test" lang="php">
+    livewire(CreateUser::class)
+        ->fillForm([
+            'name' => 'Test',
+            'email' => 'test@example.com',
+        ])
+        ->call('create')
+        ->assertNotified()
+        ->assertRedirect();
+
+    assertDatabaseHas(User::class, [
+        'name' => 'Test',
+        'email' => 'test@example.com',
+    ]);
+
+</code-snippet>
+
+<code-snippet name="Testing Validation" lang="php">
+    livewire(CreateUser::class)
+        ->fillForm([
+            'name' => null,
+            'email' => 'invalid-email',
+        ])
+        ->call('create')
+        ->assertHasFormErrors([
+            'name' => 'required',
+            'email' => 'email',
+        ])
+        ->assertNotNotified();
+
+</code-snippet>
+
+<code-snippet name="Calling Actions" lang="php">
+    use Filament\Actions\DeleteAction;
+    use Filament\Actions\Testing\TestAction;
+
+    livewire(EditUser::class, ['record' => $user->id])
+        ->callAction(DeleteAction::class)
+        ->assertNotified()
+        ->assertRedirect();
+
+    livewire(ListUsers::class)
+        ->callAction(TestAction::make('promote')->table($user), [
+            'role' => 'admin',
+        ])
+        ->assertNotified();
+
+</code-snippet>
+
+### Common Mistakes
+
+**Commonly Incorrect Namespaces:**
+- Form fields (TextInput, Select, etc.): `Filament\Forms\Components\`
+- Infolist entries (for read-only views) (TextEntry, IconEntry, etc.): `Filament\Infolists\Components\`
+- Layout components (Grid, Section, Fieldset, Tabs, Wizard, etc.): `Filament\Schemas\Components\`
+- Schema utilities (Get, Set, etc.): `Filament\Schemas\Components\Utilities\`
+- Actions: `Filament\Actions\` (no `Filament\Tables\Actions\` etc.)
+- Icons: `Filament\Support\Icons\Heroicon` enum (e.g., `Heroicon::PencilSquare`)
+
+**Recent breaking changes to Filament:**
+- File visibility is `private` by default. Use `->visibility('public')` for public access.
+- `Grid`, `Section`, and `Fieldset` no longer span all columns by default.
 </laravel-boost-guidelines>

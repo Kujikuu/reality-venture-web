@@ -1,0 +1,29 @@
+{
+  "status": {
+    "requested": "Requested",
+    "approved": "Approved",
+    "transferred": "Transferred",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "bankDetailsUpdated": "Bank details updated successfully.",
+  "payoutRequested": "Payout request submitted successfully.",
+  "payoutCancelled": "Payout request cancelled.",
+  "noBankDetails": "Please add your bank details before requesting a payout.",
+  "pendingPayoutExists": "You already have a pending payout request.",
+  "insufficientBalance": "Insufficient available balance for this payout amount.",
+  "cannotCancelStatus": "Only requested payouts can be cancelled.",
+  "validation": {
+    "bankName": { "required": "Bank name is required." },
+    "accountHolder": { "required": "Account holder name is required." },
+    "iban": {
+      "required": "IBAN is required.",
+      "format": "The IBAN must be a valid Saudi IBAN (SA followed by 22 digits)."
+    },
+    "amount": {
+      "required": "Amount is required.",
+      "numeric": "Amount must be a number.",
+      "min": "Amount must be at least the minimum payout amount."
+    }
+  }
+}

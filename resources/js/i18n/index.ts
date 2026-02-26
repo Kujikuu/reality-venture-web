@@ -12,6 +12,11 @@ import enApply from './locales/en/apply.json';
 import enLegal from './locales/en/legal.json';
 import enMeta from './locales/en/meta.json';
 import enBlog from './locales/en/blog.json';
+import enAuth from './locales/en/auth.json';
+import enConsultants from './locales/en/consultants.json';
+import enBookings from './locales/en/bookings.json';
+import enDashboard from './locales/en/dashboard.json';
+import enPayouts from './locales/en/payouts.json';
 
 import arCommon from './locales/ar/common.json';
 import arNavigation from './locales/ar/navigation.json';
@@ -22,6 +27,11 @@ import arApply from './locales/ar/apply.json';
 import arLegal from './locales/ar/legal.json';
 import arMeta from './locales/ar/meta.json';
 import arBlog from './locales/ar/blog.json';
+import arAuth from './locales/ar/auth.json';
+import arConsultants from './locales/ar/consultants.json';
+import arBookings from './locales/ar/bookings.json';
+import arDashboard from './locales/ar/dashboard.json';
+import arPayouts from './locales/ar/payouts.json';
 
 // Configure i18next
 i18n
@@ -39,6 +49,11 @@ i18n
         legal: enLegal,
         meta: enMeta,
         blog: enBlog,
+        auth: enAuth,
+        consultants: enConsultants,
+        bookings: enBookings,
+        dashboard: enDashboard,
+        payouts: enPayouts,
       },
       ar: {
         common: arCommon,
@@ -50,6 +65,11 @@ i18n
         legal: arLegal,
         meta: arMeta,
         blog: arBlog,
+        auth: arAuth,
+        consultants: arConsultants,
+        bookings: arBookings,
+        dashboard: arDashboard,
+        payouts: arPayouts,
       },
     },
     fallbackLng: 'en', // Use English if translation is missing

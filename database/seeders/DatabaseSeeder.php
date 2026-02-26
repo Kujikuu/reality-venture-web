@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             BlogSeeder::class,
             SubscriberSeeder::class,
+            SpecializationSeeder::class,
+            MarketplaceTestSeeder::class,
         ]);
     }
 }

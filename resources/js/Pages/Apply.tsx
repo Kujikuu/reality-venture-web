@@ -126,7 +126,7 @@ export default function Apply() {
                       className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                       placeholder={t('apply:form.firstName')}
                     />
-                    {errors.first_name && <p className="text-red-500 text-xs mt-1">{errors.first_name}</p>}
+                    {errors.first_name && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.first_name, errors.first_name)}</p>}
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.lastName')}</label>
@@ -138,7 +138,7 @@ export default function Apply() {
                       className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                       placeholder={t('apply:form.lastName')}
                     />
-                    {errors.last_name && <p className="text-red-500 text-xs mt-1">{errors.last_name}</p>}
+                    {errors.last_name && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.last_name, errors.last_name)}</p>}
                   </div>
                 </div>
 
@@ -152,7 +152,7 @@ export default function Apply() {
                     className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                     placeholder={t('apply:form.emailPlaceholder')}
                   />
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.email, errors.email)}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -165,7 +165,7 @@ export default function Apply() {
                     className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                     placeholder={t('apply:form.linkedinPlaceholder')}
                   />
-                  {errors.linkedin_profile && <p className="text-red-500 text-xs mt-1">{errors.linkedin_profile}</p>}
+                  {errors.linkedin_profile && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.linkedin_profile, errors.linkedin_profile)}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -202,7 +202,7 @@ export default function Apply() {
                       <span className="font-medium text-sm text-gray-700">{t('apply:form.programCorporate')}</span>
                     </label>
                   </div>
-                  {errors.program_interest && <p className="text-red-500 text-xs mt-1">{errors.program_interest}</p>}
+                  {errors.program_interest && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.program_interest, errors.program_interest)}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -215,7 +215,7 @@ export default function Apply() {
                     className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
                     placeholder={t('apply:form.messagePlaceholder')}
                   ></textarea>
-                  {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+                  {errors.description && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.description, errors.description)}</p>}
                 </div>
 
                 <div className="pt-4 flex flex-col gap-4">

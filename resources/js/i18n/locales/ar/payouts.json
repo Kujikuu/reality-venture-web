@@ -1,0 +1,29 @@
+{
+  "status": {
+    "requested": "مطلوب",
+    "approved": "تمت الموافقة",
+    "transferred": "تم التحويل",
+    "rejected": "مرفوض",
+    "cancelled": "ملغي"
+  },
+  "bankDetailsUpdated": "تم تحديث بيانات البنك بنجاح.",
+  "payoutRequested": "تم إرسال طلب الدفع بنجاح.",
+  "payoutCancelled": "تم إلغاء طلب الدفع.",
+  "noBankDetails": "يرجى إضافة بياناتك البنكية قبل طلب الدفع.",
+  "pendingPayoutExists": "لديك بالفعل طلب دفع قيد الانتظار.",
+  "insufficientBalance": "الرصيد المتاح غير كافٍ لهذا المبلغ.",
+  "cannotCancelStatus": "يمكن إلغاء الطلبات المعلقة فقط.",
+  "validation": {
+    "bankName": { "required": "اسم البنك مطلوب." },
+    "accountHolder": { "required": "اسم صاحب الحساب مطلوب." },
+    "iban": {
+      "required": "رقم الآيبان مطلوب.",
+      "format": "يجب أن يكون الآيبان سعودياً صحيحاً (SA متبوعاً بـ 22 رقماً)."
+    },
+    "amount": {
+      "required": "المبلغ مطلوب.",
+      "numeric": "يجب أن يكون المبلغ رقماً.",
+      "min": "يجب أن لا يقل المبلغ عن الحد الأدنى للدفع."
+    }
+  }
+}

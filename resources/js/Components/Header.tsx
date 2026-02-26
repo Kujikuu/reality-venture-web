@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Link } from '@inertiajs/react';
+import { Menu, X, User, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import type { PageProps } from '../types/marketplace';
 
 interface NavLink {
   nameKey: string;
@@ -11,8 +12,10 @@ interface NavLink {
 }
 
 export const Header = () => {
+  const { auth = { user: null } } = usePage<PageProps>().props;
   const { t } = useTranslation('navigation');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navLinks: NavLink[] = [
     { nameKey: 'about', link: 'hero' },
@@ -20,6 +23,7 @@ export const Header = () => {
     { nameKey: 'realityVenture', link: 'proptech' },
     { nameKey: 'programs', link: 'programs' },
     { nameKey: 'blog', link: '/blog', isPage: true },
+    { nameKey: 'consultants', link: '/consultants', isPage: true },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -36,9 +40,7 @@ export const Header = () => {
     window.location.href = `/#${targetId}`;
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const dashboardUrl = auth.user?.role === 'consultant' ? '/consultant/dashboard' : '/dashboard';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-background-dark dark:border-gray-800">
@@ -78,14 +80,60 @@ export const Header = () => {
           )}
         </nav>
 
-        {/* Actions: Language Switcher + CTA */}
+        {/* Actions: Language Switcher + Auth */}
         <div className="hidden lg:flex items-center gap-4">
           <LanguageSwitcher />
-          <Link href="/application-form">
-            <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 transition-all rounded-md uppercase sm:normal-case">
-              {t('buttons.getStarted')}
-            </button>
-          </Link>
+          {auth.user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2 h-10 px-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span className="max-w-[120px] truncate">{auth.user.name}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isUserMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setIsUserMenuOpen(false)} />
+                  <div className="absolute end-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1">
+                    <Link
+                      href={dashboardUrl}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      {t('buttons.dashboard')}
+                    </Link>
+                    <Link
+                      href="/logout"
+                      method="post"
+                      as="button"
+                      className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <LogOut className="w-4 h-4" />
+                      {t('buttons.logout')}
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Link
+                href="/login"
+                className="h-10 px-5 flex items-center justify-center text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              >
+                {t('buttons.login', 'Login')}
+              </Link>
+              <Link href="/register">
+                <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 transition-all rounded-md">
+                  {t('buttons.getStarted')}
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -102,7 +150,7 @@ export const Header = () => {
 
       {/* Mobile Nav Dropdown */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col gap-4">
+        <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col gap-4 z-50">
           {navLinks.map((item) =>
             item.isPage ? (
               <Link
@@ -127,11 +175,41 @@ export const Header = () => {
               </a>
             )
           )}
-          <Link href="/application-form" onClick={() => setIsMenuOpen(false)}>
-            <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm mt-4">
-              {t('buttons.applyNow')}
-            </button>
-          </Link>
+          <div className="border-t border-gray-200 pt-4 mt-2">
+            {auth.user ? (
+              <div className="flex flex-col gap-3">
+                <Link
+                  href={dashboardUrl}
+                  className="text-lg font-bold uppercase tracking-wide hover:text-primary"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('buttons.dashboard')}
+                </Link>
+                <Link
+                  href="/logout"
+                  method="post"
+                  as="button"
+                  className="text-lg font-bold uppercase tracking-wide hover:text-primary text-start"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('buttons.logout')}
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <button className="h-12 w-full bg-white border border-primary text-primary font-bold uppercase tracking-wide rounded-sm">
+                    {t('buttons.login')}
+                  </button>
+                </Link>
+                <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                  <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm">
+                    {t('buttons.getStarted')}
+                  </button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </header>

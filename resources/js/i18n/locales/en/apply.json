@@ -47,6 +47,29 @@
     "success": "Application submitted successfully!",
     "agreement": "By submitting this form, you agree to our"
   },
+  "submitted": "Application submitted successfully.",
+  "validation": {
+    "firstName": {
+      "required": "First name is required."
+    },
+    "lastName": {
+      "required": "Last name is required."
+    },
+    "email": {
+      "required": "Email address is required.",
+      "format": "Please enter a valid email address."
+    },
+    "linkedin": {
+      "url": "Please enter a valid LinkedIn URL."
+    },
+    "programInterest": {
+      "required": "Please select a program.",
+      "invalid": "Please select a valid program."
+    },
+    "description": {
+      "required": "Please describe your venture or idea."
+    }
+  },
   "sidebar": {
     "title": "Need Help?",
     "description": "Contact us if you have any questions about the application process.",
