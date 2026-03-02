@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\HandlesAvatarUpload;
 use App\Http\Requests\UpdateConsultantProfileRequest;
 use App\Models\Specialization;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ConsultantProfileController extends Controller
 {
+    use HandlesAvatarUpload;
+
     public function edit(): Response
     {
         $profile = auth()->user()->consultantProfile->load('specializations:id');
@@ -43,12 +45,7 @@ class ConsultantProfileController extends Controller
         ];
 
         if ($request->hasFile('avatar')) {
-            if ($profile->avatar) {
-                Storage::disk('public')->delete($profile->avatar);
-            }
-
-            $extension = $request->file('avatar')->getClientOriginalExtension();
-            $data['avatar'] = $request->file('avatar')->storeAs('avatars', auth()->id().'.'.$extension, 'public');
+            $data['avatar'] = $this->storeAvatar($request->file('avatar'), (string) auth()->id(), $profile->avatar);
         }
 
         $profile->update($data);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BookingStatus;
+use App\Http\Resources\ClientBookingResource;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -11,52 +12,44 @@ class ClientDashboardController extends Controller
     public function index(): Response
     {
         $user = auth()->user();
+        $relations = ['consultantProfile.user:id,name', 'payment', 'review'];
 
-        $bookings = $user->clientBookings()
-            ->with(['consultantProfile.user:id,name', 'payment', 'review'])
+        $upcoming = $user->clientBookings()
+            ->with($relations)
+            ->where('status', BookingStatus::Confirmed)
+            ->where('start_at', '>', now())
             ->latest('start_at')
             ->get();
 
-        $upcoming = $bookings->filter(fn ($b) => $b->status === BookingStatus::Confirmed && $b->start_at->isFuture());
-        $pendingPayment = $bookings->filter(fn ($b) => $b->status === BookingStatus::AwaitingPayment);
-        $past = $bookings->filter(fn ($b) => in_array($b->status, [BookingStatus::Completed, BookingStatus::Cancelled, BookingStatus::NoShow])
-            || ($b->status === BookingStatus::Confirmed && $b->start_at->isPast()));
+        $pendingPayment = $user->clientBookings()
+            ->with($relations)
+            ->where('status', BookingStatus::AwaitingPayment)
+            ->latest('created_at')
+            ->get();
+
+        $past = $user->clientBookings()
+            ->with($relations)
+            ->where(function ($q): void {
+                $q->whereIn('status', [BookingStatus::Completed, BookingStatus::Cancelled, BookingStatus::NoShow])
+                    ->orWhere(function ($q): void {
+                        $q->where('status', BookingStatus::Confirmed)->where('start_at', '<', now());
+                    });
+            })
+            ->latest('start_at')
+            ->get();
+
+        $stats = $user->clientBookings()
+            ->selectRaw('COUNT(*) as total, SUM(CASE WHEN status != ? THEN total_amount ELSE 0 END) as spent', [BookingStatus::Cancelled->value])
+            ->first();
 
         return Inertia::render('Dashboard/ClientDashboard', [
-            'upcoming' => $upcoming->values()->map(fn ($b) => $this->formatBooking($b)),
-            'pendingPayment' => $pendingPayment->values()->map(fn ($b) => $this->formatBooking($b)),
-            'past' => $past->values()->map(fn ($b) => $this->formatBooking($b)),
+            'upcoming' => $upcoming->map(fn ($b) => ClientBookingResource::make($b)->resolve()),
+            'pendingPayment' => $pendingPayment->map(fn ($b) => ClientBookingResource::make($b)->resolve()),
+            'past' => $past->map(fn ($b) => ClientBookingResource::make($b)->resolve()),
             'stats' => [
-                'total_bookings' => $bookings->count(),
-                'total_spent' => $bookings->where('status', '!=', BookingStatus::Cancelled)->sum('total_amount'),
+                'total_bookings' => (int) $stats->total,
+                'total_spent' => (float) $stats->spent,
             ],
         ]);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function formatBooking($booking): array
-    {
-        return [
-            'id' => $booking->id,
-            'reference' => $booking->reference,
-            'calendly_event_uuid' => $booking->calendly_event_uuid,
-            'meeting_url' => $booking->meeting_url,
-            'start_at' => $booking->start_at->toISOString(),
-            'end_at' => $booking->end_at->toISOString(),
-            'duration_minutes' => $booking->duration_minutes,
-            'status' => $booking->status->value,
-            'status_label' => $booking->status->label(),
-            'total_amount' => $booking->total_amount,
-            'is_refund_eligible' => $booking->isRefundEligible(),
-            'has_review' => $booking->review !== null,
-            'consultant' => [
-                'name' => $booking->consultantProfile->user->name,
-                'slug' => $booking->consultantProfile->slug,
-                'avatar' => $booking->consultantProfile->avatar,
-            ],
-            'created_at' => $booking->created_at->toISOString(),
-        ];
     }
 }

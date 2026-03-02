@@ -6,6 +6,7 @@ use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\ConsultantProfile;
 use App\Models\User;
+use App\Services\CalendlyService;
 use App\Services\CommissionCalculator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Log;
 
 class CalendlyWebhookController extends Controller
 {
+    public function __construct(
+        private CommissionCalculator $commissionCalculator,
+        private CalendlyService $calendlyService,
+    ) {}
+
     public function handle(Request $request): JsonResponse
     {
         if (! $this->verifySignature($request)) {
@@ -66,8 +72,7 @@ class CalendlyWebhookController extends Controller
         $end = Carbon::parse($endAt);
         $durationMinutes = (int) $start->diffInMinutes($end);
 
-        $calculator = new CommissionCalculator;
-        $amounts = $calculator->calculate($durationMinutes, (float) $consultantProfile->hourly_rate);
+        $amounts = $this->commissionCalculator->calculate($durationMinutes, (float) $consultantProfile->hourly_rate);
 
         Booking::create([
             'client_user_id' => $client->id,
@@ -120,7 +125,7 @@ class CalendlyWebhookController extends Controller
                 return $profile;
             }
 
-            $username = $this->extractCalendlyUsername($eventTypeUri);
+            $username = $this->calendlyService->extractUsernameFromApiUri($eventTypeUri);
 
             if ($username) {
                 $profile = ConsultantProfile::where('calendly_username', $username)->first();
@@ -139,15 +144,6 @@ class CalendlyWebhookController extends Controller
         $parts = explode('/', rtrim($uri, '/'));
 
         return end($parts);
-    }
-
-    private function extractCalendlyUsername(string $eventTypeUri): ?string
-    {
-        if (preg_match('#/users/([^/]+)#', $eventTypeUri, $matches)) {
-            return $matches[1];
-        }
-
-        return null;
     }
 
     private function verifySignature(Request $request): bool

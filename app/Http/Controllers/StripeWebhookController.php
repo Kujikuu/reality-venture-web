@@ -7,15 +7,17 @@ use App\Enums\PaymentStatus;
 use App\Mail\BookingCancelledMail;
 use App\Mail\BookingConfirmedMail;
 use App\Models\Payment;
+use App\Services\CalendlyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 
 class StripeWebhookController extends Controller
 {
+    public function __construct(private CalendlyService $calendlyService) {}
+
     public function handle(Request $request): JsonResponse
     {
         $payload = $request->getContent();
@@ -77,40 +79,11 @@ class StripeWebhookController extends Controller
             'cancellation_reason' => 'Payment failed',
         ]);
 
-        $this->cancelCalendlyEvent($booking->calendly_event_uuid);
+        $this->calendlyService->cancelEvent($booking->calendly_event_uuid, 'Payment failed');
 
         $booking->load(['client', 'consultantProfile.user']);
         Mail::to($booking->client->email)->send(new BookingCancelledMail($booking));
 
         return response()->json(['message' => 'Payment failure handled']);
-    }
-
-    private function cancelCalendlyEvent(?string $eventUuid): void
-    {
-        if (! $eventUuid) {
-            return;
-        }
-
-        try {
-            $token = config('marketplace.calendly.api_token');
-
-            if (! $token) {
-                return;
-            }
-
-            $client = new \GuzzleHttp\Client;
-            $client->post("https://api.calendly.com/scheduled_events/{$eventUuid}/cancellation", [
-                'headers' => [
-                    'Authorization' => "Bearer {$token}",
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => ['reason' => 'Payment failed'],
-            ]);
-        } catch (\Exception $e) {
-            Log::warning('Calendly event cancellation failed', [
-                'event_uuid' => $eventUuid,
-                'error' => $e->getMessage(),
-            ]);
-        }
     }
 }

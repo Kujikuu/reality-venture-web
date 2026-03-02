@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\HandlesAvatarUpload;
 use App\Http\Requests\UpdateClientSettingsRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ClientSettingsController extends Controller
 {
+    use HandlesAvatarUpload;
+
     public function edit(): Response
     {
         $user = auth()->user();
@@ -32,12 +34,7 @@ class ClientSettingsController extends Controller
         ];
 
         if ($request->hasFile('avatar')) {
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-
-            $extension = $request->file('avatar')->getClientOriginalExtension();
-            $data['avatar'] = $request->file('avatar')->storeAs('avatars', 'client-'.$user->id.'.'.$extension, 'public');
+            $data['avatar'] = $this->storeAvatar($request->file('avatar'), 'client-'.$user->id, $user->avatar);
         }
 
         $user->update($data);

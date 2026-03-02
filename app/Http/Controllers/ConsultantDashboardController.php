@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BookingStatus;
+use App\Http\Resources\ConsultantBookingResource;
 use App\Models\Booking;
 use App\Services\BalanceCalculator;
 use Illuminate\Http\RedirectResponse;
@@ -34,7 +35,7 @@ class ConsultantDashboardController extends Controller
                 'total_bookings' => $profile->total_bookings,
                 'available_balance' => $balance['available'],
             ],
-            'recentBookings' => $bookings->take(10)->values()->map(fn ($b) => $this->formatBooking($b)),
+            'recentBookings' => $bookings->take(10)->values()->map(fn ($b) => ConsultantBookingResource::make($b)->resolve()),
         ]);
     }
 
@@ -48,7 +49,7 @@ class ConsultantDashboardController extends Controller
             ->paginate(20);
 
         return Inertia::render('Dashboard/ConsultantBookings', [
-            'bookings' => $bookings->through(fn ($b) => $this->formatBooking($b)),
+            'bookings' => $bookings->through(fn ($b) => ConsultantBookingResource::make($b)->resolve()),
         ]);
     }
 
@@ -68,7 +69,7 @@ class ConsultantDashboardController extends Controller
             ->first();
 
         return Inertia::render('Dashboard/ConsultantEarnings', [
-            'bookings' => $bookings->through(fn ($b) => $this->formatBooking($b)),
+            'bookings' => $bookings->through(fn ($b) => ConsultantBookingResource::make($b)->resolve()),
             'totals' => [
                 'gross' => $totals->gross ?? 0,
                 'fees' => $totals->fees ?? 0,
@@ -98,30 +99,5 @@ class ConsultantDashboardController extends Controller
         if ($booking->consultant_profile_id !== auth()->user()->consultantProfile->id) {
             abort(403);
         }
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function formatBooking($booking): array
-    {
-        return [
-            'id' => $booking->id,
-            'reference' => $booking->reference,
-            'meeting_url' => $booking->meeting_url,
-            'start_at' => $booking->start_at->toISOString(),
-            'end_at' => $booking->end_at->toISOString(),
-            'duration_minutes' => $booking->duration_minutes,
-            'status' => $booking->status->value,
-            'status_label' => $booking->status->label(),
-            'total_amount' => $booking->total_amount,
-            'commission_amount' => $booking->commission_amount,
-            'consultant_amount' => $booking->consultant_amount,
-            'client' => [
-                'name' => $booking->client->name,
-                'email' => $booking->client->email,
-            ],
-            'created_at' => $booking->created_at->toISOString(),
-        ];
     }
 }
