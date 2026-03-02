@@ -4,9 +4,9 @@ use App\Enums\BookingStatus;
 use App\Mail\BookingCancelledMail;
 use App\Mail\BookingReminderMail;
 use App\Models\Booking;
+use App\Services\CalendlyService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schedule;
 
@@ -50,28 +50,7 @@ Schedule::call(function () {
             'cancellation_reason' => 'Payment not completed within time limit',
         ]);
 
-        // Cancel Calendly event
-        if ($booking->calendly_event_uuid) {
-            try {
-                $token = config('marketplace.calendly.api_token');
-
-                if ($token) {
-                    $client = new \GuzzleHttp\Client;
-                    $client->post("https://api.calendly.com/scheduled_events/{$booking->calendly_event_uuid}/cancellation", [
-                        'headers' => [
-                            'Authorization' => "Bearer {$token}",
-                            'Content-Type' => 'application/json',
-                        ],
-                        'json' => ['reason' => 'Payment timeout'],
-                    ]);
-                }
-            } catch (\Exception $e) {
-                Log::warning('Auto-cancel: Calendly cancellation failed', [
-                    'booking_id' => $booking->id,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
+        app(CalendlyService::class)->cancelEvent($booking->calendly_event_uuid, 'Payment timeout');
 
         $booking->load(['client', 'consultantProfile.user']);
         Mail::to($booking->client->email)->send(new BookingCancelledMail($booking));

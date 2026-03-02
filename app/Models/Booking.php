@@ -84,6 +84,25 @@ class Booking extends Model
         return $this->hasOne(Review::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function toFrontendArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'reference' => $this->reference,
+            'meeting_url' => $this->meeting_url,
+            'start_at' => $this->start_at->toISOString(),
+            'end_at' => $this->end_at->toISOString(),
+            'duration_minutes' => $this->duration_minutes,
+            'status' => $this->status->value,
+            'status_label' => $this->status->label(),
+            'total_amount' => $this->total_amount,
+            'created_at' => $this->created_at->toISOString(),
+        ];
+    }
+
     public function isRefundEligible(): bool
     {
         $windowHours = config('marketplace.cancellation_window_hours', 24);
