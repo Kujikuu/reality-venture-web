@@ -23,7 +23,7 @@ class ClientBookingResource extends JsonResource
             'consultant' => $this->consultantProfile ? [
                 'name' => $this->consultantProfile->user->name,
                 'slug' => $this->consultantProfile->slug,
-                'avatar' => $this->consultantProfile->avatar,
+                'avatar' => $this->consultantProfile->avatar_url,
             ] : null,
         ]);
     }

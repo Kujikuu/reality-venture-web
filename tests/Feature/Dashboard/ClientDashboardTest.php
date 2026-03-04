@@ -41,7 +41,9 @@ class ClientDashboardTest extends TestCase
     public function test_dashboard_shows_upcoming_bookings(): void
     {
         $client = User::factory()->client()->create();
-        $profile = ConsultantProfile::factory()->approved()->create();
+        $profile = ConsultantProfile::factory()->approved()->create([
+            'avatar' => 'avatars/test-avatar.jpg',
+        ]);
 
         Booking::factory()->confirmed()->create([
             'client_user_id' => $client->id,
@@ -52,7 +54,10 @@ class ClientDashboardTest extends TestCase
 
         $response = $this->actingAs($client)->get('/dashboard');
 
-        $response->assertInertia(fn ($page) => $page->has('upcoming', 1));
+        $response->assertInertia(fn ($page) => $page
+            ->has('upcoming', 1)
+            ->where('upcoming.0.consultant.avatar', $profile->avatar_url)
+        );
     }
 
     public function test_dashboard_shows_pending_payment_bookings(): void
@@ -94,6 +99,40 @@ class ClientDashboardTest extends TestCase
         $response->assertInertia(fn ($page) => $page
             ->has('stats.total_bookings')
             ->has('stats.total_spent')
+        );
+    }
+
+    public function test_total_spent_excludes_unpaid_and_no_show_bookings(): void
+    {
+        $client = User::factory()->client()->create();
+        $profile = ConsultantProfile::factory()->approved()->create();
+
+        // Completed booking should be counted.
+        Booking::factory()->completed()->create([
+            'client_user_id' => $client->id,
+            'consultant_profile_id' => $profile->id,
+            'total_amount' => 300.00,
+        ]);
+
+        // Awaiting payment booking should not be counted.
+        Booking::factory()->awaitingPayment()->create([
+            'client_user_id' => $client->id,
+            'consultant_profile_id' => $profile->id,
+            'total_amount' => 200.00,
+        ]);
+
+        // No-show booking should not be counted.
+        Booking::factory()->state([
+            'client_user_id' => $client->id,
+            'consultant_profile_id' => $profile->id,
+            'status' => \App\Enums\BookingStatus::NoShow,
+            'total_amount' => 150.00,
+        ])->create();
+
+        $response = $this->actingAs($client)->get('/dashboard');
+
+        $response->assertInertia(fn ($page) => $page
+            ->where('stats.total_spent', 300)
         );
     }
 

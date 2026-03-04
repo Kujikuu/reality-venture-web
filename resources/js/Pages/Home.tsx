@@ -41,7 +41,7 @@ export default function Home() {
       <AdBanner position="middle" />
       <Ventures />
       <Programs />
-      <Process />
+      {/* <Process /> */}
       <Team />
       <LatestPosts />
     </>

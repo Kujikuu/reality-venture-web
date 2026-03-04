@@ -101,7 +101,7 @@ export const Ventures: React.FC = () => {
         </motion.div>
 
         {/* Supporting Technology Verticals & Selection Criteria */}
-        <div className="mt-24 pt-24 border-t border-gray-100">
+        <div className="mt-24 pt-24 border-t border-gray-100 hidden">
           <motion.div
             initial="hidden"
             whileInView="visible"

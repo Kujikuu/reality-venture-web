@@ -95,7 +95,7 @@ class ConsultantDashboardTest extends TestCase
         [$user, $profile] = $this->createApprovedConsultant();
         $client = User::factory()->client()->create();
 
-        $booking = Booking::factory()->confirmed()->create([
+        $booking = Booking::factory()->past()->confirmed()->create([
             'client_user_id' => $client->id,
             'consultant_profile_id' => $profile->id,
         ]);
@@ -105,6 +105,24 @@ class ConsultantDashboardTest extends TestCase
         $response->assertRedirect();
         $booking->refresh();
         $this->assertEquals(BookingStatus::Completed, $booking->status);
+    }
+
+    public function test_consultant_cannot_complete_future_confirmed_booking(): void
+    {
+        [$user, $profile] = $this->createApprovedConsultant();
+        $client = User::factory()->client()->create();
+
+        $booking = Booking::factory()->future()->confirmed()->create([
+            'client_user_id' => $client->id,
+            'consultant_profile_id' => $profile->id,
+        ]);
+
+        $response = $this->actingAs($user)->post('/consultant/bookings/'.$booking->id.'/complete');
+
+        $response->assertRedirect();
+        $response->assertSessionHas('error');
+        $booking->refresh();
+        $this->assertEquals(BookingStatus::Confirmed, $booking->status);
     }
 
     public function test_consultant_cannot_complete_awaiting_payment_booking(): void

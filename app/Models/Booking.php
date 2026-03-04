@@ -59,9 +59,9 @@ class Booking extends Model
     public static function generateReference(): string
     {
         $year = now()->year;
-        $latest = static::whereYear('created_at', $year)->max('id') ?? 0;
+        $count = static::whereYear('created_at', $year)->count();
 
-        return sprintf('BK-%d-%06d', $year, $latest + 1);
+        return sprintf('BK-%d-%06d', $year, $count + 1);
     }
 
     public function client(): BelongsTo

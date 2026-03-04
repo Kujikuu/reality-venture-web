@@ -82,7 +82,7 @@ class ConsultantDashboardController extends Controller
     {
         $this->authorizeBooking($booking);
 
-        if ($booking->status !== BookingStatus::Confirmed) {
+        if ($booking->status !== BookingStatus::Confirmed || $booking->start_at->isFuture()) {
             return back()->with('error', 'cannotComplete');
         }
 

@@ -39,7 +39,14 @@ class ClientDashboardController extends Controller
             ->get();
 
         $stats = $user->clientBookings()
-            ->selectRaw('COUNT(*) as total, SUM(CASE WHEN status != ? THEN total_amount ELSE 0 END) as spent', [BookingStatus::Cancelled->value])
+            ->selectRaw(
+                'COUNT(*) as total, SUM(CASE WHEN status NOT IN (?, ?, ?) THEN total_amount ELSE 0 END) as spent',
+                [
+                    BookingStatus::Cancelled->value,
+                    BookingStatus::AwaitingPayment->value,
+                    BookingStatus::NoShow->value,
+                ]
+            )
             ->first();
 
         return Inertia::render('Dashboard/ClientDashboard', [
