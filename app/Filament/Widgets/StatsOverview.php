@@ -24,7 +24,7 @@ class StatsOverview extends StatsOverviewWidget
 
         return [
             Stat::make('Total Applications', $totalApplications)
-                ->description($pendingApplications.' pending review')
+                ->description('Applications received so far')
                 ->descriptionIcon('heroicon-o-clock')
                 ->color('primary'),
             Stat::make('Pending Applications', $pendingApplications)

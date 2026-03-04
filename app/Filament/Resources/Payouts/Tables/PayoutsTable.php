@@ -63,6 +63,7 @@ class PayoutsTable
                     ->label('Approve')
                     ->color('info')
                     ->icon('heroicon-o-check-circle')
+                    ->successNotificationTitle('Payout approved')
                     ->visible(fn (Payout $record): bool => $record->status === PayoutStatus::Requested)
                     ->requiresConfirmation()
                     ->action(function (Payout $record): void {
@@ -76,6 +77,8 @@ class PayoutsTable
                     ->label('Mark Transferred')
                     ->color('success')
                     ->icon('heroicon-o-banknotes')
+                    ->successNotificationTitle('Payout marked as transferred')
+                    ->requiresConfirmation()
                     ->visible(fn (Payout $record): bool => $record->status === PayoutStatus::Approved)
                     ->form([
                         TextInput::make('transfer_reference')
@@ -110,6 +113,7 @@ class PayoutsTable
                     ->label('Reject')
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
+                    ->successNotificationTitle('Payout rejected')
                     ->visible(fn (Payout $record): bool => $record->status === PayoutStatus::Requested)
                     ->form([
                         Textarea::make('admin_notes')

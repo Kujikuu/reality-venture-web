@@ -58,6 +58,7 @@ class ConsultantsTable
                     ->label('Approve')
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
+                    ->successNotificationTitle('Consultant approved')
                     ->visible(fn ($record): bool => $record->status === ConsultantStatus::Pending)
                     ->requiresConfirmation()
                     ->action(function ($record): void {
@@ -72,6 +73,7 @@ class ConsultantsTable
                     ->label('Reject')
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
+                    ->successNotificationTitle('Consultant rejected')
                     ->visible(fn ($record): bool => $record->status === ConsultantStatus::Pending)
                     ->form([
                         Textarea::make('rejection_reason')
@@ -89,6 +91,7 @@ class ConsultantsTable
                 EditAction::make(),
             ])
             ->emptyStateHeading('No consultants yet')
+            ->emptyStateDescription('Consultant applications submitted from the website will appear here.')
             ->emptyStateIcon('heroicon-o-user-group')
             ->striped()
             ->paginated([10, 25, 50]);

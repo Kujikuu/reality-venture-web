@@ -14,6 +14,7 @@ class ApplicationForm
         return $schema
             ->components([
                 Section::make('Update Status')
+                    ->description('Set the current review status of this application.')
                     ->schema([
                         Select::make('status')
                             ->options(
