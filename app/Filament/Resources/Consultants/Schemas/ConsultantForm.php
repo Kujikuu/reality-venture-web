@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use App\Models\ConsultantProfile;
 
 class ConsultantForm
 {
@@ -19,12 +20,20 @@ class ConsultantForm
                 ->description('Key consultant profile details from the application.')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('user.name')
+                    TextInput::make('user_name')
                         ->label('Consultant Name')
-                        ->disabled(),
-                    TextInput::make('user.email')
+                        ->disabled()
+                        ->dehydrated(false)
+                        ->formatStateUsing(
+                            fn($state, ?ConsultantProfile $record): ?string => $record?->user?->name
+                        ),
+                    TextInput::make('user_email')
                         ->label('Email')
-                        ->disabled(),
+                        ->disabled()
+                        ->dehydrated(false)
+                        ->formatStateUsing(
+                            fn($state, ?ConsultantProfile $record): ?string => $record?->user?->email
+                        ),
                     TextInput::make('slug')
                         ->label('Public Profile Slug')
                         ->disabled(),
@@ -106,14 +115,14 @@ class ConsultantForm
                     Select::make('status')
                         ->options(
                             collect(ConsultantStatus::cases())
-                                ->mapWithKeys(fn ($s) => [$s->value => $s->label()])
+                                ->mapWithKeys(fn($s) => [$s->value => $s->label()])
                         )
                         ->native(false)
                         ->required(),
                     Textarea::make('rejection_reason')
                         ->label('Rejection Reason')
                         ->rows(3)
-                        ->visible(fn ($get): bool => $get('status') === ConsultantStatus::Rejected->value),
+                        ->visible(fn($get): bool => $get('status') === ConsultantStatus::Rejected->value),
                 ]),
         ]);
     }
