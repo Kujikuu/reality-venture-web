@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             SubscriberSeeder::class,
             SpecializationSeeder::class,
+            TeamConsultantsSeeder::class,
             MarketplaceTestSeeder::class,
         ]);
     }
