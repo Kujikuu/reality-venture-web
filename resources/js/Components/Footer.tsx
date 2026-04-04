@@ -96,13 +96,13 @@ export const Footer = () => {
 
             {/* Socials Row */}
             <div className="flex gap-3 pt-2">
-              <a href="#" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+              <a href="https://www.linkedin.com/company/rvgrowth" target="_blank" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+              <a href="https://x.com/rvgrowth" target="_blank" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="mailto:be@rv.com.sa" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+              <a href="mailto:hello@rv.com.sa" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
                 <Mail className="w-4 h-4" />
               </a>
             </div>
