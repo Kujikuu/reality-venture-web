@@ -37,5 +37,21 @@
   "apply": {
     "pageTitle": "Apply"
   },
+  "newsletter": {
+    "phone": {
+      "placeholder": "05X XXX XXXX",
+      "label": "Phone (optional)"
+    },
+    "home": {
+      "heading": "Join the Reality Venture club",
+      "description": "Insights on startups, PropTech, and venture building — straight to your inbox.",
+      "badge": "Weekly updates"
+    },
+    "blog": {
+      "heading": "Never miss a story",
+      "description": "Subscribe to get our latest articles on venture building and PropTech.",
+      "badge": "Stay informed"
+    }
+  },
   "and": "and"
 }

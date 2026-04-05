@@ -20,6 +20,7 @@ class SubscriberFactory extends Factory
     {
         return [
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->optional(weight: 0.7)->numerify('+9665########'),
             'unsubscribe_token' => Str::random(64),
             'is_active' => true,
             'subscribed_at' => fake()->dateTimeBetween('-6 months', 'now'),

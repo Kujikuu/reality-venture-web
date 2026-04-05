@@ -5,6 +5,7 @@ import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { sectionVariants, staggerContainer } from '../Components/animations/CommonAnimations';
 import { BlogCard } from '../Components/BlogCard';
+import { NewsletterSubscribe } from '../Components/NewsletterSubscribe';
 import type { BlogPost, BlogCategory, PaginatedData } from '../types';
 
 interface BlogProps {
@@ -18,7 +19,7 @@ interface BlogProps {
 }
 
 export default function Blog({ posts, categories, filters }: BlogProps) {
-  const { t, i18n } = useTranslation('blog');
+  const { t, i18n } = useTranslation(['blog', 'common']);
   const isArabic = i18n.language === 'ar';
   const [searchValue, setSearchValue] = useState(filters.search || '');
 
@@ -175,6 +176,12 @@ export default function Blog({ posts, categories, filters }: BlogProps) {
           )}
         </div>
       </section>
+
+      <NewsletterSubscribe
+        heading={t('common:newsletter.blog.heading')}
+        description={t('common:newsletter.blog.description')}
+        badge={t('common:newsletter.blog.badge')}
+      />
     </>
   );
 }

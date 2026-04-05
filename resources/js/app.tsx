@@ -14,9 +14,15 @@ const HIDE_SHELL_PAGES = [
     'Consultant/ProfileEdit',
 ];
 
+const HIDE_FOOTER_NEWSLETTER_PAGES = [
+    'Home',
+    'Blog',
+];
+
 function AppLayout({ children }: { children: React.ReactNode }) {
     const { component } = usePage();
     const isDashboardPage = HIDE_SHELL_PAGES.some(prefix => component.startsWith(prefix));
+    const hideFooterNewsletter = HIDE_FOOTER_NEWSLETTER_PAGES.includes(component);
 
     return (
         <div className="min-h-screen bg-background-light text-text-main font-sans antialiased flex flex-col">
@@ -24,7 +30,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             <main className="flex-1 w-full flex flex-col">
                 {children}
             </main>
-            {!isDashboardPage && <Footer />}
+            {!isDashboardPage && <Footer hideNewsletter={hideFooterNewsletter} />}
         </div>
     );
 }

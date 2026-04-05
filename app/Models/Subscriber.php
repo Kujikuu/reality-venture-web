@@ -14,6 +14,7 @@ class Subscriber extends Model
 
     protected $fillable = [
         'email',
+        'phone',
         'unsubscribe_token',
         'is_active',
         'subscribed_at',

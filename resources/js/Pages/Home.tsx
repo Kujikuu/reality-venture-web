@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Hero } from '../Components/Hero';
 import { VisionMission } from '../Components/VisionMission';
 import { StrategicGoals } from '../Components/StrategicGoals';
@@ -9,10 +10,13 @@ import { Programs } from '../Components/Programs';
 import { Process } from '../Components/Process';
 import { Team } from '../Components/Team';
 import { LatestPosts } from '../Components/LatestPosts';
+import { NewsletterSubscribe } from '../Components/NewsletterSubscribe';
 import { Head } from '@inertiajs/react';
 import { AdBanner } from '../Components/AdBanner';
 
 export default function Home() {
+  const { t } = useTranslation('common');
+
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (!hash) {
@@ -43,6 +47,11 @@ export default function Home() {
       <Programs />
       {/* <Process /> */}
       <Team />
+      <NewsletterSubscribe
+        heading={t('newsletter.home.heading')}
+        description={t('newsletter.home.description')}
+        badge={t('newsletter.home.badge')}
+      />
       <LatestPosts />
     </>
   );

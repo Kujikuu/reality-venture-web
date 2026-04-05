@@ -21,6 +21,10 @@ class SubscribersTable
                     ->searchable()
                     ->sortable()
                     ->weight(FontWeight::SemiBold),
+                TextColumn::make('phone')
+                    ->searchable()
+                    ->toggleable()
+                    ->placeholder('—'),
                 IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean(),

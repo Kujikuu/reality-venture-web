@@ -20,6 +20,11 @@ class SubscriberForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
+                        TextInput::make('phone')
+                            ->tel()
+                            ->label('Phone')
+                            ->maxLength(20)
+                            ->placeholder('+9665XXXXXXXX'),
                         Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),

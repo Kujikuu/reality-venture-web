@@ -10,17 +10,42 @@ class NewsletterController extends Controller
 {
     public function subscribe(SubscribeToNewsletterRequest $request): RedirectResponse
     {
-        $subscriber = Subscriber::where('email', $request->validated('email'))->first();
+        $email = $request->validated('email');
+        $phone = $this->normalizePhone($request->validated('phone'));
+
+        $subscriber = Subscriber::where('email', $email)->first();
 
         if ($subscriber) {
-            if (! $subscriber->is_active) {
-                $subscriber->update(['is_active' => true]);
-            }
+            $subscriber->update([
+                'is_active' => true,
+                'phone' => $phone,
+            ]);
         } else {
-            Subscriber::create(['email' => $request->validated('email')]);
+            Subscriber::create([
+                'email' => $email,
+                'phone' => $phone,
+            ]);
         }
 
         return back()->with('newsletter_success', true);
+    }
+
+    private function normalizePhone(?string $phone): ?string
+    {
+        if (empty($phone)) {
+            return null;
+        }
+
+        $phone = preg_replace('/\s+/', '', $phone);
+        $phone = ltrim($phone, '+');
+
+        if (str_starts_with($phone, '966')) {
+            $phone = substr($phone, 3);
+        } elseif (str_starts_with($phone, '0')) {
+            $phone = substr($phone, 1);
+        }
+
+        return '+966'.$phone;
     }
 
     public function unsubscribe(string $token): RedirectResponse

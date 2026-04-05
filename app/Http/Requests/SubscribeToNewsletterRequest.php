@@ -18,6 +18,7 @@ class SubscribeToNewsletterRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
         ];
     }
 
@@ -29,6 +30,7 @@ class SubscribeToNewsletterRequest extends FormRequest
         return [
             'email.required' => 'Please enter your email address.',
             'email.email' => 'Please enter a valid email address.',
+            'phone.regex' => 'Please enter a valid Saudi mobile number.',
         ];
     }
 }

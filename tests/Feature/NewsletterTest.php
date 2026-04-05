@@ -28,6 +28,95 @@ class NewsletterTest extends TestCase
         ]);
     }
 
+    public function test_user_can_subscribe_with_email_and_phone(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'email' => 'test@example.com',
+            'phone' => '0512345678',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('subscribers', [
+            'email' => 'test@example.com',
+            'phone' => '+966512345678',
+            'is_active' => true,
+        ]);
+    }
+
+    public function test_user_can_subscribe_with_email_only_phone_omitted(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'email' => 'test@example.com',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('subscribers', [
+            'email' => 'test@example.com',
+            'phone' => null,
+        ]);
+    }
+
+    public function test_subscribe_rejects_invalid_saudi_phone_format(): void
+    {
+        $invalid = ['123', '+14155551234', 'abcdef', '0412345678', '05123'];
+
+        foreach ($invalid as $phone) {
+            $response = $this->post('/newsletter/subscribe', [
+                'email' => 'test@example.com',
+                'phone' => $phone,
+            ]);
+
+            $response->assertSessionHasErrors('phone');
+        }
+
+        $this->assertDatabaseCount('subscribers', 0);
+    }
+
+    public function test_phone_is_normalized_to_saudi_e164_format(): void
+    {
+        $inputs = [
+            'local-with-zero' => '0512345678',
+            'international-plus' => '+966512345678',
+            'international-no-plus' => '966512345678',
+            'bare-nine-digits' => '512345678',
+        ];
+
+        foreach ($inputs as $key => $phone) {
+            Subscriber::query()->delete();
+
+            $this->post('/newsletter/subscribe', [
+                'email' => "{$key}@example.com",
+                'phone' => $phone,
+            ]);
+
+            $stored = Subscriber::where('email', "{$key}@example.com")->value('phone');
+            $this->assertSame(
+                '+966512345678',
+                $stored,
+                "Failed normalizing input '{$phone}' (key: {$key}), got: ".var_export($stored, true)
+            );
+        }
+    }
+
+    public function test_resubscribe_updates_phone_to_new_value(): void
+    {
+        Subscriber::factory()->unsubscribed()->create([
+            'email' => 'test@example.com',
+            'phone' => '+966511111111',
+        ]);
+
+        $this->post('/newsletter/subscribe', [
+            'email' => 'test@example.com',
+            'phone' => '0522222222',
+        ]);
+
+        $this->assertDatabaseHas('subscribers', [
+            'email' => 'test@example.com',
+            'phone' => '+966522222222',
+            'is_active' => true,
+        ]);
+    }
+
     public function test_subscribe_requires_valid_email(): void
     {
         $response = $this->post('/newsletter/subscribe', [
