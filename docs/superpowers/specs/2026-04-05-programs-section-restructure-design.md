@@ -48,6 +48,10 @@ Result: one Accelerator card, centered, still clearly the featured item, with `m
 **Files:**
 - `resources/js/i18n/locales/en/programs.json`
 - `resources/js/i18n/locales/ar/programs.json`
+- `resources/js/i18n/locales/en/consultants.json`
+- `resources/js/i18n/locales/ar/consultants.json`
+
+### Programs namespace
 
 Update two top-level keys to match the new single-program context:
 
@@ -57,9 +61,31 @@ Update two top-level keys to match the new single-program context:
 | `subtitle` | Our core accelerator for early-stage startups. | برنامجنا الأساسي للشركات الناشئة في المراحل المبكرة. |
 
 Keep `advisor.*`, `accelerator.*`, and `ventureBuilder.*` sub-trees as-is:
-- `advisor.*` is reused by the consultants-page banner (below).
 - `accelerator.*` is the single visible card.
-- `ventureBuilder.*` stays because the commented-out card still references it and we want flipping the flag to Just Work.
+- `ventureBuilder.*` stays because the flagged-off card still references it and we want flipping the flag to Just Work.
+- `advisor.*` stays for now — still referenced by nothing after this change but kept in case the program card is reintroduced. (This is not dead weight worth hunting down in the same PR.)
+
+### Consultants namespace
+
+Add a new `advisorCta` object under the top level (sibling to `index` and `show`):
+
+```json
+"advisorCta": {
+  "title": "Want to join as a consultant?",
+  "description": "Reality Venture's Advisor Program connects experienced operators and domain experts with early-stage ventures that need hands-on support.",
+  "cta": "Apply as an Advisor"
+}
+```
+
+Arabic values:
+
+```json
+"advisorCta": {
+  "title": "تريد الانضمام كمستشار؟",
+  "description": "برنامج المستشارين في رياليتي فينتشر يربط المشغّلين ذوي الخبرة والمختصين بالشركات الناشئة التي تحتاج إلى دعم عملي.",
+  "cta": "قدم كمستشار"
+}
+```
 
 ## Consultants page advisor banner
 
@@ -74,12 +100,12 @@ Structure:
 <section className="bg-gray-50 border-y border-gray-200">
   <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
     <div className="flex-1 min-w-0">
-      <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('programs:advisor.title')}</h2>
-      <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('programs:advisor.description')}</p>
+      <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
+      <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>
     </div>
     <Link href="/application-form" className="shrink-0">
       <Button variant="primary" className="rounded-xl px-8 py-4" withArrow>
-        {t('programs:advisor.cta')}
+        {t('advisorCta.cta')}
       </Button>
     </Link>
   </div>
@@ -88,9 +114,9 @@ Structure:
 
 Wiring requirements:
 
-- `useTranslation` call at the top of the file currently is `useTranslation('consultants')`. Change it to `useTranslation(['consultants', 'programs'])` so the `programs:` namespace keys resolve. Existing calls like `t('index.title')` continue to work because `consultants` is the first (default) namespace.
-- Add a `Button` import from `../../Components/ui/Button` (check existing imports — may already be imported or may need adding).
-- Verify `Link` is already imported (it is — line 1).
+- No changes to `useTranslation` — the new keys live under the existing `consultants` namespace.
+- Add a `Button` import from `../../Components/ui/Button` (does not exist in the file yet).
+- `Link` is already imported (line 1).
 
 Layout behaviour:
 
