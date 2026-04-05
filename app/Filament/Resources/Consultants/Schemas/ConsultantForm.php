@@ -64,6 +64,13 @@ class ConsultantForm
             Section::make('Bio & Expertise')
                 ->description('Short professional overview shown on the public profile.')
                 ->schema([
+                    Select::make('specializations')
+                        ->label('Specializations')
+                        ->relationship('specializations', 'name_en')
+                        ->multiple()
+                        ->searchable()
+                        ->preload()
+                        ->helperText('Add, remove, or change the consultant\'s specializations.'),
                     Textarea::make('bio_en')
                         ->label('Bio (English)')
                         ->required()
