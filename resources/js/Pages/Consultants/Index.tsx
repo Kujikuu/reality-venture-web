@@ -43,7 +43,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
               <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>
             </div>
-            <Link href="/application-form" className="shrink-0">
+            <Link href="/register" className="shrink-0">
               <Button variant="primary" className="rounded-xl px-8 py-4" withArrow>
                 {t('advisorCta.cta')}
               </Button>
