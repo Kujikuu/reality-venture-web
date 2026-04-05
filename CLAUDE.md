@@ -9,7 +9,7 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.18
+- php - 8.4.19
 - filament/filament (FILAMENT) - v5
 - inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/cashier (CASHIER) - v16
@@ -22,14 +22,14 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - phpunit/phpunit (PHPUNIT) - v11
 - @inertiajs/react (INERTIA) - v2
 - react (REACT) - v19
-- tailwindcss (TAILWINDCSS) - v3
+- tailwindcss (TAILWINDCSS) - v4
 
 ## Skills Activation
 
 This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
 - `inertia-react-development` — Develops Inertia.js v2 React client-side applications. Activates when creating React pages, forms, or navigation; using &lt;Link&gt;, &lt;Form&gt;, useForm, or router; working with deferred props, prefetching, or polling; or when user mentions React with Inertia, React pages, React forms, or React navigation.
-- `tailwindcss-development` — Styles applications using Tailwind CSS v3 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
+- `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
 
 ## Conventions
 
@@ -57,41 +57,6 @@ This project has domain-specific skills available. You MUST activate the relevan
 ## Replies
 
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
-
-## i18n — Backend Message Localization
-
-This project uses i18next on the frontend (locale stored in `localStorage` as `i18nextLng`). The Laravel backend has no knowledge of the active locale, so **never translate backend messages with `__()`** before sending them to the frontend.
-
-### Rule: pass raw keys, translate on the frontend
-
-**Backend controllers** — pass the raw Laravel message key, never the translated string:
-```php
-// CORRECT — raw key
-return back()->withErrors(['email' => 'auth.failed']);
-return back()->with('status', $status); // e.g. 'passwords.sent'
-
-// WRONG — already translated to English, i18next can't localize it
-return back()->withErrors(['email' => __('auth.failed')]);
-```
-
-**Frontend components** — call `t()` on any error or flash value received from the backend, with the raw value as fallback (so standard Laravel validation messages still display as-is):
-```tsx
-// errors from withErrors()
-{errors.email && <p>{t(errors.email, errors.email)}</p>}
-
-// flash messages from ->with('status', ...)
-{flash.status && <div>{t(flash.status, flash.status)}</div>}
-```
-
-**Locale files** — add all known backend message keys to `resources/js/i18n/locales/{en,ar}/auth.json` under their Laravel group name:
-```json
-{
-  "auth": { "failed": "..." },
-  "passwords": { "sent": "...", "reset": "...", "throttled": "...", "token": "...", "user": "..." }
-}
-```
-
-Known backend keys already mapped in `auth.json`: `auth.failed`, `auth.throttle`, `passwords.sent`, `passwords.reset`, `passwords.throttled`, `passwords.token`, `passwords.user`.
 
 === boost rules ===
 
@@ -169,6 +134,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ## PHPDoc Blocks
 
 - Add useful array shape type definitions when appropriate.
+
+=== herd rules ===
+
+# Laravel Herd
+
+- The application is served by Laravel Herd and will be available at: `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs for the user.
+- You must not run any commands to make the site available via HTTP(S). It is always available through Laravel Herd.
 
 === tests rules ===
 

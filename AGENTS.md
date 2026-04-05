@@ -9,7 +9,7 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.18
+- php - 8.4.19
 - filament/filament (FILAMENT) - v5
 - inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/cashier (CASHIER) - v16
@@ -134,6 +134,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ## PHPDoc Blocks
 
 - Add useful array shape type definitions when appropriate.
+
+=== herd rules ===
+
+# Laravel Herd
+
+- The application is served by Laravel Herd and will be available at: `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs for the user.
+- You must not run any commands to make the site available via HTTP(S). It is always available through Laravel Herd.
 
 === tests rules ===
 
@@ -419,12 +426,4 @@ Authenticate before testing panel functionality. Filament uses Livewire, so use 
 **Recent breaking changes to Filament:**
 - File visibility is `private` by default. Use `->visibility('public')` for public access.
 - `Grid`, `Section`, and `Fieldset` no longer span all columns by default.
-
-### Filament admin UX conventions
-
-- Forms for admin resources should use `Section` components with clear titles, optional `description()`, and `columns(2)` for multi-field sections (see `ConsultantForm`, `ApplicationForm`, `PostForm` under `app/Filament/Resources/*/Schemas`).
-- Status and similar select fields in Filament forms should use `->native(false)` for consistent custom select styling.
-- Tables should be striped, use consistent pagination options `[10, 25, 50]`, and define empty state heading/description/icon (see tables under `app/Filament/Resources/*/Tables`).
-- Custom record actions (approve/reject/transfer, etc.) should use semantic colors/icons, call `->requiresConfirmation()` for destructive or irreversible operations, and set a `->successNotificationTitle()` so admins always get clear feedback (see `ConsultantsTable` and `PayoutsTable`).
-- Dashboard stats should be implemented via `StatsOverview` with short, business-focused labels and descriptions that reflect Reality Venture’s terminology.
 </laravel-boost-guidelines>

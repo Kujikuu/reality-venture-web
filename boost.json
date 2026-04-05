@@ -1,8 +1,6 @@
 {
     "agents": [
-        "cursor",
-        "claude_code",
-        "gemini"
+        "claude_code"
     ],
     "guidelines": true,
     "herd_mcp": true,
