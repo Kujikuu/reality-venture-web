@@ -34,10 +34,6 @@
     "company": "Company Name",
     "website": "Website (Optional)",
     "linkedin": "LinkedIn Profile",
-    "program": "Which program interests you?",
-    "programAccelerator": "Accelerator Program",
-    "programVenture": "Venture Builder",
-    "programCorporate": "Corporate Innovation",
     "describe": "Describe your venture or idea",
     "messagePlaceholder": "Briefly describe your problem statement, solution, or area of expertise...",
     "emailPlaceholder": "email@example.com",
@@ -57,14 +53,11 @@
     },
     "email": {
       "required": "Email address is required.",
-      "format": "Please enter a valid email address."
+      "format": "Please enter a valid email address.",
+      "unique": "This email has already been used to apply."
     },
     "linkedin": {
       "url": "Please enter a valid LinkedIn URL."
-    },
-    "programInterest": {
-      "required": "Please select a program.",
-      "invalid": "Please select a valid program."
     },
     "description": {
       "required": "Please describe your venture or idea."

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Applications\Pages;
 
-use App\Enums\ApplicationStatus;
+use App\Enums\ApplicationType;
 use App\Filament\Resources\Applications\ApplicationResource;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -17,22 +17,14 @@ class ListApplications extends ListRecords
         return [
             'all' => Tab::make('All')
                 ->badge(ApplicationResource::getModel()::count()),
-            'pending' => Tab::make('Pending')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ApplicationStatus::Pending))
-                ->badge(ApplicationResource::getModel()::where('status', ApplicationStatus::Pending)->count())
-                ->badgeColor('warning'),
-            'under_review' => Tab::make('Under Review')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ApplicationStatus::UnderReview))
-                ->badge(ApplicationResource::getModel()::where('status', ApplicationStatus::UnderReview)->count())
+            'general' => Tab::make('General')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::General))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::General)->count())
+                ->badgeColor('gray'),
+            'startup' => Tab::make('Startup')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Startup))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Startup)->count())
                 ->badgeColor('info'),
-            'approved' => Tab::make('Approved')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ApplicationStatus::Approved))
-                ->badge(ApplicationResource::getModel()::where('status', ApplicationStatus::Approved)->count())
-                ->badgeColor('success'),
-            'rejected' => Tab::make('Rejected')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ApplicationStatus::Rejected))
-                ->badge(ApplicationResource::getModel()::where('status', ApplicationStatus::Rejected)->count())
-                ->badgeColor('danger'),
         ];
     }
 }

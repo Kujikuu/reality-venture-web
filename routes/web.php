@@ -24,11 +24,13 @@ use Illuminate\Support\Facades\Route;
 // Static pages
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/application-form', [PageController::class, 'applicationForm'])->name('application.form');
+Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->name('startup-application.form');
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms.service');
 
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])->name('startup-applications.store');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

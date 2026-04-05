@@ -3,7 +3,10 @@
 namespace Database\Factories;
 
 use App\Enums\ApplicationStatus;
-use App\Enums\ProgramInterest;
+use App\Enums\ApplicationType;
+use App\Enums\DiscoverySource;
+use App\Enums\FundingRound;
+use App\Enums\Industry;
 use App\Models\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,11 +23,12 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
+            'type' => ApplicationType::General,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'linkedin_profile' => fake()->optional()->url(),
-            'program_interest' => fake()->randomElement(ProgramInterest::cases()),
+            'program_interest' => null,
             'description' => fake()->paragraphs(2, true),
             'status' => ApplicationStatus::Pending,
         ];
@@ -34,6 +38,29 @@ class ApplicationFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => $status,
+        ]);
+    }
+
+    public function startup(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => ApplicationType::Startup,
+            'company_name' => fake()->company(),
+            'number_of_founders' => fake()->numberBetween(1, 5),
+            'hq_country' => fake()->randomElement(['SA', 'AE', 'US', 'GB', 'EG']),
+            'website_link' => fake()->url(),
+            'founded_date' => fake()->dateTimeBetween('-10 years', 'now')->format('Y-m-d'),
+            'industry' => fake()->randomElement(Industry::cases()),
+            'industry_other' => null,
+            'company_description' => fake()->sentences(3, true),
+            'current_funding_round' => fake()->randomElement(FundingRound::cases()),
+            'investment_ask_sar' => fake()->numberBetween(100_000, 10_000_000),
+            'valuation_sar' => fake()->numberBetween(1_000_000, 100_000_000),
+            'previous_funding' => fake()->optional()->sentence(),
+            'demo_link' => fake()->optional()->url(),
+            'discovery_source' => fake()->randomElement(DiscoverySource::cases()),
+            'referral_name' => null,
+            'referral_param' => null,
         ]);
     }
 }

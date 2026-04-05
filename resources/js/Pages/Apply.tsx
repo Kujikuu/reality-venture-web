@@ -13,7 +13,6 @@ export default function Apply() {
     last_name: '',
     email: '',
     linkedin_profile: '',
-    program_interest: '',
     description: '',
   });
 
@@ -166,43 +165,6 @@ export default function Apply() {
                     placeholder={t('apply:form.linkedinPlaceholder')}
                   />
                   {errors.linkedin_profile && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.linkedin_profile, errors.linkedin_profile)}</p>}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wide mb-3 block text-gray-500">{t('apply:form.program')}</label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <label className="group relative flex items-center gap-3 p-4 border border-gray-200 cursor-pointer hover:border-primary transition-all rounded-lg hover:bg-primary-50/30">
-                      <input
-                        type="radio"
-                        name="interest"
-                        checked={data.program_interest === 'accelerator'}
-                        onChange={(e) => setData('program_interest', 'accelerator')}
-                        className="accent-primary w-5 h-5"
-                      />
-                      <span className="font-medium text-sm text-gray-700">{t('apply:form.programAccelerator')}</span>
-                    </label>
-                    <label className="group relative flex items-center gap-3 p-4 border border-gray-200 cursor-pointer hover:border-primary transition-all rounded-lg hover:bg-primary-50/30">
-                      <input
-                        type="radio"
-                        name="interest"
-                        checked={data.program_interest === 'venture'}
-                        onChange={(e) => setData('program_interest', 'venture')}
-                        className="accent-primary w-5 h-5"
-                      />
-                      <span className="font-medium text-sm text-gray-700">{t('apply:form.programVenture')}</span>
-                    </label>
-                    <label className="group relative flex items-center gap-3 p-4 border border-gray-200 cursor-pointer hover:border-primary transition-all rounded-lg hover:bg-primary-50/30">
-                      <input
-                        type="radio"
-                        name="interest"
-                        checked={data.program_interest === 'corporate'}
-                        onChange={(e) => setData('program_interest', 'corporate')}
-                        className="accent-primary w-5 h-5"
-                      />
-                      <span className="font-medium text-sm text-gray-700">{t('apply:form.programCorporate')}</span>
-                    </label>
-                  </div>
-                  {errors.program_interest && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.program_interest, errors.program_interest)}</p>}
                 </div>
 
                 <div className="space-y-2">

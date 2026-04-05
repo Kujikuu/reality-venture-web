@@ -3,7 +3,10 @@
 namespace App\Filament\Resources\Applications\Schemas;
 
 use App\Enums\ApplicationStatus;
-use App\Enums\ProgramInterest;
+use App\Enums\ApplicationType;
+use App\Enums\DiscoverySource;
+use App\Enums\FundingRound;
+use App\Enums\Industry;
 use App\Models\Application;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -20,6 +23,18 @@ class ApplicationInfolist
                     ->icon(Heroicon::OutlinedUser)
                     ->columns(2)
                     ->schema([
+                        TextEntry::make('type')
+                            ->label('Application Type')
+                            ->badge()
+                            ->formatStateUsing(fn (ApplicationType $state): string => $state->label())
+                            ->color(fn (ApplicationType $state): string => match ($state) {
+                                ApplicationType::General => 'gray',
+                                ApplicationType::Startup => 'info',
+                            }),
+                        TextEntry::make('status')
+                            ->badge()
+                            ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
+                            ->color(fn (ApplicationStatus $state): string => $state->color()),
                         TextEntry::make('first_name')
                             ->label('First Name')
                             ->icon('heroicon-o-user'),
@@ -38,23 +53,96 @@ class ApplicationInfolist
                             ->placeholder('Not provided')
                             ->color('primary'),
                     ]),
-                Section::make('Application Details')
+
+                Section::make('General Inquiry')
                     ->icon(Heroicon::OutlinedClipboardDocumentList)
-                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::General)
                     ->schema([
-                        TextEntry::make('program_interest')
-                            ->label('Program')
-                            ->badge()
-                            ->formatStateUsing(fn (ProgramInterest $state): string => $state->label()),
-                        TextEntry::make('status')
-                            ->badge()
-                            ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
-                            ->color(fn (ApplicationStatus $state): string => $state->color()),
                         TextEntry::make('description')
-                            ->label('Venture / Idea Description')
+                            ->label('Description')
                             ->columnSpanFull()
                             ->prose(),
                     ]),
+
+                Section::make('Company Details')
+                    ->icon(Heroicon::OutlinedBuildingOffice2)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->schema([
+                        TextEntry::make('company_name')
+                            ->label('Company Name'),
+                        TextEntry::make('number_of_founders')
+                            ->label('Number of Founders'),
+                        TextEntry::make('hq_country')
+                            ->label('HQ Country'),
+                        TextEntry::make('website_link')
+                            ->label('Website')
+                            ->url(fn (Application $record): ?string => $record->website_link)
+                            ->openUrlInNewTab()
+                            ->color('primary'),
+                        TextEntry::make('founded_date')
+                            ->label('Founded')
+                            ->date('M Y'),
+                        TextEntry::make('industry')
+                            ->label('Industry')
+                            ->badge()
+                            ->formatStateUsing(fn (?Industry $state): string => $state?->label() ?? '—'),
+                        TextEntry::make('industry_other')
+                            ->label('Industry (Other)')
+                            ->visible(fn (Application $record): bool => $record->industry === Industry::Other)
+                            ->columnSpanFull(),
+                        TextEntry::make('company_description')
+                            ->label('Company Description')
+                            ->columnSpanFull()
+                            ->prose(),
+                    ]),
+
+                Section::make('Investment Details')
+                    ->icon(Heroicon::OutlinedBanknotes)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->schema([
+                        TextEntry::make('current_funding_round')
+                            ->label('Current Funding Round')
+                            ->badge()
+                            ->formatStateUsing(fn (?FundingRound $state): string => $state?->label() ?? '—'),
+                        TextEntry::make('investment_ask_sar')
+                            ->label('Investment Ask')
+                            ->formatStateUsing(fn (?int $state): string => $state ? number_format($state).' SAR' : '—'),
+                        TextEntry::make('valuation_sar')
+                            ->label('Valuation')
+                            ->formatStateUsing(fn (?int $state): string => $state ? number_format($state).' SAR' : '—'),
+                        TextEntry::make('demo_link')
+                            ->label('Demo Link')
+                            ->url(fn (Application $record): ?string => $record->demo_link)
+                            ->openUrlInNewTab()
+                            ->placeholder('Not provided')
+                            ->color('primary'),
+                        TextEntry::make('previous_funding')
+                            ->label('Previous Funding & Investors')
+                            ->columnSpanFull()
+                            ->prose()
+                            ->placeholder('None'),
+                    ]),
+
+                Section::make('Discovery')
+                    ->icon(Heroicon::OutlinedMegaphone)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->schema([
+                        TextEntry::make('discovery_source')
+                            ->label('How They Heard')
+                            ->badge()
+                            ->formatStateUsing(fn (?DiscoverySource $state): string => $state?->label() ?? '—'),
+                        TextEntry::make('referral_name')
+                            ->label('Referral Name')
+                            ->placeholder('—'),
+                        TextEntry::make('referral_param')
+                            ->label('Referral Tracking Code')
+                            ->placeholder('—')
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Timeline')
                     ->icon(Heroicon::OutlinedClock)
                     ->columns(2)

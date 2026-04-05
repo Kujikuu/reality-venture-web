@@ -34,10 +34,6 @@
     "company": "اسم الشركة",
     "website": "الموقع الإلكتروني (اختياري)",
     "linkedin": "ملف لينكدإن",
-    "program": "أي برنامج يهمك؟",
-    "programAccelerator": "برنامج المسرع",
-    "programVenture": "بناء المشاريع",
-    "programCorporate": "الابتكار المؤسسي",
     "describe": "صف مشروعك أو فكرتك",
     "messagePlaceholder": "صف بإيجاز مشكلتك وحلك أو مجال خبرتك...",
     "emailPlaceholder": "email@example.com",
@@ -57,14 +53,11 @@
     },
     "email": {
       "required": "البريد الإلكتروني مطلوب.",
-      "format": "يرجى إدخال بريد إلكتروني صحيح."
+      "format": "يرجى إدخال بريد إلكتروني صحيح.",
+      "unique": "تم استخدام هذا البريد الإلكتروني للتقديم من قبل."
     },
     "linkedin": {
       "url": "يرجى إدخال رابط LinkedIn صحيح."
-    },
-    "programInterest": {
-      "required": "يرجى اختيار برنامج.",
-      "invalid": "يرجى اختيار برنامج صحيح."
     },
     "description": {
       "required": "يرجى وصف مشروعك أو فكرتك."

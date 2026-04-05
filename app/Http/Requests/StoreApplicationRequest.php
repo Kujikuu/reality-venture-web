@@ -19,9 +19,8 @@ class StoreApplicationRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:applications,email'],
             'linkedin_profile' => ['nullable', 'url', 'max:500'],
-            'program_interest' => ['required', 'in:accelerator,venture,corporate'],
             'description' => ['required', 'string', 'max:5000'],
         ];
     }
@@ -36,9 +35,8 @@ class StoreApplicationRequest extends FormRequest
             'last_name.required' => 'validation.lastName.required',
             'email.required' => 'validation.email.required',
             'email.email' => 'validation.email.format',
+            'email.unique' => 'validation.email.unique',
             'linkedin_profile.url' => 'validation.linkedin.url',
-            'program_interest.required' => 'validation.programInterest.required',
-            'program_interest.in' => 'validation.programInterest.invalid',
             'description.required' => 'validation.description.required',
         ];
     }

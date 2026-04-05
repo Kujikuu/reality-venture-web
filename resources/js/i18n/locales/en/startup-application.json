@@ -1,0 +1,162 @@
+{
+  "pageTitle": "Startup Application",
+  "hero": {
+    "badge": "Startup Application",
+    "title": "Tell Us About Your",
+    "titleHighlighted": "Startup",
+    "subtitle": "Share your company details so our team can evaluate your startup for investment or program inclusion.",
+    "rollingReview": "Rolling review",
+    "responseTime": "7–10 day response",
+    "founderFirst": "Founder-first"
+  },
+  "sidebar": {
+    "title": "What Happens Next",
+    "description": "Our team will review your submission and reach out within 7–10 business days.",
+    "email": "be@rv.com.sa",
+    "reviewProcess": "We review every application carefully and respond to all submissions.",
+    "ndaPolicy": "Your information is confidential and used only for evaluation purposes.",
+    "responseTime": "You'll hear back from us within 7–10 business days."
+  },
+  "sections": {
+    "founder": "Founder Information",
+    "company": "Company Details",
+    "investment": "Investment Details",
+    "discovery": "How You Found Us"
+  },
+  "form": {
+    "title": "Startup Application Form",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "emailPlaceholder": "email@example.com",
+    "linkedin": "LinkedIn Profile",
+    "linkedinPlaceholder": "linkedin.com/in/username",
+
+    "companyName": "Company Name",
+    "companyNamePlaceholder": "Your company name",
+    "numberOfFounders": "Number of Founders",
+    "hqCountry": "HQ Country",
+    "hqCountryPlaceholder": "Select a country",
+    "websiteLink": "Website Link",
+    "websiteLinkPlaceholder": "https://example.com",
+    "foundedDate": "Founded Date",
+    "foundedDateMonth": "Month",
+    "foundedDateYear": "Year",
+    "industry": "Industry / Sector",
+    "industryPlaceholder": "Select an industry",
+    "industryOther": "Specify Industry",
+    "industryOtherPlaceholder": "Your industry",
+    "companyDescription": "Company Description (3 sentences)",
+    "companyDescriptionPlaceholder": "Briefly describe your company in 3 sentences...",
+
+    "currentFundingRound": "Current Funding Round",
+    "currentFundingRoundPlaceholder": "Select a funding round",
+    "investmentAsk": "Investment Ask (SAR)",
+    "investmentAskPlaceholder": "0",
+    "valuation": "Company Valuation (SAR)",
+    "valuationPlaceholder": "0",
+    "previousFunding": "Previous Funding Rounds & Investors (Optional)",
+    "previousFundingPlaceholder": "List any previous rounds and investors...",
+    "demoLink": "Product Demo Link (Optional)",
+    "demoLinkPlaceholder": "https://demo-link.com",
+
+    "discoverySource": "How did you hear about Reality Venture?",
+    "discoverySourcePlaceholder": "Select an option",
+    "referralName": "Referral Name",
+    "referralNamePlaceholder": "Who referred you?",
+
+    "submit": "Submit Application",
+    "submitting": "Submitting...",
+    "success": "Application submitted successfully!",
+    "agreement": "By submitting this form, you agree to our",
+    "charCount": "{{count}} / {{max}} characters"
+  },
+  "industries": {
+    "fintech": "FinTech",
+    "healthtech": "HealthTech",
+    "edtech": "EdTech",
+    "ecommerce": "E-commerce / Retail",
+    "saas": "SaaS / Enterprise Software",
+    "ai": "AI / Machine Learning",
+    "logistics": "Logistics / Supply Chain",
+    "proptech": "PropTech / Real Estate",
+    "foodtech": "FoodTech",
+    "cleantech": "CleanTech / Sustainability",
+    "gaming": "Gaming / Entertainment",
+    "other": "Other"
+  },
+  "fundingRounds": {
+    "bootstrapped": "Bootstrapped / Not Raised Yet",
+    "pre_seed": "Pre-Seed",
+    "seed": "Seed",
+    "series_a": "Series A",
+    "series_b": "Series B",
+    "series_c_plus": "Series C+"
+  },
+  "discoverySources": {
+    "linkedin": "LinkedIn",
+    "referral": "Referral",
+    "event": "Event / Conference",
+    "website": "Website",
+    "social_media": "Social Media",
+    "news_press": "News / Press",
+    "other": "Other"
+  },
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "validation": {
+    "firstName": { "required": "First name is required." },
+    "lastName": { "required": "Last name is required." },
+    "email": {
+      "required": "Email address is required.",
+      "format": "Please enter a valid email address.",
+      "unique": "This email has already been used to apply."
+    },
+    "linkedin": { "url": "Please enter a valid LinkedIn URL." },
+    "companyName": { "required": "Company name is required." },
+    "numberOfFounders": {
+      "required": "Number of founders is required.",
+      "min": "At least 1 founder is required.",
+      "max": "Maximum 20 founders allowed."
+    },
+    "hqCountry": { "required": "Please select your HQ country." },
+    "websiteLink": {
+      "required": "Website link is required.",
+      "url": "Please enter a valid URL."
+    },
+    "foundedDate": {
+      "required": "Founded date is required.",
+      "future": "Founded date cannot be in the future."
+    },
+    "industry": { "required": "Please select an industry." },
+    "industryOther": { "required": "Please specify your industry." },
+    "companyDescription": {
+      "required": "Company description is required.",
+      "max": "Description must be 600 characters or less."
+    },
+    "currentFundingRound": { "required": "Please select a funding round." },
+    "investmentAsk": {
+      "required": "Investment ask is required.",
+      "min": "Investment ask must be greater than 0."
+    },
+    "valuation": {
+      "required": "Company valuation is required.",
+      "min": "Valuation must be greater than 0."
+    },
+    "demoLink": { "url": "Please enter a valid URL." },
+    "discoverySource": { "required": "Please tell us how you heard about us." },
+    "referralName": { "required": "Please enter the referrer's name." }
+  }
+}

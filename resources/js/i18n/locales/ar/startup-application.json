@@ -1,0 +1,162 @@
+{
+  "pageTitle": "تقديم شركة ناشئة",
+  "hero": {
+    "badge": "تقديم شركة ناشئة",
+    "title": "أخبرنا عن شركتك",
+    "titleHighlighted": "الناشئة",
+    "subtitle": "شارك تفاصيل شركتك لنقيّم شركتك الناشئة للاستثمار أو الانضمام لبرامجنا.",
+    "rollingReview": "مراجعة مستمرة",
+    "responseTime": "استجابة خلال 7-10 أيام",
+    "founderFirst": "المؤسس أولاً"
+  },
+  "sidebar": {
+    "title": "ماذا بعد؟",
+    "description": "سيراجع فريقنا طلبك ويتواصل معك خلال 7-10 أيام عمل.",
+    "email": "be@rv.com.sa",
+    "reviewProcess": "نراجع كل طلب بعناية ونرد على جميع الطلبات.",
+    "ndaPolicy": "معلوماتك سرية وتُستخدم فقط لأغراض التقييم.",
+    "responseTime": "سنرد عليك خلال 7-10 أيام عمل."
+  },
+  "sections": {
+    "founder": "معلومات المؤسس",
+    "company": "تفاصيل الشركة",
+    "investment": "تفاصيل الاستثمار",
+    "discovery": "كيف سمعت عنا"
+  },
+  "form": {
+    "title": "نموذج تقديم الشركة الناشئة",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "عنوان البريد الإلكتروني",
+    "emailPlaceholder": "email@example.com",
+    "linkedin": "ملف لينكدإن",
+    "linkedinPlaceholder": "linkedin.com/in/username",
+
+    "companyName": "اسم الشركة",
+    "companyNamePlaceholder": "اسم شركتك",
+    "numberOfFounders": "عدد المؤسسين",
+    "hqCountry": "دولة المقر الرئيسي",
+    "hqCountryPlaceholder": "اختر دولة",
+    "websiteLink": "رابط الموقع الإلكتروني",
+    "websiteLinkPlaceholder": "https://example.com",
+    "foundedDate": "تاريخ التأسيس",
+    "foundedDateMonth": "الشهر",
+    "foundedDateYear": "السنة",
+    "industry": "القطاع / الصناعة",
+    "industryPlaceholder": "اختر قطاعاً",
+    "industryOther": "حدد القطاع",
+    "industryOtherPlaceholder": "قطاعك",
+    "companyDescription": "وصف الشركة (3 جمل)",
+    "companyDescriptionPlaceholder": "صف شركتك في 3 جمل...",
+
+    "currentFundingRound": "جولة التمويل الحالية",
+    "currentFundingRoundPlaceholder": "اختر جولة تمويل",
+    "investmentAsk": "المبلغ المطلوب (ريال سعودي)",
+    "investmentAskPlaceholder": "0",
+    "valuation": "تقييم الشركة (ريال سعودي)",
+    "valuationPlaceholder": "0",
+    "previousFunding": "جولات التمويل السابقة والمستثمرون (اختياري)",
+    "previousFundingPlaceholder": "اذكر أي جولات ومستثمرين سابقين...",
+    "demoLink": "رابط عرض المنتج (اختياري)",
+    "demoLinkPlaceholder": "https://demo-link.com",
+
+    "discoverySource": "كيف سمعت عن Reality Venture؟",
+    "discoverySourcePlaceholder": "اختر",
+    "referralName": "اسم الشخص الذي أحالك",
+    "referralNamePlaceholder": "من الذي أحالك؟",
+
+    "submit": "إرسال الطلب",
+    "submitting": "جاري الإرسال...",
+    "success": "تم تقديم الطلب بنجاح!",
+    "agreement": "بإرسال هذا النموذج، أنت توافق على",
+    "charCount": "{{count}} / {{max}} حرف"
+  },
+  "industries": {
+    "fintech": "التكنولوجيا المالية",
+    "healthtech": "تكنولوجيا الصحة",
+    "edtech": "تكنولوجيا التعليم",
+    "ecommerce": "التجارة الإلكترونية",
+    "saas": "البرمجيات كخدمة",
+    "ai": "الذكاء الاصطناعي",
+    "logistics": "اللوجستيات",
+    "proptech": "تكنولوجيا العقارات",
+    "foodtech": "تكنولوجيا الغذاء",
+    "cleantech": "التكنولوجيا النظيفة",
+    "gaming": "الألعاب والترفيه",
+    "other": "أخرى"
+  },
+  "fundingRounds": {
+    "bootstrapped": "تمويل ذاتي / لم يتم الجمع بعد",
+    "pre_seed": "ما قبل البذرة",
+    "seed": "البذرة",
+    "series_a": "الجولة أ",
+    "series_b": "الجولة ب",
+    "series_c_plus": "الجولة ج وما فوق"
+  },
+  "discoverySources": {
+    "linkedin": "لينكدإن",
+    "referral": "إحالة",
+    "event": "حدث / مؤتمر",
+    "website": "الموقع الإلكتروني",
+    "social_media": "وسائل التواصل الاجتماعي",
+    "news_press": "الأخبار / الصحافة",
+    "other": "أخرى"
+  },
+  "months": {
+    "1": "يناير",
+    "2": "فبراير",
+    "3": "مارس",
+    "4": "أبريل",
+    "5": "مايو",
+    "6": "يونيو",
+    "7": "يوليو",
+    "8": "أغسطس",
+    "9": "سبتمبر",
+    "10": "أكتوبر",
+    "11": "نوفمبر",
+    "12": "ديسمبر"
+  },
+  "validation": {
+    "firstName": { "required": "الاسم الأول مطلوب." },
+    "lastName": { "required": "اسم العائلة مطلوب." },
+    "email": {
+      "required": "البريد الإلكتروني مطلوب.",
+      "format": "يرجى إدخال بريد إلكتروني صحيح.",
+      "unique": "تم استخدام هذا البريد الإلكتروني للتقديم من قبل."
+    },
+    "linkedin": { "url": "يرجى إدخال رابط LinkedIn صحيح." },
+    "companyName": { "required": "اسم الشركة مطلوب." },
+    "numberOfFounders": {
+      "required": "عدد المؤسسين مطلوب.",
+      "min": "مؤسس واحد على الأقل مطلوب.",
+      "max": "الحد الأقصى 20 مؤسساً."
+    },
+    "hqCountry": { "required": "يرجى اختيار دولة المقر." },
+    "websiteLink": {
+      "required": "رابط الموقع مطلوب.",
+      "url": "يرجى إدخال رابط صحيح."
+    },
+    "foundedDate": {
+      "required": "تاريخ التأسيس مطلوب.",
+      "future": "لا يمكن أن يكون تاريخ التأسيس في المستقبل."
+    },
+    "industry": { "required": "يرجى اختيار القطاع." },
+    "industryOther": { "required": "يرجى تحديد القطاع." },
+    "companyDescription": {
+      "required": "وصف الشركة مطلوب.",
+      "max": "الوصف يجب أن لا يتجاوز 600 حرف."
+    },
+    "currentFundingRound": { "required": "يرجى اختيار جولة التمويل." },
+    "investmentAsk": {
+      "required": "المبلغ المطلوب مطلوب.",
+      "min": "المبلغ المطلوب يجب أن يكون أكبر من 0."
+    },
+    "valuation": {
+      "required": "تقييم الشركة مطلوب.",
+      "min": "التقييم يجب أن يكون أكبر من 0."
+    },
+    "demoLink": { "url": "يرجى إدخال رابط صحيح." },
+    "discoverySource": { "required": "يرجى إخبارنا كيف سمعت عنا." },
+    "referralName": { "required": "يرجى إدخال اسم الشخص الذي أحالك." }
+  }
+}

@@ -18,7 +18,7 @@ class NewApplicationSubmitted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Application: '.$this->application->first_name.' '.$this->application->last_name,
+            subject: 'New '.$this->application->type->label().' Application: '.$this->application->first_name.' '.$this->application->last_name,
         );
     }
 

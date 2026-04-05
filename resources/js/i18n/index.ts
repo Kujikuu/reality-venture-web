@@ -9,6 +9,7 @@ import enHome from './locales/en/home.json';
 import enServices from './locales/en/services.json';
 import enPrograms from './locales/en/programs.json';
 import enApply from './locales/en/apply.json';
+import enStartupApplication from './locales/en/startup-application.json';
 import enLegal from './locales/en/legal.json';
 import enMeta from './locales/en/meta.json';
 import enBlog from './locales/en/blog.json';
@@ -24,6 +25,7 @@ import arHome from './locales/ar/home.json';
 import arServices from './locales/ar/services.json';
 import arPrograms from './locales/ar/programs.json';
 import arApply from './locales/ar/apply.json';
+import arStartupApplication from './locales/ar/startup-application.json';
 import arLegal from './locales/ar/legal.json';
 import arMeta from './locales/ar/meta.json';
 import arBlog from './locales/ar/blog.json';
@@ -46,6 +48,7 @@ i18n
         services: enServices,
         programs: enPrograms,
         apply: enApply,
+        'startup-application': enStartupApplication,
         legal: enLegal,
         meta: enMeta,
         blog: enBlog,
@@ -62,6 +65,7 @@ i18n
         services: arServices,
         programs: arPrograms,
         apply: arApply,
+        'startup-application': arStartupApplication,
         legal: arLegal,
         meta: arMeta,
         blog: arBlog,

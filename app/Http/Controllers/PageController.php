@@ -44,6 +44,11 @@ class PageController extends Controller
         return Inertia::render('Apply');
     }
 
+    public function startupApplicationForm(): Response
+    {
+        return Inertia::render('StartupApplication');
+    }
+
     public function privacyPolicy(): Response
     {
         return Inertia::render('PrivacyPolicy');

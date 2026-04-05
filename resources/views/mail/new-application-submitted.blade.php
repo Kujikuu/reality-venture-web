@@ -1,5 +1,5 @@
 <x-mail::message>
-# New Application Received
+# New {{ $application->type->label() }} Application Received
 
 A new application has been submitted on the Reality Venture website.
 
@@ -7,15 +7,69 @@ A new application has been submitted on the Reality Venture website.
 
 **Email:** {{ $application->email }}
 
-**Program Interest:** {{ $application->program_interest->label() }}
-
 @if($application->linkedin_profile)
 **LinkedIn:** {{ $application->linkedin_profile }}
 @endif
 
+@if($application->type === App\Enums\ApplicationType::Startup)
+---
+
+## Company Details
+
+**Company Name:** {{ $application->company_name }}
+
+**Number of Founders:** {{ $application->number_of_founders }}
+
+**HQ Country:** {{ $application->hq_country }}
+
+**Website:** {{ $application->website_link }}
+
+**Founded:** {{ $application->founded_date?->format('M Y') }}
+
+**Industry:** {{ $application->industry?->label() }}@if($application->industry_other) ({{ $application->industry_other }})@endif
+
+**Company Description:**
+
+{{ $application->company_description }}
+
+---
+
+## Investment Details
+
+**Current Funding Round:** {{ $application->current_funding_round?->label() }}
+
+**Investment Ask:** {{ number_format($application->investment_ask_sar) }} SAR
+
+**Valuation:** {{ number_format($application->valuation_sar) }} SAR
+
+@if($application->previous_funding)
+**Previous Funding:**
+
+{{ $application->previous_funding }}
+@endif
+
+@if($application->demo_link)
+**Demo:** {{ $application->demo_link }}
+@endif
+
+---
+
+## How They Found Us
+
+**Source:** {{ $application->discovery_source?->label() }}
+
+@if($application->referral_name)
+**Referred By:** {{ $application->referral_name }}
+@endif
+
+@if($application->referral_param)
+**Tracking Code:** {{ $application->referral_param }}
+@endif
+@else
 **Description:**
 
 {{ $application->description }}
+@endif
 
 <x-mail::button :url="config('app.url') . '/admin/applications'">
 View in Admin Panel

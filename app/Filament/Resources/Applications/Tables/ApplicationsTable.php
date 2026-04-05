@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Applications\Tables;
 
 use App\Enums\ApplicationStatus;
-use App\Enums\ProgramInterest;
+use App\Enums\ApplicationType;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -18,6 +18,14 @@ class ApplicationsTable
     {
         return $table
             ->columns([
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->formatStateUsing(fn (ApplicationType $state): string => $state->label())
+                    ->color(fn (ApplicationType $state): string => match ($state) {
+                        ApplicationType::General => 'gray',
+                        ApplicationType::Startup => 'info',
+                    }),
                 TextColumn::make('full_name')
                     ->label('Applicant')
                     ->state(fn ($record): string => $record->first_name.' '.$record->last_name)
@@ -25,15 +33,10 @@ class ApplicationsTable
                     ->sortable(['first_name'])
                     ->weight(FontWeight::SemiBold)
                     ->description(fn ($record): string => $record->email),
-                TextColumn::make('program_interest')
-                    ->label('Program')
-                    ->badge()
-                    ->formatStateUsing(fn (ProgramInterest $state): string => $state->label())
-                    ->color(fn (ProgramInterest $state): string => match ($state) {
-                        ProgramInterest::Accelerator => 'primary',
-                        ProgramInterest::Venture => 'info',
-                        ProgramInterest::Corporate => 'warning',
-                    }),
+                TextColumn::make('company_name')
+                    ->label('Company')
+                    ->searchable()
+                    ->placeholder('—'),
                 TextColumn::make('status')
                     ->badge()
                     ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
@@ -50,12 +53,6 @@ class ApplicationsTable
                     ->options(
                         collect(ApplicationStatus::cases())
                             ->mapWithKeys(fn ($s) => [$s->value => $s->label()])
-                    ),
-                SelectFilter::make('program_interest')
-                    ->label('Program')
-                    ->options(
-                        collect(ProgramInterest::cases())
-                            ->mapWithKeys(fn ($p) => [$p->value => $p->label()])
                     ),
             ])
             ->recordActions([
