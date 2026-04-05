@@ -84,10 +84,10 @@ export default function ConsultantsIndex({ consultants, specializations, filters
                   animate="visible"
                 >
                   {consultants.data.map((consultant) => (
-                    <motion.div key={consultant.id} variants={cardVariants}>
+                    <motion.div key={consultant.id} variants={cardVariants} className="h-full">
                       <Link
                         href={`/consultants/${consultant.slug}`}
-                        className="block bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-primary/20 transition-all group"
+                        className="flex h-full flex-col bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-primary/20 transition-all group"
                       >
                         {/* Avatar + Name */}
                         <div className="flex items-start gap-4 mb-4">
@@ -115,7 +115,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
                         </div>
 
                         {/* Specializations */}
-                        <div className="flex flex-wrap gap-1.5 mb-4">
+                        <div className="flex flex-wrap gap-1.5 mb-4 grow content-start">
                           {consultant.specializations.slice(0, 3).map((spec) => (
                             <span key={spec.id} className="px-2.5 py-1 bg-primary/5 text-primary text-xs font-medium rounded-full">
                               {lang === 'ar' && spec.name_ar ? spec.name_ar : spec.name_en}
