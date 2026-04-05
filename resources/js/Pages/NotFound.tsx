@@ -37,7 +37,7 @@ export default function NotFound() {
             <Link href="/">
               <Button withArrow>
                 <Home className="w-4 h-4" />
-                Go {t('footer.home')}
+                Go {t('navigation:buttons.home')}
               </Button>
             </Link>
             <button
