@@ -21,14 +21,14 @@ export const LenisProvider: React.FC<LenisProviderProps> = ({ children }) => {
 
     lenisRef.current = lenis;
 
-    // Scroll to top smoothly on Inertia navigation
+    // Scroll to top smoothly on real page navigation only.
+    // 'navigate' fires on URL changes (page visits) but NOT on form POSTs that
+    // redirect back to the same URL — so forms using preserveScroll stay put.
     const handleNavigate = () => {
       lenis.scrollTo(0);
     };
 
-    // Listen for Inertia 'finish' event (fires after page loads)
-    // In Inertia v2, on() returns an unsubscribe function
-    const unsubscribe = router.on('finish', handleNavigate);
+    const unsubscribe = router.on('navigate', handleNavigate);
 
     // Cleanup
     return () => {

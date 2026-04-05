@@ -50,7 +50,7 @@ export default function StartupApplication() {
   const { t, i18n } = useTranslation(['common', 'navigation', 'startup-application']);
   const isArabic = i18n.language === 'ar';
 
-  const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+  const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
     first_name: '',
     last_name: '',
     email: '',
@@ -96,6 +96,7 @@ export default function StartupApplication() {
     post('/startup-applications', {
       preserveState: true,
       preserveScroll: true,
+      onSuccess: () => reset(),
     });
   };
 

@@ -8,7 +8,7 @@ import { Head, useForm } from '@inertiajs/react';
 export default function Apply() {
   const { t } = useTranslation(['common', 'navigation', 'apply']);
 
-  const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+  const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
     first_name: '',
     last_name: '',
     email: '',
@@ -21,6 +21,7 @@ export default function Apply() {
     post('/applications', {
       preserveState: true,
       preserveScroll: true,
+      onSuccess: () => reset(),
     });
   };
 
