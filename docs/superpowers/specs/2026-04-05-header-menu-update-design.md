@@ -5,19 +5,20 @@
 
 ## Summary
 
-Rename and reorganize the public header navigation to reflect current product surface. Drop the "Reality Venture" link, rename "Programs" to "Venture Program" and "Consultants" to "Advisory", add a new "RV Club" link that scrolls to the newsletter section on the home page, and keep "About" and "Blog" as-is.
+Rename and reorganize the public header navigation to reflect current product surface. Drop the "Reality Venture" link, rename "Programs" to "Venture Program" and "Consultants" to "Advisory", add a new "RV Club" link that scrolls to the newsletter section on the home page, and keep "About" and "Blog" as-is. Mirror the same 5 links in the footer's "Quick Links" column (renamed from "Explore") so header and footer navigation stay in sync.
 
 ## Goals
 
 - Align nav labels with how we talk about the product.
 - Give the newsletter section a first-class entry point from the header ("RV Club").
+- Keep header and footer navigation consistent.
 - Keep the change contained to nav rendering and copy — no route changes, no new pages.
 
 ## Non-goals
 
 - No changes to routes, controllers, or pages.
 - No new About page or new sections on the home page.
-- No visual redesign of the header beyond the link list.
+- No visual redesign of the header or footer beyond the link list and column heading.
 
 ## Menu definition
 
@@ -85,6 +86,44 @@ Mirror the English structure under `header`:
   - `rvClub`: `"نادي RV"`
 - Keep: `about` (`"من نحن"`), `blog` (`"المدونة"`).
 
+### 6. `resources/js/Components/Footer.tsx`
+
+Rewrite the "Explore" column so it mirrors the new header nav:
+
+- Change the column heading translation key from `footer.explore` to `footer.quickLinks`.
+- Replace the 5 `<li>` entries with the 5 menu items from the header, in the same order:
+  - About → `<Link href="/#hero" onClick={(e) => smoothScrollTo(e, 'hero')}>{t('navigation:footer.about')}</Link>`
+  - Venture Program → `<Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')}>{t('navigation:footer.ventureProgram')}</Link>`
+  - Advisory → `<Link href="/consultants">{t('navigation:footer.advisory')}</Link>` (no `smoothScrollTo` — it's a page route)
+  - RV Club → `<Link href="/#rv-club" onClick={(e) => smoothScrollTo(e, 'rv-club')}>{t('navigation:footer.rvClub')}</Link>`
+  - Blog → `<Link href="/blog">{t('navigation:footer.blog')}</Link>`
+
+### 7. `resources/js/i18n/locales/en/navigation.json` (footer keys)
+
+Under the `footer` object:
+
+- Remove: `services`, `realityVenture`, `home`, `programs`, `explore`.
+- Rename/add:
+  - `quickLinks`: `"Quick Links"` (replaces `explore`)
+  - `about`: `"About"`
+  - `ventureProgram`: `"Venture Program"`
+  - `advisory`: `"Advisory"`
+  - `rvClub`: `"RV Club"`
+- Keep: `blog`, `location`, `riyadh`, `globalOperations`, `privacyPolicy`, `termsOfService`, `copyright`, `newsletter.*`.
+
+### 8. `resources/js/i18n/locales/ar/navigation.json` (footer keys)
+
+Mirror the English footer structure:
+
+- Remove: `services`, `realityVenture`, `home`, `programs`, `explore`.
+- Add:
+  - `quickLinks`: `"روابط سريعة"`
+  - `about`: `"من نحن"`
+  - `ventureProgram`: `"برنامج المشاريع"`
+  - `advisory`: `"الاستشارات"`
+  - `rvClub`: `"نادي RV"`
+- Keep: `blog`, `location`, `riyadh`, `globalOperations`, `privacyPolicy`, `termsOfService`, `copyright`, `newsletter.*`.
+
 ## Verification
 
 - Existing feature tests continue to pass. No backend code changes, so no new PHP tests required.
@@ -96,6 +135,7 @@ Mirror the English structure under `header`:
   - Clicking "Advisory" navigates to `/consultants`.
   - Clicking "RV Club" scrolls to the newsletter section on home, clear of the sticky header.
   - Clicking "Blog" navigates to `/blog`.
+  - Footer "Quick Links" column shows the same 5 items as the header, all functional.
 - Run `npm run build` to confirm no TypeScript errors.
 - Run `vendor/bin/pint --dirty --format agent` (no PHP changed, but safe to confirm clean).
 
