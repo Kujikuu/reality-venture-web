@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Consultants\Schemas;
 
 use App\Enums\ConsultantStatus;
 use App\Models\ConsultantProfile;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -20,6 +21,17 @@ class ConsultantForm
                 ->description('Key consultant profile details from the application.')
                 ->columns(2)
                 ->schema([
+                    FileUpload::make('avatar')
+                        ->label('Avatar')
+                        ->image()
+                        ->avatar()
+                        ->imageEditor()
+                        ->disk('public')
+                        ->directory('avatars')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(2048)
+                        ->columnSpanFull()
+                        ->helperText('JPG, PNG, or WebP. Max 2 MB.'),
                     Select::make('user_id')
                         ->label('User')
                         ->relationship('user', 'name')
