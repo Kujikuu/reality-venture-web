@@ -5,6 +5,7 @@ import { Star, Clock, Users } from 'lucide-react';
 import { staggerContainer, cardVariants } from '../../Components/animations/CommonAnimations';
 import type { ConsultantCard, Specialization, PaginatedData } from '../../types/marketplace';
 import i18next from 'i18next';
+import { Button } from '../../Components/ui/Button';
 
 interface Props {
   consultants: PaginatedData<ConsultantCard>;
@@ -32,6 +33,21 @@ export default function ConsultantsIndex({ consultants, specializations, filters
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4">{t('index.title')}</h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">{t('index.subtitle')}</p>
+          </div>
+        </section>
+
+        {/* Advisor CTA Banner */}
+        <section className="bg-gray-50 border-y border-gray-200">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
+              <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>
+            </div>
+            <Link href="/application-form" className="shrink-0">
+              <Button variant="primary" className="rounded-xl px-8 py-4" withArrow>
+                {t('advisorCta.cta')}
+              </Button>
+            </Link>
           </div>
         </section>
 
