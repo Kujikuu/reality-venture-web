@@ -1,5 +1,5 @@
 import { Button } from '../Components/ui/Button';
-import { Mail, CheckCircle2 } from 'lucide-react';
+import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
@@ -94,8 +94,13 @@ export default function Apply() {
                   <li className="flex items-start gap-3"><span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>{t('apply:whatWeLookFor.committed.description')}</li>
                   <li className="flex items-start gap-3"><span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>{t('apply:whatWeLookFor.scalable.description')}</li>
                 </ul>
-                <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-3 text-xs uppercase tracking-widest text-gray-400">
-                  <Mail className="w-4 h-4 text-primary" /> {t('apply:sidebar.email')}
+                <div className="mt-8 pt-6 border-t border-gray-100 space-y-3 text-xs uppercase tracking-widest text-gray-400">
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-4 h-4 text-primary" /> {t('apply:sidebar.email')}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MessageCircle className="w-4 h-4 text-primary" /> {t('apply:sidebar.whatsapp')}
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -214,8 +219,20 @@ export default function Apply() {
               <div className="bg-primary text-white p-8 rounded-xl shadow-lg">
                 <h3 className="text-lg font-bold uppercase tracking-tight mb-3">{t('apply:sidebar.title')}</h3>
                 <p className="text-sm text-gray-50 mb-6 leading-relaxed">{t('apply:sidebar.description')}</p>
-                <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
-                  <Mail className="w-4 h-4" /> <a href="mailto:be@rv.com.sa">{t('apply:sidebar.email')}</a>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
+                    <Mail className="w-4 h-4" /> <a href="mailto:be@rv.com.sa">{t('apply:sidebar.email')}</a>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
+                    <MessageCircle className="w-4 h-4" />
+                    <a
+                      href={`https://wa.me/${t('apply:sidebar.whatsappNumber').replace(/\D/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('apply:sidebar.whatsapp')}
+                    </a>
+                  </div>
                 </div>
               </div>
             </aside>
