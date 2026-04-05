@@ -126,9 +126,9 @@ export const Header = () => {
               >
                 {t('buttons.login', 'Login')}
               </Link>
-              <Link href="/register">
+              <Link href="/application-form">
                 <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 transition-all rounded-md">
-                  {t('buttons.getStarted')}
+                  {t('buttons.applyNow')}
                 </button>
               </Link>
             </div>
@@ -201,9 +201,9 @@ export const Header = () => {
                     {t('buttons.login')}
                   </button>
                 </Link>
-                <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/application-form" onClick={() => setIsMenuOpen(false)}>
                   <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm">
-                    {t('buttons.getStarted')}
+                    {t('buttons.applyNow')}
                   </button>
                 </Link>
               </div>
