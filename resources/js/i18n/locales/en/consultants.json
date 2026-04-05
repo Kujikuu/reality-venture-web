@@ -24,5 +24,10 @@
     "hourlyRate": "Hourly Rate",
     "loginToBook": "Log in to book a session",
     "consultantNotice": "You are viewing this profile as a consultant"
+  },
+  "advisorCta": {
+    "title": "Want to join as a consultant?",
+    "description": "Reality Venture's Advisor Program connects experienced operators and domain experts with early-stage ventures that need hands-on support.",
+    "cta": "Apply as an Advisor"
   }
 }
