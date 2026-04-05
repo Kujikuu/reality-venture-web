@@ -6,6 +6,9 @@ use App\Enums\ConsultantStatus;
 use App\Mail\ConsultantApprovedMail;
 use App\Mail\ConsultantRejectedMail;
 use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Support\Enums\FontWeight;
@@ -89,6 +92,12 @@ class ConsultantsTable
                         Mail::to($record->user->email)->send(new ConsultantRejectedMail($record));
                     }),
                 EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ])
             ->emptyStateHeading('No consultants yet')
             ->emptyStateDescription('Consultant applications submitted from the website will appear here.')

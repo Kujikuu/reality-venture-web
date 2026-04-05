@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Consultants;
 
 use App\Enums\ConsultantStatus;
+use App\Filament\Resources\Consultants\Pages\CreateConsultant;
 use App\Filament\Resources\Consultants\Pages\EditConsultant;
 use App\Filament\Resources\Consultants\Pages\ListConsultants;
 use App\Filament\Resources\Consultants\Schemas\ConsultantForm;
@@ -28,11 +29,6 @@ class ConsultantResource extends Resource
     protected static ?string $navigationLabel = 'Consultants';
 
     protected static ?string $modelLabel = 'Consultant';
-
-    public static function canCreate(): bool
-    {
-        return false;
-    }
 
     public static function getNavigationBadge(): ?string
     {
@@ -84,6 +80,7 @@ class ConsultantResource extends Resource
     {
         return [
             'index' => ListConsultants::route('/'),
+            'create' => CreateConsultant::route('/create'),
             'edit' => EditConsultant::route('/{record}/edit'),
         ];
     }

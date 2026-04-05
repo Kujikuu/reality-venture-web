@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Consultants\Pages;
 
 use App\Enums\ConsultantStatus;
 use App\Filament\Resources\Consultants\ConsultantResource;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,6 +12,13 @@ use Illuminate\Database\Eloquent\Builder;
 class ListConsultants extends ListRecords
 {
     protected static string $resource = ConsultantResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make(),
+        ];
+    }
 
     public function getTabs(): array
     {

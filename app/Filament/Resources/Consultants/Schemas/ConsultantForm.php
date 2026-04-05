@@ -3,13 +3,13 @@
 namespace App\Filament\Resources\Consultants\Schemas;
 
 use App\Enums\ConsultantStatus;
+use App\Models\ConsultantProfile;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use App\Models\ConsultantProfile;
 
 class ConsultantForm
 {
@@ -20,36 +20,53 @@ class ConsultantForm
                 ->description('Key consultant profile details from the application.')
                 ->columns(2)
                 ->schema([
+                    Select::make('user_id')
+                        ->label('User')
+                        ->relationship('user', 'name')
+                        ->searchable()
+                        ->preload()
+                        ->required()
+                        ->hiddenOn('edit'),
                     TextInput::make('user_name')
                         ->label('Consultant Name')
                         ->disabled()
                         ->dehydrated(false)
                         ->formatStateUsing(
-                            fn($state, ?ConsultantProfile $record): ?string => $record?->user?->name
-                        ),
+                            fn ($state, ?ConsultantProfile $record): ?string => $record?->user?->name
+                        )
+                        ->hiddenOn('create'),
                     TextInput::make('user_email')
                         ->label('Email')
                         ->disabled()
                         ->dehydrated(false)
                         ->formatStateUsing(
-                            fn($state, ?ConsultantProfile $record): ?string => $record?->user?->email
-                        ),
+                            fn ($state, ?ConsultantProfile $record): ?string => $record?->user?->email
+                        )
+                        ->hiddenOn('create'),
                     TextInput::make('slug')
                         ->label('Public Profile Slug')
-                        ->disabled(),
+                        ->required()
+                        ->maxLength(255)
+                        ->unique('consultant_profiles', 'slug', ignoreRecord: true)
+                        ->disabled(fn (string $operation): bool => $operation === 'edit'),
                     TextInput::make('hourly_rate')
                         ->label('Hourly Rate')
                         ->prefix('SAR')
-                        ->disabled(),
+                        ->numeric()
+                        ->required()
+                        ->disabled(fn (string $operation): bool => $operation === 'edit'),
                     TextInput::make('years_experience')
                         ->label('Years of Experience')
-                        ->disabled(),
+                        ->numeric()
+                        ->default(0)
+                        ->disabled(fn (string $operation): bool => $operation === 'edit'),
                 ]),
             Section::make('Bio & Expertise')
                 ->description('Short professional overview shown on the public profile.')
                 ->schema([
                     Textarea::make('bio_en')
                         ->label('Bio (English)')
+                        ->required()
                         ->rows(4)
                         ->maxLength(5000),
                     Textarea::make('bio_ar')
@@ -115,14 +132,14 @@ class ConsultantForm
                     Select::make('status')
                         ->options(
                             collect(ConsultantStatus::cases())
-                                ->mapWithKeys(fn($s) => [$s->value => $s->label()])
+                                ->mapWithKeys(fn ($s) => [$s->value => $s->label()])
                         )
                         ->native(false)
                         ->required(),
                     Textarea::make('rejection_reason')
                         ->label('Rejection Reason')
                         ->rows(3)
-                        ->visible(fn($get): bool => $get('status') === ConsultantStatus::Rejected->value),
+                        ->visible(fn ($get): bool => $get('status') === ConsultantStatus::Rejected->value),
                 ]),
         ]);
     }
