@@ -4,6 +4,8 @@ import { Link } from '@inertiajs/react';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+const SHOW_VENTURE_BUILDER = false;
+
 export const Programs: React.FC = () => {
   const { t } = useTranslation('programs');
 
@@ -17,36 +19,9 @@ export const Programs: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-          {/* Advisor Reality Program */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-200 flex flex-col transition-all duration-300 hover:border-secondary/30 hover:shadow-md hover:shadow-secondary/5">
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-gray-900">{t('advisor.title')}</span>
-              <p className="text-sm text-gray-500 mt-2">{t('advisor.subtitle')}</p>
-            </div>
-            <p className="text-gray-500 mb-8 text-sm leading-relaxed min-h-[60px]">
-              {t('advisor.description')}
-            </p>
-
-            <Link href="/application-form" className="w-full mb-8">
-              <Button variant="outline" className="w-full rounded-xl py-6 border-gray-200">{t('advisor.cta')}</Button>
-            </Link>
-
-            <div className="pt-8 border-t border-gray-100">
-              <p className="font-semibold text-sm text-gray-900 mb-4">{t('advisor.benefits.title')}</p>
-              <ul className="space-y-4 text-sm text-gray-600">
-                {(t('advisor.benefits.items', { returnObjects: true }) as string[]).map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
+        <div className="max-w-2xl mx-auto">
           {/* Accelerator Program */}
-          <div className="bg-white rounded-2xl p-8 border border-secondary/40 ring-1 ring-secondary/20 flex flex-col transform lg:-translate-y-4 relative shadow-lg shadow-secondary/5">
+          <div className="bg-white rounded-2xl p-8 border border-secondary/40 ring-1 ring-secondary/20 flex flex-col relative shadow-lg shadow-secondary/5">
             <div className="mb-6">
               <span className="text-3xl font-bold text-gray-900">{t('accelerator.title')}</span>
               <p className="text-sm text-gray-500 mt-2">{t('accelerator.subtitle')}</p>
@@ -73,33 +48,34 @@ export const Programs: React.FC = () => {
             </div>
           </div>
 
-          {/* Reality Venture Builder */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-200 flex flex-col transition-all duration-300 hover:border-secondary/30 hover:shadow-md hover:shadow-secondary/5">
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-gray-900">{t('ventureBuilder.title')}</span>
-              <p className="text-sm text-gray-500 mt-2">{t('ventureBuilder.subtitle')}</p>
+          {SHOW_VENTURE_BUILDER && (
+            /* Reality Venture Builder */
+            <div className="bg-white rounded-2xl p-8 border border-gray-200 flex flex-col transition-all duration-300 hover:border-secondary/30 hover:shadow-md hover:shadow-secondary/5 mt-8">
+              <div className="mb-6">
+                <span className="text-3xl font-bold text-gray-900">{t('ventureBuilder.title')}</span>
+                <p className="text-sm text-gray-500 mt-2">{t('ventureBuilder.subtitle')}</p>
+              </div>
+              <p className="text-gray-500 mb-8 text-sm leading-relaxed min-h-[60px]">
+                {t('ventureBuilder.description')}
+              </p>
+
+              <Link href="/application-form" className="w-full mb-8">
+                <Button variant="outline" className="w-full rounded-xl py-6 border-gray-200">{t('ventureBuilder.cta')}</Button>
+              </Link>
+
+              <div className="pt-8 border-t border-gray-100">
+                <p className="font-semibold text-sm text-gray-900 mb-4">{t('ventureBuilder.provider.title')}</p>
+                <ul className="space-y-4 text-sm text-gray-600">
+                  {(t('ventureBuilder.provider.items', { returnObjects: true }) as string[]).map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-primary shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <p className="text-gray-500 mb-8 text-sm leading-relaxed min-h-[60px]">
-              {t('ventureBuilder.description')}
-            </p>
-
-            <Link href="/application-form" className="w-full mb-8">
-              <Button variant="outline" className="w-full rounded-xl py-6 border-gray-200">{t('ventureBuilder.cta')}</Button>
-            </Link>
-
-            <div className="pt-8 border-t border-gray-100">
-              <p className="font-semibold text-sm text-gray-900 mb-4">{t('ventureBuilder.provider.title')}</p>
-              <ul className="space-y-4 text-sm text-gray-600">
-                {(t('ventureBuilder.provider.items', { returnObjects: true }) as string[]).map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
+          )}
         </div>
       </div>
     </section>
