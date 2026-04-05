@@ -43,11 +43,12 @@ export default function Home() {
       <TargetAudience />
       <Services />
       <AdBanner position="middle" />
-      <Ventures />
+      {/* <Ventures /> */}
+      <Team />
       <Programs />
       {/* <Process /> */}
-      <Team />
       <NewsletterSubscribe
+        sectionId="rv-club"
         heading={t('newsletter.home.heading')}
         description={t('newsletter.home.description')}
         badge={t('newsletter.home.badge')}
