@@ -19,22 +19,27 @@ export const Programs: React.FC = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Accelerator Program */}
-          <div className="bg-white rounded-2xl p-8 border border-secondary/40 ring-1 ring-secondary/20 flex flex-col relative shadow-lg shadow-secondary/5">
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-gray-900">{t('accelerator.title')}</span>
-              <p className="text-sm text-gray-500 mt-2">{t('accelerator.subtitle')}</p>
-            </div>
-            <p className="text-gray-500 mb-4 text-sm leading-relaxed min-h-[60px]">
-              {t('accelerator.description')}
-            </p>
-            <Link href="/application-form" className="w-full mb-8">
-              <Button variant="primary" className="w-full rounded-xl py-6" withArrow>{t('accelerator.cta')}</Button>
-            </Link>
-            <div className="pt-8 border-t border-gray-100">
-              <div className="mb-6">
-                <p className="font-semibold text-sm text-gray-900 mb-2">{t('accelerator.includes.title')}</p>
+          <div className="bg-white rounded-2xl p-8 lg:p-10 border border-secondary/40 ring-1 ring-secondary/20 relative shadow-lg shadow-secondary/5">
+            <div className="grid md:grid-cols-2 md:gap-10 lg:gap-12">
+              {/* Left column — copy + CTA */}
+              <div className="flex flex-col">
+                <div className="mb-6">
+                  <span className="text-3xl font-bold text-gray-900">{t('accelerator.title')}</span>
+                  <p className="text-sm text-gray-500 mt-2">{t('accelerator.subtitle')}</p>
+                </div>
+                <p className="text-gray-500 mb-8 text-sm leading-relaxed">
+                  {t('accelerator.description')}
+                </p>
+                <Link href="/application-form" className="w-full mt-auto">
+                  <Button variant="primary" className="w-full rounded-xl py-6" withArrow>{t('accelerator.cta')}</Button>
+                </Link>
+              </div>
+
+              {/* Right column — includes + duration */}
+              <div className="mt-8 md:mt-0 md:pl-10 md:border-l md:border-gray-100">
+                <p className="font-semibold text-sm text-gray-900 mb-4">{t('accelerator.includes.title')}</p>
                 <ul className="space-y-4 text-sm text-gray-600">
                   {(t('accelerator.includes.items', { returnObjects: true }) as string[]).map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -43,7 +48,7 @@ export const Programs: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-                <p className="text-sm text-gray-500 mt-4"><strong>{t('accelerator.includes.duration')}</strong></p>
+                <p className="text-sm text-gray-500 mt-6"><strong>{t('accelerator.includes.duration')}</strong></p>
               </div>
             </div>
           </div>
