@@ -63,7 +63,7 @@ export const Hero: React.FC = () => {
             <InteractiveTiltCard className="w-full max-w-lg aspect-square">
               <div className="relative w-full h-full">
                 {/* Main Card */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-2xl overflow-hidden">
 
                   {/* Animated gradient mesh background */}
                   <div className="absolute inset-0 opacity-40">
@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
                     {/* Logo Image */}
                     <div className="relative mb-8">
                       {/* Glowing ring effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-300/20 rounded-full blur-xl animate-pulse" style={{ animationDuration: '3s' }} />
+                      <div className="absolute inset-0 bg-linear-to-br from-primary/20 to-primary-300/20 rounded-full blur-xl animate-pulse" style={{ animationDuration: '3s' }} />
 
                       <div className="relative w-48 h-48 flex items-center justify-center ">
                         <img
@@ -131,10 +131,10 @@ export const Hero: React.FC = () => {
                   </div>
 
                   {/* Glassmorphism overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-tr from-white/10 via-transparent to-white/5 pointer-events-none" />
 
                   {/* Corner shine effect */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-white/40 to-transparent rounded-bl-full pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-bl from-white/40 to-transparent rounded-bl-full pointer-events-none" />
                 </div>
 
                 {/* Shadow/depth element */}

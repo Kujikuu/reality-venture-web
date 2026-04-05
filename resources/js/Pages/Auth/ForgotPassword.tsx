@@ -19,7 +19,7 @@ export default function ForgotPassword() {
       <Head title={t('forgot.title')} />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <motion.div
-          className="w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-sm"
+          className="w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xs"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >

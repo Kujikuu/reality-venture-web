@@ -92,7 +92,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
 
       {/* Hero / Header */}
       <article>
-        <section className="relative bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-16 lg:py-24 overflow-hidden">
+        <section className="relative bg-linear-to-br from-primary-50 via-white to-secondary-50 py-16 lg:py-24 overflow-hidden">
           {/* Floating geometric shapes */}
           <div className="absolute top-10 start-10 w-20 h-20 rounded-full bg-primary/5 blur-xl" />
           <div className="absolute bottom-10 end-20 w-32 h-32 rounded-full bg-secondary/5 blur-xl" />

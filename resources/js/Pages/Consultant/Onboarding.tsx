@@ -128,7 +128,7 @@ export default function Onboarding({ specializations }: Props) {
                 </ul>
               </div>
             )}
-            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xs">
               <AnimatePresence mode="wait">
                 {/* Step 1: Profile Info */}
                 {step === 1 && (

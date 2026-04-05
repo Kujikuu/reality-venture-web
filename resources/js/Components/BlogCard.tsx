@@ -39,7 +39,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-primary-50 to-primary-100">
               <span className="text-primary-300 text-4xl font-bold">RV</span>
             </div>
           )}

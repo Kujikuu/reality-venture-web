@@ -71,7 +71,7 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '', in
   return (
     <div className={`w-full py-8 ${className}`}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
-        <div className="relative w-full overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 group">
+        <div className="relative w-full overflow-hidden rounded-xl shadow-xs hover:shadow-md transition-shadow duration-300 group">
           <div className="relative aspect-[4/2] md:aspect-[6/2] w-full">
             <AnimatePresence mode="wait">
               {banner.link_url ? (
@@ -96,7 +96,7 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '', in
                 image
               )}
             </AnimatePresence>
-            <div className="absolute top-2 right-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-medium text-gray-500 uppercase tracking-wider shadow-sm z-10">
+            <div className="absolute top-2 right-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-medium text-gray-500 uppercase tracking-wider shadow-xs z-10">
               Ad
             </div>
           </div>

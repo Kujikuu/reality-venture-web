@@ -166,7 +166,7 @@ export const Team: React.FC = () => {
               {teamMembers.map((member, idx) => (
                 <div
                   key={member.name + idx}
-                  className="flex-shrink-0 box-border p-4"
+                  className="shrink-0 box-border p-4"
                   style={{ width: `${100 / visibleSlides}%` }}
                 >
                   <div className="bg-gray-50 rounded-lg p-8 h-full hover:bg-white transition-all duration-300 border border-gray-100 group">

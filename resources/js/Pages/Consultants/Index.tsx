@@ -28,7 +28,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
       <Head title={t('index.title')} />
       <div className="bg-white">
         {/* Hero */}
-        <section className="bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-16 lg:py-24">
+        <section className="bg-linear-to-br from-primary/5 via-white to-secondary/5 py-16 lg:py-24">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4">{t('index.title')}</h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">{t('index.subtitle')}</p>

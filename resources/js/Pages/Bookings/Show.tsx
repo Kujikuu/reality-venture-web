@@ -48,7 +48,7 @@ export default function BookingShow({ booking }: Props) {
       <div className="min-h-screen bg-gray-50 py-12 px-6">
         <div className="max-w-2xl mx-auto">
           <motion.div
-            className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm"
+            className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-xs"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >

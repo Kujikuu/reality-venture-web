@@ -1,4 +1,20 @@
 @import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+@theme {
+    --default-ring-width: 3px;
+    --default-ring-color: var(--color-blue-500);
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {

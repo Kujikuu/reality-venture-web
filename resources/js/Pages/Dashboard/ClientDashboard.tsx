@@ -71,7 +71,7 @@ export default function ClientDashboard({ upcoming, pendingPayment, past, stats 
               onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeTab === tab.key
-                  ? 'bg-white text-gray-900 shadow-sm'
+                  ? 'bg-white text-gray-900 shadow-xs'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >

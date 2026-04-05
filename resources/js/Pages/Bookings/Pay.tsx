@@ -80,7 +80,7 @@ export default function BookingPay({ booking, clientSecret, stripeKey, pending }
         <Head title={t('pay.title')} />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
           <motion.div
-            className="bg-white border border-gray-200 rounded-2xl p-12 text-center max-w-md w-full shadow-sm"
+            className="bg-white border border-gray-200 rounded-2xl p-12 text-center max-w-md w-full shadow-xs"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -101,7 +101,7 @@ export default function BookingPay({ booking, clientSecret, stripeKey, pending }
       <div className="min-h-screen bg-gray-50 py-12 px-6">
         <div className="max-w-2xl mx-auto">
           <motion.div
-            className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm"
+            className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-xs"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >

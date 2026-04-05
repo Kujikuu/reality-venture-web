@@ -23,7 +23,7 @@ export default function Register() {
       <Head title={t('register.title')} />
       <div className="min-h-screen flex">
         {/* Left Panel */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary-800 to-[#2a1a40] items-center justify-center p-12">
+        <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-primary via-primary-800 to-[#2a1a40] items-center justify-center p-12">
           <div className="max-w-md text-white">
            <a href="/"><img src="/assets/images/RVHorizonal.png" alt="Reality Venture" className="h-10 mb-12 brightness-0 invert" /></a>
             <h2 className="text-4xl font-bold tracking-tight mb-4">{t('register.heroTitle')}</h2>

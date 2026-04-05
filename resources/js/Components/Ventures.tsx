@@ -78,7 +78,7 @@ export const Ventures: React.FC = () => {
                   { icon: Layers, textKey: 5 }
                 ].map((item, i) => (
                   <div key={i} className="flex items-start p-3 rounded-md bg-gray-50 border border-gray-100 hover:border-primary/30 hover:bg-primary-50/50 transition-colors">
-                    <item.icon className="w-5 h-5 text-primary ltr:mr-3 rtl:ml-3 flex-shrink-0 mt-0.5" />
+                    <item.icon className="w-5 h-5 text-primary ltr:mr-3 rtl:ml-3 shrink-0 mt-0.5" />
                     <span className="text-sm text-gray-700 leading-relaxed">{t(`ventures.focusAreas.${i}.text`)}</span>
                   </div>
                 ))}
@@ -92,7 +92,7 @@ export const Ventures: React.FC = () => {
                </h4>
                <ul className="space-y-2 text-sm text-gray-600">
                  {(t('ventures.serving', { returnObjects: true }) as string[]).map((item, i) => (
-                   <li key={i} className="flex items-start gap-2"><span className="text-primary font-bold flex-shrink-0">•</span><span>{item}</span></li>
+                   <li key={i} className="flex items-start gap-2"><span className="text-primary font-bold shrink-0">•</span><span>{item}</span></li>
                  ))}
                </ul>
             </div>

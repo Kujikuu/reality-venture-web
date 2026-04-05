@@ -46,7 +46,7 @@ export default function Blog({ posts, categories, filters }: BlogProps) {
       <Head title={t('pageTitle')} />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-20 lg:py-28 overflow-hidden">
+      <section className="relative bg-linear-to-br from-primary-50 via-white to-secondary-50 py-20 lg:py-28 overflow-hidden">
         {/* Floating geometric shapes */}
         <div className="absolute top-10 start-10 w-20 h-20 rounded-full bg-primary/5 blur-xl" />
         <div className="absolute bottom-10 end-20 w-32 h-32 rounded-full bg-secondary/5 blur-xl" />
