@@ -9,6 +9,7 @@ interface NewsletterSubscribeProps {
   badge?: string;
   backgroundImage?: string;
   className?: string;
+  sectionId?: string;
 }
 
 const DEFAULT_BACKGROUND = '/assets/images/newsletter-bg.jpg';
@@ -19,6 +20,7 @@ export const NewsletterSubscribe = ({
   badge,
   backgroundImage = DEFAULT_BACKGROUND,
   className = '',
+  sectionId,
 }: NewsletterSubscribeProps) => {
   const { t } = useTranslation(['navigation', 'common']);
   const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
@@ -39,7 +41,7 @@ export const NewsletterSubscribe = ({
   const displayBadge = badge ?? t('common:status.noSpam');
 
   return (
-    <section className={`px-4 py-12 sm:px-8 sm:py-16 lg:p-16 ${className}`}>
+    <section id={sectionId} className={`scroll-mt-24 px-4 py-12 sm:px-8 sm:py-16 lg:p-16 ${className}`}>
       <div className="relative overflow-hidden rounded-2xl max-w-7xl mx-auto py-16 px-6 sm:py-20 sm:px-10 lg:py-24 lg:px-16">
         <div
           className="absolute inset-0 bg-cover bg-center"
