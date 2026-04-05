@@ -19,11 +19,10 @@ export const Header = () => {
 
   const navLinks: NavLink[] = [
     { nameKey: 'about', link: 'hero' },
-    // { nameKey: 'services', link: 'services' },
-    { nameKey: 'realityVenture', link: 'proptech' },
-    { nameKey: 'programs', link: 'programs' },
+    { nameKey: 'ventureProgram', link: 'programs' },
+    { nameKey: 'advisory', link: '/consultants', isPage: true },
+    { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
-    { nameKey: 'consultants', link: '/consultants', isPage: true },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
