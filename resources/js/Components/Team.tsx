@@ -39,7 +39,7 @@ const MEMBER_CONFIG = [
   {
     key: 'investorRelationsManager',
     image: '/assets/images/team-investor-relations.jpg',
-    fallbackName: 'Agad Alnemri',
+    fallbackName: 'Ahad Alnemri',
     fallbackTitle: 'Investors Relation Manager',
     fallbackDepartment: 'Investor Relations',
     fallbackBio: 'Builds trusted LP relationships and orchestrates transparent reporting.',

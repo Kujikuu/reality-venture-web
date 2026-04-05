@@ -73,9 +73,9 @@ class TeamConsultantsSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Agad Alnemri',
-                'email' => 'agad@rv.com.sa',
-                'slug_prefix' => 'agad-alnemri',
+                'name' => 'Ahad Alnemri',
+                'email' => 'ahad@rv.com.sa',
+                'slug_prefix' => 'ahad-alnemri',
                 'bio_en' => 'Builds trusted LP relationships and orchestrates transparent reporting.',
                 'bio_ar' => 'تبني علاقات موثوقة مع المستثمرين وتنسق تقارير شفافة.',
                 'years_experience' => 6,
