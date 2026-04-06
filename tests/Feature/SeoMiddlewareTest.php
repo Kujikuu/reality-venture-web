@@ -47,7 +47,7 @@ class SeoMiddlewareTest extends TestCase
         $response = $this->get('/');
 
         $response->assertInertia(fn ($page) => $page
-            ->where('seo.title', 'Accelerator & Incubator')
+            ->where('seo.title', 'Reality Venture - Accelerator & Incubator')
             ->has('seo.description')
             ->where('seo.ogType', 'website')
             ->has('seo.jsonLd')

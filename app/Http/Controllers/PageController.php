@@ -12,7 +12,7 @@ class PageController extends Controller
     public function home(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Accelerator & Incubator',
+            'title' => 'Reality Venture - Accelerator & Incubator',
             'description' => 'Join Reality Venture, a leading accelerator and incubator program connecting innovative startups with expert consultants and mentors.',
             'canonical' => url('/'),
             'ogImage' => asset('images/og-default.jpg'),

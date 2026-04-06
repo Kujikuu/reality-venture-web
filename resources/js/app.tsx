@@ -36,7 +36,11 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 }
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - Reality Venture` : 'Reality Venture'),
+    title: (title) => {
+        if (!title) return 'Reality Venture';
+        if (title.includes('Reality Venture')) return title;
+        return `${title} - Reality Venture`;
+    },
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.tsx`,
