@@ -70,7 +70,7 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '', in
 
   return (
     <div className={`w-full py-8 ${className}`}>
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="relative w-full overflow-hidden rounded-xl shadow-xs hover:shadow-md transition-shadow duration-300 group">
           <div className="relative aspect-[4/2] md:aspect-[6/2] w-full">
             <AnimatePresence mode="wait">

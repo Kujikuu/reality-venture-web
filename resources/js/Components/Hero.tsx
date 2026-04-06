@@ -21,7 +21,7 @@ export const Hero: React.FC = () => {
         <div className="shape absolute bottom-20 left-1/4 w-12 h-12 border border-primary/20" />
       </div>
 
-      <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           variants={heroContainerVariants}

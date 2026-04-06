@@ -31,7 +31,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
       <div className="bg-white">
         {/* Hero */}
         <section className="bg-linear-to-br from-primary/5 via-white to-secondary/5 py-16 lg:py-24">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4">{t('index.title')}</h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">{t('index.subtitle')}</p>
           </div>
@@ -39,7 +39,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
 
         {/* Advisor CTA Banner */}
         <section className="bg-gray-50 border-y border-gray-200">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
             <div className="flex-1 min-w-0">
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
               <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>
@@ -53,7 +53,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
         </section>
 
         {/* Content */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
+        <section className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar Filters */}
             <aside className="lg:w-64 shrink-0">

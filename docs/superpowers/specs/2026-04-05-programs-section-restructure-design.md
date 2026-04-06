@@ -91,14 +91,14 @@ Arabic values:
 
 **File:** `resources/js/Pages/Consultants/Index.tsx`
 
-Insert a new `<section>` between the existing Hero section (the one ending near line 36) and the Content section (starting with `<section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-12">`).
+Insert a new `<section>` between the existing Hero section (the one ending near line 36) and the Content section (starting with `<section className="max-w-7xl mx-auto px-6 lg:px-12 py-12">`).
 
 Structure:
 
 ```tsx
 {/* Advisor CTA Banner */}
 <section className="bg-gray-50 border-y border-gray-200">
-  <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+  <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
     <div className="flex-1 min-w-0">
       <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
       <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>

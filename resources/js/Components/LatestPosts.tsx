@@ -23,7 +23,7 @@ export const LatestPosts: React.FC = () => {
 
   return (
     <section className="relative bg-gray-50 py-24 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
           className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8"

@@ -146,7 +146,7 @@ export default function StartupApplication() {
             <div className="shape absolute bottom-20 left-1/4 w-12 h-12 border border-primary/20" />
           </div> */}
 
-          <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
             <motion.div
               className="flex items-center"
               variants={heroContainerVariants}
@@ -212,7 +212,7 @@ export default function StartupApplication() {
 
         {/* Form Section */}
         <section className="flex-1 py-20 px-6 lg:px-12 bg-gray-50/50">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10">
             <div className="bg-white border border-gray-200 p-8 md:p-12 rounded-xl shadow-sm">
               <div className="flex items-center justify-between mb-10">
                 <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('startup-application:form.title')}</h2>

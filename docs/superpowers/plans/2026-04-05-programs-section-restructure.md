@@ -252,7 +252,7 @@ export const Programs: React.FC = () => {
 
   return (
     <section id="programs" className="bg-gray-50 py-24 scroll-mt-24">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">{t('title')}</h2>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
@@ -369,7 +369,7 @@ Find the closing `</section>` of the Hero section (it appears right after the `<
 ```tsx
         {/* Advisor CTA Banner */}
         <section className="bg-gray-50 border-y border-gray-200">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 lg:py-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
             <div className="flex-1 min-w-0">
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{t('advisorCta.title')}</h2>
               <p className="text-sm lg:text-base text-gray-500 leading-relaxed">{t('advisorCta.description')}</p>

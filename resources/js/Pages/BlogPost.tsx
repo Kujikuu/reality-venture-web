@@ -191,7 +191,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <section className="py-24 bg-gray-50">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('relatedPosts')}</h2>
             <motion.div
               initial="hidden"

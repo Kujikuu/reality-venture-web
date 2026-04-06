@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
             <div className="shape absolute bottom-20 left-1/4 w-12 h-12 border border-primary/20" />
           </div>
 
-          <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
             <motion.div
               className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-center"
               variants={heroContainerVariants}
@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="flex-1 py-20 px-6 lg:px-12 bg-gray-50/50">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[0.3fr_0.7fr] gap-12 lg:gap-24">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[0.3fr_0.7fr] gap-12 lg:gap-24">
             <aside className="hidden lg:block h-fit sticky top-32">
               <nav className="space-y-1 border-l-2 border-gray-200">
                 {(t('privacyPolicy.sections', { returnObjects: true }) as Array<{ id: string, title: string }>).map((section) => (

@@ -51,7 +51,7 @@ export default function ConsultantShow({ consultant, reviews }: Props) {
     <>
       <SEO />
       <div className="bg-gray-50 min-h-screen">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column */}
             <div className="lg:col-span-7 space-y-8">

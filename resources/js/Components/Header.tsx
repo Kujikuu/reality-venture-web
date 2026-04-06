@@ -43,7 +43,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-background-dark dark:border-gray-800">
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-12 h-20 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 h-20 flex items-center justify-between">
 
         {/* Logo */}
         <Link

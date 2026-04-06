@@ -141,7 +141,7 @@ export const Team: React.FC = () => {
 
   return (
     <section id="team" className="py-24 bg-white scroll-mt-24">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">

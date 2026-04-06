@@ -54,7 +54,7 @@ export default function Blog({ posts, categories, filters }: BlogProps) {
         <div className="absolute bottom-10 end-20 w-32 h-32 rounded-full bg-secondary/5 blur-xl" />
         <div className="absolute top-1/2 end-10 w-16 h-16 border border-secondary/10 rounded-lg rotate-12" />
 
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-8 text-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -73,7 +73,7 @@ export default function Blog({ posts, categories, filters }: BlogProps) {
 
       {/* Filters & Content */}
       <section className="py-24">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
           {/* Search & Category Filters */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10">
