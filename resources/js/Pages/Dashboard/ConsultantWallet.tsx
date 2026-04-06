@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, DollarSign, UserCircle, Wallet, Landmark,
@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BalanceSummary, BankDetails, PaginatedData, PageProps, PayoutItem } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   balance: BalanceSummary;
@@ -79,7 +80,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
 
   return (
     <>
-      <Head title={t('consultant.walletTitle')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('consultant.walletTitle')}>
 
         {/* Flash Messages */}

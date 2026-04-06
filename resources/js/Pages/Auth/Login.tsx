@@ -1,8 +1,9 @@
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { LogIn } from 'lucide-react';
 import type { PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 export default function Login() {
   const { t } = useTranslation('auth');
@@ -20,7 +21,7 @@ export default function Login() {
 
   return (
     <>
-      <Head title={t('login.title')} />
+      <SEO />
       <div className="min-h-screen flex">
         {/* Left Panel - Brand */}
         <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-primary via-primary-800 to-[#2a1a40] items-center justify-center p-12">

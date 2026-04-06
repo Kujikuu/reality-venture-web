@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Head, usePage, router } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Settings, Save, UserCircle, Camera } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   userData: {
@@ -51,7 +52,7 @@ export default function ClientSettings({ userData }: Props) {
 
   return (
     <>
-      <Head title={t('client.settingsTitle')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('client.settingsTitle')}>
 
         {flash.success && (

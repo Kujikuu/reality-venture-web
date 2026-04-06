@@ -1,8 +1,9 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Calendar, DollarSign, UserCircle, TrendingUp, ArrowUpRight, ArrowDownRight, Wallet } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PaginatedData } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   bookings: PaginatedData<BookingItem>;
@@ -42,7 +43,7 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
 
   return (
     <>
-      <Head title={t('consultant.earningsTitle')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('consultant.earningsTitle')}>
 
         {/* Summary Cards */}

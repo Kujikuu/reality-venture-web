@@ -1,7 +1,8 @@
-import { Head, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ShieldCheck } from 'lucide-react';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   token: string;
@@ -24,7 +25,7 @@ export default function ResetPassword({ token, email }: Props) {
 
   return (
     <>
-      <Head title={t('reset.title')} />
+      <SEO />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <motion.div
           className="w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xs"

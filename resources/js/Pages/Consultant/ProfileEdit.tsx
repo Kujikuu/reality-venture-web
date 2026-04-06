@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Head, usePage, router } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { Save, ExternalLink, LayoutDashboard, Calendar, DollarSign, UserCircle, Camera, Wallet } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { Specialization, PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface ConsultantProfileData {
   id: number;
@@ -107,7 +108,7 @@ export default function ProfileEdit({ profile, avatarUrl, specializations }: Pro
 
   return (
     <DashboardLayout links={sidebarLinks} title={t('consultant.profileEditTitle')}>
-      <Head title={t('consultant.profileEditTitle')} />
+      <SEO />
       <div>
 
         {flash.success && (

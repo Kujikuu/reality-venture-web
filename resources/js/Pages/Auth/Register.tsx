@@ -1,7 +1,8 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { UserPlus, Search, Briefcase } from 'lucide-react';
+import { SEO } from '../../Components/SEO';
 
 export default function Register() {
   const { t } = useTranslation('auth');
@@ -20,7 +21,7 @@ export default function Register() {
 
   return (
     <>
-      <Head title={t('register.title')} />
+      <SEO />
       <div className="min-h-screen flex">
         {/* Left Panel */}
         <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-primary via-primary-800 to-[#2a1a40] items-center justify-center p-12">

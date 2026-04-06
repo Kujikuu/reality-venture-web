@@ -1,14 +1,15 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Clock, Home } from 'lucide-react';
+import { SEO } from '../../Components/SEO';
 
 export default function PendingApproval() {
   const { t } = useTranslation('dashboard');
 
   return (
     <>
-      <Head title={t('pending.title')} />
+      <SEO />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <motion.div
           className="max-w-md text-center"

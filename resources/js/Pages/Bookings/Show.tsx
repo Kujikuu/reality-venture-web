@@ -1,9 +1,10 @@
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Link, useForm, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, User, ExternalLink, Star, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
 import type { BookingItem } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   booking: BookingItem;
@@ -44,7 +45,7 @@ export default function BookingShow({ booking }: Props) {
 
   return (
     <>
-      <Head title={`${t('show.title')} - ${booking.reference}`} />
+      <SEO />
       <div className="min-h-screen bg-gray-50 py-12 px-6">
         <div className="max-w-2xl mx-auto">
           <motion.div

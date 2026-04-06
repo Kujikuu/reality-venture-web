@@ -1,8 +1,9 @@
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { KeyRound } from 'lucide-react';
 import type { PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 export default function ForgotPassword() {
   const { t } = useTranslation('auth');
@@ -16,7 +17,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <Head title={t('forgot.title')} />
+      <SEO />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <motion.div
           className="w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xs"

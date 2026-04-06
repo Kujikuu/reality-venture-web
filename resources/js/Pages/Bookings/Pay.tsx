@@ -1,4 +1,4 @@
-import { Head, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Shield, Calendar, Clock, User, Loader2 } from 'lucide-react';
@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState, useEffect } from 'react';
 import type { BookingItem } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   booking: BookingItem | null;
@@ -77,7 +78,7 @@ export default function BookingPay({ booking, clientSecret, stripeKey, pending }
   if (pending || !booking) {
     return (
       <>
-        <Head title={t('pay.title')} />
+        <SEO />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
           <motion.div
             className="bg-white border border-gray-200 rounded-2xl p-12 text-center max-w-md w-full shadow-xs"
@@ -97,7 +98,7 @@ export default function BookingPay({ booking, clientSecret, stripeKey, pending }
 
   return (
     <>
-      <Head title={t('pay.title')} />
+      <SEO />
       <div className="min-h-screen bg-gray-50 py-12 px-6">
         <div className="max-w-2xl mx-auto">
           <motion.div

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react';
 import type { Specialization } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   specializations: Specialization[];
@@ -91,7 +92,7 @@ export default function Onboarding({ specializations }: Props) {
 
   return (
     <>
-      <Head title={t('onboarding.title')} />
+      <SEO />
       <div className="min-h-screen bg-gray-50 py-12 px-6">
         <div className="max-w-2xl mx-auto">
           {/* Step Indicators */}

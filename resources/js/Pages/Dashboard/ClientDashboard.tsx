@@ -1,9 +1,10 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Calendar, Settings, ExternalLink, Star } from 'lucide-react';
 import { useState } from 'react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   upcoming: BookingItem[];
@@ -43,7 +44,7 @@ export default function ClientDashboard({ upcoming, pendingPayment, past, stats 
 
   return (
     <>
-      <Head title={t('client.title')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('client.title')}>
         {/* Welcome */}
         <div className="mb-6">

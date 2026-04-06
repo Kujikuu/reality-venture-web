@@ -1,7 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { XCircle, Home, RefreshCw } from 'lucide-react';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   rejectionReason: string | null;
@@ -12,7 +13,7 @@ export default function Rejected({ rejectionReason }: Props) {
 
   return (
     <>
-      <Head title={t('rejected.title')} />
+      <SEO />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <motion.div
           className="max-w-md w-full text-center"

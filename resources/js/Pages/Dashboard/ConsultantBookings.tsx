@@ -1,8 +1,9 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Calendar, DollarSign, UserCircle, Wallet } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PaginatedData } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   bookings: PaginatedData<BookingItem>;
@@ -30,7 +31,7 @@ export default function ConsultantBookings({ bookings }: Props) {
 
   return (
     <>
-      <Head title={t('consultant.bookings')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('consultant.bookings')}>
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
           {bookings.data.length === 0 ? (

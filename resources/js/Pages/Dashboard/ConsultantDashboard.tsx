@@ -1,8 +1,9 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Calendar, DollarSign, UserCircle, Star, TrendingUp, Wallet } from 'lucide-react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PageProps } from '../../types/marketplace';
+import { SEO } from '../../Components/SEO';
 
 interface Props {
   stats: {
@@ -39,7 +40,7 @@ export default function ConsultantDashboard({ stats, recentBookings }: Props) {
 
   return (
     <>
-      <Head title={t('consultant.title')} />
+      <SEO />
       <DashboardLayout links={sidebarLinks} title={t('consultant.title')}>
         {/* Welcome */}
         <div className="mb-6">
