@@ -143,7 +143,7 @@ export default function DesksIndex() {
 
             {/* Hero */}
             <section className="bg-primary text-white py-16 px-4">
-                <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-3xl md:text-4xl font-bold mb-3">{t('title')}</h1>
                     <p className="text-white/80 text-lg mb-8">{t('subtitle')}</p>
 
@@ -174,7 +174,7 @@ export default function DesksIndex() {
             </section>
 
             {/* Tabs + UserMenu row */}
-            <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3">
+            <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-6">
                 <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
                     <div className="overflow-x-auto flex-1">
                         <TypeTabs activeType={activeType} onTypeChange={handleTypeChange} />
@@ -189,7 +189,7 @@ export default function DesksIndex() {
             </div>
 
             {/* Workspace grid */}
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="w-full max-w-7xl mx-auto px-4 py-8">
                 {loading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {Array.from({ length: 6 }).map((_, i) => (

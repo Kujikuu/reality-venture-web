@@ -138,7 +138,7 @@ export default function StartupApplication() {
       <SEO />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 pb-20">
+        <section className="relative overflow-hidden pt-24 pb-16">
           {/* <div className="absolute inset-0 hero-gradient -z-10" />
           <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
             <div className="shape absolute top-20 left-10 w-20 h-20 border-2 border-primary/10 rotate-45" />

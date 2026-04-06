@@ -31,9 +31,9 @@ export default function Apply() {
     <SEO />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 pb-20">
+        <section className="relative overflow-hidden pt-24 pb-16">
 
-          <div className="relative max-w-360 mx-auto px-6 lg:px-6">
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-6">
             <motion.div
               className="flex items-center"
               variants={heroContainerVariants}
