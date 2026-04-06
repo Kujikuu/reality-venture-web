@@ -12,7 +12,7 @@ class PageController extends Controller
     public function home(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Reality Venture - Accelerator & Incubator',
+            'title' => 'Accelerator & Incubator',
             'description' => 'Join Reality Venture, a leading accelerator and incubator program connecting innovative startups with expert consultants and mentors.',
             'canonical' => url('/'),
             'ogImage' => asset('images/og-default.jpg'),
@@ -59,7 +59,7 @@ class PageController extends Controller
     public function applicationForm(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Apply Now - Reality Venture',
+            'title' => 'Apply Now',
             'description' => 'Apply to join Reality Venture accelerator program and connect with expert consultants to grow your startup.',
             'canonical' => url('/application-form'),
             'ogImage' => asset('images/og-default.jpg'),
@@ -74,7 +74,7 @@ class PageController extends Controller
     public function startupApplicationForm(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Startup Application - Reality Venture',
+            'title' => 'Startup Application',
             'description' => 'Submit your startup application to Reality Venture accelerator and incubator program.',
             'canonical' => url('/startup-application'),
             'ogImage' => asset('images/og-default.jpg'),
@@ -89,7 +89,7 @@ class PageController extends Controller
     public function privacyPolicy(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Privacy Policy - Reality Venture',
+            'title' => 'Privacy Policy',
             'description' => 'Reality Venture privacy policy - how we collect, use, and protect your personal information.',
             'canonical' => url('/privacy-policy'),
             'ogImage' => asset('images/og-default.jpg'),
@@ -104,7 +104,7 @@ class PageController extends Controller
     public function termsOfService(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Terms of Service - Reality Venture',
+            'title' => 'Terms of Service',
             'description' => 'Reality Venture terms of service - rules and guidelines for using our platform.',
             'canonical' => url('/terms-of-service'),
             'ogImage' => asset('images/og-default.jpg'),

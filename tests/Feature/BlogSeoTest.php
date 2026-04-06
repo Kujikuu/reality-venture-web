@@ -16,7 +16,7 @@ class BlogSeoTest extends TestCase
         $response = $this->get('/blog');
 
         $response->assertInertia(fn ($page) => $page
-            ->where('seo.title', 'Blog - Reality Venture')
+            ->where('seo.title', 'Blog')
             ->has('seo.description')
             ->where('seo.robots', 'index, follow')
         );

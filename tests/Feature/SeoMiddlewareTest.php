@@ -15,7 +15,7 @@ class SeoMiddlewareTest extends TestCase
 
         $response->assertInertia(fn ($page) => $page
             ->has('seo')
-            ->where('seo.title', 'Privacy Policy - Reality Venture')
+            ->where('seo.title', 'Privacy Policy')
             ->where('seo.ogType', 'website')
             ->where('seo.robots', 'index, follow')
             ->has('seo.description')
@@ -47,7 +47,7 @@ class SeoMiddlewareTest extends TestCase
         $response = $this->get('/');
 
         $response->assertInertia(fn ($page) => $page
-            ->where('seo.title', 'Reality Venture - Accelerator & Incubator')
+            ->where('seo.title', 'Accelerator & Incubator')
             ->has('seo.description')
             ->where('seo.ogType', 'website')
             ->has('seo.jsonLd')

@@ -55,7 +55,7 @@ class BlogController extends Controller
             ]);
 
         Inertia::share('seo', fn () => [
-            'title' => 'Blog - Reality Venture',
+            'title' => 'Blog',
             'description' => 'Latest insights, stories, and updates from Reality Venture accelerator and incubator program.',
             'canonical' => url('/blog'),
             'ogImage' => asset('images/og-default.jpg'),

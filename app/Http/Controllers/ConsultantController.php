@@ -26,6 +26,16 @@ class ConsultantController extends Controller
             ->orderBy('sort_order')
             ->get(['id', 'name_en', 'name_ar', 'slug']);
 
+        Inertia::share('seo', fn () => [
+            'title' => 'Our Consultants',
+            'description' => 'Browse expert consultants and mentors at Reality Venture. Find the right advisor for your startup journey.',
+            'canonical' => url('/consultants'),
+            'ogImage' => asset('images/og-default.jpg'),
+            'ogType' => 'website',
+            'robots' => 'index, follow',
+            'jsonLd' => null,
+        ]);
+
         return Inertia::render('Consultants/Index', [
             'consultants' => $consultants,
             'specializations' => $specializations,
@@ -44,6 +54,29 @@ class ConsultantController extends Controller
         $consultantProfile->load([
             'user:id,name',
             'specializations:id,name_en,name_ar,slug',
+        ]);
+
+        $consultantName = $consultantProfile->user->name;
+        $bioText = $consultantProfile->bio_en ?: $consultantProfile->bio_ar ?: '';
+        $seoDescription = mb_strlen($bioText) > 160
+            ? mb_substr($bioText, 0, 157).'...'
+            : $bioText;
+
+        Inertia::share('seo', fn () => [
+            'title' => "{$consultantName} - Consultant",
+            'description' => $seoDescription,
+            'canonical' => url("/consultants/{$consultantProfile->slug}"),
+            'ogImage' => $consultantProfile->avatar_url ?: asset('images/og-default.jpg'),
+            'ogType' => 'profile',
+            'robots' => 'index, follow',
+            'jsonLd' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Person',
+                'name' => $consultantName,
+                'description' => $seoDescription,
+                'image' => $consultantProfile->avatar_url,
+                'jobTitle' => $consultantProfile->specializations->pluck('name_en')->first(),
+            ],
         ]);
 
         $reviews = $consultantProfile->reviews()
