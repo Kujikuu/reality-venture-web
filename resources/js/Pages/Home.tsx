@@ -11,7 +11,7 @@ import { Process } from '../Components/Process';
 import { Team } from '../Components/Team';
 import { LatestPosts } from '../Components/LatestPosts';
 import { NewsletterSubscribe } from '../Components/NewsletterSubscribe';
-import { Head } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 import { AdBanner } from '../Components/AdBanner';
 
 export default function Home() {
@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+      <SEO />
       <AdBanner position="top" />
       <Hero />
       <VisionMission />

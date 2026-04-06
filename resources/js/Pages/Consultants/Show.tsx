@@ -1,4 +1,5 @@
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { SEO } from '../../Components/SEO';
 import { useTranslation } from 'react-i18next';
 import { Star, Clock, Globe, MapPin, MessageCircle, Info } from 'lucide-react';
 import CalendlyWidget from '../../Components/CalendlyWidget';
@@ -48,7 +49,7 @@ export default function ConsultantShow({ consultant, reviews }: Props) {
 
   return (
     <>
-      <Head title={consultant.name} />
+      <SEO />
       <div className="bg-gray-50 min-h-screen">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

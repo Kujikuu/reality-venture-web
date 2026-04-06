@@ -1,4 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Hash, User, Share2 } from 'lucide-react';
@@ -82,13 +83,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
 
   return (
     <>
-      <Head>
-        <title>{post.meta_title || title}</title>
-        {post.meta_description && <meta name="description" content={post.meta_description} />}
-        {post.og_image && <meta property="og:image" content={post.og_image} />}
-        <meta property="og:title" content={post.meta_title || title} />
-        {post.meta_description && <meta property="og:description" content={post.meta_description} />}
-      </Head>
+      <SEO />
 
       {/* Hero / Header */}
       <article>

@@ -5,7 +5,8 @@ import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
-import { Head, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 import { COUNTRIES } from '../data/countries';
 
 const INDUSTRY_KEYS = [
@@ -134,7 +135,7 @@ export default function StartupApplication() {
 
   return (
     <>
-      <Head title={t('startup-application:pageTitle')} />
+      <SEO />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative overflow-hidden pt-24 pb-20">

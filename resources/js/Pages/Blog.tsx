@@ -1,4 +1,5 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -44,7 +45,7 @@ export default function Blog({ posts, categories, filters }: BlogProps) {
 
   return (
     <>
-      <Head title={t('pageTitle')} />
+      <SEO />
 
       {/* Hero Section */}
       <section className="relative bg-linear-to-br from-primary-50 via-white to-secondary-50 py-20 lg:py-28 overflow-hidden">

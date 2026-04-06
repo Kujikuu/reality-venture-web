@@ -2,14 +2,14 @@ import { motion } from 'framer-motion';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
 import { Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Head } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 
 export default function TermsOfService() {
   const { t } = useTranslation('legal');
 
   return (
     <>
-      <Head title={t('legal.pageTitle')} />
+      <SEO />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-24 bg-gray-50">

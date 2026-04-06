@@ -3,7 +3,8 @@ import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
-import { Head, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import { SEO } from '../Components/SEO';
 
 export default function Apply() {
   const { t } = useTranslation(['common', 'navigation', 'apply']);
@@ -27,7 +28,7 @@ export default function Apply() {
 
   return (
     <>
-    <Head title={t('apply.pageTitle')} />
+    <SEO />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative overflow-hidden pt-24 pb-20">

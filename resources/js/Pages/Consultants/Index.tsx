@@ -1,4 +1,5 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
+import { SEO } from '../../Components/SEO';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Star, Clock, Users } from 'lucide-react';
@@ -26,7 +27,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
 
   return (
     <>
-      <Head title={t('index.title')} />
+      <SEO />
       <div className="bg-white">
         {/* Hero */}
         <section className="bg-linear-to-br from-primary/5 via-white to-secondary/5 py-16 lg:py-24">
