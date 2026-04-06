@@ -18,6 +18,7 @@ import enConsultants from './locales/en/consultants.json';
 import enBookings from './locales/en/bookings.json';
 import enDashboard from './locales/en/dashboard.json';
 import enPayouts from './locales/en/payouts.json';
+import enDesks from './locales/en/desks.json';
 
 import arCommon from './locales/ar/common.json';
 import arNavigation from './locales/ar/navigation.json';
@@ -34,6 +35,7 @@ import arConsultants from './locales/ar/consultants.json';
 import arBookings from './locales/ar/bookings.json';
 import arDashboard from './locales/ar/dashboard.json';
 import arPayouts from './locales/ar/payouts.json';
+import arDesks from './locales/ar/desks.json';
 
 // Configure i18next
 i18n
@@ -57,6 +59,7 @@ i18n
         bookings: enBookings,
         dashboard: enDashboard,
         payouts: enPayouts,
+        desks: enDesks,
       },
       ar: {
         common: arCommon,
@@ -74,6 +77,7 @@ i18n
         bookings: arBookings,
         dashboard: arDashboard,
         payouts: arPayouts,
+        desks: arDesks,
       },
     },
     fallbackLng: 'en', // Use English if translation is missing

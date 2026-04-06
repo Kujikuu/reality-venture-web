@@ -1,3 +1,13 @@
+declare global {
+    interface Window {
+        desksConfig: {
+            apiUrl: string;
+            siteKey: string;
+            locale: string;
+        };
+    }
+}
+
 export interface AuthUser {
   id: number;
   name: string;
