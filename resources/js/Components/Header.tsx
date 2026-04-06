@@ -18,10 +18,10 @@ export const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navLinks: NavLink[] = [
+    { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'about', link: 'hero' },
     { nameKey: 'ventureProgram', link: 'programs' },
     { nameKey: 'advisory', link: '/consultants', isPage: true },
-    { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
   ];
 

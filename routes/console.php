@@ -56,3 +56,6 @@ Schedule::call(function () {
         Mail::to($booking->client->email)->send(new BookingCancelledMail($booking));
     }
 })->everyFiveMinutes()->name('cancel-unpaid-bookings')->withoutOverlapping();
+
+// Generate sitemap daily at 3 AM
+Schedule::command('seo:generate-sitemap')->dailyAt('03:00');
