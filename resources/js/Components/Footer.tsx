@@ -64,10 +64,10 @@ export const Footer = ({ hideNewsletter = false }: FooterProps) => {
           {/* Navigation - Explore - Span 2 */}
           <div className="lg:col-span-3">
             <h4 className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-6">{t('navigation:footer.quickLinks')}</h4>
-            <ul className="space-y-4 text-sm font-medium text-gray-500">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium text-gray-500">
               <li><Link href="/#hero" onClick={(e) => smoothScrollTo(e, 'hero')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.about')}</Link></li>
-              <li><Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.ventureProgram')}</Link></li>
               <li><Link href="/consultants" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.advisory')}</Link></li>
+              <li><Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.ventureProgram')}</Link></li>
               <li><Link href="/desks" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.desks')}</Link></li>
               <li><Link href="/#rv-club" onClick={(e) => smoothScrollTo(e, 'rv-club')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.rvClub')}</Link></li>
               <li><Link href="/blog" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.blog')}</Link></li>
