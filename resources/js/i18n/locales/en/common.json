@@ -39,8 +39,16 @@
   },
   "newsletter": {
     "phone": {
-      "placeholder": "05X XXX XXXX",
+      "placeholder": "Enter your phone number",
       "label": "Phone (optional)"
+    },
+     "fullname": {
+      "placeholder": "Enter your full name",
+      "label": "Fullname"
+    },
+     "email": {
+      "placeholder": "Enter your email address",
+      "label": "Email"
     },
     "home": {
       "heading": "Join the Reality Venture club",

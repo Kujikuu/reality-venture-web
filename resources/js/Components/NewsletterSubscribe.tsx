@@ -55,7 +55,7 @@ export const NewsletterSubscribe = ({
           aria-hidden="true"
         /> */}
 
-        <div className="relative flex flex-col gap-4 backdrop-blur bg-white/10 border border-white/20 rounded-2xl p-6 sm:p-10 lg:p-12 text-center max-w-2xl mx-auto">
+        <div className="relative flex flex-col gap-4 backdrop-blur-xs bg-white/40 border border-white/60 rounded-2xl p-6 sm:p-10 lg:p-12 text-center max-w-2xl mx-auto">
 
           {/* {displayBadge && (
             <div className="inline-flex items-center gap-2 text-white/90 font-bold text-xs tracking-widest uppercase mb-6 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md border border-white/20">
@@ -84,9 +84,9 @@ export const NewsletterSubscribe = ({
                     type="text"
                     value={data.fullname}
                     onChange={(e) => setData('fullname', e.target.value)}
-                    placeholder={t('navigation:footer.newsletter.placeholder')}
-                    aria-label={t('navigation:footer.newsletter.placeholder')}
-                    className="w-full px-4 py-3 rounded-md bg-black/10 border border-black/20 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-black/40 outline-none text-sm backdrop-blur-sm"
+                    placeholder={t('common:newsletter.fullname.placeholder')}
+                    aria-label={t('common:newsletter.fullname.label')}
+                    className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
                   />
                   {errors.fullname && (
                     <p className="text-red-500 text-sm mt-2 text-start">{errors.fullname}</p>
@@ -98,9 +98,9 @@ export const NewsletterSubscribe = ({
                       type="email"
                       value={data.email}
                       onChange={(e) => setData('email', e.target.value)}
-                      placeholder={t('navigation:footer.newsletter.placeholder')}
-                      aria-label={t('navigation:footer.newsletter.placeholder')}
-                      className="w-full px-4 py-3 rounded-md bg-black/10 border border-black/20 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-black/40 outline-none text-sm backdrop-blur-sm"
+                      placeholder={t('common:newsletter.email.placeholder')}
+                      aria-label={t('common:newsletter.email.label')}
+                      className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
                     />
                     {errors.email && (
                       <p className="text-red-500 text-sm mt-2 text-start">{errors.email}</p>
@@ -114,7 +114,7 @@ export const NewsletterSubscribe = ({
                       onChange={(e) => setData('phone', e.target.value)}
                       placeholder={t('common:newsletter.phone.placeholder')}
                       aria-label={t('common:newsletter.phone.label')}
-                      className="w-full px-4 py-3 rounded-md bg-black/10 border border-black/20 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-black/40 outline-none text-sm backdrop-blur-sm"
+                      className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
                     />
                     {errors.phone && (
                       <p className="text-red-500 text-sm mt-2 text-start">{errors.phone}</p>

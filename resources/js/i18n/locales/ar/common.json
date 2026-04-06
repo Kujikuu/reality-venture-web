@@ -40,7 +40,15 @@
   "newsletter": {
     "phone": {
       "placeholder": "05X XXX XXXX",
-      "label": "الهاتف (اختياري)"
+      "label": "الهاتف"
+    },
+    "fullname": {
+      "placeholder": "ادخل اسمك بالكامل",
+      "label": "الاسم بالكامل"
+    },
+    "email": {
+      "placeholder": "أدخل بريدك الإلكتروني",
+      "label": "البريد الإلكتروني"
     },
     "home": {
       "heading": "انضم إلى نادي رياليتي فينتشر",
