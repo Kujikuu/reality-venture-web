@@ -53,8 +53,8 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                             </div>
                         )}
                         {/* Type badge */}
-                        <span className="absolute top-3 left-3 bg-primary text-white text-xs font-medium px-3 py-1 rounded-full capitalize">
-                            {workspace.type.replace('_', ' ')}
+                        <span className="absolute top-3 start-3 bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+                            {t(`tabs.${workspace.type}`)}
                         </span>
                     </div>
 

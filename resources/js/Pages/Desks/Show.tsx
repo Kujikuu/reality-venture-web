@@ -158,7 +158,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
                                 coverImage={workspace.cover_image}
                                 images={workspace.images ?? []}
                                 name={workspace.name}
-                                typeBadge={workspace.type.replace('_', ' ')}
+                                typeBadge={t(`tabs.${workspace.type}`)}
                             />
 
                             {/* Name + share */}
@@ -168,7 +168,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
                                         {workspace.name}
                                     </h1>
                                     <span className="inline-block mt-2 bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full capitalize">
-                                        {workspace.type.replace('_', ' ')}
+                                        {t(`tabs.${workspace.type}`)}
                                     </span>
                                 </div>
                                 <div className="flex flex-col items-end gap-1 flex-shrink-0">

@@ -217,7 +217,7 @@ export default function DesksBookings() {
                                             {booking.workspace.name}
                                         </Link>
                                         <span className="inline-block mt-1 bg-primary/10 text-primary text-xs px-2.5 py-0.5 rounded-full capitalize">
-                                            {booking.workspace.type.replace('_', ' ')}
+                                            {t(`tabs.${booking.workspace.type}`)}
                                         </span>
                                     </div>
                                     <span
