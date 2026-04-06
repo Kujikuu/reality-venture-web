@@ -90,10 +90,10 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                             <div className="flex flex-wrap gap-1.5">
                                 {topAmenities.map((amenity) => (
                                     <span
-                                        key={amenity}
+                                        key={amenity.id || amenity.key}
                                         className="bg-surface text-gray-600 text-xs px-2.5 py-1 rounded-full"
                                     >
-                                        {amenity}
+                                        {amenity.label || amenity.key}
                                     </span>
                                 ))}
                             </div>
