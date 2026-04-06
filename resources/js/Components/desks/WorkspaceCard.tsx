@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { MapPin, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { cardVariants, cardHover } from '../animations/CommonAnimations';
+import { cardVariants } from '../animations/CommonAnimations';
 
 interface Pricing {
     price_per_hour: number | null;
@@ -35,11 +35,8 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
     return (
         <motion.div
             variants={cardVariants}
-            whileHover="hover"
-            animate="visible"
-            className="rounded-xl border border-gray-200 bg-white overflow-hidden"
+            className="rounded-xl border border-gray-200 bg-white overflow-hidden transition-shadow duration-300 hover:shadow-lg"
         >
-            <motion.div variants={cardHover}>
                 <Link href={`/desks/${workspace.id}`} className="block">
                     {/* Image */}
                     <div className="relative h-48 bg-gray-100 overflow-hidden">
@@ -119,7 +116,6 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                         </div>
                     </div>
                 </Link>
-            </motion.div>
         </motion.div>
     );
 };
