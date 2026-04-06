@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <>
       <SEO />
-      <Hero />
       <AdBanner position="top" />
+      <Hero />
       <VisionMission />
       <StrategicGoals />
       <TargetAudience />
