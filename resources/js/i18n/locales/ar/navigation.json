@@ -11,7 +11,9 @@
     "about": "من نحن",
     "blog": "المدونة",
     "ventureProgram": "برنامج المشاريع",
+    "marketplace": "السوق",
     "advisory": "الاستشارات",
+    "desks": "المكاتب",
     "rvClub": "نادي RV"
   },
   "footer": {
@@ -20,6 +22,7 @@
     "about": "من نحن",
     "ventureProgram": "برنامج المشاريع",
     "advisory": "الاستشارات",
+    "desks": "المكاتب",
     "rvClub": "نادي RV",
     "process": "العملية",
     "team": "الفريق",

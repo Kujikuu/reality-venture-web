@@ -16,13 +16,18 @@ export const Header = () => {
   const { t } = useTranslation('navigation');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
 
   const navLinks: NavLink[] = [
     { nameKey: 'about', link: 'hero' },
     { nameKey: 'ventureProgram', link: 'programs' },
-    { nameKey: 'advisory', link: '/consultants', isPage: true },
     { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
+  ];
+
+  const marketplaceLinks = [
+    { nameKey: 'advisory', link: '/consultants' },
+    { nameKey: 'desks', link: '/desks' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -55,7 +60,59 @@ export const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((item) =>
+          {navLinks.slice(0, 2).map((item) =>
+            item.isPage ? (
+              <Link
+                key={item.nameKey}
+                href={item.link}
+                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
+              >
+                {t(`header.${item.nameKey}`)}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ) : (
+              <a
+                key={item.nameKey}
+                href={`/#${item.link}`}
+                onClick={(e) => handleNavClick(e, item.link)}
+                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
+              >
+                {t(`header.${item.nameKey}`)}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
+              </a>
+            )
+          )}
+
+          {/* Marketplace Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
+              className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
+            >
+              {t('header.marketplace')}
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMarketplaceOpen ? 'rotate-180' : ''}`} />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
+            </button>
+            {isMarketplaceOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setIsMarketplaceOpen(false)} />
+                <div className="absolute start-0 mt-3 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1">
+                  {marketplaceLinks.map((item) => (
+                    <Link
+                      key={item.nameKey}
+                      href={item.link}
+                      className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors"
+                      onClick={() => setIsMarketplaceOpen(false)}
+                    >
+                      {t(`header.${item.nameKey}`)}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          {navLinks.slice(2).map((item) =>
             item.isPage ? (
               <Link
                 key={item.nameKey}
@@ -174,6 +231,24 @@ export const Header = () => {
               </a>
             )
           )}
+
+          {/* Marketplace section */}
+          <div className="border-t border-gray-200 pt-4 mt-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3 block">{t('header.marketplace')}</span>
+            <div className="flex flex-col gap-3">
+              {marketplaceLinks.map((item) => (
+                <Link
+                  key={item.nameKey}
+                  href={item.link}
+                  className="text-lg font-bold uppercase tracking-wide hover:text-primary"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t(`header.${item.nameKey}`)}
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <div className="border-t border-gray-200 pt-4 mt-2">
             {auth.user ? (
               <div className="flex flex-col gap-3">

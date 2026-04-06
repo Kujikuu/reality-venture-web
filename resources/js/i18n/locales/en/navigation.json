@@ -11,7 +11,9 @@
     "about": "About",
     "blog": "Blog",
     "ventureProgram": "Venture Program",
+    "marketplace": "Marketplace",
     "advisory": "Advisory",
+    "desks": "Desks",
     "rvClub": "RV Club"
   },
   "footer": {
@@ -20,6 +22,7 @@
     "about": "About",
     "ventureProgram": "Venture Program",
     "advisory": "Advisory",
+    "desks": "Desks",
     "rvClub": "RV Club",
     "process": "Process",
     "team": "Team",
