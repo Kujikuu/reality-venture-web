@@ -15,6 +15,10 @@ class SubscriberForm
             ->components([
                 Section::make('Subscriber Details')
                     ->schema([
+                        TextInput::make('fullname')
+                            ->label('Full Name')
+                            ->required()
+                            ->maxLength(100),
                         TextInput::make('email')
                             ->email()
                             ->required()

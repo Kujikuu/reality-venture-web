@@ -10,6 +10,7 @@ class NewsletterController extends Controller
 {
     public function subscribe(SubscribeToNewsletterRequest $request): RedirectResponse
     {
+        $fullname = $request->validated('fullname');
         $email = $request->validated('email');
         $phone = $this->normalizePhone($request->validated('phone'));
 
@@ -17,11 +18,13 @@ class NewsletterController extends Controller
 
         if ($subscriber) {
             $subscriber->update([
+                'fullname' => $fullname,
                 'is_active' => true,
                 'phone' => $phone,
             ]);
         } else {
             Subscriber::create([
+                'fullname' => $fullname,
                 'email' => $email,
                 'phone' => $phone,
             ]);

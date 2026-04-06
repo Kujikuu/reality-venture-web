@@ -17,6 +17,10 @@ class SubscribersTable
     {
         return $table
             ->columns([
+                TextColumn::make('fullname')
+                    ->label('Full Name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable()

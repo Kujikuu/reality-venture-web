@@ -18,12 +18,16 @@ class NewsletterTest extends TestCase
     public function test_user_can_subscribe_to_newsletter(): void
     {
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
+            'phone' => '0512345678',
         ]);
 
         $response->assertRedirect();
         $this->assertDatabaseHas('subscribers', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
+            'phone' => '+966512345678',
             'is_active' => true,
         ]);
     }
@@ -31,6 +35,7 @@ class NewsletterTest extends TestCase
     public function test_user_can_subscribe_with_email_and_phone(): void
     {
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
         ]);
@@ -43,25 +48,13 @@ class NewsletterTest extends TestCase
         ]);
     }
 
-    public function test_user_can_subscribe_with_email_only_phone_omitted(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'email' => 'test@example.com',
-        ]);
-
-        $response->assertRedirect();
-        $this->assertDatabaseHas('subscribers', [
-            'email' => 'test@example.com',
-            'phone' => null,
-        ]);
-    }
-
     public function test_subscribe_rejects_invalid_saudi_phone_format(): void
     {
         $invalid = ['123', '+14155551234', 'abcdef', '0412345678', '05123'];
 
         foreach ($invalid as $phone) {
             $response = $this->post('/newsletter/subscribe', [
+                'fullname' => 'Test User',
                 'email' => 'test@example.com',
                 'phone' => $phone,
             ]);
@@ -85,6 +78,7 @@ class NewsletterTest extends TestCase
             Subscriber::query()->delete();
 
             $this->post('/newsletter/subscribe', [
+                'fullname' => 'Test User',
                 'email' => "{$key}@example.com",
                 'phone' => $phone,
             ]);
@@ -106,6 +100,7 @@ class NewsletterTest extends TestCase
         ]);
 
         $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0522222222',
         ]);
@@ -120,7 +115,9 @@ class NewsletterTest extends TestCase
     public function test_subscribe_requires_valid_email(): void
     {
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'not-an-email',
+            'phone' => '0512345678',
         ]);
 
         $response->assertSessionHasErrors('email');
@@ -129,10 +126,32 @@ class NewsletterTest extends TestCase
     public function test_subscribe_requires_email(): void
     {
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => '',
+            'phone' => '0512345678',
         ]);
 
         $response->assertSessionHasErrors('email');
+    }
+
+    public function test_subscribe_requires_fullname(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'email' => 'test@example.com',
+            'phone' => '0512345678',
+        ]);
+
+        $response->assertSessionHasErrors('fullname');
+    }
+
+    public function test_subscribe_requires_phone(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        $response->assertSessionHasErrors('phone');
     }
 
     public function test_duplicate_subscription_is_idempotent(): void
@@ -140,7 +159,9 @@ class NewsletterTest extends TestCase
         Subscriber::factory()->create(['email' => 'test@example.com']);
 
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
+            'phone' => '0512345678',
         ]);
 
         $response->assertRedirect();
@@ -156,7 +177,9 @@ class NewsletterTest extends TestCase
         $this->assertFalse($subscriber->is_active);
 
         $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
             'email' => 'test@example.com',
+            'phone' => '0512345678',
         ]);
 
         $response->assertRedirect();

@@ -37,23 +37,23 @@ export default function Home() {
   return (
     <>
       <SEO />
-      <AdBanner position="top" />
-      <Hero />
-      <VisionMission />
-      <StrategicGoals />
-      <TargetAudience />
-      <Services />
-      <AdBanner position="middle" />
-      {/* <Ventures /> */}
-      <Team />
-      <Programs />
-      {/* <Process /> */}
       <NewsletterSubscribe
         sectionId="rv-club"
         heading={t('newsletter.home.heading')}
         description={t('newsletter.home.description')}
         badge={t('newsletter.home.badge')}
       />
+      <Hero />
+      <AdBanner position="top" />
+      <VisionMission />
+      <StrategicGoals />
+      <TargetAudience />
+      <Services />
+      <AdBanner position="middle" />
+      {/* <Ventures /> */}
+      <Programs />
+      <Team />
+      {/* <Process /> */}
       <LatestPosts />
     </>
   );

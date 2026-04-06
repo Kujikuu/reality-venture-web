@@ -19,6 +19,7 @@ class SubscriberFactory extends Factory
     public function definition(): array
     {
         return [
+            'fullname' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->optional(weight: 0.7)->numerify('+9665########'),
             'unsubscribe_token' => Str::random(64),
