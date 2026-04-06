@@ -227,13 +227,13 @@ export default function DesksShow({ workspaceId }: ShowProps) {
                                         {t('detail.amenities')}
                                     </h3>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                        {workspace.amenities.map((amenity) => (
+                                        {workspace.amenities.map((amenity: any) => (
                                             <div
-                                                key={amenity}
+                                                key={amenity.id || amenity.key}
                                                 className="flex items-center gap-2 text-sm text-gray-600"
                                             >
                                                 <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                                                <span>{amenity}</span>
+                                                <span>{amenity.label || amenity.key}</span>
                                             </div>
                                         ))}
                                     </div>
