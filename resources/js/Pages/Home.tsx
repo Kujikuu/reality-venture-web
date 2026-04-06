@@ -37,12 +37,6 @@ export default function Home() {
   return (
     <>
       <SEO />
-      <NewsletterSubscribe
-        sectionId="rv-club"
-        heading={t('newsletter.home.heading')}
-        description={t('newsletter.home.description')}
-        badge={t('newsletter.home.badge')}
-      />
       <Hero />
       <AdBanner position="top" />
       <VisionMission />
@@ -53,6 +47,12 @@ export default function Home() {
       {/* <Ventures /> */}
       <Programs />
       <Team />
+      <NewsletterSubscribe
+        sectionId="rv-club"
+        heading={t('newsletter.home.heading')}
+        description={t('newsletter.home.description')}
+        badge={t('newsletter.home.badge')}
+      />
       {/* <Process /> */}
       <LatestPosts />
     </>
