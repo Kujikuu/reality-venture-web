@@ -9,6 +9,19 @@ import { heroContainerVariants, heroItemVariants } from './animations/HeroAnimat
 export const Hero: React.FC = () => {
   const { t } = useTranslation(['common', 'home']);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+    e.preventDefault();
+    window.location.href = `/#${targetId}`;
+  };
+
   return (
     <section id="hero" className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40 bg-white">
       {/* Animated Gradient Background */}
@@ -48,9 +61,9 @@ export const Hero: React.FC = () => {
               <Link href="/application-form">
                 <Button withArrow className="w-full sm:w-auto px-10 h-14 text-lg">{t('common:buttons.getStarted')}</Button>
               </Link>
-              <Link href="#programs">
+              <a href="/#programs" onClick={(e) => handleSmoothScroll(e, 'programs')}>
                 <Button variant="outline" className="w-full sm:w-auto px-10 h-14 text-lg border-gray-200 bg-white">{t('common:buttons.viewPrograms')}</Button>
-              </Link>
+              </a>
             </motion.div>
 
           </div>
@@ -62,7 +75,7 @@ export const Hero: React.FC = () => {
           >
             <InteractiveTiltCard className="w-full max-w-lg aspect-square">
               <div className="relative w-full h-full">
-                <Link href="#programs">
+                <a href="/#programs" onClick={(e) => handleSmoothScroll(e, 'programs')}>
                   {/* Main Card */}
                   <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-2xl overflow-hidden">
 
@@ -140,7 +153,7 @@ export const Hero: React.FC = () => {
 
                   {/* Shadow/depth element */}
                   <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-4 bg-primary/10 rounded-full blur-2xl" />
-                </Link>
+                </a>
               </div>
             </InteractiveTiltCard>
 

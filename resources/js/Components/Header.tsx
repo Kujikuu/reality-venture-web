@@ -19,7 +19,7 @@ export const Header = () => {
   const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
 
   const navLinks: NavLink[] = [
-    { nameKey: 'about', link: 'hero' },
+    // { nameKey: 'about', link: 'hero' },
     { nameKey: 'ventureProgram', link: 'programs' },
     { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
@@ -51,12 +51,13 @@ export const Header = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-12 h-20 flex items-center justify-between">
 
         {/* Logo */}
-        <Link
+        <a
           href="/"
+          onClick={(e) => handleNavClick(e, 'hero')}
           className="flex items-center gap-3 group cursor-pointer"
         >
           <img src="/assets/images/RVHorizonal.png" alt="Company Logo" className="w-auto h-7 md:h-10" />
-        </Link>
+        </a>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
