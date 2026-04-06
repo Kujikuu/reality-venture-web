@@ -137,34 +137,34 @@ export default function StartupApplication() {
       <Head title={t('startup-application:pageTitle')} />
       <div className="flex flex-col min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-24">
-          <div className="absolute inset-0 hero-gradient -z-10" />
+        <section className="relative overflow-hidden pt-24 pb-20">
+          {/* <div className="absolute inset-0 hero-gradient -z-10" />
           <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
             <div className="shape absolute top-20 left-10 w-20 h-20 border-2 border-primary/10 rotate-45" />
             <div className="shape absolute top-40 right-20 w-16 h-16 rounded-full bg-primary-50/50" />
             <div className="shape absolute bottom-20 left-1/4 w-12 h-12 border border-primary/20" />
-          </div>
+          </div> */}
 
           <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
             <motion.div
-              className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-center"
+              className="flex items-center"
               variants={heroContainerVariants}
               initial="hidden"
               animate="visible"
             >
               <div>
-                <motion.span
+                {/* <motion.span
                   variants={heroItemVariants}
                   className="inline-block py-1 px-3 rounded-md bg-primary-50 text-primary text-xs font-bold tracking-wide mb-6 w-fit uppercase"
                 >
                   {t('startup-application:hero.badge')}
-                </motion.span>
+                </motion.span> */}
 
                 <motion.h1
                   variants={heroItemVariants}
-                  className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-6"
+                  className="flex flex-wrap gap-3 text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-6"
                 >
-                  {t('startup-application:hero.title')} <br />
+                  {t('startup-application:hero.title')}
                   <span className="text-primary">{t('startup-application:hero.titleHighlighted')}</span>
                 </motion.h1>
 
@@ -175,17 +175,17 @@ export default function StartupApplication() {
                   {t('startup-application:hero.subtitle')}
                 </motion.p>
 
-                <motion.div
+                {/* <motion.div
                   variants={heroItemVariants}
                   className="flex flex-wrap gap-6 text-xs font-bold uppercase tracking-widest text-gray-400"
                 >
                   <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary/60"></span>{t('startup-application:hero.rollingReview')}</span>
                   <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary/60"></span>{t('startup-application:hero.responseTime')}</span>
                   <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary/60"></span>{t('startup-application:hero.founderFirst')}</span>
-                </motion.div>
+                </motion.div> */}
               </div>
 
-              <motion.div
+              {/* <motion.div
                 variants={heroItemVariants}
                 className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-xl shadow-primary-500/5 p-8 lg:p-10 rounded-3xl relative overflow-hidden"
               >
@@ -204,7 +204,7 @@ export default function StartupApplication() {
                     <MessageCircle className="w-4 h-4 text-primary" /> {t('startup-application:sidebar.whatsapp')}
                   </div>
                 </div>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </div>
         </section>
