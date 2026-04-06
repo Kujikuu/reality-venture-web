@@ -23,7 +23,7 @@ export const NewsletterSubscribe = ({
   sectionId,
 }: NewsletterSubscribeProps) => {
   const { t } = useTranslation(['navigation', 'common']);
-  const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+  const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
     email: '',
     phone: '',
   });
@@ -33,6 +33,7 @@ export const NewsletterSubscribe = ({
     post('/newsletter/subscribe', {
       preserveState: true,
       preserveScroll: true,
+      onSuccess: () => reset(),
     });
   };
 
