@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { staggerContainer } from '../../Components/animations/CommonAnimations';
 import { useDesksApi } from '../../hooks/useDesksApi';
@@ -148,21 +148,24 @@ export default function DesksIndex() {
                     <p className="text-white/80 text-lg mb-8">{t('subtitle')}</p>
 
                     <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-                        <select
-                            value={pendingCity}
-                            onChange={(e) => setPendingCity(e.target.value)}
-                            className="flex-1 rounded-xl px-4 py-3 text-text-main bg-white text-sm outline-none"
-                        >
-                            <option value="">{t('search.cityPlaceholder')}</option>
-                            {cities.map((city) => (
-                                <option key={city.id} value={city.slug}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="relative flex-1">
+                            <select
+                                value={pendingCity}
+                                onChange={(e) => setPendingCity(e.target.value)}
+                                className="w-full appearance-none rounded-lg border border-white/20 bg-white px-4 py-3 pe-10 text-sm text-text-main outline-none cursor-pointer"
+                            >
+                                <option value="">{t('search.cityPlaceholder')}</option>
+                                {cities.map((city) => (
+                                    <option key={city} value={city}>
+                                        {city}
+                                    </option>
+                                ))}
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+                        </div>
                         <button
                             onClick={handleSearch}
-                            className="px-6 py-3 bg-secondary text-white rounded-xl font-medium text-sm hover:bg-secondary/90 transition-colors"
+                            className="px-6 py-3 bg-secondary text-white rounded-lg font-medium text-sm hover:bg-secondary/90 transition-colors"
                         >
                             {t('search.searchButton')}
                         </button>
