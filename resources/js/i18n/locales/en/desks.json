@@ -1,0 +1,94 @@
+{
+  "label": "Desks",
+  "title": "Find Your Workspace",
+  "subtitle": "Book desks, meeting rooms, and private offices across Saudi Arabia.",
+  "search": {
+    "cityPlaceholder": "All Cities",
+    "searchButton": "Search"
+  },
+  "tabs": {
+    "all": "All",
+    "desk": "Desks",
+    "meeting_room": "Meeting Rooms",
+    "private_office": "Private Offices",
+    "event_space": "Event Spaces",
+    "studio": "Studios",
+    "virtual_office": "Virtual Offices"
+  },
+  "card": {
+    "capacity": "Up to {{count}}",
+    "perHour": "/hr",
+    "perDay": "/day",
+    "noPhoto": "No photos yet"
+  },
+  "listing": {
+    "loadMore": "Load More",
+    "noResults": "No workspaces found",
+    "noResultsDescription": "Try adjusting your filters or search in a different city.",
+    "error": "Unable to load workspaces. Please try again.",
+    "retry": "Retry"
+  },
+  "detail": {
+    "breadcrumbHome": "Desks",
+    "amenities": "Amenities",
+    "availability": "Availability",
+    "description": "About this space",
+    "host": "Hosted by",
+    "closed": "Closed",
+    "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  },
+  "booking": {
+    "title": "Book this space",
+    "typeHourly": "Hourly",
+    "typeDaily": "Daily",
+    "date": "Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "guests": "Guests",
+    "total": "Total",
+    "reserve": "Reserve Now",
+    "successTitle": "Booking Confirmed!",
+    "successDescription": "Your reservation has been created. Payment is due on-site at check-in.",
+    "successId": "Booking ID",
+    "conflict": "This time slot is no longer available.",
+    "closedDay": "This workspace is closed on the selected day.",
+    "error": "Something went wrong. Please try again."
+  },
+  "auth": {
+    "loginTab": "Login",
+    "registerTab": "Register",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "passwordConfirmation": "Confirm Password",
+    "loginButton": "Login",
+    "registerButton": "Create Account",
+    "loginLink": "Login",
+    "logout": "Log Out",
+    "error": "Invalid credentials. Please try again."
+  },
+  "bookings": {
+    "title": "My Bookings",
+    "empty": "You don't have any bookings yet",
+    "emptyDescription": "Browse workspaces and make your first reservation.",
+    "browse": "Browse Workspaces",
+    "cancelConfirm": "Are you sure you want to cancel this booking?",
+    "cancelKeep": "No, Keep It",
+    "cancelButton": "Cancel Booking",
+    "cancelledSuccess": "Booking cancelled successfully.",
+    "guests": "Guests",
+    "loginRequired": "Please login to view your bookings.",
+    "bookAgain": "Book Again",
+    "status": {
+      "reserved": "Reserved",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "no_show": "No Show"
+    }
+  },
+  "share": {
+    "copyLink": "Copy Link",
+    "copied": "Link copied!"
+  }
+}

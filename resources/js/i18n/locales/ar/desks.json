@@ -1,0 +1,94 @@
+{
+  "label": "المكاتب",
+  "title": "ابحث عن مساحة عملك",
+  "subtitle": "احجز مكاتب وقاعات اجتماعات ومكاتب خاصة في جميع انحاء المملكة العربية السعودية.",
+  "search": {
+    "cityPlaceholder": "جميع المدن",
+    "searchButton": "بحث"
+  },
+  "tabs": {
+    "all": "الكل",
+    "desk": "مكاتب",
+    "meeting_room": "قاعات اجتماعات",
+    "private_office": "مكاتب خاصة",
+    "event_space": "قاعات فعاليات",
+    "studio": "استوديوهات",
+    "virtual_office": "مكاتب افتراضية"
+  },
+  "card": {
+    "capacity": "حتى {{count}}",
+    "perHour": "/ساعة",
+    "perDay": "/يوم",
+    "noPhoto": "لا توجد صور بعد"
+  },
+  "listing": {
+    "loadMore": "عرض المزيد",
+    "noResults": "لا توجد مساحات عمل",
+    "noResultsDescription": "حاول تعديل الفلاتر او البحث في مدينة مختلفة.",
+    "error": "تعذر تحميل المساحات. يرجى المحاولة مرة اخرى.",
+    "retry": "اعادة المحاولة"
+  },
+  "detail": {
+    "breadcrumbHome": "المكاتب",
+    "amenities": "المرافق",
+    "availability": "اوقات العمل",
+    "description": "عن هذه المساحة",
+    "host": "المضيف",
+    "closed": "مغلق",
+    "days": ["الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت"]
+  },
+  "booking": {
+    "title": "احجز هذه المساحة",
+    "typeHourly": "بالساعة",
+    "typeDaily": "يومي",
+    "date": "التاريخ",
+    "startTime": "وقت البداية",
+    "endTime": "وقت النهاية",
+    "guests": "عدد الضيوف",
+    "total": "المجموع",
+    "reserve": "احجز الان",
+    "successTitle": "تم تاكيد الحجز!",
+    "successDescription": "تم انشاء حجزك. الدفع عند الوصول.",
+    "successId": "رقم الحجز",
+    "conflict": "هذا الوقت لم يعد متاحا.",
+    "closedDay": "هذه المساحة مغلقة في اليوم المحدد.",
+    "error": "حدث خطا ما. يرجى المحاولة مرة اخرى."
+  },
+  "auth": {
+    "loginTab": "تسجيل الدخول",
+    "registerTab": "حساب جديد",
+    "name": "الاسم الكامل",
+    "email": "البريد الالكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "passwordConfirmation": "تاكيد كلمة المرور",
+    "loginButton": "دخول",
+    "registerButton": "انشاء حساب",
+    "loginLink": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "error": "بيانات غير صحيحة. يرجى المحاولة مرة اخرى."
+  },
+  "bookings": {
+    "title": "حجوزاتي",
+    "empty": "ليس لديك حجوزات بعد",
+    "emptyDescription": "تصفح المساحات واحجز اول مساحة عمل.",
+    "browse": "تصفح المساحات",
+    "cancelConfirm": "هل انت متاكد من الغاء هذا الحجز؟",
+    "cancelKeep": "لا، ابق عليه",
+    "cancelButton": "الغاء الحجز",
+    "cancelledSuccess": "تم الغاء الحجز بنجاح.",
+    "guests": "الضيوف",
+    "loginRequired": "يرجى تسجيل الدخول لعرض حجوزاتك.",
+    "bookAgain": "احجز مرة اخرى",
+    "status": {
+      "reserved": "محجوز",
+      "cancelled": "ملغي",
+      "completed": "مكتمل",
+      "no_show": "لم يحضر"
+    }
+  },
+  "share": {
+    "copyLink": "نسخ الرابط",
+    "copied": "تم نسخ الرابط!"
+  }
+}
