@@ -2,17 +2,20 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class SeoMiddlewareTest extends TestCase
 {
+    use LazilyRefreshDatabase;
+
     public function test_page_shares_default_seo_props(): void
     {
         $response = $this->get('/privacy-policy');
 
         $response->assertInertia(fn ($page) => $page
             ->has('seo')
-            ->where('seo.title', config('app.name'))
+            ->where('seo.title', 'Privacy Policy - Reality Venture')
             ->where('seo.ogType', 'website')
             ->where('seo.robots', 'index, follow')
             ->has('seo.description')
@@ -36,6 +39,29 @@ class SeoMiddlewareTest extends TestCase
 
         $response->assertInertia(fn ($page) => $page
             ->where('seo.jsonLd', null)
+        );
+    }
+
+    public function test_home_page_overrides_seo_props(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertInertia(fn ($page) => $page
+            ->where('seo.title', 'Reality Venture - Accelerator & Incubator')
+            ->has('seo.description')
+            ->where('seo.ogType', 'website')
+            ->has('seo.jsonLd')
+        );
+    }
+
+    public function test_home_page_json_ld_is_organization(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertInertia(fn ($page) => $page
+            ->where('seo.jsonLd.@type', 'Organization')
+            ->where('seo.jsonLd.name', 'Reality Venture')
+            ->has('seo.jsonLd.url')
         );
     }
 }

@@ -1,5 +1,5 @@
 @php
-    $page = app(\Inertia\Inertia::class)->getShared('seo');
+    $page = \Inertia\Inertia::getShared('seo');
     $jsonLd = null;
 
     if (is_callable($page)) {
