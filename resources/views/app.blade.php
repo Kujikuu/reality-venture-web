@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Public+Sans:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])
+        @include('partials.seo-jsonld')
         @inertiaHead
     </head>
     <body class="flex-1 w-full flex flex-col">
