@@ -133,7 +133,7 @@ export default function DesksBookings() {
         <>
             <Head title={t('bookings.title')} />
 
-            <div className="max-w-4xl mx-auto px-4 py-8">
+            <div className="max-w-7xl w-full mx-auto px-4 py-8">
                 {/* Breadcrumb */}
                 <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
                     <Link href="/desks" className="hover:text-primary transition-colors">

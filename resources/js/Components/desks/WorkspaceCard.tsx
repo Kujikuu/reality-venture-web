@@ -35,7 +35,7 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
     return (
         <motion.div
             variants={cardVariants}
-            className="rounded-xl border border-gray-200 bg-white overflow-hidden transition-shadow duration-300 hover:shadow-lg"
+            className="h-full rounded-xl border border-gray-200 bg-white overflow-hidden transition-shadow duration-300 hover:shadow-lg"
         >
                 <Link href={`/desks/${workspace.id}`} className="block">
                     {/* Image */}
