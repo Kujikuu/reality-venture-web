@@ -31,6 +31,8 @@
     "lastName": "اسم العائلة",
     "email": "عنوان البريد الإلكتروني",
     "emailPlaceholder": "email@example.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "05XXXXXXXX",
     "linkedin": "حساب التواصل الاجتماعي",
     "linkedinPlaceholder": "https://twitter.com/username, https://linkedin.com/in/username، إلخ.",
 
@@ -125,6 +127,10 @@
       "required": "البريد الإلكتروني مطلوب.",
       "format": "يرجى إدخال بريد إلكتروني صحيح.",
       "unique": "تم استخدام هذا البريد الإلكتروني للتقديم من قبل."
+    },
+    "phone": {
+      "required": "رقم الهاتف مطلوب.",
+      "format": "يرجى إدخال رقم جوال سعودي صحيح."
     },
     "linkedin": { "url": "يرجى إدخال رابط صحيح." },
     "companyName": { "required": "اسم الشركة مطلوب." },

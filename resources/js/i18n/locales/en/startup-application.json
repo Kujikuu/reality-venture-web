@@ -31,6 +31,8 @@
     "lastName": "Last Name",
     "email": "Email Address",
     "emailPlaceholder": "email@example.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "05XXXXXXXX",
     "linkedin": "Social Media Profile",
     "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
 
@@ -125,6 +127,10 @@
       "required": "Email address is required.",
       "format": "Please enter a valid email address.",
       "unique": "This email has already been used to apply."
+    },
+    "phone": {
+      "required": "Phone number is required.",
+      "format": "Please enter a valid KSA mobile number."
     },
     "linkedin": { "url": "Please enter a valid URL." },
     "companyName": { "required": "Company name is required." },

@@ -23,6 +23,7 @@ class StartupApplicationTest extends TestCase
             'first_name' => 'Sara',
             'last_name' => 'Al-Qahtani',
             'email' => 'sara@startup.com',
+            'phone' => '0512345678',
             'linkedin_profile' => 'https://linkedin.com/in/sara',
             'company_name' => 'RealityCo',
             'number_of_founders' => 3,
@@ -87,6 +88,7 @@ class StartupApplicationTest extends TestCase
             'first_name',
             'last_name',
             'email',
+            'phone',
             'company_name',
             'number_of_founders',
             'hq_country',
@@ -203,6 +205,7 @@ class StartupApplicationTest extends TestCase
             'first_name' => 'Same',
             'last_name' => 'Email',
             'email' => 'block@startup.com',
+            'phone' => '0512345678',
             'description' => 'Trying general after startup.',
         ]);
 

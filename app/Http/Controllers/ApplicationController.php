@@ -28,6 +28,7 @@ class ApplicationController extends Controller
     {
         $validated = $request->validated();
         $validated['type'] = ApplicationType::Startup->value;
+        $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
         $application = Application::create($validated);
 
