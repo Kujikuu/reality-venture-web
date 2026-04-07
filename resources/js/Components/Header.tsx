@@ -21,6 +21,7 @@ export const Header = () => {
   const navLinks: NavLink[] = [
     // { nameKey: 'about', link: 'hero' },
     { nameKey: 'ventureProgram', link: 'programs' },
+    { nameKey: 'advisory', link: '/consultants' },
     { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
   ];
@@ -85,7 +86,7 @@ export const Header = () => {
           )}
 
           {/* Marketplace Dropdown */}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
               className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
@@ -111,7 +112,7 @@ export const Header = () => {
                 </div>
               </>
             )}
-          </div>
+          </div> */}
 
           {navLinks.slice(2).map((item) =>
             item.isPage ? (
