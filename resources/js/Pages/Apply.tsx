@@ -1,22 +1,32 @@
 import { Button } from '../Components/ui/Button';
+import { Select } from '../Components/ui/Select';
 import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
 import { useForm } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
+import { SAUDI_CITIES } from '../data/saudi-cities';
 
 export default function Apply() {
-  const { t } = useTranslation(['common', 'navigation', 'apply']);
+  const { t, i18n } = useTranslation(['common', 'navigation', 'apply']);
 
   const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
     first_name: '',
     last_name: '',
     email: '',
     phone: '',
+    city: '',
     linkedin_profile: '',
     description: '',
   });
+
+  const isArabic = i18n.language === 'ar';
+
+  const cityOptions = SAUDI_CITIES.map((c) => ({
+    value: c.code,
+    label: isArabic ? c.name_ar : c.name_en,
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -165,6 +175,18 @@ export default function Apply() {
                     placeholder={t('apply:form.phonePlaceholder')}
                   />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.phone, errors.phone)}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="city" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.city')}</label>
+                  <Select
+                    id="city"
+                    value={data.city}
+                    onChange={(e) => setData('city', e.target.value)}
+                    options={cityOptions}
+                    placeholder={t('apply:form.cityPlaceholder')}
+                  />
+                  {errors.city && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.city, errors.city)}</p>}
                 </div>
 
                 <div className="space-y-2">
