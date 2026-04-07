@@ -258,6 +258,7 @@ export default function Apply() {
                       href={`https://wa.me/${t('apply:sidebar.whatsappNumber').replace(/\D/g, '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      dir='ltr'
                     >
                       {t('apply:sidebar.whatsapp')}
                     </a>

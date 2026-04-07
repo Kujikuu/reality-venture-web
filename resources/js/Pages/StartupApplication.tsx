@@ -653,6 +653,7 @@ export default function StartupApplication() {
                       href={`https://wa.me/${t('startup-application:sidebar.whatsappNumber').replace(/\D/g, '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      dir='ltr'
                     >
                       {t('startup-application:sidebar.whatsapp')}
                     </a>
