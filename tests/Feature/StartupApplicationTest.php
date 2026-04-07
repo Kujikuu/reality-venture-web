@@ -278,6 +278,18 @@ class StartupApplicationTest extends TestCase
         $response->assertSessionHasErrors(['company_description']);
     }
 
+    public function test_dispatches_google_sheet_sync_job(): void
+    {
+        Mail::fake();
+        \Illuminate\Support\Facades\Queue::fake();
+
+        $this->post('/startup-applications', $this->validPayload([
+            'email' => 'sheets@test.com',
+        ]));
+
+        \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SyncApplicationToGoogleSheet::class);
+    }
+
     public function test_startup_submission_blocks_later_general_with_same_email(): void
     {
         Mail::fake();

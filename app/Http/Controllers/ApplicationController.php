@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ApplicationType;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\StoreStartupApplicationRequest;
+use App\Jobs\SyncApplicationToGoogleSheet;
 use App\Mail\NewApplicationSubmitted;
 use App\Models\Application;
 use Illuminate\Support\Facades\Mail;
@@ -20,6 +21,7 @@ class ApplicationController extends Controller
         $application = Application::create($validated);
 
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
+        SyncApplicationToGoogleSheet::dispatch($application);
 
         return back()->with('success', 'submitted');
     }
@@ -39,6 +41,7 @@ class ApplicationController extends Controller
         $application = Application::create($validated);
 
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
+        SyncApplicationToGoogleSheet::dispatch($application);
 
         return back()->with('success', 'submitted');
     }

@@ -92,6 +92,22 @@ class ApplicationTest extends TestCase
         $response->assertSessionHasErrors(['email']);
     }
 
+    public function test_dispatches_google_sheet_sync_job(): void
+    {
+        Mail::fake();
+        \Illuminate\Support\Facades\Queue::fake();
+
+        $this->post('/applications', [
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'sheets-general@test.com',
+            'phone' => '0551234567',
+            'description' => 'Testing sheets sync.',
+        ]);
+
+        \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SyncApplicationToGoogleSheet::class);
+    }
+
     public function test_linkedin_is_optional(): void
     {
         Mail::fake();

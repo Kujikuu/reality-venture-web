@@ -41,4 +41,8 @@ return [
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'google' => [
+        'sheets_spreadsheet_id' => env('GOOGLE_SHEETS_SPREADSHEET_ID'),
+    ],
+
 ];
