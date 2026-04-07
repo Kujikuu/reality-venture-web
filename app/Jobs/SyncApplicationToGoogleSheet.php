@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Revolution\Google\Sheets\Facades\Sheets;
+use Illuminate\Support\Facades\Http;
 
 class SyncApplicationToGoogleSheet implements ShouldQueue
 {
@@ -25,9 +25,9 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
 
     public function handle(): void
     {
-        $spreadsheetId = config('services.google.sheets_spreadsheet_id');
+        $webhookUrl = config('services.google.sheets_webhook_url');
 
-        if (! $spreadsheetId) {
+        if (! $webhookUrl) {
             return;
         }
 
@@ -39,9 +39,10 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             ? $this->buildStartupRow()
             : $this->buildGeneralRow();
 
-        Sheets::spreadsheet($spreadsheetId)
-            ->sheet($sheet)
-            ->append([$row]);
+        Http::post($webhookUrl, [
+            'sheet' => $sheet,
+            'row' => $row,
+        ]);
     }
 
     /** @return array<int, string|null> */

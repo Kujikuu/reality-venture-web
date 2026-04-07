@@ -42,7 +42,7 @@ return [
     ],
 
     'google' => [
-        'sheets_spreadsheet_id' => env('GOOGLE_SHEETS_SPREADSHEET_ID'),
+        'sheets_webhook_url' => env('GOOGLE_SHEETS_WEBHOOK_URL'),
     ],
 
 ];
