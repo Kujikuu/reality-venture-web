@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Flag, Target } from 'lucide-react';
+import { Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { sectionVariants, staggerContainer, cardVariants } from './animations/CommonAnimations';
@@ -25,9 +25,6 @@ export const VisionMission: React.FC = () => {
              <div className="relative bg-white rounded-lg p-8 md:p-12 border border-gray-100">
                 <div className="flex flex-col gap-10">
                    <div>
-                      <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center mb-6 text-primary">
-                        <Eye className="w-6 h-6" />
-                      </div>
                       <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('visionMission.vision')}</h3>
                       <p className="text-gray-500 leading-relaxed">
                         {t('visionMission.visionText')}
@@ -37,9 +34,6 @@ export const VisionMission: React.FC = () => {
                    <div className="w-full h-px bg-gray-100"></div>
 
                    <div>
-                       <div className="w-12 h-12 bg-secondary-50 rounded-md flex items-center justify-center mb-6 text-primary">
-                        <Flag className="w-6 h-6" />
-                      </div>
                       <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('visionMission.mission')}</h3>
                       <p className="text-gray-500 leading-relaxed">
                         {t('visionMission.missionText')}
