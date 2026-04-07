@@ -6,12 +6,12 @@ import { sectionVariants } from './animations/CommonAnimations';
 import { useTranslation } from 'react-i18next';
 
 const services: ServiceItem[] = [
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Business+Modeling', titleKey: 'items.businessModeling.title', descriptionKey: 'items.businessModeling.description' },
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Management', titleKey: 'items.management.title', descriptionKey: 'items.management.description' },
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Franchising', titleKey: 'items.franchising.title', descriptionKey: 'items.franchising.description' },
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Marketing', titleKey: 'items.marketing.title', descriptionKey: 'items.marketing.description' },
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Technology', titleKey: 'items.technology.title', descriptionKey: 'items.technology.description' },
-  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Investment', titleKey: 'items.investment.title', descriptionKey: 'items.investment.description' },
+  { image: '/images/services/BusinessModeling.png', titleKey: 'items.businessModeling.title', descriptionKey: 'items.businessModeling.description' },
+  { image: '/images/services/Management.png', titleKey: 'items.management.title', descriptionKey: 'items.management.description' },
+  { image: '/images/services/Franchising.png', titleKey: 'items.franchising.title', descriptionKey: 'items.franchising.description' },
+  { image: '/images/services/Marketing.png', titleKey: 'items.marketing.title', descriptionKey: 'items.marketing.description' },
+  { image: '/images/services/Technology.png', titleKey: 'items.technology.title', descriptionKey: 'items.technology.description' },
+  { image: '/images/services/Investment.png', titleKey: 'items.investment.title', descriptionKey: 'items.investment.description' },
 ];
 
 const featureKeys = ['features.endToEnd', 'features.tailored', 'features.proven'] as const;
@@ -123,7 +123,7 @@ export const Services: React.FC = () => {
                 {services.map((service, idx) => (
                   <div
                     key={idx}
-                    className="shrink-0"
+                    className="shrink-0 cursor-pointer"
                     style={{
                       width: `${cardWidth}px`,
                       marginInlineEnd: `${gap}px`,
