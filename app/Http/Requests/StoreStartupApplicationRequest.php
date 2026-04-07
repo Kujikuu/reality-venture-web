@@ -31,18 +31,18 @@ class StoreStartupApplicationRequest extends FormRequest
 
             'business_stage' => ['required', Rule::enum(BusinessStage::class)],
             'company_name' => ['required', 'string', 'max:255'],
-            'number_of_founders' => [$this->requiredUnlessIdea(), 'nullable', 'integer', 'min:1', 'max:20'],
-            'hq_country' => [$this->requiredUnlessIdea(), 'nullable', 'string', 'size:2'],
-            'website_link' => [$this->requiredUnlessIdea(), 'nullable', 'url', 'max:500'],
-            'founded_date' => [$this->requiredUnlessIdea(), 'nullable', 'date', 'before_or_equal:today'],
-            'industry' => [$this->requiredUnlessIdea(), 'nullable', Rule::enum(Industry::class)],
+            'number_of_founders' => ['nullable', 'integer', 'min:1', 'max:20'],
+            'hq_country' => ['nullable', 'string', 'size:2'],
+            'website_link' => ['nullable', 'url', 'max:500'],
+            'founded_date' => ['nullable', 'date', 'before_or_equal:today'],
+            'industry' => ['nullable', Rule::enum(Industry::class)],
             'industry_other' => ['nullable', 'required_if:industry,other', 'string', 'max:255'],
             'company_description' => ['required', 'string', 'max:600'],
             'attachment' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:20480'],
 
-            'current_funding_round' => [$this->requiredUnlessIdea(), 'nullable', Rule::enum(FundingRound::class)],
-            'investment_ask_sar' => [$this->requiredUnlessIdeaOrNoneFunding(), 'nullable', 'integer', 'min:1'],
-            'valuation_sar' => [$this->requiredUnlessIdeaOrNoneFunding(), 'nullable', 'integer', 'min:1'],
+            'current_funding_round' => ['nullable', Rule::enum(FundingRound::class)],
+            'investment_ask_sar' => ['nullable', 'integer', 'min:1'],
+            'valuation_sar' => ['nullable', 'integer', 'min:1'],
             'previous_funding' => ['nullable', 'string', 'max:2000'],
             'demo_link' => ['nullable', 'url', 'max:500'],
 
@@ -50,20 +50,6 @@ class StoreStartupApplicationRequest extends FormRequest
             'referral_name' => ['nullable', 'required_if:discovery_source,referral', 'string', 'max:255'],
             'referral_param' => ['nullable', 'string', 'max:255'],
         ];
-    }
-
-    private function requiredUnlessIdea(): string
-    {
-        return 'required_unless:business_stage,idea';
-    }
-
-    private function requiredUnlessIdeaOrNoneFunding(): string
-    {
-        if ($this->input('business_stage') === 'idea' || $this->input('current_funding_round') === 'none') {
-            return 'nullable';
-        }
-
-        return 'required';
     }
 
     /**
