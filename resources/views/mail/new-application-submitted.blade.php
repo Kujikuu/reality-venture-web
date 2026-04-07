@@ -7,6 +7,10 @@ A new application has been submitted on the Reality Venture website.
 
 **Email:** {{ $application->email }}
 
+@if($application->phone)
+**Phone:** {{ $application->phone }}
+@endif
+
 @if($application->linkedin_profile)
 **LinkedIn:** {{ $application->linkedin_profile }}
 @endif

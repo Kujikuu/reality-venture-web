@@ -28,6 +28,7 @@ class ApplicationTest extends TestCase
             'first_name' => 'Ahmed',
             'last_name' => 'Al-Saud',
             'email' => 'ahmed@example.com',
+            'phone' => '0551234567',
             'linkedin_profile' => 'https://linkedin.com/in/ahmed',
             'description' => 'I am interested in learning about your programs and would love to connect.',
         ];
@@ -39,6 +40,7 @@ class ApplicationTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'email' => 'ahmed@example.com',
+            'phone' => '+966551234567',
             'first_name' => 'Ahmed',
             'type' => ApplicationType::General->value,
         ]);
@@ -71,6 +73,7 @@ class ApplicationTest extends TestCase
             'first_name',
             'last_name',
             'email',
+            'phone',
             'description',
         ]);
     }
@@ -97,6 +100,7 @@ class ApplicationTest extends TestCase
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'nolinked@example.com',
+            'phone' => '+966551234567',
             'description' => 'Description without LinkedIn.',
         ];
 

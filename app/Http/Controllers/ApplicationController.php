@@ -15,6 +15,7 @@ class ApplicationController extends Controller
     {
         $validated = $request->validated();
         $validated['type'] = ApplicationType::General->value;
+        $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
         $application = Application::create($validated);
 
@@ -33,5 +34,20 @@ class ApplicationController extends Controller
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
 
         return back()->with('success', 'submitted');
+    }
+
+    private static function normalizeKsaPhone(string $phone): string
+    {
+        $digits = preg_replace('/\D/', '', $phone);
+
+        if (str_starts_with($digits, '966')) {
+            return '+'.$digits;
+        }
+
+        if (str_starts_with($digits, '0')) {
+            return '+966'.substr($digits, 1);
+        }
+
+        return '+966'.$digits;
     }
 }

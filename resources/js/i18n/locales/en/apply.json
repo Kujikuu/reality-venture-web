@@ -37,6 +37,7 @@
     "describe": "Describe your venture or idea",
     "messagePlaceholder": "Briefly describe your problem statement, solution, or area of expertise...",
     "emailPlaceholder": "email@example.com",
+    "phonePlaceholder": "05XXXXXXXX",
     "linkedinPlaceholder": "linkedin.com/in/username",
     "submit": "Submit Application",
     "submitting": "Submitting...",
@@ -55,6 +56,10 @@
       "required": "Email address is required.",
       "format": "Please enter a valid email address.",
       "unique": "This email has already been used to apply."
+    },
+    "phone": {
+      "required": "Phone number is required.",
+      "format": "Please enter a valid KSA mobile number."
     },
     "linkedin": {
       "url": "Please enter a valid LinkedIn URL."

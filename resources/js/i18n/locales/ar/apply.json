@@ -37,6 +37,7 @@
     "describe": "صف مشروعك أو فكرتك",
     "messagePlaceholder": "صف بإيجاز مشكلتك وحلك أو مجال خبرتك...",
     "emailPlaceholder": "email@example.com",
+    "phonePlaceholder": "05XXXXXXXX",
     "linkedinPlaceholder": "linkedin.com/in/username",
     "submit": "إرسال الطلب",
     "submitting": "جاري الإرسال...",
@@ -55,6 +56,10 @@
       "required": "البريد الإلكتروني مطلوب.",
       "format": "يرجى إدخال بريد إلكتروني صحيح.",
       "unique": "تم استخدام هذا البريد الإلكتروني للتقديم من قبل."
+    },
+    "phone": {
+      "required": "رقم الهاتف مطلوب.",
+      "format": "يرجى إدخال رقم جوال سعودي صحيح."
     },
     "linkedin": {
       "url": "يرجى إدخال رابط LinkedIn صحيح."

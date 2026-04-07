@@ -20,6 +20,7 @@ class StoreApplicationRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:applications,email'],
+            'phone' => ['required', 'string', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
             'linkedin_profile' => ['nullable', 'url', 'max:500'],
             'description' => ['required', 'string', 'max:5000'],
         ];
@@ -36,6 +37,8 @@ class StoreApplicationRequest extends FormRequest
             'email.required' => 'validation.email.required',
             'email.email' => 'validation.email.format',
             'email.unique' => 'validation.email.unique',
+            'phone.required' => 'validation.phone.required',
+            'phone.regex' => 'validation.phone.format',
             'linkedin_profile.url' => 'validation.linkedin.url',
             'description.required' => 'validation.description.required',
         ];

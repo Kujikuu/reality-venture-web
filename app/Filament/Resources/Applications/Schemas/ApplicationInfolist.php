@@ -45,6 +45,11 @@ class ApplicationInfolist
                             ->icon('heroicon-o-envelope')
                             ->copyable()
                             ->copyMessage('Email copied'),
+                        TextEntry::make('phone')
+                            ->icon('heroicon-o-phone')
+                            ->copyable()
+                            ->copyMessage('Phone copied')
+                            ->placeholder('Not provided'),
                         TextEntry::make('linkedin_profile')
                             ->label('LinkedIn')
                             ->icon('heroicon-o-link')

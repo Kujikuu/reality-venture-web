@@ -13,6 +13,7 @@ export default function Apply() {
     first_name: '',
     last_name: '',
     email: '',
+    phone: '',
     linkedin_profile: '',
     description: '',
   });
@@ -150,6 +151,20 @@ export default function Apply() {
                     placeholder={t('apply:form.emailPlaceholder')}
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.email, errors.email)}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.phone')}</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    dir="ltr"
+                    value={data.phone}
+                    onChange={(e) => setData('phone', e.target.value)}
+                    className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                    placeholder={t('apply:form.phonePlaceholder')}
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.phone, errors.phone)}</p>}
                 </div>
 
                 <div className="space-y-2">

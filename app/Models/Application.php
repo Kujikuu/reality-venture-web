@@ -21,6 +21,7 @@ class Application extends Model
         'first_name',
         'last_name',
         'email',
+        'phone',
         'linkedin_profile',
         'program_interest',
         'description',
