@@ -24,9 +24,15 @@ export default function Register() {
       <SEO />
       <div className="min-h-screen flex">
         {/* Left Panel */}
-        <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-primary via-primary-800 to-[#2a1a40] items-center justify-center p-12">
-          <div className="max-w-md text-white">
-           <a href="/"><img src="/assets/images/RVHorizonal.png" alt="Reality Venture" className="h-10 mb-12 brightness-0 invert" /></a>
+        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12">
+          <img
+            src="/assets/images/auth-bg.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-linear-to-br from-primary/80 to-black/60" />
+          <div className="relative z-10 max-w-md text-white">
+            <a href="/"><img src="/assets/images/RVHorizonal.png" alt="Reality Venture" className="h-10 mb-12 brightness-0 invert" /></a>
             <h2 className="text-4xl font-bold tracking-tight mb-4">{t('register.heroTitle')}</h2>
             <p className="text-white/70 text-lg leading-relaxed">{t('register.heroDesc')}</p>
           </div>
