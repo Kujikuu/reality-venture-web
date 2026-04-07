@@ -235,7 +235,7 @@ export const Header = () => {
           )}
 
           {/* Marketplace section */}
-          <div className="border-t border-gray-200 pt-4 mt-2">
+          {/* <div className="border-t border-gray-200 pt-4 mt-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3 block">{t('header.marketplace')}</span>
             <div className="flex flex-col gap-3">
               {marketplaceLinks.map((item) => (
@@ -249,7 +249,7 @@ export const Header = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="border-t border-gray-200 pt-4 mt-2">
             {auth.user ? (
