@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Applications\Schemas;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
+use App\Enums\BusinessStage;
 use App\Enums\DiscoverySource;
 use App\Enums\FundingRound;
 use App\Enums\Industry;
@@ -57,6 +58,9 @@ class ApplicationInfolist
                             ->openUrlInNewTab()
                             ->placeholder('Not provided')
                             ->color('primary'),
+                        TextEntry::make('city')
+                            ->icon('heroicon-o-map-pin')
+                            ->placeholder('Not provided'),
                     ]),
 
                 Section::make('General Inquiry')
@@ -74,6 +78,10 @@ class ApplicationInfolist
                     ->columns(2)
                     ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
                     ->schema([
+                        TextEntry::make('business_stage')
+                            ->label('Business Stage')
+                            ->badge()
+                            ->formatStateUsing(fn (?BusinessStage $state): string => $state?->label() ?? '—'),
                         TextEntry::make('company_name')
                             ->label('Company Name'),
                         TextEntry::make('number_of_founders')
@@ -100,6 +108,13 @@ class ApplicationInfolist
                             ->label('Company Description')
                             ->columnSpanFull()
                             ->prose(),
+                        TextEntry::make('attachment_path')
+                            ->label('Attachment')
+                            ->formatStateUsing(fn (?string $state): string => $state ? basename($state) : '—')
+                            ->url(fn (Application $record): ?string => $record->attachment_path ? asset('storage/'.$record->attachment_path) : null)
+                            ->openUrlInNewTab()
+                            ->placeholder('No file uploaded')
+                            ->color('primary'),
                     ]),
 
                 Section::make('Investment Details')

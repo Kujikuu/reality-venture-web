@@ -15,10 +15,18 @@ A new application has been submitted on the Reality Venture website.
 **LinkedIn:** {{ $application->linkedin_profile }}
 @endif
 
+@if($application->city)
+**City:** {{ $application->city }}
+@endif
+
 @if($application->type === App\Enums\ApplicationType::Startup)
 ---
 
 ## Company Details
+
+@if($application->business_stage)
+**Business Stage:** {{ $application->business_stage->label() }}
+@endif
 
 **Company Name:** {{ $application->company_name }}
 
@@ -54,6 +62,10 @@ A new application has been submitted on the Reality Venture website.
 
 @if($application->demo_link)
 **Demo:** {{ $application->demo_link }}
+@endif
+
+@if($application->attachment_path)
+**Attachment:** {{ asset('storage/' . $application->attachment_path) }}
 @endif
 
 ---
