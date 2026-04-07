@@ -33,8 +33,12 @@
     "emailPlaceholder": "email@example.com",
     "phone": "Phone Number",
     "phonePlaceholder": "05XXXXXXXX",
+    "city": "City",
+    "cityPlaceholder": "Select a city",
     "linkedin": "Social Media Profile",
     "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
+    "businessStage": "Business Stage",
+    "businessStagePlaceholder": "Select your business stage",
 
     "companyName": "Company Name",
     "companyNamePlaceholder": "Your company name",
@@ -63,6 +67,10 @@
     "previousFundingPlaceholder": "List any previous rounds and investors...",
     "demoLink": "Product Demo Link (Optional)",
     "demoLinkPlaceholder": "https://demo-link.com",
+    "attachment": "Pitch Deck / Company Documents (Optional)",
+    "attachmentHelp": "PDF or Image, max 20MB",
+    "attachmentBrowse": "Browse files",
+    "attachmentDragDrop": "or drag and drop",
 
     "discoverySource": "How did you hear about Reality Venture?",
     "discoverySourcePlaceholder": "Select an option",
@@ -89,7 +97,13 @@
     "gaming": "Gaming / Entertainment",
     "other": "Other"
   },
+  "businessStages": {
+    "idea": "Idea Stage",
+    "mvp": "MVP Stage",
+    "growth": "Growth Stage"
+  },
   "fundingRounds": {
+    "none": "None - Not Seeking Funding",
     "bootstrapped": "Bootstrapped / Not Raised Yet",
     "pre_seed": "Pre-Seed",
     "seed": "Seed",
@@ -162,6 +176,11 @@
     "valuation": {
       "required": "Company valuation is required.",
       "min": "Valuation must be greater than 0."
+    },
+    "businessStage": { "required": "Please select your business stage." },
+    "attachment": {
+      "mimes": "File must be a PDF or image (JPG, PNG).",
+      "max": "File must be less than 20MB."
     },
     "demoLink": { "url": "Please enter a valid URL." },
     "discoverySource": { "required": "Please tell us how you heard about us." },

@@ -33,8 +33,12 @@
     "emailPlaceholder": "email@example.com",
     "phone": "رقم الهاتف",
     "phonePlaceholder": "05XXXXXXXX",
+    "city": "المدينة",
+    "cityPlaceholder": "اختر مدينة",
     "linkedin": "حساب التواصل الاجتماعي",
     "linkedinPlaceholder": "https://twitter.com/username, https://linkedin.com/in/username، إلخ.",
+    "businessStage": "مرحلة العمل",
+    "businessStagePlaceholder": "اختر مرحلة عملك",
 
     "companyName": "اسم الشركة",
     "companyNamePlaceholder": "اسم شركتك",
@@ -63,6 +67,10 @@
     "previousFundingPlaceholder": "اذكر أي جولات ومستثمرين سابقين...",
     "demoLink": "رابط عرض المنتج (اختياري)",
     "demoLinkPlaceholder": "https://demo-link.com",
+    "attachment": "عرض تقديمي / مستندات الشركة (اختياري)",
+    "attachmentHelp": "PDF أو صورة، بحد أقصى 20 ميجابايت",
+    "attachmentBrowse": "تصفح الملفات",
+    "attachmentDragDrop": "أو اسحب وأفلت",
 
     "discoverySource": "كيف سمعت عن Reality Venture؟",
     "discoverySourcePlaceholder": "اختر",
@@ -89,7 +97,13 @@
     "gaming": "الألعاب والترفيه",
     "other": "أخرى"
   },
+  "businessStages": {
+    "idea": "مرحلة الفكرة",
+    "mvp": "مرحلة المنتج الأولي",
+    "growth": "مرحلة النمو"
+  },
   "fundingRounds": {
+    "none": "لا - لا أبحث عن تمويل",
     "bootstrapped": "تمويل ذاتي / لم يتم الجمع بعد",
     "pre_seed": "ما قبل البذرة",
     "seed": "البذرة",
@@ -162,6 +176,11 @@
     "valuation": {
       "required": "تقييم الشركة مطلوب.",
       "min": "التقييم يجب أن يكون أكبر من 0."
+    },
+    "businessStage": { "required": "يرجى اختيار مرحلة عملك." },
+    "attachment": {
+      "mimes": "يجب أن يكون الملف PDF أو صورة (JPG، PNG).",
+      "max": "يجب أن يكون حجم الملف أقل من 20 ميجابايت."
     },
     "demoLink": { "url": "يرجى إدخال رابط صحيح." },
     "discoverySource": { "required": "يرجى إخبارنا كيف سمعت عنا." },
