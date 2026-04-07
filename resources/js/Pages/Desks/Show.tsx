@@ -98,7 +98,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
         <>
             <Head title={workspace?.name ?? 'Desks'} />
 
-            <div className="max-w-6xl mx-auto px-4 py-8">
+            <div className="w-full max-w-7xl mx-auto px-4 py-8">
                 {/* Breadcrumb */}
                 {!loading && !error && workspace && (
                     <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
