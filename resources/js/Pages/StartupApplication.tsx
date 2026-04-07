@@ -9,6 +9,7 @@ import { useForm } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
 import { SarIcon } from '../Components/ui/SarIcon';
 import { COUNTRIES } from '../data/countries';
+import { SAUDI_CITIES } from '../data/saudi-cities';
 
 const INDUSTRY_KEYS = [
   'fintech',
@@ -26,6 +27,7 @@ const INDUSTRY_KEYS = [
 ];
 
 const FUNDING_ROUND_KEYS = [
+  'none',
   'bootstrapped',
   'pre_seed',
   'seed',
@@ -33,6 +35,8 @@ const FUNDING_ROUND_KEYS = [
   'series_b',
   'series_c_plus',
 ];
+
+const BUSINESS_STAGE_KEYS = ['idea', 'mvp', 'growth'];
 
 const DISCOVERY_SOURCE_KEYS = [
   'linkedin',
@@ -57,7 +61,9 @@ export default function StartupApplication() {
     last_name: '',
     email: '',
     phone: '',
+    city: '',
     linkedin_profile: '',
+    business_stage: '',
     company_name: '',
     number_of_founders: 1,
     hq_country: '',
@@ -68,6 +74,7 @@ export default function StartupApplication() {
     industry: '',
     industry_other: '',
     company_description: '',
+    attachment: null as File | null,
     current_funding_round: '',
     investment_ask_sar: '',
     valuation_sar: '',
@@ -97,6 +104,7 @@ export default function StartupApplication() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     post('/startup-applications', {
+      forceFormData: true,
       preserveState: true,
       preserveScroll: true,
       onSuccess: () => reset(),
@@ -106,6 +114,16 @@ export default function StartupApplication() {
   const countryOptions = COUNTRIES.map((c) => ({
     value: c.code,
     label: isArabic ? c.name_ar : c.name_en,
+  }));
+
+  const cityOptions = SAUDI_CITIES.map((c) => ({
+    value: c.code,
+    label: isArabic ? c.name_ar : c.name_en,
+  }));
+
+  const businessStageOptions = BUSINESS_STAGE_KEYS.map((key) => ({
+    value: key,
+    label: t(`startup-application:businessStages.${key}`),
   }));
 
   const industryOptions = INDUSTRY_KEYS.map((key) => ({
@@ -284,6 +302,18 @@ export default function StartupApplication() {
                   </div>
 
                   <div className="space-y-2">
+                    <label htmlFor="city" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.city')}</label>
+                    <Select
+                        id="city"
+                        value={data.city}
+                        onChange={(e) => setData('city', e.target.value)}
+                        options={cityOptions}
+                        placeholder={t('startup-application:form.cityPlaceholder')}
+                    />
+                    {errors.city && <p className="text-red-500 text-xs mt-1">{errorText('city', errors.city)}</p>}
+                  </div>
+
+                  <div className="space-y-2">
                     <label htmlFor="linkedin" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.linkedin')}</label>
                     <input
                       type="text"
@@ -302,6 +332,18 @@ export default function StartupApplication() {
                   <h3 className="text-sm font-bold uppercase tracking-widest text-primary border-b border-gray-100 pb-3">
                     {t('startup-application:sections.company')}
                   </h3>
+
+                  <div className="space-y-2">
+                    <label htmlFor="businessStage" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.businessStage')}</label>
+                    <Select
+                        id="businessStage"
+                        value={data.business_stage}
+                        onChange={(e) => setData('business_stage', e.target.value)}
+                        options={businessStageOptions}
+                        placeholder={t('startup-application:form.businessStagePlaceholder')}
+                    />
+                    {errors.business_stage && <p className="text-red-500 text-xs mt-1">{errorText('business_stage', errors.business_stage)}</p>}
+                  </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -416,6 +458,21 @@ export default function StartupApplication() {
                     ></textarea>
                     <p className="text-xs text-gray-400 text-right">{descriptionLength} / 600</p>
                     {errors.company_description && <p className="text-red-500 text-xs mt-1">{errorText('company_description', errors.company_description)}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.attachment')}</label>
+                    <div className="relative">
+                        <input
+                            type="file"
+                            id="attachment"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            onChange={(e) => setData('attachment', e.target.files?.[0] ?? null)}
+                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary hover:file:bg-primary-100"
+                        />
+                    </div>
+                    <p className="text-xs text-gray-400">{t('startup-application:form.attachmentHelp')}</p>
+                    {errors.attachment && <p className="text-red-500 text-xs mt-1">{errorText('attachment', errors.attachment)}</p>}
                   </div>
                 </div>
 
