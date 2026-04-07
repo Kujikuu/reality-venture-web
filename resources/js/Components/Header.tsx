@@ -21,7 +21,7 @@ export const Header = () => {
   const navLinks: NavLink[] = [
     // { nameKey: 'about', link: 'hero' },
     { nameKey: 'ventureProgram', link: 'programs' },
-    { nameKey: 'advisory', link: '/consultants' },
+    { nameKey: 'advisory', link: '/consultants', isPage: true },
     { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
   ];
