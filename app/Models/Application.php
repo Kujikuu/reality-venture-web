@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
+use App\Enums\BusinessStage;
 use App\Enums\DiscoverySource;
 use App\Enums\FundingRound;
 use App\Enums\Industry;
@@ -22,6 +23,7 @@ class Application extends Model
         'last_name',
         'email',
         'phone',
+        'city',
         'linkedin_profile',
         'program_interest',
         'description',
@@ -29,6 +31,7 @@ class Application extends Model
         'company_name',
         'number_of_founders',
         'hq_country',
+        'business_stage',
         'website_link',
         'founded_date',
         'industry',
@@ -42,6 +45,7 @@ class Application extends Model
         'discovery_source',
         'referral_name',
         'referral_param',
+        'attachment_path',
     ];
 
     protected function casts(): array
@@ -52,6 +56,7 @@ class Application extends Model
             'type' => ApplicationType::class,
             'industry' => Industry::class,
             'current_funding_round' => FundingRound::class,
+            'business_stage' => BusinessStage::class,
             'discovery_source' => DiscoverySource::class,
             'founded_date' => 'date',
             'investment_ask_sar' => 'integer',

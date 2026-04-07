@@ -48,6 +48,7 @@ class ApplicationFactory extends Factory
             'company_name' => fake()->company(),
             'number_of_founders' => fake()->numberBetween(1, 5),
             'hq_country' => fake()->randomElement(['SA', 'AE', 'US', 'GB', 'EG']),
+            'business_stage' => fake()->randomElement(\App\Enums\BusinessStage::cases()),
             'website_link' => fake()->url(),
             'founded_date' => fake()->dateTimeBetween('-10 years', 'now')->format('Y-m-d'),
             'industry' => fake()->randomElement(Industry::cases()),

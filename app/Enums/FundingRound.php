@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum FundingRound: string
 {
+    case None = 'none';
     case Bootstrapped = 'bootstrapped';
     case PreSeed = 'pre_seed';
     case Seed = 'seed';
@@ -14,6 +15,7 @@ enum FundingRound: string
     public function label(): string
     {
         return match ($this) {
+            self::None => 'None',
             self::Bootstrapped => 'Bootstrapped / Not Raised Yet',
             self::PreSeed => 'Pre-Seed',
             self::Seed => 'Seed',
