@@ -33,12 +33,12 @@
     "phone": "Phone Number",
     "company": "Company Name",
     "website": "Website (Optional)",
-    "linkedin": "LinkedIn Profile",
+    "linkedin": "Social Media Profile",
     "describe": "Describe your venture or idea",
     "messagePlaceholder": "Briefly describe your problem statement, solution, or area of expertise...",
     "emailPlaceholder": "email@example.com",
     "phonePlaceholder": "05XXXXXXXX",
-    "linkedinPlaceholder": "linkedin.com/in/username",
+    "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
     "submit": "Submit Application",
     "submitting": "Submitting...",
     "success": "Application submitted successfully!",
@@ -62,7 +62,7 @@
       "format": "Please enter a valid KSA mobile number."
     },
     "linkedin": {
-      "url": "Please enter a valid LinkedIn URL."
+      "url": "Please enter a valid URL."
     },
     "description": {
       "required": "Please describe your venture or idea."

@@ -31,8 +31,8 @@
     "lastName": "اسم العائلة",
     "email": "عنوان البريد الإلكتروني",
     "emailPlaceholder": "email@example.com",
-    "linkedin": "ملف لينكدإن",
-    "linkedinPlaceholder": "linkedin.com/in/username",
+    "linkedin": "حساب التواصل الاجتماعي",
+    "linkedinPlaceholder": "https://twitter.com/username, https://linkedin.com/in/username، إلخ.",
 
     "companyName": "اسم الشركة",
     "companyNamePlaceholder": "اسم شركتك",
@@ -96,7 +96,7 @@
     "series_c_plus": "الجولة ج وما فوق"
   },
   "discoverySources": {
-    "linkedin": "لينكدإن",
+    "linkedin": "التواصل الاجتماعي",
     "referral": "إحالة",
     "event": "حدث / مؤتمر",
     "website": "الموقع الإلكتروني",
@@ -126,7 +126,7 @@
       "format": "يرجى إدخال بريد إلكتروني صحيح.",
       "unique": "تم استخدام هذا البريد الإلكتروني للتقديم من قبل."
     },
-    "linkedin": { "url": "يرجى إدخال رابط LinkedIn صحيح." },
+    "linkedin": { "url": "يرجى إدخال رابط صحيح." },
     "companyName": { "required": "اسم الشركة مطلوب." },
     "numberOfFounders": {
       "required": "عدد المؤسسين مطلوب.",

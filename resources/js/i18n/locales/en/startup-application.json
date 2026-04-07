@@ -31,8 +31,8 @@
     "lastName": "Last Name",
     "email": "Email Address",
     "emailPlaceholder": "email@example.com",
-    "linkedin": "LinkedIn Profile",
-    "linkedinPlaceholder": "linkedin.com/in/username",
+    "linkedin": "Social Media Profile",
+    "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
 
     "companyName": "Company Name",
     "companyNamePlaceholder": "Your company name",
@@ -96,7 +96,7 @@
     "series_c_plus": "Series C+"
   },
   "discoverySources": {
-    "linkedin": "LinkedIn",
+    "linkedin": "Social Media",
     "referral": "Referral",
     "event": "Event / Conference",
     "website": "Website",
@@ -126,7 +126,7 @@
       "format": "Please enter a valid email address.",
       "unique": "This email has already been used to apply."
     },
-    "linkedin": { "url": "Please enter a valid LinkedIn URL." },
+    "linkedin": { "url": "Please enter a valid URL." },
     "companyName": { "required": "Company name is required." },
     "numberOfFounders": {
       "required": "Number of founders is required.",

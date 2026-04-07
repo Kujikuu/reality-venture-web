@@ -33,12 +33,12 @@
     "phone": "رقم الهاتف",
     "company": "اسم الشركة",
     "website": "الموقع الإلكتروني (اختياري)",
-    "linkedin": "ملف لينكدإن",
+    "linkedin": "حساب التواصل الاجتماعي",
     "describe": "صف مشروعك أو فكرتك",
     "messagePlaceholder": "صف بإيجاز مشكلتك وحلك أو مجال خبرتك...",
     "emailPlaceholder": "email@example.com",
     "phonePlaceholder": "05XXXXXXXX",
-    "linkedinPlaceholder": "linkedin.com/in/username",
+    "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username، إلخ.",
     "submit": "إرسال الطلب",
     "submitting": "جاري الإرسال...",
     "success": "تم تقديم الطلب بنجاح!",
@@ -62,7 +62,7 @@
       "format": "يرجى إدخال رقم جوال سعودي صحيح."
     },
     "linkedin": {
-      "url": "يرجى إدخال رابط LinkedIn صحيح."
+      "url": "يرجى إدخال رابط صحيح."
     },
     "description": {
       "required": "يرجى وصف مشروعك أو فكرتك."
