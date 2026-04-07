@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from '../Components/ui/Button';
 import { Select } from '../Components/ui/Select';
-import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Mail, CheckCircle2, MessageCircle, Upload, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
@@ -462,16 +462,36 @@ export default function StartupApplication() {
 
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.attachment')}</label>
-                    <div className="relative">
+                    {data.attachment ? (
+                      <div className="flex items-center gap-3 p-4 bg-primary-50 border border-primary/20 rounded-lg">
+                        <Upload className="w-5 h-5 text-primary shrink-0" />
+                        <span className="text-sm text-gray-700 truncate flex-1">{data.attachment.name}</span>
+                        <span className="text-xs text-gray-400 shrink-0">{(data.attachment.size / 1024 / 1024).toFixed(1)} MB</span>
+                        <button
+                          type="button"
+                          onClick={() => setData('attachment', null)}
+                          className="p-1 rounded-full hover:bg-primary/10 transition-colors"
+                        >
+                          <X className="w-4 h-4 text-gray-500" />
+                        </button>
+                      </div>
+                    ) : (
+                      <label
+                        htmlFor="attachment"
+                        className="flex flex-col items-center justify-center gap-2 p-8 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg cursor-pointer hover:border-primary/40 hover:bg-gray-50/80 transition-all"
+                      >
+                        <Upload className="w-8 h-8 text-gray-300" />
+                        <span className="text-sm font-semibold text-primary">{t('startup-application:form.attachmentBrowse')}</span>
+                        <span className="text-xs text-gray-400">{t('startup-application:form.attachmentHelp')}</span>
                         <input
-                            type="file"
-                            id="attachment"
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            onChange={(e) => setData('attachment', e.target.files?.[0] ?? null)}
-                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary hover:file:bg-primary-100"
+                          type="file"
+                          id="attachment"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={(e) => setData('attachment', e.target.files?.[0] ?? null)}
+                          className="hidden"
                         />
-                    </div>
-                    <p className="text-xs text-gray-400">{t('startup-application:form.attachmentHelp')}</p>
+                      </label>
+                    )}
                     {errors.attachment && <p className="text-red-500 text-xs mt-1">{errorText('attachment', errors.attachment)}</p>}
                   </div>
                 </div>
