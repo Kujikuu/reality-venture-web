@@ -147,8 +147,8 @@ export default function ConsultantsIndex({ consultants, specializations, filters
                             <Clock className="w-3.5 h-3.5" />
                             <span>{consultant.years_experience} {t('index.yearsExp')}</span>
                           </div>
-                          <span className="px-3 py-1 bg-secondary/10 text-secondary font-bold text-sm rounded-full">
-                            <SarIcon /> {consultant.hourly_rate}{t('index.perHour')}
+                          <span className="flex justify-center items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary font-bold text-sm rounded-full">
+                            <SarIcon className='h-[0.9em]!' /> {consultant.hourly_rate}{t('index.perHour')}
                           </span>
                         </div>
                       </Link>
