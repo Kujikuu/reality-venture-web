@@ -4,6 +4,7 @@ import { LayoutDashboard, Calendar, DollarSign, UserCircle, TrendingUp, ArrowUpR
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PaginatedData } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   bookings: PaginatedData<BookingItem>;
@@ -55,7 +56,7 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
                 <DollarSign className="w-4 h-4 text-gray-400" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-gray-900">{Number(totals.gross).toLocaleString()} <span className="text-sm font-medium text-gray-400">SAR</span></div>
+            <div className="text-2xl font-bold text-gray-900"><SarIcon /> {Number(totals.gross).toLocaleString()}</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-xl p-5">
@@ -65,7 +66,7 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
                 <ArrowDownRight className="w-4 h-4 text-red-400" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-red-500">−{Number(totals.fees).toLocaleString()} <span className="text-sm font-medium text-red-300">SAR</span></div>
+            <div className="text-2xl font-bold text-red-500">−<SarIcon /> {Number(totals.fees).toLocaleString()}</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-xl p-5">
@@ -75,7 +76,7 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
                 <ArrowUpRight className="w-4 h-4 text-emerald-500" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-emerald-600">{Number(totals.net).toLocaleString()} <span className="text-sm font-medium text-emerald-400">SAR</span></div>
+            <div className="text-2xl font-bold text-emerald-600"><SarIcon /> {Number(totals.net).toLocaleString()}</div>
           </div>
         </div>
 
@@ -126,13 +127,13 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-end font-semibold text-gray-900">
-                          {booking.total_amount} SAR
+                          <SarIcon /> {booking.total_amount}
                         </td>
                         <td className="px-6 py-4 text-end text-red-500 font-medium">
-                          −{booking.commission_amount} SAR
+                          −<SarIcon /> {booking.commission_amount}
                         </td>
                         <td className="px-6 py-4 text-end font-bold text-emerald-600">
-                          {booking.consultant_amount} SAR
+                          <SarIcon /> {booking.consultant_amount}
                         </td>
                       </tr>
                     ))}
@@ -157,7 +158,7 @@ export default function ConsultantEarnings({ bookings, totals }: Props) {
                       <div className="text-gray-500">
                         {booking.total_amount} <span className="text-red-400">− {booking.commission_amount}</span>
                       </div>
-                      <div className="font-bold text-emerald-600">{booking.consultant_amount} SAR</div>
+                      <div className="font-bold text-emerald-600"><SarIcon /> {booking.consultant_amount}</div>
                     </div>
                   </div>
                 ))}

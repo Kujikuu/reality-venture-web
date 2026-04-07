@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import { Calendar, Clock, Users, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useDesksApi } from '../../hooks/useDesksApi';
+import { SarIcon } from '../ui/SarIcon';
 
 interface Pricing {
     price_per_hour: number | null;
@@ -57,7 +58,6 @@ export const BookingCard: React.FC<BookingCardProps> = ({
     const [error, setError] = useState('');
     const [successId, setSuccessId] = useState<number | null>(null);
 
-    const currency = pricing?.currency ?? 'SAR';
 
     const selectedDayOfWeek = useMemo(() => {
         if (!date) return null;
@@ -178,13 +178,13 @@ export const BookingCard: React.FC<BookingCardProps> = ({
                 <div className="flex items-center gap-3 flex-wrap">
                     {pricing?.price_per_hour != null && (
                         <span className="text-secondary font-bold text-lg">
-                            {pricing.price_per_hour} {currency}
+                            <SarIcon /> {pricing.price_per_hour}
                             <span className="text-sm font-normal text-gray-500"> /hr</span>
                         </span>
                     )}
                     {pricing?.price_per_day != null && (
                         <span className="text-gray-500 text-sm">
-                            {pricing.price_per_day} {currency} /day
+                            <SarIcon /> {pricing.price_per_day} /day
                         </span>
                     )}
                 </div>
@@ -277,7 +277,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({
                 <div className="bg-gray-50 rounded-lg px-4 py-3 flex items-center justify-between">
                     <span className="text-sm text-gray-600">{t('booking.total')}</span>
                     <span className="font-semibold text-text-main">
-                        {total} {currency}
+                        <SarIcon /> {total}
                     </span>
                 </div>
             )}

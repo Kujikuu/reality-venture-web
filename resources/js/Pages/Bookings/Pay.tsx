@@ -7,6 +7,7 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { useState, useEffect } from 'react';
 import type { BookingItem } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   booking: BookingItem | null;
@@ -53,7 +54,7 @@ function PaymentForm({ booking }: { booking: BookingItem }) {
         disabled={!stripe || processing}
         className="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary-800 transition-colors disabled:opacity-50"
       >
-        {processing ? t('pay.processing') : `${t('pay.payNow')} — ${booking.total_amount} SAR`}
+        {processing ? t('pay.processing') : <><SarIcon /> {booking.total_amount} — {t('pay.payNow')}</>}
       </button>
       <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
         <Shield className="w-3.5 h-3.5" /> {t('pay.secure')}
@@ -129,7 +130,7 @@ export default function BookingPay({ booking, clientSecret, stripeKey, pending }
                 </div>
                 <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
                   <span className="text-sm font-bold text-gray-900">{t('pay.amount')}</span>
-                  <span className="ms-auto text-lg font-bold text-secondary">{booking.total_amount} SAR</span>
+                  <span className="ms-auto text-lg font-bold text-secondary"><SarIcon /> {booking.total_amount}</span>
                 </div>
               </div>
             </div>

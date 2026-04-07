@@ -5,6 +5,7 @@ import { Star, Clock, Globe, MapPin, MessageCircle, Info } from 'lucide-react';
 import CalendlyWidget from '../../Components/CalendlyWidget';
 import type { ConsultantDetail, ReviewItem, PageProps } from '../../types/marketplace';
 import i18next from 'i18next';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   consultant: ConsultantDetail;
@@ -160,7 +161,7 @@ export default function ConsultantShow({ consultant, reviews }: Props) {
                       <h3 className="font-bold text-gray-900">{t('show.bookingCard')}</h3>
                       <div className="text-end">
                         <span className="text-2xl font-bold text-secondary">{consultant.hourly_rate}</span>
-                        <span className="text-sm text-gray-400"> SAR/hr</span>
+                        <span className="text-sm text-gray-400"> <SarIcon />/hr</span>
                       </div>
                     </div>
                   </div>

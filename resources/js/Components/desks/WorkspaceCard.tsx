@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cardVariants } from '../animations/CommonAnimations';
+import { SarIcon } from '../ui/SarIcon';
 
 interface Pricing {
     price_per_hour: number | null;
@@ -30,7 +31,6 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
     const { t } = useTranslation('desks');
     const topAmenities = workspace.amenities.slice(0, 3);
     const pricing = workspace.pricing;
-    const currency = pricing?.currency ?? 'SAR';
 
     return (
         <motion.div
@@ -100,17 +100,17 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                         <div className="flex items-center justify-between pt-1 border-t border-gray-100">
                             {pricing?.price_per_hour != null ? (
                                 <span className="text-secondary font-semibold text-sm">
-                                    {pricing.price_per_hour} {currency}{t('card.perHour')}
+                                    <SarIcon /> {pricing.price_per_hour}{t('card.perHour')}
                                 </span>
                             ) : pricing?.price_per_day != null ? (
                                 <span className="text-secondary font-semibold text-sm">
-                                    {pricing.price_per_day} {currency}{t('card.perDay')}
+                                    <SarIcon /> {pricing.price_per_day}{t('card.perDay')}
                                 </span>
                             ) : null}
 
                             {pricing?.price_per_hour != null && pricing?.price_per_day != null && (
                                 <span className="text-gray-400 text-xs">
-                                    {pricing.price_per_day} {currency}{t('card.perDay')}
+                                    <SarIcon /> {pricing.price_per_day}{t('card.perDay')}
                                 </span>
                             )}
                         </div>

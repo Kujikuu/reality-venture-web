@@ -5,6 +5,7 @@ import { Calendar, Clock, User, ExternalLink, Star, AlertTriangle } from 'lucide
 import { useState } from 'react';
 import type { BookingItem } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   booking: BookingItem;
@@ -90,7 +91,7 @@ export default function BookingShow({ booking }: Props) {
                 </div>
                 <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
                   <span className="text-sm font-bold text-gray-900">{t('show.amount')}</span>
-                  <span className="ms-auto text-lg font-bold text-secondary">{booking.total_amount} SAR</span>
+                  <span className="ms-auto text-lg font-bold text-secondary"><SarIcon /> {booking.total_amount}</span>
                 </div>
               </div>
 

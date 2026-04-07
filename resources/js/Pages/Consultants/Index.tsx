@@ -7,6 +7,7 @@ import { staggerContainer, cardVariants } from '../../Components/animations/Comm
 import type { ConsultantCard, Specialization, PaginatedData } from '../../types/marketplace';
 import i18next from 'i18next';
 import { Button } from '../../Components/ui/Button';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   consultants: PaginatedData<ConsultantCard>;
@@ -95,7 +96,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
                 </div>
               ) : (
                 <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6"
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
@@ -147,7 +148,7 @@ export default function ConsultantsIndex({ consultants, specializations, filters
                             <span>{consultant.years_experience} {t('index.yearsExp')}</span>
                           </div>
                           <span className="px-3 py-1 bg-secondary/10 text-secondary font-bold text-sm rounded-full">
-                            {consultant.hourly_rate} SAR{t('index.perHour')}
+                            <SarIcon /> {consultant.hourly_rate}{t('index.perHour')}
                           </span>
                         </div>
                       </Link>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react';
 import type { Specialization } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   specializations: Specialization[];
@@ -245,7 +246,7 @@ export default function Onboarding({ specializations }: Props) {
                           onChange={(e) => setData('hourly_rate', parseInt(e.target.value) || 0)}
                           className="w-full h-12 px-4 pe-16 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
                         />
-                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 font-medium">SAR</span>
+                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 font-medium"><SarIcon /></span>
                       </div>
                       {errors.hourly_rate && <p className="text-red-500 text-xs">{errors.hourly_rate}</p>}
                     </div>

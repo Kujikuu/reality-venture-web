@@ -5,6 +5,7 @@ import { useState } from 'react';
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PageProps } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   upcoming: BookingItem[];
@@ -60,7 +61,7 @@ export default function ClientDashboard({ upcoming, pendingPayment, past, stats 
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-5">
             <div className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">{t('client.totalSpent')}</div>
-            <div className="text-2xl font-bold text-secondary">{stats.total_spent} SAR</div>
+            <div className="text-2xl font-bold text-secondary"><SarIcon /> {stats.total_spent}</div>
           </div>
         </div>
 
@@ -111,7 +112,7 @@ export default function ClientDashboard({ upcoming, pendingPayment, past, stats 
                     </div>
                   </div>
                   <div className="text-end">
-                    <span className="text-sm font-bold text-gray-900">{booking.total_amount} SAR</span>
+                    <span className="text-sm font-bold text-gray-900"><SarIcon /> {booking.total_amount}</span>
                   </div>
                 </div>
 

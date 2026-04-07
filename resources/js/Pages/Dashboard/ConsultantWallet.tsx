@@ -8,6 +8,7 @@ import {
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BalanceSummary, BankDetails, PaginatedData, PageProps, PayoutItem } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   balance: BalanceSummary;
@@ -100,7 +101,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                 <ArrowUpRight className="w-4 h-4 text-emerald-500" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-emerald-600">{Number(balance.available).toLocaleString()} <span className="text-sm font-medium text-emerald-400">SAR</span></div>
+            <div className="text-2xl font-bold text-emerald-600"><SarIcon /> {Number(balance.available).toLocaleString()}</div>
             <p className="text-[10px] text-gray-400 mt-1">{t('consultant.availableDesc')}</p>
           </div>
 
@@ -111,7 +112,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                 <Clock className="w-4 h-4 text-amber-500" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-amber-600">{Number(balance.pending).toLocaleString()} <span className="text-sm font-medium text-amber-400">SAR</span></div>
+            <div className="text-2xl font-bold text-amber-600"><SarIcon /> {Number(balance.pending).toLocaleString()}</div>
             <p className="text-[10px] text-gray-400 mt-1">{t('consultant.pendingDesc')}</p>
           </div>
 
@@ -122,7 +123,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                 <DollarSign className="w-4 h-4 text-gray-400" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-gray-900">{Number(balance.total_earned).toLocaleString()} <span className="text-sm font-medium text-gray-400">SAR</span></div>
+            <div className="text-2xl font-bold text-gray-900"><SarIcon /> {Number(balance.total_earned).toLocaleString()}</div>
             <p className="text-[10px] text-gray-400 mt-1">{t('consultant.totalEarnedDesc')}</p>
           </div>
 
@@ -133,7 +134,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                 <ArrowDownRight className="w-4 h-4 text-blue-500" />
               </span>
             </div>
-            <div className="text-2xl font-bold text-blue-600">{Number(balance.total_paid_out).toLocaleString()} <span className="text-sm font-medium text-blue-400">SAR</span></div>
+            <div className="text-2xl font-bold text-blue-600"><SarIcon /> {Number(balance.total_paid_out).toLocaleString()}</div>
             <p className="text-[10px] text-gray-400 mt-1">{t('consultant.totalPaidOutDesc')}</p>
           </div>
         </div>
@@ -280,7 +281,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
 
                 {balance.total_in_process > 0 && (
                   <div className="p-3 bg-amber-50 border border-amber-100 rounded-lg text-xs text-amber-700">
-                    {t('consultant.totalInProcess')}: {Number(balance.total_in_process).toLocaleString()} SAR
+                    {t('consultant.totalInProcess')}: <SarIcon /> {Number(balance.total_in_process).toLocaleString()}
                   </div>
                 )}
 
@@ -327,7 +328,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                       <tr key={payout.id} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-6 py-4 font-mono text-xs font-medium text-gray-900">{payout.reference}</td>
                         <td className="px-6 py-4 text-gray-500">{formatDate(payout.created_at)}</td>
-                        <td className="px-6 py-4 text-end font-bold text-gray-900">{Number(payout.amount).toLocaleString()} SAR</td>
+                        <td className="px-6 py-4 text-end font-bold text-gray-900"><SarIcon /> {Number(payout.amount).toLocaleString()}</td>
                         <td className="px-6 py-4">
                           <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${payoutStatusColors[payout.status]}`}>
                             {tPayouts(`status.${payout.status}`)}
@@ -379,7 +380,7 @@ export default function ConsultantWallet({ balance, payouts, bankDetails, hasPen
                     </div>
                     <div className="text-xs text-gray-400 mb-2">{formatDate(payout.created_at)}</div>
                     <div className="flex items-center justify-between">
-                      <div className="font-bold text-gray-900">{Number(payout.amount).toLocaleString()} SAR</div>
+                      <div className="font-bold text-gray-900"><SarIcon /> {Number(payout.amount).toLocaleString()}</div>
                       {payout.status === 'requested' && (
                         <Link
                           href={`/consultant/wallet/payouts/${payout.id}/cancel`}

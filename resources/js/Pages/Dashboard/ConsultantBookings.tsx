@@ -4,6 +4,7 @@ import { LayoutDashboard, Calendar, DollarSign, UserCircle, Wallet } from 'lucid
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PaginatedData } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   bookings: PaginatedData<BookingItem>;
@@ -67,9 +68,9 @@ export default function ConsultantBookings({ bookings }: Props) {
                           {tBookings(`status.${booking.status}`)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-end font-medium text-gray-900">{booking.total_amount} SAR</td>
-                      <td className="px-6 py-4 text-sm text-end text-red-500">-{booking.commission_amount} SAR</td>
-                      <td className="px-6 py-4 text-sm text-end font-bold text-green-600">{booking.consultant_amount} SAR</td>
+                      <td className="px-6 py-4 text-sm text-end font-medium text-gray-900"><SarIcon /> {booking.total_amount}</td>
+                      <td className="px-6 py-4 text-sm text-end text-red-500">-<SarIcon /> {booking.commission_amount}</td>
+                      <td className="px-6 py-4 text-sm text-end font-bold text-green-600"><SarIcon /> {booking.consultant_amount}</td>
                       <td className="px-6 py-4">
                         {booking.status === 'confirmed' && (
                           <Link

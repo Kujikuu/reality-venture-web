@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
 import { useForm } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
+import { SarIcon } from '../Components/ui/SarIcon';
 import { COUNTRIES } from '../data/countries';
 
 const INDUSTRY_KEYS = [
@@ -434,7 +435,7 @@ export default function StartupApplication() {
                           className="w-full h-14 px-6 pe-16 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                           placeholder={t('startup-application:form.investmentAskPlaceholder')}
                         />
-                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 uppercase">SAR</span>
+                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400"><SarIcon /></span>
                       </div>
                       {errors.investment_ask_sar && <p className="text-red-500 text-xs mt-1">{errorText('investment_ask_sar', errors.investment_ask_sar)}</p>}
                     </div>
@@ -450,7 +451,7 @@ export default function StartupApplication() {
                           className="w-full h-14 px-6 pe-16 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                           placeholder={t('startup-application:form.valuationPlaceholder')}
                         />
-                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 uppercase">SAR</span>
+                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400"><SarIcon /></span>
                       </div>
                       {errors.valuation_sar && <p className="text-red-500 text-xs mt-1">{errorText('valuation_sar', errors.valuation_sar)}</p>}
                     </div>

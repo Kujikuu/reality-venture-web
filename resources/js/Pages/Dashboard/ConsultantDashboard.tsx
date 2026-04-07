@@ -4,6 +4,7 @@ import { LayoutDashboard, Calendar, DollarSign, UserCircle, Star, TrendingUp, Wa
 import DashboardLayout from '../../Layouts/DashboardLayout';
 import type { BookingItem, PageProps } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
+import { SarIcon } from '../../Components/ui/SarIcon';
 
 interface Props {
   stats: {
@@ -60,7 +61,7 @@ export default function ConsultantDashboard({ stats, recentBookings }: Props) {
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
               <DollarSign className="w-4 h-4" /> {t('consultant.totalEarnings')}
             </div>
-            <div className="text-2xl font-bold text-secondary">{stats.total_net_earnings} SAR</div>
+            <div className="text-2xl font-bold text-secondary"><SarIcon /> {stats.total_net_earnings}</div>
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-5">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
@@ -81,7 +82,7 @@ export default function ConsultantDashboard({ stats, recentBookings }: Props) {
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
               <Wallet className="w-4 h-4" /> {t('consultant.availableForPayout')}
             </div>
-            <div className="text-2xl font-bold text-emerald-600">{Number(stats.available_balance).toLocaleString()} SAR</div>
+            <div className="text-2xl font-bold text-emerald-600"><SarIcon /> {Number(stats.available_balance).toLocaleString()}</div>
           </Link>
         </div>
 
@@ -115,12 +116,12 @@ export default function ConsultantDashboard({ stats, recentBookings }: Props) {
                       </p>
                     </div>
                     <div className="text-end">
-                      <div className="text-sm font-bold text-gray-900">{booking.total_amount} SAR</div>
+                      <div className="text-sm font-bold text-gray-900"><SarIcon /> {booking.total_amount}</div>
                       <div className="text-xs text-gray-400">
-                        {t('consultant.netEarnings')}: <span className="text-green-600 font-semibold">{booking.consultant_amount} SAR</span>
+                        {t('consultant.netEarnings')}: <span className="text-green-600 font-semibold"><SarIcon /> {booking.consultant_amount}</span>
                       </div>
                       <div className="text-xs text-gray-300">
-                        -{booking.commission_amount} SAR {t('consultant.platformFee').toLowerCase()}
+                        -<SarIcon /> {booking.commission_amount} {t('consultant.platformFee').toLowerCase()}
                       </div>
                     </div>
                   </div>

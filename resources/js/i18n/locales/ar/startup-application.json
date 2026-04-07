@@ -53,9 +53,9 @@
 
     "currentFundingRound": "جولة التمويل الحالية",
     "currentFundingRoundPlaceholder": "اختر جولة تمويل",
-    "investmentAsk": "المبلغ المطلوب (ريال سعودي)",
+    "investmentAsk": "المبلغ المطلوب",
     "investmentAskPlaceholder": "0",
-    "valuation": "تقييم الشركة (ريال سعودي)",
+    "valuation": "تقييم الشركة",
     "valuationPlaceholder": "0",
     "previousFunding": "جولات التمويل السابقة والمستثمرون (اختياري)",
     "previousFundingPlaceholder": "اذكر أي جولات ومستثمرين سابقين...",
