@@ -1,0 +1,48 @@
+export interface SaudiCity {
+  code: string;
+  name_en: string;
+  name_ar: string;
+}
+
+export const SAUDI_CITIES: SaudiCity[] = [
+  { code: 'RUH', name_en: 'Riyadh', name_ar: 'الرياض' },
+  { code: 'JED', name_en: 'Jeddah', name_ar: 'جدة' },
+  { code: 'MKH', name_en: 'Makkah', name_ar: 'مكة المكرمة' },
+  { code: 'MED', name_en: 'Madinah', name_ar: 'المدينة المنورة' },
+  { code: 'DMM', name_en: 'Dammam', name_ar: 'الدمام' },
+  { code: 'KHO', name_en: 'Khobar', name_ar: 'الخبر' },
+  { code: 'DHR', name_en: 'Dhahran', name_ar: 'الظهران' },
+  { code: 'TAI', name_en: 'Taif', name_ar: 'الطائف' },
+  { code: 'TAB', name_en: 'Tabuk', name_ar: 'تبوك' },
+  { code: 'BUR', name_en: 'Buraidah', name_ar: 'بريدة' },
+  { code: 'KHM', name_en: 'Khamis Mushait', name_ar: 'خميس مشيط' },
+  { code: 'ABH', name_en: 'Abha', name_ar: 'أبها' },
+  { code: 'HAI', name_en: "Ha'il", name_ar: 'حائل' },
+  { code: 'NAJ', name_en: 'Najran', name_ar: 'نجران' },
+  { code: 'JIZ', name_en: 'Jizan', name_ar: 'جازان' },
+  { code: 'YAN', name_en: 'Yanbu', name_ar: 'ينبع' },
+  { code: 'JUB', name_en: 'Jubail', name_ar: 'الجبيل' },
+  { code: 'AHQ', name_en: 'Al-Ahsa', name_ar: 'الأحساء' },
+  { code: 'QAT', name_en: 'Qatif', name_ar: 'القطيف' },
+  { code: 'SKA', name_en: 'Sakaka', name_ar: 'سكاكا' },
+  { code: 'ARR', name_en: 'Arar', name_ar: 'عرعر' },
+  { code: 'BAH', name_en: 'Al Baha', name_ar: 'الباحة' },
+  { code: 'UNA', name_en: 'Unaizah', name_ar: 'عنيزة' },
+  { code: 'KHJ', name_en: 'Al Kharj', name_ar: 'الخرج' },
+  { code: 'ZUL', name_en: 'Zulfi', name_ar: 'الزلفي' },
+  { code: 'AFF', name_en: 'Afif', name_ar: 'عفيف' },
+  { code: 'DWD', name_en: 'Dawadmi', name_ar: 'الدوادمي' },
+  { code: 'MAJ', name_en: 'Majmaah', name_ar: 'المجمعة' },
+  { code: 'WAD', name_en: 'Wadi Al-Dawasir', name_ar: 'وادي الدواسر' },
+  { code: 'BIS', name_en: 'Bisha', name_ar: 'بيشة' },
+  { code: 'LIT', name_en: 'Al Lith', name_ar: 'الليث' },
+  { code: 'QUN', name_en: 'Qunfudhah', name_ar: 'القنفذة' },
+  { code: 'RAS', name_en: 'Ras Tanura', name_ar: 'رأس تنورة' },
+  { code: 'SAF', name_en: 'Safwa', name_ar: 'صفوى' },
+  { code: 'KHF', name_en: 'Khafji', name_ar: 'الخفجي' },
+  { code: 'TUR', name_en: 'Turaif', name_ar: 'طريف' },
+  { code: 'RAF', name_en: 'Rafha', name_ar: 'رفحاء' },
+  { code: 'SHQ', name_en: 'Shaqra', name_ar: 'شقراء' },
+  { code: 'HOT', name_en: 'Hotat Bani Tamim', name_ar: 'حوطة بني تميم' },
+  { code: 'LAY', name_en: 'Layla', name_ar: 'ليلى' },
+];
