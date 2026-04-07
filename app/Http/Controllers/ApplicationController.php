@@ -30,6 +30,12 @@ class ApplicationController extends Controller
         $validated['type'] = ApplicationType::Startup->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
+        if ($request->hasFile('attachment')) {
+            $validated['attachment_path'] = $request->file('attachment')->store('application-files', 'public');
+        }
+
+        unset($validated['attachment']);
+
         $application = Application::create($validated);
 
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
