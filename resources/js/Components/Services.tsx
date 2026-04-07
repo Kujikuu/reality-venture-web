@@ -1,53 +1,177 @@
-import React from 'react';
-import { Workflow, Settings, Store, TrendingUp, Cpu, Landmark } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ArrowUpRight, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { motion } from 'framer-motion';
-import { staggerContainer, cardVariants } from './animations/CommonAnimations';
+import { sectionVariants } from './animations/CommonAnimations';
 import { useTranslation } from 'react-i18next';
+
+const services: ServiceItem[] = [
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Business+Modeling', titleKey: 'items.businessModeling.title', descriptionKey: 'items.businessModeling.description' },
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Management', titleKey: 'items.management.title', descriptionKey: 'items.management.description' },
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Franchising', titleKey: 'items.franchising.title', descriptionKey: 'items.franchising.description' },
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Marketing', titleKey: 'items.marketing.title', descriptionKey: 'items.marketing.description' },
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Technology', titleKey: 'items.technology.title', descriptionKey: 'items.technology.description' },
+  { image: 'https://placehold.co/600x400/f9fafb/9ca3af?text=Investment', titleKey: 'items.investment.title', descriptionKey: 'items.investment.description' },
+];
+
+const featureKeys = ['features.endToEnd', 'features.tailored', 'features.proven'] as const;
 
 export const Services: React.FC = () => {
   const { t } = useTranslation('services');
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [cardWidth, setCardWidth] = useState(360);
+  const [gap, setGap] = useState(24);
+  const [isRtl, setIsRtl] = useState(false);
 
-  const services: ServiceItem[] = [
-    { icon: Workflow, titleKey: "items.businessModeling.title", descriptionKey: "items.businessModeling.description" },
-    { icon: Settings, titleKey: "items.management.title", descriptionKey: "items.management.description" },
-    { icon: Store, titleKey: "items.franchising.title", descriptionKey: "items.franchising.description" },
-    { icon: TrendingUp, titleKey: "items.marketing.title", descriptionKey: "items.marketing.description" },
-    { icon: Cpu, titleKey: "items.technology.title", descriptionKey: "items.technology.description" },
-    { icon: Landmark, titleKey: "items.investment.title", descriptionKey: "items.investment.description" },
-  ];
+  const maxIndex = services.length - 1;
+
+  const calcCardWidth = useCallback(() => {
+    if (!viewportRef.current) return;
+    const w = viewportRef.current.offsetWidth;
+    if (w < 640) {
+      setCardWidth(w - 32);
+      setGap(16);
+    } else if (w < 1024) {
+      setCardWidth(300);
+      setGap(20);
+    } else {
+      setCardWidth(360);
+      setGap(24);
+    }
+  }, []);
+
+  useEffect(() => {
+    setIsRtl(document.documentElement.dir === 'rtl');
+    calcCardWidth();
+    window.addEventListener('resize', calcCardWidth);
+    return () => window.removeEventListener('resize', calcCardWidth);
+  }, [calcCardWidth]);
+
+  const goPrev = () => {
+    if (isRtl) {
+      if (current < maxIndex) setCurrent(current + 1);
+    } else {
+      if (current > 0) setCurrent(current - 1);
+    }
+  };
+
+  const goNext = () => {
+    if (isRtl) {
+      if (current > 0) setCurrent(current - 1);
+    } else {
+      if (current < maxIndex) setCurrent(current + 1);
+    }
+  };
+
+  const prevDisabled = isRtl ? current >= maxIndex : current === 0;
+  const nextDisabled = isRtl ? current === 0 : current >= maxIndex;
+
+  const translateX = isRtl
+    ? current * (cardWidth + gap)
+    : -(current * (cardWidth + gap));
 
   return (
-    <section id="services" className="py-24 bg-white scroll-mt-24">
+    <section id="services" className="py-16 lg:py-24 bg-gray-50 scroll-mt-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('badge')}</span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
-            {t('title')}
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            {t('description')}
-          </p>
-        </div>
-        
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={staggerContainer}
+          className="flex flex-col lg:flex-row gap-10 lg:gap-16"
+          variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
         >
-          {services.map((service, idx) => (
-            <motion.div key={idx} className="group p-8 rounded-lg border border-gray-100 hover:border-secondary/40 hover:bg-white hover:shadow-lg hover:shadow-secondary/5 transition-all duration-300" variants={cardVariants}>
-              <div className="w-14 h-14 bg-white rounded-md flex items-center justify-center mb-6 group-hover:bg-secondary group-hover:text-white transition-colors text-gray-400 border border-gray-100 group-hover:border-secondary">
-                <service.icon className="w-7 h-7" />
+          {/* Left column */}
+          <div className="w-full lg:w-1/2">
+            <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('badge')}</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+              {t('title')}
+            </h2>
+            <p className="text-base md:text-lg text-gray-500 mb-6 md:mb-8">
+              {t('description')}
+            </p>
+            <div className="flex flex-col gap-4 md:gap-6">
+              {featureKeys.map((key) => (
+                <div key={key} className="flex items-start gap-3">
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-primary-50 flex items-center justify-center mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-primary" />
+                  </div>
+                  <p
+                    className="text-sm md:text-base font-medium text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: t(key) }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right column - Carousel */}
+          <div className="w-full lg:w-1/2">
+            <div
+              ref={viewportRef}
+              className="overflow-visible"
+              style={{
+                clipPath: isRtl
+                  ? 'inset(-20px 0 -20px -9999px)'
+                  : 'inset(-20px -9999px -20px 0)',
+              }}
+            >
+              <div
+                className="flex transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(${translateX}px)` }}
+              >
+                {services.map((service, idx) => (
+                  <div
+                    key={idx}
+                    className="shrink-0"
+                    style={{
+                      width: `${cardWidth}px`,
+                      marginInlineEnd: `${gap}px`,
+                    }}
+                  >
+                    <div className="group flex flex-col h-full gap-3 p-3 rounded-2xl border border-gray-100 bg-white overflow-hidden transition-all duration-300 hover:shadow-lg">
+                      <div className="bg-gray-50 p-3 rounded-sm overflow-clip w-full h-48 md:h-64 lg:h-80">
+                        <img
+                          src={service.image}
+                          alt={t(service.titleKey)}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-3 pt-5 p-4">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-xl font-bold text-gray-900">
+                            {t(service.titleKey)}
+                          </h3>
+                          <ArrowUpRight className="w-6 h-6 text-gray-400" />
+                        </div>
+                        <p className="text-sm text-gray-500 leading-tight">
+                          {t(service.descriptionKey)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-secondary transition-colors">{service.titleKey ? t(service.titleKey) : service.title}</h4>
-              <p className="text-gray-500 leading-relaxed text-sm">
-                {service.descriptionKey ? t(service.descriptionKey) : service.description}
-              </p>
-            </motion.div>
-          ))}
+            </div>
+
+            {/* Navigation arrows */}
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={goPrev}
+                disabled={prevDisabled}
+                className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={goNext}
+                disabled={nextDisabled}
+                className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

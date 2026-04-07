@@ -1,11 +1,9 @@
 import React from 'react';
 
 export interface ServiceItem {
-  icon: React.ElementType;
-  title?: string;
-  description?: string;
-  titleKey?: string;
-  descriptionKey?: string;
+  image: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
 export interface ProgramItem {

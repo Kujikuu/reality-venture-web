@@ -2,6 +2,11 @@
   "badge": "Our Expertise",
   "title": "Comprehensive Services",
   "description": "Everything you need to go from idea to scale, all under one roof.",
+  "features": {
+    "endToEnd": "End-to-end support from <strong>business modeling</strong> to <strong>capital raising</strong>",
+    "tailored": "Tailored strategies designed for <strong>Saudi market</strong> dynamics and opportunities",
+    "proven": "Proven frameworks that deliver <strong>measurable results</strong> at every stage"
+  },
   "items": {
     "businessModeling": {
       "title": "Business Modeling",
