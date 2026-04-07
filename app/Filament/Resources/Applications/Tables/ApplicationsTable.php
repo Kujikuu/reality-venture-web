@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Applications\Tables;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
+use App\Filament\Exports\ApplicationExporter;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\TextColumn;
@@ -60,7 +62,10 @@ class ApplicationsTable
                 EditAction::make()->label('Update Status'),
                 DeleteAction::make(),
             ])
-            ->toolbarActions([])
+            ->toolbarActions([
+                ExportAction::make()
+                    ->exporter(ApplicationExporter::class),
+            ])
             ->emptyStateHeading('No applications yet')
             ->emptyStateDescription('Applications submitted from the website will appear here.')
             ->emptyStateIcon('heroicon-o-document-text')
