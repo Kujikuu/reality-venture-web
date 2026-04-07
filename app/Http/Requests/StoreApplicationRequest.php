@@ -21,6 +21,7 @@ class StoreApplicationRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:applications,email'],
             'phone' => ['required', 'string', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
+            'city' => ['nullable', 'string', 'max:255'],
             'linkedin_profile' => ['nullable', 'url', 'max:500'],
             'description' => ['required', 'string', 'max:5000'],
         ];

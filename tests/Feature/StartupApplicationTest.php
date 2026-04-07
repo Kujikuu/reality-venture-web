@@ -25,6 +25,7 @@ class StartupApplicationTest extends TestCase
             'email' => 'sara@startup.com',
             'phone' => '0512345678',
             'linkedin_profile' => 'https://linkedin.com/in/sara',
+            'business_stage' => 'growth',
             'company_name' => 'RealityCo',
             'number_of_founders' => 3,
             'hq_country' => 'SA',
@@ -89,18 +90,102 @@ class StartupApplicationTest extends TestCase
             'last_name',
             'email',
             'phone',
+            'business_stage',
             'company_name',
-            'number_of_founders',
-            'hq_country',
-            'website_link',
-            'founded_date',
-            'industry',
             'company_description',
-            'current_funding_round',
-            'investment_ask_sar',
-            'valuation_sar',
             'discovery_source',
         ]);
+    }
+
+    public function test_requires_business_stage(): void
+    {
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'business_stage' => '',
+        ]));
+
+        $response->assertSessionHasErrors(['business_stage']);
+    }
+
+    public function test_idea_stage_allows_minimal_company_fields(): void
+    {
+        Mail::fake();
+
+        $response = $this->post('/startup-applications', [
+            'first_name' => 'Ali',
+            'last_name' => 'Test',
+            'email' => 'ali-idea@test.com',
+            'phone' => '0512345678',
+            'business_stage' => 'idea',
+            'company_name' => 'My Idea',
+            'company_description' => 'A new concept we are exploring.',
+            'discovery_source' => 'website',
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('applications', [
+            'email' => 'ali-idea@test.com',
+            'business_stage' => 'idea',
+        ]);
+    }
+
+    public function test_none_funding_round_makes_investment_fields_optional(): void
+    {
+        Mail::fake();
+
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'current_funding_round' => 'none',
+            'investment_ask_sar' => '',
+            'valuation_sar' => '',
+            'email' => 'none-funding@test.com',
+        ]));
+
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('applications', [
+            'email' => 'none-funding@test.com',
+            'current_funding_round' => 'none',
+        ]);
+    }
+
+    public function test_accepts_valid_pdf_attachment(): void
+    {
+        Mail::fake();
+
+        $file = \Illuminate\Http\UploadedFile::fake()->create('pitch.pdf', 5000, 'application/pdf');
+
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'attachment' => $file,
+            'email' => 'upload@test.com',
+        ]));
+
+        $response->assertSessionHasNoErrors();
+
+        $application = Application::where('email', 'upload@test.com')->first();
+        $this->assertNotNull($application->attachment_path);
+        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($application->attachment_path));
+    }
+
+    public function test_rejects_oversized_attachment(): void
+    {
+        $file = \Illuminate\Http\UploadedFile::fake()->create('huge.pdf', 25000, 'application/pdf');
+
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'attachment' => $file,
+            'email' => 'toobig@test.com',
+        ]));
+
+        $response->assertSessionHasErrors(['attachment']);
+    }
+
+    public function test_rejects_invalid_attachment_type(): void
+    {
+        $file = \Illuminate\Http\UploadedFile::fake()->create('doc.docx', 1000, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'attachment' => $file,
+            'email' => 'wrongtype@test.com',
+        ]));
+
+        $response->assertSessionHasErrors(['attachment']);
     }
 
     public function test_industry_other_required_when_industry_is_other(): void
