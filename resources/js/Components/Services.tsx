@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { motion } from 'framer-motion';
@@ -16,14 +16,16 @@ const services: ServiceItem[] = [
 
 const featureKeys = ['features.endToEnd', 'features.tailored', 'features.proven'] as const;
 
+const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
+
 export const Services: React.FC = () => {
-  const { t } = useTranslation('services');
+  const { t, i18n } = useTranslation('services');
   const viewportRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const [cardWidth, setCardWidth] = useState(360);
   const [gap, setGap] = useState(24);
-  const [isRtl, setIsRtl] = useState(false);
 
+  const isRtl = RTL_LANGUAGES.includes(i18n.language);
   const maxIndex = services.length - 1;
 
   const calcCardWidth = useCallback(() => {
@@ -42,7 +44,6 @@ export const Services: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setIsRtl(document.documentElement.dir === 'rtl');
     calcCardWidth();
     window.addEventListener('resize', calcCardWidth);
     return () => window.removeEventListener('resize', calcCardWidth);
@@ -72,7 +73,7 @@ export const Services: React.FC = () => {
     : -(current * (cardWidth + gap));
 
   return (
-    <section id="services" className="py-16 lg:py-24 bg-gray-50 scroll-mt-24 overflow-hidden">
+    <section id="services" className="py-16 lg:py-24 bg-gray-50 scroll-mt-24 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="flex flex-col lg:flex-row gap-10 lg:gap-16"
@@ -109,8 +110,8 @@ export const Services: React.FC = () => {
           <div className="w-full lg:w-1/2">
             <div
               ref={viewportRef}
-              className="overflow-visible"
               style={{
+                overflow: 'visible',
                 clipPath: isRtl
                   ? 'inset(-20px 0 -20px -9999px)'
                   : 'inset(-20px -9999px -20px 0)',
