@@ -36,6 +36,8 @@ class ApplicationInfolist
                             ->badge()
                             ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
                             ->color(fn (ApplicationStatus $state): string => $state->color()),
+                            TextEntry::make('uid')
+                            ->name('Reference'),
                         TextEntry::make('first_name')
                             ->label('First Name')
                             ->icon('heroicon-o-user'),
