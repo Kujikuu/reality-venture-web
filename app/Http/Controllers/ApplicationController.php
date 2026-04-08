@@ -22,7 +22,7 @@ class ApplicationController extends Controller
 
         $application = Application::create($validated);
 
-        Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
+        Mail::to('be@rv.com.sa')->send(new NewApplicationSubmitted($application));
         SyncApplicationToGoogleSheet::dispatch($application);
         Mail::to($application->email)->send(new GeneralApplicationConfirmation($application));
 
@@ -43,7 +43,7 @@ class ApplicationController extends Controller
 
         $application = Application::create($validated);
 
-        Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
+        Mail::to('be@rv.com.sa')->send(new NewApplicationSubmitted($application));
         SyncApplicationToGoogleSheet::dispatch($application);
         Mail::to($application->email)->send(new StartupApplicationConfirmation($application));
 
