@@ -6,7 +6,9 @@ use App\Enums\ApplicationType;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\StoreStartupApplicationRequest;
 use App\Jobs\SyncApplicationToGoogleSheet;
+use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\NewApplicationSubmitted;
+use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
 use Illuminate\Support\Facades\Mail;
 
@@ -22,6 +24,7 @@ class ApplicationController extends Controller
 
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
         SyncApplicationToGoogleSheet::dispatch($application);
+        Mail::to($application->email)->send(new GeneralApplicationConfirmation($application));
 
         return back()->with('success', 'submitted');
     }
@@ -42,6 +45,7 @@ class ApplicationController extends Controller
 
         Mail::to('rv@sniper.com.sa')->send(new NewApplicationSubmitted($application));
         SyncApplicationToGoogleSheet::dispatch($application);
+        Mail::to($application->email)->send(new StartupApplicationConfirmation($application));
 
         return back()->with('success', 'submitted');
     }
