@@ -19,6 +19,7 @@ class Application extends Model
 
     protected $fillable = [
         'type',
+        'uid',
         'first_name',
         'last_name',
         'email',
@@ -63,5 +64,28 @@ class Application extends Model
             'valuation_sar' => 'integer',
             'number_of_founders' => 'integer',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Application $application) {
+            if (empty($application->uid)) {
+                $application->uid = static::generateUid();
+            }
+        });
+    }
+
+    public static function generateUid(): string
+    {
+        $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+        do {
+            $uid = 'RV-';
+            for ($i = 0; $i < 6; $i++) {
+                $uid .= $characters[random_int(0, \strlen($characters) - 1)];
+            }
+        } while (static::where('uid', $uid)->exists());
+
+        return $uid;
     }
 }
