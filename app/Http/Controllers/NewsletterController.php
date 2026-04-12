@@ -16,18 +16,22 @@ class NewsletterController extends Controller
 
         $subscriber = Subscriber::where('email', $email)->first();
 
+        $clubData = [
+            'fullname' => $fullname,
+            'is_active' => true,
+            'phone' => $phone,
+            'position' => $request->validated('position'),
+            'interests' => $request->validated('interests'),
+            'city' => $request->validated('city'),
+            'sector' => $request->validated('sector'),
+        ];
+
         if ($subscriber) {
-            $subscriber->update([
-                'fullname' => $fullname,
-                'is_active' => true,
-                'phone' => $phone,
-            ]);
+            $subscriber->update($clubData);
         } else {
-            Subscriber::create([
-                'fullname' => $fullname,
+            Subscriber::create(array_merge($clubData, [
                 'email' => $email,
-                'phone' => $phone,
-            ]);
+            ]));
         }
 
         return back()->with('newsletter_success', true);

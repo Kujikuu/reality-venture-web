@@ -51,7 +51,7 @@
       "label": "Email"
     },
     "home": {
-      "heading": "Join the Reality Venture club",
+      "heading": "Join the Reality Venture Club",
       "description": "Insights on startups, PropTech, and venture building — straight to your inbox.",
       "badge": "Weekly updates"
     },
@@ -59,6 +59,35 @@
       "heading": "Never miss a story",
       "description": "Subscribe to get our latest articles on venture building and PropTech.",
       "badge": "Stay informed"
+    },
+    "clubFields": {
+      "toggle": "Tell us more about yourself (optional)"
+    },
+    "position": {
+      "placeholder": "Your position / job title",
+      "label": "Position"
+    },
+    "city": {
+      "placeholder": "Your city",
+      "label": "City"
+    },
+    "sector": {
+      "label": "Sector",
+      "public": "Public Sector",
+      "private": "Private Sector"
+    },
+    "interests": {
+      "label": "Interests",
+      "options": {
+        "startups": "Startups",
+        "proptech": "PropTech",
+        "investment": "Investment",
+        "ventureBuilding": "Venture Building",
+        "technology": "Technology",
+        "realEstate": "Real Estate",
+        "entrepreneurship": "Entrepreneurship",
+        "innovation": "Innovation"
+      }
     }
   },
   "and": "and"

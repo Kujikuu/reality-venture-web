@@ -211,6 +211,102 @@ class NewsletterTest extends TestCase
         $this->assertEquals(64, strlen($subscriber->unsubscribe_token));
     }
 
+    public function test_user_can_subscribe_with_club_fields(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Ahmed Al Saud',
+            'email' => 'ahmed@example.com',
+            'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups', 'proptech', 'investment'],
+            'city' => 'Riyadh',
+            'sector' => 'private',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('subscribers', [
+            'fullname' => 'Ahmed Al Saud',
+            'email' => 'ahmed@example.com',
+            'phone' => '+966512345678',
+            'position' => 'CEO',
+            'city' => 'Riyadh',
+            'sector' => 'private',
+        ]);
+
+        $subscriber = Subscriber::where('email', 'ahmed@example.com')->first();
+        $this->assertEquals(['startups', 'proptech', 'investment'], $subscriber->interests);
+    }
+
+    public function test_user_can_subscribe_without_optional_club_fields(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
+            'email' => 'test@example.com',
+            'phone' => '0512345678',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('subscribers', [
+            'email' => 'test@example.com',
+            'position' => null,
+            'city' => null,
+            'sector' => null,
+        ]);
+
+        $subscriber = Subscriber::where('email', 'test@example.com')->first();
+        $this->assertNull($subscriber->interests);
+    }
+
+    public function test_subscribe_rejects_invalid_interest_values(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
+            'email' => 'test@example.com',
+            'phone' => '0512345678',
+            'interests' => ['invalid_interest', 'another_bad_one'],
+        ]);
+
+        $response->assertSessionHasErrors('interests.0');
+    }
+
+    public function test_subscribe_rejects_invalid_sector_value(): void
+    {
+        $response = $this->post('/newsletter/subscribe', [
+            'fullname' => 'Test User',
+            'email' => 'test@example.com',
+            'phone' => '0512345678',
+            'sector' => 'government',
+        ]);
+
+        $response->assertSessionHasErrors('sector');
+    }
+
+    public function test_resubscribe_updates_club_fields(): void
+    {
+        Subscriber::factory()->unsubscribed()->create([
+            'email' => 'test@example.com',
+            'position' => 'Manager',
+            'city' => 'Jeddah',
+        ]);
+
+        $this->post('/newsletter/subscribe', [
+            'fullname' => 'Updated Name',
+            'email' => 'test@example.com',
+            'phone' => '0522222222',
+            'position' => 'CEO',
+            'city' => 'Riyadh',
+            'sector' => 'public',
+            'interests' => ['technology', 'innovation'],
+        ]);
+
+        $subscriber = Subscriber::where('email', 'test@example.com')->first();
+        $this->assertTrue($subscriber->is_active);
+        $this->assertEquals('CEO', $subscriber->position);
+        $this->assertEquals('Riyadh', $subscriber->city);
+        $this->assertEquals('public', $subscriber->sector->value);
+        $this->assertEquals(['technology', 'innovation'], $subscriber->interests);
+    }
+
     public function test_send_newsletter_job_sends_to_active_subscribers_only(): void
     {
         Mail::fake();
