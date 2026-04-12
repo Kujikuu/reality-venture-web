@@ -36,7 +36,7 @@ class ApplicationInfolist
                             ->badge()
                             ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
                             ->color(fn (ApplicationStatus $state): string => $state->color()),
-                            TextEntry::make('uid')
+                        TextEntry::make('uid')
                             ->name('Reference'),
                         TextEntry::make('first_name')
                             ->label('First Name')
@@ -53,10 +53,10 @@ class ApplicationInfolist
                             ->copyable()
                             ->copyMessage('Phone copied')
                             ->placeholder('Not provided'),
-                        TextEntry::make('linkedin_profile')
-                            ->label('LinkedIn')
+                        TextEntry::make('social_profile')
+                            ->label('Social Profile')
                             ->icon('heroicon-o-link')
-                            ->url(fn (Application $record): ?string => $record->linkedin_profile)
+                            ->url(fn (Application $record): ?string => $record->social_profile)
                             ->openUrlInNewTab()
                             ->placeholder('Not provided')
                             ->color('primary'),

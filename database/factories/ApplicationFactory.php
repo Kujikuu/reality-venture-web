@@ -27,7 +27,7 @@ class ApplicationFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'linkedin_profile' => fake()->optional()->url(),
+            'social_profile' => fake()->optional()->url(),
             'program_interest' => null,
             'description' => fake()->paragraphs(2, true),
             'status' => ApplicationStatus::Pending,

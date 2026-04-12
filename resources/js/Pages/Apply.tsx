@@ -17,7 +17,7 @@ export default function Apply() {
     email: '',
     phone: '',
     city: '',
-    linkedin_profile: '',
+    social_profile: '',
     description: '',
   });
 
@@ -190,16 +190,16 @@ export default function Apply() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="linkedin" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.linkedin')}</label>
+                  <label htmlFor="socialProfile" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.linkedin')}</label>
                   <input
                     type="text"
-                    id="linkedin"
-                    value={data.linkedin_profile}
-                    onChange={(e) => setData('linkedin_profile', e.target.value)}
+                    id="socialProfile"
+                    value={data.social_profile}
+                    onChange={(e) => setData('social_profile', e.target.value)}
                     className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                     placeholder={t('apply:form.linkedinPlaceholder')}
                   />
-                  {errors.linkedin_profile && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.linkedin_profile, errors.linkedin_profile)}</p>}
+                  {errors.social_profile && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.social_profile, errors.social_profile)}</p>}
                 </div>
 
                 <div className="space-y-2">

@@ -21,8 +21,8 @@ Keep this reference ID for your records. You can use it when contacting our team
 **Phone:** {{ $application->phone }}
 @endif
 
-@if($application->linkedin_profile)
-**LinkedIn:** {{ $application->linkedin_profile }}
+@if($application->social_profile)
+**Social Profile:** {{ $application->social_profile }}
 @endif
 
 @if($application->program_interest)

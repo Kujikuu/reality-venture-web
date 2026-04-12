@@ -11,8 +11,8 @@ A new application has been submitted on the Reality Venture website.
 **Phone:** {{ $application->phone }}
 @endif
 
-@if($application->linkedin_profile)
-**LinkedIn:** {{ $application->linkedin_profile }}
+@if($application->social_profile)
+**Social Profile:** {{ $application->social_profile }}
 @endif
 
 @if($application->city)

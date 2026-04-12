@@ -33,7 +33,7 @@ class ApplicationExporter extends Exporter
                 ->label('Phone'),
             ExportColumn::make('city')
                 ->label('City'),
-            ExportColumn::make('linkedin_profile')
+            ExportColumn::make('social_profile')
                 ->label('Social Profile'),
             ExportColumn::make('business_stage')
                 ->label('Business Stage')

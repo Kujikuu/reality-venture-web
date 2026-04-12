@@ -27,7 +27,7 @@ class StoreStartupApplicationRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
             'city' => ['nullable', 'string', 'max:255'],
-            'linkedin_profile' => ['nullable', 'url', 'max:500'],
+            'social_profile' => ['nullable', 'url', 'max:500'],
 
             'business_stage' => ['required', Rule::enum(BusinessStage::class)],
             'company_name' => ['required', 'string', 'max:255'],
@@ -64,7 +64,7 @@ class StoreStartupApplicationRequest extends FormRequest
             'email.email' => 'validation.email.format',
             'phone.required' => 'validation.phone.required',
             'phone.regex' => 'validation.phone.format',
-            'linkedin_profile.url' => 'validation.linkedin.url',
+            'social_profile.url' => 'validation.linkedin.url',
 
             'company_name.required' => 'validation.companyName.required',
             'number_of_founders.required' => 'validation.numberOfFounders.required',

@@ -57,7 +57,7 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->email,
             $app->phone,
             $app->city,
-            $app->linkedin_profile,
+            $app->social_profile,
             $app->business_stage?->label(),
             $app->company_name,
             (string) $app->number_of_founders,
@@ -91,7 +91,7 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->email,
             $app->phone,
             $app->city,
-            $app->linkedin_profile,
+            $app->social_profile,
             $app->description,
         ];
     }

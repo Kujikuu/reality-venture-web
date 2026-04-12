@@ -25,7 +25,7 @@ class Application extends Model
         'email',
         'phone',
         'city',
-        'linkedin_profile',
+        'social_profile',
         'program_interest',
         'description',
         'status',

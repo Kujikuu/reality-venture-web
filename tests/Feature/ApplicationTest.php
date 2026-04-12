@@ -29,7 +29,7 @@ class ApplicationTest extends TestCase
             'last_name' => 'Al-Saud',
             'email' => 'ahmed@example.com',
             'phone' => '0551234567',
-            'linkedin_profile' => 'https://linkedin.com/in/ahmed',
+            'social_profile' => 'https://linkedin.com/in/ahmed',
             'description' => 'I am interested in learning about your programs and would love to connect.',
         ];
 

@@ -22,7 +22,7 @@ class StoreApplicationRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
             'city' => ['nullable', 'string', 'max:255'],
-            'linkedin_profile' => ['nullable', 'url', 'max:500'],
+            'social_profile' => ['nullable', 'url', 'max:500'],
             'description' => ['required', 'string', 'max:5000'],
         ];
     }
@@ -39,7 +39,7 @@ class StoreApplicationRequest extends FormRequest
             'email.email' => 'validation.email.format',
             'phone.required' => 'validation.phone.required',
             'phone.regex' => 'validation.phone.format',
-            'linkedin_profile.url' => 'validation.linkedin.url',
+            'social_profile.url' => 'validation.linkedin.url',
             'description.required' => 'validation.description.required',
         ];
     }

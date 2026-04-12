@@ -24,7 +24,7 @@ class StartupApplicationTest extends TestCase
             'last_name' => 'Al-Qahtani',
             'email' => 'sara@startup.com',
             'phone' => '0512345678',
-            'linkedin_profile' => 'https://linkedin.com/in/sara',
+            'social_profile' => 'https://linkedin.com/in/sara',
             'business_stage' => 'growth',
             'company_name' => 'RealityCo',
             'number_of_founders' => 3,
