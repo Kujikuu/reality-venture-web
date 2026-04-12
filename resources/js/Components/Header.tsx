@@ -28,7 +28,7 @@ export const Header = () => {
 
   const marketplaceLinks = [
     { nameKey: 'advisory', link: '/consultants' },
-    { nameKey: 'desks', link: '/desks' },
+    { nameKey: 'desks', link: '/grit' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -190,6 +190,11 @@ export const Header = () => {
                   {t('buttons.applyNow')}
                 </button>
               </Link>
+              <Link href="/grit">
+                <button className="h-10 px-6 items-center justify-center bg-secondary text-white text-sm font-bold tracking-tight hover:bg-secondary-800 transition-all rounded-md">
+                  {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
+                </button>
+              </Link>
             </div>
           )}
         </div>
@@ -281,6 +286,11 @@ export const Header = () => {
                 <Link href="/application-form" onClick={() => setIsMenuOpen(false)}>
                   <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm">
                     {t('buttons.applyNow')}
+                  </button>
+                </Link>
+                <Link href="/grit" onClick={() => setIsMenuOpen(false)}>
+                  <button className="h-12 w-full bg-secondary text-white font-bold uppercase tracking-wide rounded-sm">
+                    {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
                   </button>
                 </Link>
               </div>

@@ -160,7 +160,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({
                         {t('booking.successId')}: <span className="font-medium text-text-main">#{successId}</span>
                     </p>
                     <Link
-                        href="/desks/bookings"
+                        href="/grit/bookings"
                         className="text-sm text-primary font-medium hover:underline"
                     >
                         View My Bookings

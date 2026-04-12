@@ -5,7 +5,8 @@
     "login": "Login",
     "logout": "Logout",
     "dashboard": "Dashboard",
-    "home": "Home"
+    "home": "Home",
+    "grit": "GRIT"
   },
   "header": {
     "about": "About",

@@ -9,6 +9,7 @@ import { CancelModal } from '../../Components/desks/CancelModal';
 
 interface Workspace {
     id: number;
+    slug: string;
     name: string;
     type: string;
 }
@@ -136,7 +137,7 @@ export default function DesksBookings() {
             <div className="max-w-7xl w-full mx-auto px-4 py-8">
                 {/* Breadcrumb */}
                 <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
-                    <Link href="/desks" className="hover:text-primary transition-colors">
+                    <Link href="/grit" className="hover:text-primary transition-colors">
                         {t('detail.breadcrumbHome')}
                     </Link>
                     <ChevronRight className="w-4 h-4 flex-shrink-0" />
@@ -191,7 +192,7 @@ export default function DesksBookings() {
                         <p className="font-medium text-text-main">{t('bookings.empty')}</p>
                         <p className="text-sm text-gray-500 mt-1">{t('bookings.emptyDescription')}</p>
                         <Link
-                            href="/desks"
+                            href="/grit"
                             className="inline-block mt-4 px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
                         >
                             {t('bookings.browse')}
@@ -211,7 +212,7 @@ export default function DesksBookings() {
                                 <div className="flex items-start justify-between gap-3">
                                     <div className="min-w-0">
                                         <Link
-                                            href={`/desks/${booking.workspace.id}`}
+                                            href={`/grit/${booking.workspace.slug}`}
                                             className="font-semibold text-text-main hover:text-primary transition-colors line-clamp-1"
                                         >
                                             {booking.workspace.name}
@@ -258,7 +259,7 @@ export default function DesksBookings() {
                                     <div className="flex items-center gap-2">
                                         {(booking.status === 'completed' || booking.status === 'cancelled') && (
                                             <Link
-                                                href={`/desks/${booking.workspace.id}`}
+                                                href={`/grit/${booking.workspace.slug}`}
                                                 className="text-xs text-primary font-medium hover:underline"
                                             >
                                                 {t('bookings.bookAgain')}

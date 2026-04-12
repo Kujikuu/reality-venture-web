@@ -44,9 +44,9 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // Desks / Workspaces
-Route::get('/desks', fn () => inertia('Desks/Index'))->name('desks.index');
-Route::get('/desks/bookings', fn () => inertia('Desks/Bookings'))->name('desks.bookings');
-Route::get('/desks/{id}', fn (string $id) => inertia('Desks/Show', ['workspaceId' => $id]))->name('desks.show');
+Route::get('/grit', fn () => inertia('Desks/Index'))->name('desks.index');
+Route::get('/grit/bookings', fn () => inertia('Desks/Bookings'))->name('desks.bookings');
+Route::get('/grit/{slug}', fn (string $slug) => inertia('Desks/Show', ['workspaceSlug' => $slug]))->name('desks.show');
 
 // ─── Auth (Guest Only) ──────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

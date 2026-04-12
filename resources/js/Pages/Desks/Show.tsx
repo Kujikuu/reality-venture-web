@@ -29,6 +29,7 @@ interface Host {
 
 interface Workspace {
     id: number;
+    slug: string;
     type: string;
     name: string;
     city: string;
@@ -43,10 +44,10 @@ interface Workspace {
 }
 
 interface ShowProps {
-    workspaceId: number;
+    workspaceSlug: string;
 }
 
-export default function DesksShow({ workspaceId }: ShowProps) {
+export default function DesksShow({ workspaceSlug }: ShowProps) {
     const { t } = useTranslation('desks');
     const { fetchApi } = useDesksApi();
     const {
@@ -71,7 +72,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
     useEffect(() => {
         setLoading(true);
         setError('');
-        fetchApi(`/api/v1/workspaces/${workspaceId}`)
+        fetchApi(`/api/v1/workspaces/${workspaceSlug}`)
             .then((res) => {
                 if (!res.ok) throw new Error('fetch failed');
                 return res.json();
@@ -85,7 +86,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
             .finally(() => {
                 setLoading(false);
             });
-    }, [workspaceId, fetchApi, t]);
+    }, [workspaceSlug, fetchApi, t]);
 
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
@@ -102,7 +103,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
                 {/* Breadcrumb */}
                 {!loading && !error && workspace && (
                     <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
-                        <Link href="/desks" className="hover:text-primary transition-colors">
+                        <Link href="/grit" className="hover:text-primary transition-colors">
                             {t('detail.breadcrumbHome')}
                         </Link>
                         <ChevronRight className="w-4 h-4 flex-shrink-0" />
@@ -133,7 +134,7 @@ export default function DesksShow({ workspaceId }: ShowProps) {
                             onClick={() => {
                                 setLoading(true);
                                 setError('');
-                                fetchApi(`/api/v1/workspaces/${workspaceId}`)
+                                fetchApi(`/api/v1/workspaces/${workspaceSlug}`)
                                     .then((res) => {
                                         if (!res.ok) throw new Error('fetch failed');
                                         return res.json();

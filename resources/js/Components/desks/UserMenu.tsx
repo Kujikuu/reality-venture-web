@@ -71,7 +71,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user, loading, onLoginClick,
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
                     </div>
                     <Link
-                        href="/desks/bookings"
+                        href="/grit/bookings"
                         className="flex items-center gap-2 px-4 py-2.5 text-sm text-text-main hover:bg-gray-50 transition-colors"
                         onClick={() => setOpen(false)}
                     >

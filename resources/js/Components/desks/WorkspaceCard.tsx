@@ -14,6 +14,7 @@ interface Pricing {
 
 interface Workspace {
     id: number;
+    slug: string;
     type: string;
     name: string;
     city: string;
@@ -37,7 +38,7 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
             variants={cardVariants}
             className="h-full rounded-xl border border-gray-200 bg-white overflow-hidden transition-shadow duration-300 hover:shadow-lg"
         >
-                <Link href={`/desks/${workspace.id}`} className="block">
+                <Link href={`/grit/${workspace.slug}`} className="block">
                     {/* Image */}
                     <div className="relative h-48 bg-gray-100 overflow-hidden">
                         {workspace.cover_image ? (
