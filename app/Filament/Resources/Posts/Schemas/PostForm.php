@@ -117,6 +117,7 @@ class PostForm
                             ->relationship('category', 'name_en')
                             ->searchable()
                             ->preload()
+                            ->native(false)
                             ->createOptionForm([
                                 TextInput::make('name_en')->label('Name (English)')->required(),
                                 TextInput::make('name_ar')->label('Name (Arabic)')->required(),
@@ -128,6 +129,7 @@ class PostForm
                             ->multiple()
                             ->searchable()
                             ->preload()
+                            ->native(false)
                             ->createOptionForm([
                                 TextInput::make('name_en')->label('Name (English)')->required(),
                                 TextInput::make('name_ar')->label('Name (Arabic)')->required(),
@@ -139,7 +141,8 @@ class PostForm
                             ->default(fn () => auth()->id())
                             ->required()
                             ->searchable()
-                            ->preload(),
+                            ->preload()
+                            ->native(false),
                         Select::make('status')
                             ->options(
                                 collect(PostStatus::cases())
@@ -151,6 +154,7 @@ class PostForm
                         DateTimePicker::make('published_at')
                             ->label('Publish Date')
                             ->nullable()
+                            ->native(false)
                             ->prefixIcon('heroicon-o-calendar'),
                     ]),
                 Section::make('Media')

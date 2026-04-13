@@ -10,31 +10,26 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewApplicationSubmitted extends Mailable implements ShouldQueue
+class StageAdvancedToDecision extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Application $application) {}
+    public function __construct(
+        public Application $application,
+    ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "طلب جديد | New {$this->application->type->label()} Application — {$this->application->uid}",
+            subject: "تحديث على طلبك | Application Decision — {$this->application->uid}",
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.new-application-submitted',
+            markdown: 'mail.stage-decision',
+            with: ['application' => $this->application],
         );
-    }
-
-    /**
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

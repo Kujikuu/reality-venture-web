@@ -15,10 +15,12 @@ class ApplicationExporter extends Exporter
     public static function getColumns(): array
     {
         return [
+            ExportColumn::make('uid')
+                ->label('Reference'),
             ExportColumn::make('id')
                 ->label('ID'),
             ExportColumn::make('type')
-                ->label('Type')
+                ->label('Stage')
                 ->formatStateUsing(fn ($state) => $state?->label()),
             ExportColumn::make('status')
                 ->label('Status')

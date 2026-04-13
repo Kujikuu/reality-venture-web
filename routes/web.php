@@ -31,6 +31,7 @@ Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])->name('startup-applications.store');
+Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])->name('applications.lookup');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

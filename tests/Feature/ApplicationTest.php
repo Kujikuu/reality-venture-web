@@ -42,7 +42,7 @@ class ApplicationTest extends TestCase
             'email' => 'ahmed@example.com',
             'phone' => '+966551234567',
             'first_name' => 'Ahmed',
-            'type' => ApplicationType::General->value,
+            'type' => ApplicationType::Initial->value,
         ]);
 
         Mail::assertSent(NewApplicationSubmitted::class);

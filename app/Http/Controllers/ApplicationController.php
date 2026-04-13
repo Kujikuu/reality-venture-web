@@ -17,7 +17,7 @@ class ApplicationController extends Controller
     public function store(StoreApplicationRequest $request)
     {
         $validated = $request->validated();
-        $validated['type'] = ApplicationType::General->value;
+        $validated['type'] = ApplicationType::Initial->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
         $application = Application::create($validated);
@@ -32,7 +32,7 @@ class ApplicationController extends Controller
     public function storeStartup(StoreStartupApplicationRequest $request)
     {
         $validated = $request->validated();
-        $validated['type'] = ApplicationType::Startup->value;
+        $validated['type'] = ApplicationType::Applying->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
         if ($request->hasFile('attachment')) {
@@ -63,5 +63,24 @@ class ApplicationController extends Controller
         }
 
         return '+966'.$digits;
+    }
+
+    public function lookup(string $uid)
+    {
+        $application = Application::where('uid', $uid)->first();
+
+        if (! $application) {
+            return response()->json(['message' => 'Application not found'], 404);
+        }
+
+        return response()->json([
+            'uid' => $application->uid,
+            'first_name' => $application->first_name,
+            'last_name' => $application->last_name,
+            'email' => $application->email,
+            'phone' => $application->phone,
+            'social_profile' => $application->social_profile,
+            'city' => $application->city,
+        ]);
     }
 }

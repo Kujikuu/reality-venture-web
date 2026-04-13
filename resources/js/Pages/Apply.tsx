@@ -118,7 +118,9 @@ export default function Apply() {
                 <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('apply:form.title')}</h2>
                 {recentlySuccessful && (
                   <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm">
-                    ✓ {t('apply:form.success', 'Application submitted successfully!')}
+                    {isArabic 
+                      ? '✓ وصلنا طلبك بنجاح 🎉 راجع إيميلك عشان تعرف الخطوات الجاية'
+                      : '✓ Request received successfully. Check your email for next steps.'}
                   </div>
                 )}
               </div>

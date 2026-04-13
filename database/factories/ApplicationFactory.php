@@ -23,7 +23,8 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => ApplicationType::General,
+            'uid' => 'RV-'.strtoupper(\Illuminate\Support\Str::random(6)),
+            'type' => ApplicationType::Initial,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
@@ -44,7 +45,7 @@ class ApplicationFactory extends Factory
     public function startup(): static
     {
         return $this->state(fn (array $attributes) => [
-            'type' => ApplicationType::Startup,
+            'type' => ApplicationType::Applying,
             'company_name' => fake()->company(),
             'number_of_founders' => fake()->numberBetween(1, 5),
             'hq_country' => fake()->randomElement(['SA', 'AE', 'US', 'GB', 'EG']),

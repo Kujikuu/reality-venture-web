@@ -31,11 +31,11 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             return;
         }
 
-        $sheet = $this->application->type === ApplicationType::Startup
+        $sheet = $this->application->type === ApplicationType::Applying
             ? 'Startup Applications'
             : 'General Applications';
 
-        $row = $this->application->type === ApplicationType::Startup
+        $row = $this->application->type === ApplicationType::Applying
             ? $this->buildStartupRow()
             : $this->buildGeneralRow();
 
@@ -52,6 +52,7 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
 
         return [
             $app->created_at?->format('Y-m-d H:i'),
+            $app->uid,
             $app->first_name,
             $app->last_name,
             $app->email,
@@ -86,6 +87,7 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
 
         return [
             $app->created_at?->format('Y-m-d H:i'),
+            $app->uid,
             $app->first_name,
             $app->last_name,
             $app->email,

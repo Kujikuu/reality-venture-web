@@ -37,6 +37,7 @@ class ConsultantForm
                         ->relationship('user', 'name')
                         ->searchable()
                         ->preload()
+                        ->native(false)
                         ->required()
                         ->hiddenOn('edit'),
                     TextInput::make('user_name')
@@ -82,6 +83,7 @@ class ConsultantForm
                         ->multiple()
                         ->searchable()
                         ->preload()
+                        ->native(false)
                         ->helperText('Add, remove, or change the consultant\'s specializations.'),
                     Textarea::make('bio_en')
                         ->label('Bio (English)')

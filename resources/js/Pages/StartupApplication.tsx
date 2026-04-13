@@ -89,6 +89,24 @@ export default function StartupApplication() {
     const ref = new URLSearchParams(window.location.search).get('ref');
     if (ref) {
       setData('referral_param', ref);
+      
+      fetch(`/applications/lookup/${ref}`)
+        .then(res => res.json())
+        .then(json => {
+            if (json.uid) {
+                setData(prev => ({
+                    ...prev,
+                    first_name: json.first_name || '',
+                    last_name: json.last_name || '',
+                    email: json.email || '',
+                    phone: json.phone || '',
+                    city: json.city || '',
+                    social_profile: json.social_profile || '',
+                    referral_param: ref,
+                }));
+            }
+        })
+        .catch(err => console.error('Failed to lookup application', err));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -238,7 +256,9 @@ export default function StartupApplication() {
                 <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('startup-application:form.title')}</h2>
                 {recentlySuccessful && (
                   <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm">
-                    {t('startup-application:form.success')}
+                    {isArabic 
+                      ? '✓ وصلنا طلبك بنجاح 🎉 راجع إيميلك عشان تعرف الخطوات الجاية'
+                      : '✓ Request received successfully. Check your email for next steps.'}
                   </div>
                 )}
               </div>

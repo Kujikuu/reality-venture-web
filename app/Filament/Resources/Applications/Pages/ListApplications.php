@@ -17,14 +17,26 @@ class ListApplications extends ListRecords
         return [
             'all' => Tab::make('All')
                 ->badge(ApplicationResource::getModel()::count()),
-            'general' => Tab::make('General')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::General))
-                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::General)->count())
+            'initial' => Tab::make('Initial')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Initial))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Initial)->count())
                 ->badgeColor('gray'),
-            'startup' => Tab::make('Startup')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Startup))
-                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Startup)->count())
+            'applying' => Tab::make('Applying')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Applying))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Applying)->count())
                 ->badgeColor('info'),
+            'evaluation' => Tab::make('Evaluation')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Evaluation))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Evaluation)->count())
+                ->badgeColor('warning'),
+            'decision' => Tab::make('Decision')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::Decision))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::Decision)->count())
+                ->badgeColor('primary'),
+            'demo_day' => Tab::make('Demo Day')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ApplicationType::DemoDay))
+                ->badge(ApplicationResource::getModel()::where('type', ApplicationType::DemoDay)->count())
+                ->badgeColor('success'),
         ];
     }
 }

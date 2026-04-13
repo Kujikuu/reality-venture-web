@@ -89,10 +89,12 @@ class AdBannerForm
                                 DateTimePicker::make('starts_at')
                                     ->label('Start Date')
                                     ->nullable()
+                                    ->native(false)
                                     ->prefixIcon('heroicon-o-play'),
                                 DateTimePicker::make('ends_at')
                                     ->label('End Date')
                                     ->nullable()
+                                    ->native(false)
                                     ->after('starts_at')
                                     ->prefixIcon('heroicon-o-stop'),
                             ])

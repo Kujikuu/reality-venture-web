@@ -8,6 +8,7 @@ use App\Enums\BusinessStage;
 use App\Enums\DiscoverySource;
 use App\Enums\FundingRound;
 use App\Enums\Industry;
+use App\Enums\InterviewType;
 use App\Models\Application;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -25,13 +26,10 @@ class ApplicationInfolist
                     ->columns(2)
                     ->schema([
                         TextEntry::make('type')
-                            ->label('Application Type')
+                            ->label('Stage')
                             ->badge()
                             ->formatStateUsing(fn (ApplicationType $state): string => $state->label())
-                            ->color(fn (ApplicationType $state): string => match ($state) {
-                                ApplicationType::General => 'gray',
-                                ApplicationType::Startup => 'info',
-                            }),
+                            ->color(fn (ApplicationType $state): string => $state->color()),
                         TextEntry::make('status')
                             ->badge()
                             ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
@@ -67,7 +65,7 @@ class ApplicationInfolist
 
                 Section::make('General Inquiry')
                     ->icon(Heroicon::OutlinedClipboardDocumentList)
-                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::General)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Initial)
                     ->schema([
                         TextEntry::make('description')
                             ->label('Description')
@@ -78,7 +76,7 @@ class ApplicationInfolist
                 Section::make('Company Details')
                     ->icon(Heroicon::OutlinedBuildingOffice2)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('business_stage')
                             ->label('Business Stage')
@@ -122,7 +120,7 @@ class ApplicationInfolist
                 Section::make('Investment Details')
                     ->icon(Heroicon::OutlinedBanknotes)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('current_funding_round')
                             ->label('Current Funding Round')
@@ -147,10 +145,44 @@ class ApplicationInfolist
                             ->placeholder('None'),
                     ]),
 
+                Section::make('Evaluation & Interview')
+                    ->icon(Heroicon::OutlinedClipboardDocumentCheck)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->schema([
+                        TextEntry::make('interview_type')
+                            ->label('Interview Type')
+                            ->badge()
+                            ->formatStateUsing(fn (?InterviewType $state): string => $state?->label() ?? '—'),
+                        TextEntry::make('interview_scheduled_at')
+                            ->label('Interview Scheduled')
+                            ->dateTime('M d, Y H:i')
+                            ->placeholder('Not scheduled'),
+                    ]),
+
+                Section::make('Demo Day')
+                    ->icon(Heroicon::OutlinedPresentationChartBar)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::DemoDay)
+                    ->schema([
+                        TextEntry::make('demo_day_date')
+                            ->label('Date & Time')
+                            ->dateTime('M d, Y H:i')
+                            ->icon('heroicon-o-calendar'),
+                        TextEntry::make('demo_day_location')
+                            ->label('Location')
+                            ->icon('heroicon-o-map-pin'),
+                        TextEntry::make('demo_day_requirements')
+                            ->label('Requirements')
+                            ->listWithLineBreaks()
+                            ->bulleted()
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Discovery')
                     ->icon(Heroicon::OutlinedMegaphone)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('discovery_source')
                             ->label('How They Heard')
