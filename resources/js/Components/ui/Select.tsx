@@ -65,15 +65,15 @@ export const Select: React.FC<SelectProps> = ({
     return (
         <div className={`relative w-full ${className}`} ref={containerRef}>
             {label && (
-                <label className="text-sm font-medium text-gray-700 ps-1 mb-1.5 block">
+                <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
                     {label}
                 </label>
             )}
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`h-11 w-full px-4 rounded-md bg-white border ${
-                    error ? "border-red-500" : "border-gray-500"
-                } text-black cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-black/40`}
+                className={`h-14 w-full px-6 rounded-lg bg-gray-50 border ${
+                    error ? "border-red-500" : "border-gray-200"
+                } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary`}
             >
                 <span className={`text-sm ${!selectedOption ? "text-black/50" : "text-black"}`}>
                     {selectedOption ? selectedOption.label : placeholder}

@@ -73,15 +73,15 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
     return (
         <div className={`relative w-full text-start ${className}`} ref={containerRef}>
             {label && (
-                <label className="text-sm font-medium text-gray-700 ps-1 mb-1.5 block">
+                <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
                     {label}
                 </label>
             )}
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`min-h-[44px] w-full px-3 py-2 rounded-md bg-white border ${
-                    error ? "border-red-500" : "border-gray-500"
-                } text-black cursor-pointer flex flex-wrap gap-2 items-center transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-black/40`}
+                className={`h-14 w-full px-6 rounded-lg bg-gray-50 border ${
+                    error ? "border-red-500" : "border-gray-200"
+                } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary`}
             >
                 {selectedOptions.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5 flex-1">
@@ -102,17 +102,15 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                         ))}
                     </div>
                 ) : (
-                    <span className="text-black/50 text-sm flex-1 ps-1">
+                    <span className="text-gray-400 text-sm flex-1">
                         {placeholder}
                     </span>
                 )}
-                <div className="flex items-center gap-2 border-s border-gray-200 ps-2 ms-auto">
-                    <ChevronDown
-                        className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                            isOpen ? "rotate-180" : ""
-                        }`}
-                    />
-                </div>
+                <ChevronDown
+                    className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : ""
+                    }`}
+                />
             </div>
 
             <AnimatePresence>

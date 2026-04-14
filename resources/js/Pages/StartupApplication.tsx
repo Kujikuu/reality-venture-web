@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../Components/ui/Button';
+import { Input } from '../Components/ui/Input';
 import { Select } from '../Components/ui/Select';
-import { Mail, CheckCircle2, MessageCircle, Upload, X, Check } from 'lucide-react';
+import { Textarea } from '../Components/ui/Textarea';
+import { FileUpload } from '../Components/ui/FileUpload';
+import { CurrencyInput } from '../Components/ui/CurrencyInput';
+import { Mail, CheckCircle2, MessageCircle, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
@@ -299,81 +303,57 @@ export default function StartupApplication() {
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.firstName')}</label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        value={data.first_name}
-                        onChange={(e) => setData('first_name', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      />
-                      {errors.first_name && <p className="text-red-500 text-xs mt-1">{errorText('first_name', errors.first_name)}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.lastName')}</label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        value={data.last_name}
-                        onChange={(e) => setData('last_name', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      />
-                      {errors.last_name && <p className="text-red-500 text-xs mt-1">{errorText('last_name', errors.last_name)}</p>}
-                    </div>
+                    <Input
+                      label={t('startup-application:form.firstName')}
+                      value={data.first_name}
+                      onChange={(e) => setData('first_name', e.target.value)}
+                      placeholder={t('startup-application:form.firstName')}
+                      error={errorText('first_name', errors.first_name)}
+                    />
+                    <Input
+                      label={t('startup-application:form.lastName')}
+                      value={data.last_name}
+                      onChange={(e) => setData('last_name', e.target.value)}
+                      placeholder={t('startup-application:form.lastName')}
+                      error={errorText('last_name', errors.last_name)}
+                    />
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.email')}</label>
-                    <input
-                      type="email"
-                      id="email"
-                      value={data.email}
-                      onChange={(e) => setData('email', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.emailPlaceholder')}
-                    />
-                    {errors.email && <p className="text-red-500 text-xs mt-1">{errorText('email', errors.email)}</p>}
-                  </div>
+                  <Input
+                    type="email"
+                    label={t('startup-application:form.email')}
+                    value={data.email}
+                    onChange={(e) => setData('email', e.target.value)}
+                    placeholder={t('startup-application:form.emailPlaceholder')}
+                    error={errorText('email', errors.email)}
+                  />
 
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.phone')}</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      dir="ltr"
-                      value={data.phone}
-                      onChange={(e) => setData('phone', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.phonePlaceholder')}
-                    />
-                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errorText('phone', errors.phone)}</p>}
-                  </div>
+                  <Input
+                    type="tel"
+                    dir="ltr"
+                    label={t('startup-application:form.phone')}
+                    value={data.phone}
+                    onChange={(e) => setData('phone', e.target.value)}
+                    placeholder={t('startup-application:form.phonePlaceholder')}
+                    error={errorText('phone', errors.phone)}
+                  />
 
-                  <div className="space-y-2">
-                    <label htmlFor="city" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.city')}</label>
-                    <Select
-                        id="city"
-                        value={data.city}
-                        onChange={(e) => setData('city', e.target.value)}
-                        options={cityOptions}
-                        placeholder={t('startup-application:form.cityPlaceholder')}
-                    />
-                    {errors.city && <p className="text-red-500 text-xs mt-1">{errorText('city', errors.city)}</p>}
-                  </div>
+                  <Select
+                    label={t('startup-application:form.city')}
+                    value={data.city}
+                    onChange={(e) => setData('city', e.target.value)}
+                    options={cityOptions}
+                    placeholder={t('startup-application:form.cityPlaceholder')}
+                    error={errorText('city', errors.city)}
+                  />
 
-                  <div className="space-y-2">
-                    <label htmlFor="socialProfile" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.linkedin')}</label>
-                    <input
-                      type="text"
-                      id="socialProfile"
-                      value={data.social_profile}
-                      onChange={(e) => setData('social_profile', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.linkedinPlaceholder')}
-                    />
-                    {errors.social_profile && <p className="text-red-500 text-xs mt-1">{errorText('social_profile', errors.social_profile)}</p>}
-                  </div>
+                  <Input
+                    label={t('startup-application:form.linkedin')}
+                    value={data.social_profile}
+                    onChange={(e) => setData('social_profile', e.target.value)}
+                    placeholder={t('startup-application:form.linkedinPlaceholder')}
+                    error={errorText('social_profile', errors.social_profile)}
+                  />
                 </div>
 
                 {/* Section 2: Company Details */}
@@ -382,70 +362,50 @@ export default function StartupApplication() {
                     {t('startup-application:sections.company')}
                   </h3>
 
-                  <div className="space-y-2">
-                    <label htmlFor="businessStage" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.businessStage')}</label>
-                    <Select
-                        id="businessStage"
-                        value={data.business_stage}
-                        onChange={(e) => setData('business_stage', e.target.value)}
-                        options={businessStageOptions}
-                        placeholder={t('startup-application:form.businessStagePlaceholder')}
+                  <Select
+                    label={t('startup-application:form.businessStage')}
+                    value={data.business_stage}
+                    onChange={(e) => setData('business_stage', e.target.value)}
+                    options={businessStageOptions}
+                    placeholder={t('startup-application:form.businessStagePlaceholder')}
+                    error={errorText('business_stage', errors.business_stage)}
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Input
+                      label={t('startup-application:form.companyName')}
+                      value={data.company_name}
+                      onChange={(e) => setData('company_name', e.target.value)}
+                      placeholder={t('startup-application:form.companyNamePlaceholder')}
+                      error={errorText('company_name', errors.company_name)}
                     />
-                    {errors.business_stage && <p className="text-red-500 text-xs mt-1">{errorText('business_stage', errors.business_stage)}</p>}
+                    <Input
+                      type="number"
+                      min={1}
+                      max={20}
+                      label={t('startup-application:form.numberOfFounders')}
+                      value={String(data.number_of_founders)}
+                      onChange={(e) => setData('number_of_founders', Number(e.target.value))}
+                      error={errorText('number_of_founders', errors.number_of_founders)}
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="companyName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.companyName')}</label>
-                      <input
-                        type="text"
-                        id="companyName"
-                        value={data.company_name}
-                        onChange={(e) => setData('company_name', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                        placeholder={t('startup-application:form.companyNamePlaceholder')}
-                      />
-                      {errors.company_name && <p className="text-red-500 text-xs mt-1">{errorText('company_name', errors.company_name)}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="numFounders" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.numberOfFounders')}</label>
-                      <input
-                        type="number"
-                        id="numFounders"
-                        min={1}
-                        max={20}
-                        value={data.number_of_founders}
-                        onChange={(e) => setData('number_of_founders', Number(e.target.value))}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      />
-                      {errors.number_of_founders && <p className="text-red-500 text-xs mt-1">{errorText('number_of_founders', errors.number_of_founders)}</p>}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="hqCountry" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.hqCountry')}</label>
-                      <Select
-                        id="hqCountry"
-                        value={data.hq_country}
-                        onChange={(e) => setData('hq_country', e.target.value)}
-                        options={countryOptions}
-                        placeholder={t('startup-application:form.hqCountryPlaceholder')}
-                      />
-                      {errors.hq_country && <p className="text-red-500 text-xs mt-1">{errorText('hq_country', errors.hq_country)}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="website" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.websiteLink')}</label>
-                      <input
-                        type="text"
-                        id="website"
-                        value={data.website_link}
-                        onChange={(e) => setData('website_link', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                        placeholder={t('startup-application:form.websiteLinkPlaceholder')}
-                      />
-                      {errors.website_link && <p className="text-red-500 text-xs mt-1">{errorText('website_link', errors.website_link)}</p>}
-                    </div>
+                    <Select
+                      label={t('startup-application:form.hqCountry')}
+                      value={data.hq_country}
+                      onChange={(e) => setData('hq_country', e.target.value)}
+                      options={countryOptions}
+                      placeholder={t('startup-application:form.hqCountryPlaceholder')}
+                      error={errorText('hq_country', errors.hq_country)}
+                    />
+                    <Input
+                      label={t('startup-application:form.websiteLink')}
+                      value={data.website_link}
+                      onChange={(e) => setData('website_link', e.target.value)}
+                      placeholder={t('startup-application:form.websiteLinkPlaceholder')}
+                      error={errorText('website_link', errors.website_link)}
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -467,82 +427,47 @@ export default function StartupApplication() {
                     {errors.founded_date && <p className="text-red-500 text-xs mt-1">{errorText('founded_date', errors.founded_date)}</p>}
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="industry" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.industry')}</label>
-                    <Select
-                      id="industry"
-                      value={data.industry}
-                      onChange={(e) => setData('industry', e.target.value)}
-                      options={industryOptions}
-                      placeholder={t('startup-application:form.industryPlaceholder')}
-                    />
-                    {errors.industry && <p className="text-red-500 text-xs mt-1">{errorText('industry', errors.industry)}</p>}
-                  </div>
+                  <Select
+                    label={t('startup-application:form.industry')}
+                    value={data.industry}
+                    onChange={(e) => setData('industry', e.target.value)}
+                    options={industryOptions}
+                    placeholder={t('startup-application:form.industryPlaceholder')}
+                    error={errorText('industry', errors.industry)}
+                  />
 
                   {data.industry === 'other' && (
-                    <div className="space-y-2">
-                      <label htmlFor="industryOther" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.industryOther')}</label>
-                      <input
-                        type="text"
-                        id="industryOther"
-                        value={data.industry_other}
-                        onChange={(e) => setData('industry_other', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                        placeholder={t('startup-application:form.industryOtherPlaceholder')}
-                      />
-                      {errors.industry_other && <p className="text-red-500 text-xs mt-1">{errorText('industry_other', errors.industry_other)}</p>}
-                    </div>
+                    <Input
+                      label={t('startup-application:form.industryOther')}
+                      value={data.industry_other}
+                      onChange={(e) => setData('industry_other', e.target.value)}
+                      placeholder={t('startup-application:form.industryOtherPlaceholder')}
+                      error={errorText('industry_other', errors.industry_other)}
+                    />
                   )}
 
-                  <div className="space-y-2">
-                    <label htmlFor="companyDesc" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.companyDescription')}</label>
-                    <textarea
-                      id="companyDesc"
-                      rows={4}
-                      maxLength={600}
-                      value={data.company_description}
-                      onChange={(e) => setData('company_description', e.target.value)}
-                      className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.companyDescriptionPlaceholder')}
-                    ></textarea>
-                    <p className="text-xs text-gray-400 text-right">{descriptionLength} / 600</p>
+                  <div>
+                    <Textarea
+                        label={t('startup-application:form.companyDescription')}
+                        rows={4}
+                        maxLength={600}
+                        value={data.company_description}
+                        onChange={(e) => setData('company_description', e.target.value)}
+                        placeholder={t('startup-application:form.companyDescriptionPlaceholder')}
+                    />
+                    <p className="text-xs text-gray-400 text-end mt-1">{descriptionLength} / 600</p>
                     {errors.company_description && <p className="text-red-500 text-xs mt-1">{errorText('company_description', errors.company_description)}</p>}
-                  </div>
+                </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.attachment')}</label>
-                    {data.attachment ? (
-                      <div className="flex items-center gap-3 p-4 bg-primary-50 border border-primary/20 rounded-lg">
-                        <Upload className="w-5 h-5 text-primary shrink-0" />
-                        <span className="text-sm text-gray-700 truncate flex-1">{data.attachment.name}</span>
-                        <span className="text-xs text-gray-400 shrink-0">{(data.attachment.size / 1024 / 1024).toFixed(1)} MB</span>
-                        <button
-                          type="button"
-                          onClick={() => setData('attachment', null)}
-                          className="p-1 rounded-full hover:bg-primary/10 transition-colors"
-                        >
-                          <X className="w-4 h-4 text-gray-500" />
-                        </button>
-                      </div>
-                    ) : (
-                      <label
-                        htmlFor="attachment"
-                        className="flex flex-col items-center justify-center gap-2 p-8 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg cursor-pointer hover:border-primary/40 hover:bg-gray-50/80 transition-all"
-                      >
-                        <Upload className="w-8 h-8 text-gray-300" />
-                        <span className="text-sm font-semibold text-primary">{t('startup-application:form.attachmentBrowse')}</span>
-                        <span className="text-xs text-gray-400">{t('startup-application:form.attachmentHelp')}</span>
-                        <input
-                          type="file"
-                          id="attachment"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          onChange={(e) => setData('attachment', e.target.files?.[0] ?? null)}
-                          className="hidden"
-                        />
-                      </label>
-                    )}
-                    {errors.attachment && <p className="text-red-500 text-xs mt-1">{errorText('attachment', errors.attachment)}</p>}
-                  </div>
+                  <FileUpload
+                    label={t('startup-application:form.attachment')}
+                    value={data.attachment}
+                    onChange={(file) => setData('attachment', file)}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    placeholder={t('startup-application:form.attachmentBrowse')}
+                    helpText={t('startup-application:form.attachmentHelp')}
+                    error={errorText('attachment', errors.attachment)}
+                  />
                 </div>
 
                 {/* Section 3: Investment Details */}
@@ -551,78 +476,50 @@ export default function StartupApplication() {
                     {t('startup-application:sections.investment')}
                   </h3>
 
-                  <div className="space-y-2">
-                    <label htmlFor="fundingRound" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.currentFundingRound')}</label>
-                    <Select
-                      id="fundingRound"
-                      value={data.current_funding_round}
-                      onChange={(e) => setData('current_funding_round', e.target.value)}
-                      options={fundingRoundOptions}
-                      placeholder={t('startup-application:form.currentFundingRoundPlaceholder')}
-                    />
-                    {errors.current_funding_round && <p className="text-red-500 text-xs mt-1">{errorText('current_funding_round', errors.current_funding_round)}</p>}
-                  </div>
+                  <Select
+                    label={t('startup-application:form.currentFundingRound')}
+                    value={data.current_funding_round}
+                    onChange={(e) => setData('current_funding_round', e.target.value)}
+                    options={fundingRoundOptions}
+                    placeholder={t('startup-application:form.currentFundingRoundPlaceholder')}
+                    error={errorText('current_funding_round', errors.current_funding_round)}
+                  />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="investmentAsk" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.investmentAsk')}</label>
-                      <div className="relative">
-                        <input
-                          type="number"
-                          id="investmentAsk"
-                          min={1}
-                          value={data.investment_ask_sar}
-                          onChange={(e) => setData('investment_ask_sar', e.target.value)}
-                          className="w-full h-14 px-6 pe-16 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                          placeholder={t('startup-application:form.investmentAskPlaceholder')}
-                        />
-                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400"><SarIcon /></span>
-                      </div>
-                      {errors.investment_ask_sar && <p className="text-red-500 text-xs mt-1">{errorText('investment_ask_sar', errors.investment_ask_sar)}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="valuation" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.valuation')}</label>
-                      <div className="relative">
-                        <input
-                          type="number"
-                          id="valuation"
-                          min={1}
-                          value={data.valuation_sar}
-                          onChange={(e) => setData('valuation_sar', e.target.value)}
-                          className="w-full h-14 px-6 pe-16 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                          placeholder={t('startup-application:form.valuationPlaceholder')}
-                        />
-                        <span className="absolute end-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400"><SarIcon /></span>
-                      </div>
-                      {errors.valuation_sar && <p className="text-red-500 text-xs mt-1">{errorText('valuation_sar', errors.valuation_sar)}</p>}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="previousFunding" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.previousFunding')}</label>
-                    <textarea
-                      id="previousFunding"
-                      rows={3}
-                      value={data.previous_funding}
-                      onChange={(e) => setData('previous_funding', e.target.value)}
-                      className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.previousFundingPlaceholder')}
-                    ></textarea>
-                    {errors.previous_funding && <p className="text-red-500 text-xs mt-1">{errorText('previous_funding', errors.previous_funding)}</p>}
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="demoLink" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.demoLink')}</label>
-                    <input
-                      type="text"
-                      id="demoLink"
-                      value={data.demo_link}
-                      onChange={(e) => setData('demo_link', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('startup-application:form.demoLinkPlaceholder')}
+                    <CurrencyInput
+                      min={1}
+                      label={t('startup-application:form.investmentAsk')}
+                      value={data.investment_ask_sar}
+                      onChange={(e) => setData('investment_ask_sar', e.target.value)}
+                      placeholder={t('startup-application:form.investmentAskPlaceholder')}
+                      error={errorText('investment_ask_sar', errors.investment_ask_sar)}
                     />
-                    {errors.demo_link && <p className="text-red-500 text-xs mt-1">{errorText('demo_link', errors.demo_link)}</p>}
+                    <CurrencyInput
+                      min={1}
+                      label={t('startup-application:form.valuation')}
+                      value={data.valuation_sar}
+                      onChange={(e) => setData('valuation_sar', e.target.value)}
+                      placeholder={t('startup-application:form.valuationPlaceholder')}
+                      error={errorText('valuation_sar', errors.valuation_sar)}
+                    />
                   </div>
+
+                  <Textarea
+                    label={t('startup-application:form.previousFunding')}
+                    rows={3}
+                    value={data.previous_funding}
+                    onChange={(e) => setData('previous_funding', e.target.value)}
+                    placeholder={t('startup-application:form.previousFundingPlaceholder')}
+                    error={errorText('previous_funding', errors.previous_funding)}
+                  />
+
+                  <Input
+                    label={t('startup-application:form.demoLink')}
+                    value={data.demo_link}
+                    onChange={(e) => setData('demo_link', e.target.value)}
+                    placeholder={t('startup-application:form.demoLinkPlaceholder')}
+                    error={errorText('demo_link', errors.demo_link)}
+                  />
                 </div>
 
                 {/* Section 4: Discovery */}
@@ -631,31 +528,23 @@ export default function StartupApplication() {
                     {t('startup-application:sections.discovery')}
                   </h3>
 
-                  <div className="space-y-2">
-                    <label htmlFor="discoverySource" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.discoverySource')}</label>
-                    <Select
-                      id="discoverySource"
-                      value={data.discovery_source}
-                      onChange={(e) => setData('discovery_source', e.target.value)}
-                      options={discoverySourceOptions}
-                      placeholder={t('startup-application:form.discoverySourcePlaceholder')}
-                    />
-                    {errors.discovery_source && <p className="text-red-500 text-xs mt-1">{errorText('discovery_source', errors.discovery_source)}</p>}
-                  </div>
+                  <Select
+                    label={t('startup-application:form.discoverySource')}
+                    value={data.discovery_source}
+                    onChange={(e) => setData('discovery_source', e.target.value)}
+                    options={discoverySourceOptions}
+                    placeholder={t('startup-application:form.discoverySourcePlaceholder')}
+                    error={errorText('discovery_source', errors.discovery_source)}
+                  />
 
-                  {data.discovery_source === 'referral' && (
-                    <div className="space-y-2">
-                      <label htmlFor="referralName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('startup-application:form.referralName')}</label>
-                      <input
-                        type="text"
-                        id="referralName"
-                        value={data.referral_name}
-                        onChange={(e) => setData('referral_name', e.target.value)}
-                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                        placeholder={t('startup-application:form.referralNamePlaceholder')}
-                      />
-                      {errors.referral_name && <p className="text-red-500 text-xs mt-1">{errorText('referral_name', errors.referral_name)}</p>}
-                    </div>
+{data.discovery_source === 'referral' && (
+                    <Input
+                      label={t('startup-application:form.referralName')}
+                      value={data.referral_name}
+                      onChange={(e) => setData('referral_name', e.target.value)}
+                      placeholder={t('startup-application:form.referralNamePlaceholder')}
+                      error={errorText('referral_name', errors.referral_name)}
+                    />
                   )}
                 </div>
 

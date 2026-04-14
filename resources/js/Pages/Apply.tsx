@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "../Components/ui/Button";
+import { Input } from "../Components/ui/Input";
 import { Select } from "../Components/ui/Select";
+import { Textarea } from "../Components/ui/Textarea";
 import { Mail, Check, MessageCircle, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -162,222 +164,106 @@ export default function Apply() {
                             </div>
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="firstName"
-                                            className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                        >
-                                            {t("apply:form.firstName")}
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="firstName"
-                                            value={data.first_name}
-                                            onChange={(e) =>
-                                                setData(
-                                                    "first_name",
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                                            placeholder={t(
-                                                "apply:form.firstName",
-                                            )}
-                                        />
-                                        {errors.first_name && (
-                                            <p className="text-red-500 text-xs mt-1">
-                                                {t(
-                                                    "apply:" +
-                                                        errors.first_name,
-                                                    errors.first_name,
-                                                )}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="lastName"
-                                            className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                        >
-                                            {t("apply:form.lastName")}
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="lastName"
-                                            value={data.last_name}
-                                            onChange={(e) =>
-                                                setData(
-                                                    "last_name",
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                                            placeholder={t(
-                                                "apply:form.lastName",
-                                            )}
-                                        />
-                                        {errors.last_name && (
-                                            <p className="text-red-500 text-xs mt-1">
-                                                {t(
-                                                    "apply:" + errors.last_name,
-                                                    errors.last_name,
-                                                )}
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="email"
-                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                    >
-                                        {t("apply:form.email")}
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        value={data.email}
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
-                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                                        placeholder={t(
-                                            "apply:form.emailPlaceholder",
-                                        )}
-                                    />
-                                    {errors.email && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {t(
-                                                "apply:" + errors.email,
-                                                errors.email,
-                                            )}
-                                        </p>
-                                    )}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="phone"
-                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                    >
-                                        {t("apply:form.phone")}
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        dir="ltr"
-                                        value={data.phone}
-                                        onChange={(e) =>
-                                            setData("phone", e.target.value)
-                                        }
-                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                                        placeholder={t(
-                                            "apply:form.phonePlaceholder",
-                                        )}
-                                    />
-                                    {errors.phone && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {t(
-                                                "apply:" + errors.phone,
-                                                errors.phone,
-                                            )}
-                                        </p>
-                                    )}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="city"
-                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                    >
-                                        {t("apply:form.city")}
-                                    </label>
-                                    <Select
-                                        id="city"
-                                        value={data.city}
-                                        onChange={(e) =>
-                                            setData("city", e.target.value)
-                                        }
-                                        options={cityOptions}
-                                        placeholder={t(
-                                            "apply:form.cityPlaceholder",
-                                        )}
-                                    />
-                                    {errors.city && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {t(
-                                                "apply:" + errors.city,
-                                                errors.city,
-                                            )}
-                                        </p>
-                                    )}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="socialProfile"
-                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                    >
-                                        {t("apply:form.linkedin")}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="socialProfile"
-                                        value={data.social_profile}
+                                    <Input
+                                        label={t("apply:form.firstName")}
+                                        value={data.first_name}
                                         onChange={(e) =>
                                             setData(
-                                                "social_profile",
+                                                "first_name",
                                                 e.target.value,
                                             )
                                         }
-                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
                                         placeholder={t(
-                                            "apply:form.linkedinPlaceholder",
+                                            "apply:form.firstName",
                                         )}
+                                        error={errors.first_name ? t("apply:" + errors.first_name, errors.first_name) : undefined}
                                     />
-                                    {errors.social_profile && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {t(
-                                                "apply:" +
-                                                    errors.social_profile,
-                                                errors.social_profile,
-                                            )}
-                                        </p>
-                                    )}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="message"
-                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
-                                    >
-                                        {t("apply:form.describe")}
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        rows={6}
-                                        value={data.description}
+                                    <Input
+                                        label={t("apply:form.lastName")}
+                                        value={data.last_name}
                                         onChange={(e) =>
                                             setData(
-                                                "description",
+                                                "last_name",
                                                 e.target.value,
                                             )
                                         }
-                                        className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
                                         placeholder={t(
-                                            "apply:form.messagePlaceholder",
+                                            "apply:form.lastName",
                                         )}
-                                    ></textarea>
-                                    {errors.description && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {t(
-                                                "apply:" + errors.description,
-                                                errors.description,
-                                            )}
-                                        </p>
-                                    )}
+                                        error={errors.last_name ? t("apply:" + errors.last_name, errors.last_name) : undefined}
+                                    />
                                 </div>
+
+                                <Input
+                                    type="email"
+                                    label={t("apply:form.email")}
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                    placeholder={t(
+                                        "apply:form.emailPlaceholder",
+                                    )}
+                                    error={errors.email ? t("apply:" + errors.email, errors.email) : undefined}
+                                />
+
+                                <Input
+                                    type="tel"
+                                    dir="ltr"
+                                    label={t("apply:form.phone")}
+                                    value={data.phone}
+                                    onChange={(e) =>
+                                        setData("phone", e.target.value)
+                                    }
+                                    placeholder={t(
+                                        "apply:form.phonePlaceholder",
+                                    )}
+                                    error={errors.phone ? t("apply:" + errors.phone, errors.phone) : undefined}
+                                />
+
+                                <Select
+                                    label={t("apply:form.city")}
+                                    value={data.city}
+                                    onChange={(e) =>
+                                        setData("city", e.target.value)
+                                    }
+                                    options={cityOptions}
+                                    placeholder={t(
+                                        "apply:form.cityPlaceholder",
+                                    )}
+                                    error={errors.city ? t("apply:" + errors.city, errors.city) : undefined}
+                                />
+
+                                <Input
+                                    label={t("apply:form.linkedin")}
+                                    value={data.social_profile}
+                                    onChange={(e) =>
+                                        setData(
+                                            "social_profile",
+                                            e.target.value,
+                                        )
+                                    }
+                                    placeholder={t(
+                                        "apply:form.linkedinPlaceholder",
+                                    )}
+                                    error={errors.social_profile ? t("apply:" + errors.social_profile, errors.social_profile) : undefined}
+                                />
+
+                                <Textarea
+                                    label={t("apply:form.describe")}
+                                    rows={6}
+                                    value={data.description}
+                                    onChange={(e) =>
+                                        setData(
+                                            "description",
+                                            e.target.value,
+                                        )
+                                    }
+                                    placeholder={t(
+                                        "apply:form.messagePlaceholder",
+                                    )}
+                                    error={errors.description ? t("apply:" + errors.description, errors.description) : undefined}
+                                />
 
                                 <div className="pt-4 flex flex-col gap-4">
                                     <Button
