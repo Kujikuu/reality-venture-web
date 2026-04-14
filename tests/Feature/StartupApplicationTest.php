@@ -63,7 +63,7 @@ class StartupApplicationTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'email' => 'sara@startup.com',
-            'type' => ApplicationType::Applying->value,
+            'type' => ApplicationType::Startup->value,
             'company_name' => 'RealityCo',
             'investment_ask_sar' => 2_000_000,
         ]);

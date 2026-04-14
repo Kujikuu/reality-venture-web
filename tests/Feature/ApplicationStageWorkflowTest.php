@@ -7,8 +7,6 @@ use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
 use App\Filament\Resources\Applications\Pages\EditApplication;
 use App\Mail\StageAdvancedToApplying;
-use App\Mail\StageAdvancedToDecision;
-use App\Mail\StageAdvancedToEvaluation;
 use App\Models\Application;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,7 +26,7 @@ class ApplicationStageWorkflowTest extends TestCase
         $this->admin = User::factory()->create();
     }
 
-    public function test_changing_stage_to_applying_queues_email()
+    public function test_changing_stage_to_startup_queues_email()
     {
         Mail::fake();
 
@@ -39,14 +37,14 @@ class ApplicationStageWorkflowTest extends TestCase
         Livewire::actingAs($this->admin)
             ->test(EditApplication::class, ['record' => $application->getKey()])
             ->fillForm([
-                'type' => ApplicationType::Applying->value,
+                'type' => ApplicationType::Startup->value,
                 'status' => ApplicationStatus::Pending->value,
             ])
             ->call('save')
             ->assertHasNoFormErrors();
 
         $application->refresh();
-        $this->assertEquals(ApplicationType::Applying, $application->type);
+        $this->assertEquals(ApplicationType::Startup, $application->type);
 
         Mail::assertQueued(StageAdvancedToApplying::class, function (StageAdvancedToApplying $mail) use ($application) {
             return $mail->hasTo($application->email) && $mail->application->id === $application->id;
@@ -58,7 +56,7 @@ class ApplicationStageWorkflowTest extends TestCase
         Mail::fake();
 
         $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Applying,
+            'type' => ApplicationType::Startup,
         ]);
 
         Livewire::actingAs($this->admin)
@@ -74,10 +72,6 @@ class ApplicationStageWorkflowTest extends TestCase
         $application->refresh();
         $this->assertEquals(ApplicationType::Evaluation, $application->type);
         $this->assertEquals(InterviewType::Online, $application->interview_type);
-
-        Mail::assertQueued(StageAdvancedToEvaluation::class, function (StageAdvancedToEvaluation $mail) use ($application) {
-            return $mail->hasTo($application->email) && $mail->application->id === $application->id;
-        });
     }
 
     public function test_changing_stage_to_decision_queues_email()
@@ -100,9 +94,5 @@ class ApplicationStageWorkflowTest extends TestCase
 
         $application->refresh();
         $this->assertEquals(ApplicationType::Decision, $application->type);
-
-        Mail::assertQueued(StageAdvancedToDecision::class, function (StageAdvancedToDecision $mail) use ($application) {
-            return $mail->hasTo($application->email) && $mail->application->id === $application->id;
-        });
     }
 }

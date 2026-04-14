@@ -77,6 +77,16 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->discovery_source?->label(),
             $app->referral_name,
             $app->referral_param,
+            $app->status,
+            $app->type,
+            $app->interview_scheduled_at?->format('Y-m-d H:i'),
+            $app->interview_type,
+            $app->interview_url,
+            $app->interview_location,
+            $app->evaluation_notes ? json_encode($app->evaluation_notes) : null,
+            $app->demo_day_date?->format('Y-m-d H:i'),
+            $app->demo_day_location,
+            $app->demo_day_requirements ? json_encode($app->demo_day_requirements) : null,
         ];
     }
 
@@ -95,6 +105,8 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->city,
             $app->social_profile,
             $app->description,
+            $app->status,
+            $app->type,
         ];
     }
 }
