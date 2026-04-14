@@ -9,17 +9,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('applications', function (Blueprint $table) {
-            $table->enum('type', ['general', 'startup', 'initial', 'applying'])->change();
-        });
-
         DB::table('applications')
             ->where('type', 'general')
             ->update(['type' => 'initial']);
 
         DB::table('applications')
             ->where('type', 'startup')
-            ->update(['type' => 'applying']);
+            ->update(['type' => 'startup']);
+
+        Schema::table('applications', function (Blueprint $table) {
+            $table->string('type')->default('initial')->change();
+        });
 
         Schema::table('applications', function (Blueprint $table) {
             $table->json('evaluation_notes')->nullable()->after('attachment_path');
@@ -38,7 +38,7 @@ return new class extends Migration
             ->update(['type' => 'general']);
 
         DB::table('applications')
-            ->where('type', 'applying')
+            ->where('type', 'startup')
             ->update(['type' => 'startup']);
 
         Schema::table('applications', function (Blueprint $table) {
