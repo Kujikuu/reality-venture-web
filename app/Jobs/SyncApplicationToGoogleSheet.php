@@ -31,11 +31,11 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             return;
         }
 
-        $sheet = $this->application->type === ApplicationType::Applying
+        $sheet = $this->application->type === ApplicationType::Startup
             ? 'Startup Applications'
             : 'General Applications';
 
-        $row = $this->application->type === ApplicationType::Applying
+        $row = $this->application->type === ApplicationType::Startup
             ? $this->buildStartupRow()
             : $this->buildGeneralRow();
 
