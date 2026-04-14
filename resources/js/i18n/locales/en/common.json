@@ -44,7 +44,7 @@
     },
     "newsletter": {
         "phone": {
-            "placeholder": "Enter your phone number",
+            "placeholder": "05XXXXXXXX",
             "label": "Phone"
         },
         "fullname": {
@@ -78,11 +78,26 @@
             "placeholder": "Your city",
             "label": "City"
         },
-        "sector": {
-            "label": "Sector",
-            "placeholder": "Select your sector",
-            "public": "Public Sector",
-            "private": "Private Sector"
+        "organization": {
+            "label": "Organization",
+            "placeholder": "Select your organization type",
+            "searchPlaceholder": "Search...",
+            "noResults": "No options found",
+            "public": "Public",
+            "private": "Private",
+            "nonProfit": "Non-Profit"
+        },
+        "role": {
+            "label": "Position",
+            "placeholder": "Select your role",
+            "searchPlaceholder": "Search...",
+            "noResults": "No options found",
+            "investor": "Investor",
+            "owner": "Owner",
+            "ceo": "CEO",
+            "developer": "Developer",
+            "consultant": "Consultant",
+            "employee": "Employee"
         },
         "interests": {
             "label": "Interests",
@@ -97,7 +112,14 @@
                 "technology": "Technology",
                 "realEstate": "Real Estate",
                 "entrepreneurship": "Entrepreneurship",
-                "innovation": "Innovation"
+                "innovation": "Innovation",
+                "games": "Games",
+                "sport": "Sport",
+                "hospitality": "Hospitality",
+                "foodAndBeverage": "Food & Beverage",
+                "healthcare": "Healthcare",
+                "aiAndTech": "AI & Tech",
+                "manufacturing": "Manufacturing"
             }
         },
         "subscribe_checkbox": "I'd like to receive the RV Club newsletter"

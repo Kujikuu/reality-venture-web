@@ -44,7 +44,7 @@
     },
     "newsletter": {
         "phone": {
-            "placeholder": "ادخل رقم الهاتف",
+            "placeholder": "05XXXXXXXX",
             "label": "الهاتف"
         },
         "fullname": {
@@ -78,11 +78,26 @@
             "placeholder": "مدينتك",
             "label": "المدينة"
         },
-        "sector": {
-            "label": "القطاع",
-            "placeholder": "اختر القطاع",
-            "public": "القطاع العام",
-            "private": "القطاع الخاص"
+        "organization": {
+            "label": "المنظمة",
+            "placeholder": "اختر نوع مؤسستك",
+            "searchPlaceholder": "ابحث...",
+            "noResults": "لم يتم العثور على خيارات",
+            "public": "عام",
+            "private": "خاص",
+            "nonProfit": "غير ربحي"
+        },
+        "role": {
+            "label": "المنصب",
+            "placeholder": "اختر منصبك",
+            "searchPlaceholder": "ابحث...",
+            "noResults": "لم يتم العثور على خيارات",
+            "investor": "مستثمر",
+            "owner": "مالك",
+            "ceo": "الرئيس التنفيذي",
+            "developer": "مطور",
+            "consultant": "استشاري",
+            "employee": "موظف"
         },
         "interests": {
             "label": "الاهتمامات",
@@ -97,7 +112,14 @@
                 "technology": "التقنية",
                 "realEstate": "العقارات",
                 "entrepreneurship": "ريادة الأعمال",
-                "innovation": "الابتكار"
+                "innovation": "الابتكار",
+                "games": "ألعاب",
+                "sport": "رياضة",
+                "hospitality": "ضيافة",
+                "foodAndBeverage": "غذاء وشراب",
+                "healthcare": "الرعاية الصحية",
+                "aiAndTech": "الذكاء والتقنية",
+                "manufacturing": "التصنيع"
             }
         },
         "subscribe_checkbox": "أرغب في الاشتراك في النشرة الإخبارية لنادي RV"

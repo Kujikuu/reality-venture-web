@@ -50,6 +50,34 @@ const INTEREST_OPTIONS = [
         value: "innovation",
         labelKey: "common:newsletter.interests.options.innovation",
     },
+    {
+        value: "games",
+        labelKey: "common:newsletter.interests.options.games",
+    },
+    {
+        value: "sport",
+        labelKey: "common:newsletter.interests.options.sport",
+    },
+    {
+        value: "hospitality",
+        labelKey: "common:newsletter.interests.options.hospitality",
+    },
+    {
+        value: "foodAndBeverage",
+        labelKey: "common:newsletter.interests.options.foodAndBeverage",
+    },
+    {
+        value: "healthcare",
+        labelKey: "common:newsletter.interests.options.healthcare",
+    },
+    {
+        value: "aiAndTech",
+        labelKey: "common:newsletter.interests.options.aiAndTech",
+    },
+    {
+        value: "manufacturing",
+        labelKey: "common:newsletter.interests.options.manufacturing",
+    },
 ];
 
 const DEFAULT_BACKGROUND = "/assets/images/newsletter-bg.jpg";
@@ -76,9 +104,10 @@ export const NewsletterSubscribe = ({
         email: "",
         phone: "",
         position: "",
+        role: "",
         interests: [] as string[],
         city: "",
-        sector: "",
+        organization: "",
         subscribe_newsletter: true,
     });
 
@@ -202,34 +231,96 @@ export const NewsletterSubscribe = ({
                                     />
                                 </div>
 
-                                <Select
-                                    options={[
-                                        {
-                                            value: "public",
-                                            label: t(
-                                                "common:newsletter.sector.public",
-                                            ),
-                                        },
-                                        {
-                                            value: "private",
-                                            label: t(
-                                                "common:newsletter.sector.private",
-                                            ),
-                                        },
-                                    ]}
-                                    value={data.sector}
-                                    onChange={(val) => setData("sector", val)}
-                                    placeholder={t(
-                                        "common:newsletter.sector.placeholder",
-                                    )}
-                                    searchPlaceholder={t(
-                                        "common:newsletter.interests.search_placeholder",
-                                    )}
-                                    noResultsText={t(
-                                        "common:newsletter.interests.no_results",
-                                    )}
-                                    error={errors.sector}
-                                />
+                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                    <Select
+                                        options={[
+                                            {
+                                                value: "public",
+                                                label: t(
+                                                    "common:newsletter.organization.public",
+                                                ),
+                                            },
+                                            {
+                                                value: "private",
+                                                label: t(
+                                                    "common:newsletter.organization.private",
+                                                ),
+                                            },
+                                            {
+                                                value: "nonProfit",
+                                                label: t(
+                                                    "common:newsletter.organization.nonProfit",
+                                                ),
+                                            },
+                                        ]}
+                                        value={data.organization}
+                                        onChange={(val) => setData("organization", val)}
+                                        placeholder={t(
+                                            "common:newsletter.organization.placeholder",
+                                        )}
+                                        searchPlaceholder={t(
+                                            "common:newsletter.organization.searchPlaceholder",
+                                        )}
+                                        noResultsText={t(
+                                            "common:newsletter.organization.noResults",
+                                        )}
+                                        error={errors.organization}
+                                        containerClassName="flex-1"
+                                    />
+                                    <Select
+                                        options={[
+                                            {
+                                                value: "investor",
+                                                label: t(
+                                                    "common:newsletter.role.investor",
+                                                ),
+                                            },
+                                            {
+                                                value: "owner",
+                                                label: t(
+                                                    "common:newsletter.role.owner",
+                                                ),
+                                            },
+                                            {
+                                                value: "ceo",
+                                                label: t(
+                                                    "common:newsletter.role.ceo",
+                                                ),
+                                            },
+                                            {
+                                                value: "developer",
+                                                label: t(
+                                                    "common:newsletter.role.developer",
+                                                ),
+                                            },
+                                            {
+                                                value: "consultant",
+                                                label: t(
+                                                    "common:newsletter.role.consultant",
+                                                ),
+                                            },
+                                            {
+                                                value: "employee",
+                                                label: t(
+                                                    "common:newsletter.role.employee",
+                                                ),
+                                            },
+                                        ]}
+                                        value={data.role}
+                                        onChange={(val) => setData("role", val)}
+                                        placeholder={t(
+                                            "common:newsletter.role.placeholder",
+                                        )}
+                                        searchPlaceholder={t(
+                                            "common:newsletter.role.searchPlaceholder",
+                                        )}
+                                        noResultsText={t(
+                                            "common:newsletter.role.noResults",
+                                        )}
+                                        error={errors.role}
+                                        containerClassName="flex-1"
+                                    />
+                                </div>
 
                                 <MultiSelect
                                     options={INTEREST_OPTIONS.map((opt) => ({

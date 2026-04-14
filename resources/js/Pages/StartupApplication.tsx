@@ -97,7 +97,10 @@ export default function StartupApplication() {
       setData('referral_param', ref);
       
       fetch(`/applications/lookup/${ref}`)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) return Promise.reject(new Error('Not found'));
+            return res.json();
+        })
         .then(json => {
             if (json.uid) {
                 setData(prev => ({
@@ -112,7 +115,7 @@ export default function StartupApplication() {
                 }));
             }
         })
-        .catch(err => console.error('Failed to lookup application', err));
+        .catch(() => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
