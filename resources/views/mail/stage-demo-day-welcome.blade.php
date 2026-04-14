@@ -1,43 +1,47 @@
 <x-mail::message>
-<div dir="rtl">
+<!-- Arabic Section - RTL -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" dir="rtl">
+<tr>
+<td dir="rtl" style="direction: rtl; text-align: right; font-family: Arial, sans-serif;">
 
-# مبروك {{ $application->first_name }}! 👋
+<h1 style="direction: rtl; text-align: right; font-size: 24px; color: #333;">مبروك {{ $application->first_name }}! 👋</h1>
 
-يسعدنا إبلاغك بأنه قد تم اعتماد اتفاقية الاستثمار الخاصة بك بنجاح، وقد انتقل طلبك الآن رسمياً إلى **مرحلة يوم العرض (Demo Day)**.
+<p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">يشرّفنا إبلاغك بأنه قد تم اعتماد اتفاقية الاستثمار الخاصة بك بنجاح، وقد انتقل طلبك الآن رسمياً إلى <strong>مرحلة يوم العرض (Demo Day)</strong>.</p>
 
-**رقم المرجع الخاص بك:**
-<x-mail::panel>
-**{{ $application->uid }}**
-</x-mail::panel>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
 
-هذه خطوة كبيرة في رحلتنا معك! سنقوم قريباً بالتواصل معك لتزويدك بجدول يوم العرض، وكافة التفاصيل المتعلقة بمكان العرض والمتطلبات الفنية.
+<p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">هذه خطوة كبيرة في رحلتنا معك! سنقوم قريباً بالتواصل معك لتزويدك بجدول يوم العرض، وكافة التفاصيل المتعلقة بمكان العرض والمتطلبات الفنية.</p>
 
-استعد لمشاركة مشروعك ورؤيتك مع فريقنا ومجتمع المستثمرين.
+<p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">استعد لمشاركة مشروعك ورؤيتك مع فريقنا ومجتمع المستثمرين.</p>
 
-مع خالص التحية،<br>
-فريق {{ config('app.name') }}
+<p style="direction: rtl; text-align: right; font-size: 16px;">مع خالص التحية،<br><strong>فريق {{ config('app.name') }}</strong></p>
 
-</div>
+</td>
+</tr>
+</table>
 
----
+<hr style="border: 0; border-top: 1px solid #e5e5e5; margin: 20px 0;">
 
-<div dir="ltr">
+<!-- English Section - LTR -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" dir="ltr">
+<tr>
+<td dir="ltr" style="direction: ltr; text-align: left; font-family: Arial, sans-serif;">
 
-# Congratulations {{ $application->first_name }}! 👋
+<h1 style="direction: ltr; text-align: left; font-size: 24px; color: #333;">Congratulations {{ $application->first_name }}! 👋</h1>
 
-We are pleased to inform you that your investment agreement has been successfully approved, and your application has now officially moved to the **Demo Day stage**.
+<p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">We are pleased to inform you that your investment agreement has been successfully approved, and your application has now officially moved to the <strong>Demo Day stage</strong>.</p>
 
-**Your Reference Number:**
-<x-mail::panel>
-**{{ $application->uid }}**
-</x-mail::panel>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
 
-This is a major milestone in our journey together! We will be in touch shortly with the Demo Day schedule, location details, and technical requirements.
+<p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">This is a major milestone in our journey together! We will be in touch shortly with the Demo Day schedule, location details, and technical requirements.</p>
 
-Get ready to showcase your venture and vision to our team and investor community.
+<p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Get ready to showcase your venture and vision to our team and investor community.</p>
 
-Best regards,<br>
-{{ config('app.name') }} Team
+<p style="direction: ltr; text-align: left; font-size: 16px;">Best regards,<br><strong>{{ config('app.name') }} Team</strong></p>
 
-</div>
+</td>
+</tr>
+</table>
 </x-mail::message>

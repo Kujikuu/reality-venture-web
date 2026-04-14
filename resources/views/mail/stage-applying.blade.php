@@ -1,58 +1,73 @@
 <x-mail::message>
-<div dir="rtl">
+<!-- Arabic Section - RTL -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" dir="rtl">
+<tr>
+<td dir="rtl" style="direction: rtl; text-align: right; font-family: Arial, sans-serif;">
 
-# حياك الله {{ $application->first_name }} 👋
+<h1 style="direction: rtl; text-align: right; font-size: 24px; color: #333;">حياك الله {{ $application->first_name }} 👋</h1>
 
-طلبك وصلنا وتم تسجيله بنجاح 🎉
+<p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">طلبك وصلنا وتم تسجيله بنجاح 🎉</p>
 
-رقم المرجع حقّك هو:
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع حقّك هو:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
 
-<x-mail::panel>
-**{{ $application->uid }}**
-</x-mail::panel>
+<p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">الحين نبيك تكمّل بيانات المشروع عشان نقدر نراجعها ونتواصل معك.</p>
 
-الحين نبيك تكمّل بيانات المشروع عشان نقدر نراجعها ونتواصل معك.
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">الخطوات الجاية:</h2>
+<ol style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
+<li style="direction: rtl; text-align: right;">كمّل بيانات المشروع من خلال الرابط تحت</li>
+<li style="direction: rtl; text-align: right;">ارفع أي ملفات تدعم طلبك (عرض تقديمي، خطة عمل، إلخ)</li>
+<li style="direction: rtl; text-align: right;">بعد ما تكمّل، فريقنا بيراجع طلبك</li>
+</ol>
 
-### الخطوات الجاية:
-1. كمّل بيانات المشروع من خلال الرابط تحت
-2. ارفع أي ملفات تدعم طلبك (عرض تقديمي، خطة عمل، إلخ)
-3. بعد ما تكمّل، فريقنا بيراجع طلبك
+<table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+<tr>
+<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<a href="{{ config('app.url') . '/startup-application?ref=' . $application->uid }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">تقديم شركة ناشئة</a>
+</td>
+</tr>
+</table>
 
-<x-mail::button :url="config('app.url') . '/startup-application?ref=' . $application->uid">
-تقديم شركة ناشئة
-</x-mail::button>
+<p style="direction: rtl; text-align: right; font-size: 16px;">مع التحية،<br><strong>فريق {{ config('app.name') }}</strong></p>
 
-مع التحية،<br>
-فريق {{ config('app.name') }}
+</td>
+</tr>
+</table>
 
-</div>
+<hr style="border: 0; border-top: 1px solid #e5e5e5; margin: 20px 0;">
 
----
+<!-- English Section - LTR -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" dir="ltr">
+<tr>
+<td dir="ltr" style="direction: ltr; text-align: left; font-family: Arial, sans-serif;">
 
-<div dir="ltr">
+<h1 style="direction: ltr; text-align: left; font-size: 24px; color: #333;">Hello {{ $application->first_name }} 👋</h1>
 
-# Hello {{ $application->first_name }} 👋
+<p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Your application has been registered successfully 🎉</p>
 
-Your application has been registered successfully 🎉
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Here is your reference ID:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
 
-Here is your reference ID:
+<p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Please complete your project details so we can review your application and get back to you.</p>
 
-<x-mail::panel>
-**{{ $application->uid }}**
-</x-mail::panel>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Next Steps:</h2>
+<ol style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
+<li style="direction: ltr; text-align: left;">Complete your project details using the link below</li>
+<li style="direction: ltr; text-align: left;">Upload any supporting documents (pitch deck, business plan, etc.)</li>
+<li style="direction: ltr; text-align: left;">Once submitted, our team will review your application</li>
+</ol>
 
-Please complete your project details so we can review your application and get back to you.
+<table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+<tr>
+<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<a href="{{ config('app.url') . '/startup-application?ref=' . $application->uid }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">Complete Your Application</a>
+</td>
+</tr>
+</table>
 
-### Next Steps:
-1. Complete your project details using the link below
-2. Upload any supporting documents (pitch deck, business plan, etc.)
-3. Once submitted, our team will review your application
+<p style="direction: ltr; text-align: left; font-size: 16px;">Thanks,<br><strong>The {{ config('app.name') }} Team</strong></p>
 
-<x-mail::button :url="config('app.url') . '/startup-application?ref=' . $application->uid">
-Complete Your Application
-</x-mail::button>
-
-Thanks,<br>
-The {{ config('app.name') }} Team
-</div>
+</td>
+</tr>
+</table>
 </x-mail::message>
