@@ -3,21 +3,14 @@
 
 # مرحباً {{ $application->first_name }}،
 
-نود إبلاغك بأن طلبك قد تم قبوله مبدئياً وانتقل إلى مرحلة التقييم المتقدم والمقابلة.
+شكراً لك على وقتك في المقابلة. نود إبلاغك بأن طلبك قد انتقل الآن إلى مرحلة التقييم النهائي. يقوم فريقنا حالياً بمراجعة كافة التفاصيل والنتائج من المقابلة ليتخذ القرار النهائي بشأن قبول مشروعك.
 
 **رقم المرجع الخاص بك:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
 
-سيقوم فريقنا بالتواصل معك خلال الفترة القادمة لتحديد موعد مقابلة مدتها 10 دقائق، وذلك إما عن بُعد أو حضورياً.
-
-**إرشادات هامة للمقابلة:**
-* إعداد عرض احترافي ومختصر عن مشروعك (3–5 دقائق)
-* الاستعداد للإجابة على أسئلة تتعلق بالسوق، نموذج العمل، والفريق
-* تجهيز أبرز المؤشرات والأرقام المالية الداعمة (إن وجدت)
-
-نتطلع للتعرّف على مشروعك بشكل أعمق ومناقشة فرص نموه.
+سنوافيك بالتحديثات قريباً بإذن الله. نتطلع لمواصلة الرحلة معك!
 
 مع خالص التحية،<br>
 فريق {{ config('app.name') }}
@@ -30,21 +23,14 @@
 
 # Hello {{ $application->first_name }},
 
-We are pleased to inform you that your application has been successfully shortlisted and has advanced to the advanced evaluation and interview stage.
+Thank you for your time during the interview. We are pleased to inform you that your application has now moved to the Final Evaluation stage. Our team is currently reviewing all details and findings from the interview to make a final decision regarding your venture’s acceptance.
 
 **Your Reference Number:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
 
-Our team will be in touch shortly to schedule a 10-minute interview, either online or in person.
-
-**Interview Guidelines:**
-* Prepare a concise and professional pitch (3–5 minutes)
-* Be ready to address questions on your market, business model, and team
-* Present key financial metrics and performance indicators, if available
-
-We look forward to learning more about your venture and exploring its growth potential.
+We will be in touch with updates shortly. We look forward to continuing this journey with you!
 
 Best regards,<br>
 *{{ config('app.name') }} Team*
