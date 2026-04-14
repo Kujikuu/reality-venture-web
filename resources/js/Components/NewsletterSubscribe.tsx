@@ -90,7 +90,7 @@ export const NewsletterSubscribe = ({
             onSuccess: () => reset(),
         });
     };
-    const displayHeading = heading ?? t("common:newsletter.clubHeading");
+    const displayHeading = heading ?? t("common:newsletter.home.clubHeading");
     const displayDescription =
         description ?? t("common:newsletter.home.description");
 
@@ -114,7 +114,7 @@ export const NewsletterSubscribe = ({
                             className="h-12 w-auto"
                         />
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight uppercase">
+                    <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">
                         {displayHeading}
                     </h2>
 
@@ -156,7 +156,11 @@ export const NewsletterSubscribe = ({
                                         containerClassName="flex-1"
                                     />
                                     <Input
+                                        style={{
+                                            textAlign: "right",
+                                        }}
                                         type="tel"
+                                        dir="ltr"
                                         inputMode="tel"
                                         required
                                         value={data.phone}

@@ -31,7 +31,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
                     <div className={`w-5 h-5 border-2 rounded transition-all duration-200 flex items-center justify-center ${
                         props.checked
                             ? "bg-primary border-primary"
-                            : "border-gray-500 bg-white group-hover:border-primary/50"
+                            : "border-gray-200 bg-white group-hover:border-primary/50"
                     } peer-focus-visible:ring-2 peer-focus-visible:ring-primary/30`}>
                         {props.checked && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
                     </div>

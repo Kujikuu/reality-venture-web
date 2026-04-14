@@ -75,7 +75,7 @@ export const Select: React.FC<SelectProps> = ({
                     error ? "border-red-500" : "border-gray-200"
                 } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary`}
             >
-                <span className={`text-sm ${!selectedOption ? "text-black/50" : "text-black"}`}>
+                <span className={`text-sm ${!selectedOption ? "text-gray-400" : "text-gray-900"}`}>
                     {selectedOption ? selectedOption.label : placeholder}
                 </span>
                 <ChevronDown

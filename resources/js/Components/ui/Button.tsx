@@ -13,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = "h-14 px-10 text-base font-bold tracking-tight rounded-md transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 relative overflow-hidden";
+  const baseStyles = "h-14 px-10 text-base font-bold tracking-tight rounded-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 relative overflow-hidden";
 
   const variants = {
     primary: "bg-primary text-white hover:bg-primary-800",
