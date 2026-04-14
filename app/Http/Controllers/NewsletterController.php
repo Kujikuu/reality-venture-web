@@ -18,7 +18,7 @@ class NewsletterController extends Controller
 
         $clubData = [
             'fullname' => $fullname,
-            'is_active' => true,
+            'is_active' => (bool) $request->validated('subscribe_newsletter'),
             'phone' => $phone,
             'position' => $request->validated('position'),
             'interests' => $request->validated('interests'),

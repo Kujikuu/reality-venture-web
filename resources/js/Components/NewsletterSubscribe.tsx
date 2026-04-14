@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { CheckCircle2, Send, ChevronDown, ChevronUp } from "lucide-react";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
+import { MultiSelect } from "./ui/MultiSelect";
+import { Input } from "./ui/Input";
+import { Select } from "./ui/Select";
+import { Checkbox } from "./ui/Checkbox";
+import { Button } from "./ui/Button";
 
 interface NewsletterSubscribeProps {
     heading?: string;
@@ -58,7 +63,6 @@ export const NewsletterSubscribe = ({
     sectionId,
 }: NewsletterSubscribeProps) => {
     const { t } = useTranslation(["navigation", "common"]);
-    const [showClubFields, setShowClubFields] = useState(false);
     const {
         data,
         setData,
@@ -75,6 +79,7 @@ export const NewsletterSubscribe = ({
         interests: [] as string[],
         city: "",
         sector: "",
+        subscribe_newsletter: true,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -85,19 +90,6 @@ export const NewsletterSubscribe = ({
             onSuccess: () => reset(),
         });
     };
-
-    const toggleInterest = (value: string) => {
-        const current = data.interests;
-        if (current.includes(value)) {
-            setData(
-                "interests",
-                current.filter((i) => i !== value),
-            );
-        } else {
-            setData("interests", [...current, value]);
-        }
-    };
-
     const displayHeading = heading ?? t("common:newsletter.clubHeading");
     const displayDescription =
         description ?? t("common:newsletter.home.description");
@@ -136,251 +128,152 @@ export const NewsletterSubscribe = ({
                             onSubmit={handleSubmit}
                             className="max-w-2xl w-full mx-auto"
                         >
-                            <div className="flex flex-col gap-3 w-full">
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={data.fullname}
+                            <div className="flex flex-col gap-4 w-full">
+                                <Input
+                                    required
+                                    value={data.fullname}
+                                    onChange={(e) =>
+                                        setData("fullname", e.target.value)
+                                    }
+                                    placeholder={t(
+                                        "common:newsletter.fullname.placeholder",
+                                    )}
+                                    error={errors.fullname}
+                                />
+
+                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                    <Input
+                                        type="email"
+                                        required
+                                        value={data.email}
                                         onChange={(e) =>
-                                            setData("fullname", e.target.value)
+                                            setData("email", e.target.value)
                                         }
                                         placeholder={t(
-                                            "common:newsletter.fullname.placeholder",
+                                            "common:newsletter.email.placeholder",
                                         )}
-                                        aria-label={t(
-                                            "common:newsletter.fullname.label",
-                                        )}
-                                        className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
+                                        error={errors.email}
+                                        containerClassName="flex-1"
                                     />
-                                    {errors.fullname && (
-                                        <p className="text-red-500 text-sm mt-2 text-start">
-                                            {errors.fullname}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="flex flex-col sm:flex-row gap-3 w-full">
-                                    <div className="flex-1">
-                                        <input
-                                            type="email"
-                                            value={data.email}
-                                            onChange={(e) =>
-                                                setData("email", e.target.value)
-                                            }
-                                            placeholder={t(
-                                                "common:newsletter.email.placeholder",
-                                            )}
-                                            aria-label={t(
-                                                "common:newsletter.email.label",
-                                            )}
-                                            className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
-                                        />
-                                        {errors.email && (
-                                            <p className="text-red-500 text-sm mt-2 text-start">
-                                                {errors.email}
-                                            </p>
+                                    <Input
+                                        type="tel"
+                                        inputMode="tel"
+                                        required
+                                        value={data.phone}
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
+                                        placeholder={t(
+                                            "common:newsletter.phone.placeholder",
                                         )}
-                                    </div>
-                                    <div className="flex-1">
-                                        <input
-                                            type="tel"
-                                            inputMode="tel"
-                                            value={data.phone}
-                                            onChange={(e) =>
-                                                setData("phone", e.target.value)
-                                            }
-                                            placeholder={t(
-                                                "common:newsletter.phone.placeholder",
-                                            )}
-                                            aria-label={t(
-                                                "common:newsletter.phone.label",
-                                            )}
-                                            className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
-                                        />
-                                        {errors.phone && (
-                                            <p className="text-red-500 text-sm mt-2 text-start">
-                                                {errors.phone}
-                                            </p>
-                                        )}
-                                    </div>
+                                        error={errors.phone}
+                                        containerClassName="flex-1"
+                                    />
                                 </div>
 
-                                {/* RV Club additional fields toggle */}
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setShowClubFields(!showClubFields)
+                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                    <Input
+                                        required
+                                        value={data.position}
+                                        onChange={(e) =>
+                                            setData("position", e.target.value)
+                                        }
+                                        placeholder={t(
+                                            "common:newsletter.position.placeholder",
+                                        )}
+                                        error={errors.position}
+                                        containerClassName="flex-1"
+                                    />
+                                    <Input
+                                        required
+                                        value={data.city}
+                                        onChange={(e) =>
+                                            setData("city", e.target.value)
+                                        }
+                                        placeholder={t(
+                                            "common:newsletter.city.placeholder",
+                                        )}
+                                        error={errors.city}
+                                        containerClassName="flex-1"
+                                    />
+                                </div>
+
+                                <Select
+                                    options={[
+                                        {
+                                            value: "public",
+                                            label: t(
+                                                "common:newsletter.sector.public",
+                                            ),
+                                        },
+                                        {
+                                            value: "private",
+                                            label: t(
+                                                "common:newsletter.sector.private",
+                                            ),
+                                        },
+                                    ]}
+                                    value={data.sector}
+                                    onChange={(val) => setData("sector", val)}
+                                    placeholder={t(
+                                        "common:newsletter.sector.placeholder",
+                                    )}
+                                    searchPlaceholder={t(
+                                        "common:newsletter.interests.search_placeholder",
+                                    )}
+                                    noResultsText={t(
+                                        "common:newsletter.interests.no_results",
+                                    )}
+                                    error={errors.sector}
+                                />
+
+                                <MultiSelect
+                                    options={INTEREST_OPTIONS.map((opt) => ({
+                                        value: opt.value,
+                                        label: t(opt.labelKey),
+                                    }))}
+                                    value={data.interests}
+                                    onChange={(val) =>
+                                        setData("interests", val)
                                     }
-                                    className="flex items-center justify-center gap-1 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-                                >
-                                    {t("common:newsletter.clubFields.toggle")}
-                                    {showClubFields ? (
-                                        <ChevronUp className="w-4 h-4" />
-                                    ) : (
-                                        <ChevronDown className="w-4 h-4" />
+                                    placeholder={t(
+                                        "common:newsletter.interests.placeholder",
                                     )}
-                                </button>
+                                    searchPlaceholder={t(
+                                        "common:newsletter.interests.search_placeholder",
+                                    )}
+                                    noResultsText={t(
+                                        "common:newsletter.interests.no_results",
+                                    )}
+                                    error={errors.interests}
+                                />
 
-                                {showClubFields && (
-                                    <div className="flex flex-col gap-3 w-full animate-in slide-in-from-top-2 duration-200">
-                                        <div className="flex flex-col sm:flex-row gap-3 w-full">
-                                            <div className="flex-1">
-                                                <input
-                                                    type="text"
-                                                    value={data.position}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "position",
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder={t(
-                                                        "common:newsletter.position.placeholder",
-                                                    )}
-                                                    aria-label={t(
-                                                        "common:newsletter.position.label",
-                                                    )}
-                                                    className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
-                                                />
-                                                {errors.position && (
-                                                    <p className="text-red-500 text-sm mt-2 text-start">
-                                                        {errors.position}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="flex-1">
-                                                <input
-                                                    type="text"
-                                                    value={data.city}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "city",
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder={t(
-                                                        "common:newsletter.city.placeholder",
-                                                    )}
-                                                    aria-label={t(
-                                                        "common:newsletter.city.label",
-                                                    )}
-                                                    className="w-full px-4 py-3 rounded-md bg-white border border-gray-500 text-black placeholder-black/50 focus:border-black/40 focus:ring-1 focus:ring-primary outline-none text-sm"
-                                                />
-                                                {errors.city && (
-                                                    <p className="text-red-500 text-sm mt-2 text-start">
-                                                        {errors.city}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
+                                <Checkbox
+                                    required
+                                    checked={data.subscribe_newsletter}
+                                    onChange={(e) =>
+                                        setData(
+                                            "subscribe_newsletter",
+                                            e.target.checked,
+                                        )
+                                    }
+                                    label={t(
+                                        "common:newsletter.subscribe_checkbox",
+                                    )}
+                                    error={errors.subscribe_newsletter}
+                                    className="py-1"
+                                />
 
-                                        {/* Sector radio buttons */}
-                                        <div className="text-start">
-                                            <p className="text-sm font-medium text-gray-700 mb-2">
-                                                {t(
-                                                    "common:newsletter.sector.label",
-                                                )}
-                                            </p>
-                                            <div className="flex gap-4">
-                                                <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
-                                                    <input
-                                                        type="radio"
-                                                        name="sector"
-                                                        value="public"
-                                                        checked={
-                                                            data.sector ===
-                                                            "public"
-                                                        }
-                                                        onChange={(e) =>
-                                                            setData(
-                                                                "sector",
-                                                                e.target.value,
-                                                            )
-                                                        }
-                                                        className="accent-primary"
-                                                    />
-                                                    {t(
-                                                        "common:newsletter.sector.public",
-                                                    )}
-                                                </label>
-                                                <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
-                                                    <input
-                                                        type="radio"
-                                                        name="sector"
-                                                        value="private"
-                                                        checked={
-                                                            data.sector ===
-                                                            "private"
-                                                        }
-                                                        onChange={(e) =>
-                                                            setData(
-                                                                "sector",
-                                                                e.target.value,
-                                                            )
-                                                        }
-                                                        className="accent-primary"
-                                                    />
-                                                    {t(
-                                                        "common:newsletter.sector.private",
-                                                    )}
-                                                </label>
-                                            </div>
-                                            {errors.sector && (
-                                                <p className="text-red-500 text-sm mt-2">
-                                                    {errors.sector}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        {/* Interests multi-select checkboxes */}
-                                        <div className="text-start">
-                                            <p className="text-sm font-medium text-gray-700 mb-2">
-                                                {t(
-                                                    "common:newsletter.interests.label",
-                                                )}
-                                            </p>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                {INTEREST_OPTIONS.map(
-                                                    (option) => (
-                                                        <label
-                                                            key={option.value}
-                                                            className="flex items-center gap-2 cursor-pointer text-sm text-gray-700"
-                                                        >
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={data.interests.includes(
-                                                                    option.value,
-                                                                )}
-                                                                onChange={() =>
-                                                                    toggleInterest(
-                                                                        option.value,
-                                                                    )
-                                                                }
-                                                                className="accent-primary rounded"
-                                                            />
-                                                            {t(option.labelKey)}
-                                                        </label>
-                                                    ),
-                                                )}
-                                            </div>
-                                            {errors.interests && (
-                                                <p className="text-red-500 text-sm mt-2">
-                                                    {errors.interests}
-                                                </p>
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
-
-                                <button
+                                <Button
                                     type="submit"
                                     disabled={processing}
-                                    className="w-full px-8 py-3 bg-primary hover:bg-primary-800 text-white font-bold rounded-md transition-all whitespace-nowrap inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                                    className="w-full h-12 disabled:opacity-50"
                                 >
                                     <Send className="w-4 h-4" />
                                     {t(
                                         "navigation:footer.newsletter.subscribe",
                                     )}
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}

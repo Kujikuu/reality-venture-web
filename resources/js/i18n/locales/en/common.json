@@ -1,101 +1,106 @@
 {
-  "buttons": {
-    "getStarted": "Get Started",
-    "applyNow": "Apply Now",
-    "viewPrograms": "View Programs",
-    "submit": "Submit",
-    "learnMore": "Learn More",
-    "close": "Close"
-  },
-  "labels": {
-    "email": "Email Address",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "phone": "Phone Number",
-    "company": "Company Name",
-    "website": "Website",
-    "linkedin": "Social Profile"
-  },
-  "status": {
-    "loading": "Loading...",
-    "success": "Success",
-    "error": "Error",
-    "noSpam": "No Spam, Promise!",
-    "noPhotos": "No photos yet"
-  },
-
-  "company": {
-    "name": "Reality Venture",
-    "tagline": "We build. We execute. We scale real ventures.",
-    "slogan": "Building Real Ventures",
-    "executionFirst": "EXECUTION-FIRST ACCELERATOR",
-    "ventureBuilder": "Venture Builder",
-    "accelerator": "Accelerator",
-    "logoAlt": "Reality Venture Logo",
-    "grit": "GRIT"
-  },
-
-  "footer": {
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service"
-  },
-  "apply": {
-    "pageTitle": "Apply"
-  },
-  "newsletter": {
-    "phone": {
-      "placeholder": "Enter your phone number",
-      "label": "Phone (optional)"
+    "buttons": {
+        "getStarted": "Get Started",
+        "applyNow": "Apply Now",
+        "viewPrograms": "View Programs",
+        "submit": "Submit",
+        "learnMore": "Learn More",
+        "close": "Close"
     },
-     "fullname": {
-      "placeholder": "Enter your full name",
-      "label": "Fullname"
+    "labels": {
+        "email": "Email Address",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phone": "Phone Number",
+        "company": "Company Name",
+        "website": "Website",
+        "linkedin": "Social Profile"
     },
-     "email": {
-      "placeholder": "Enter your email address",
-      "label": "Email"
-    },
-    "home": {
-      "heading": "Join the Reality Venture Club",
-      "clubHeading": "Join the RV Club",
-      "description": "Insights on startups, PropTech, and venture building — straight to your inbox.",
-      "badge": "Weekly updates"
+    "status": {
+        "loading": "Loading...",
+        "success": "Success",
+        "error": "Error",
+        "noSpam": "No Spam, Promise!",
+        "noPhotos": "No photos yet"
     },
 
-    "blog": {
-      "heading": "Never miss a story",
-      "description": "Subscribe to get our latest articles on venture building and PropTech.",
-      "badge": "Stay informed"
+    "company": {
+        "name": "Reality Venture",
+        "tagline": "We build. We execute. We scale real ventures.",
+        "slogan": "Building Real Ventures",
+        "executionFirst": "EXECUTION-FIRST ACCELERATOR",
+        "ventureBuilder": "Venture Builder",
+        "accelerator": "Accelerator",
+        "logoAlt": "Reality Venture Logo",
+        "grit": "GRIT"
     },
-    "clubFields": {
-      "toggle": "Tell us more about yourself (optional)"
+
+    "footer": {
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service"
     },
-    "position": {
-      "placeholder": "Your position / job title",
-      "label": "Position"
+    "apply": {
+        "pageTitle": "Apply"
     },
-    "city": {
-      "placeholder": "Your city",
-      "label": "City"
+    "newsletter": {
+        "phone": {
+            "placeholder": "Enter your phone number",
+            "label": "Phone"
+        },
+        "fullname": {
+            "placeholder": "Enter your full name",
+            "label": "Fullname"
+        },
+        "email": {
+            "placeholder": "Enter your email address",
+            "label": "Email"
+        },
+        "home": {
+            "heading": "Join the RV Club",
+            "clubHeading": "Join the RV Club",
+            "description": "Insights on startups, PropTech, and venture building — straight to your inbox.",
+            "badge": "Weekly updates"
+        },
+
+        "blog": {
+            "heading": "Never miss a story",
+            "description": "Subscribe to get our latest articles on venture building and PropTech.",
+            "badge": "Stay informed"
+        },
+        "clubFields": {
+            "toggle": "Tell us more about yourself"
+        },
+        "position": {
+            "placeholder": "Your position / job title",
+            "label": "Position"
+        },
+        "city": {
+            "placeholder": "Your city",
+            "label": "City"
+        },
+        "sector": {
+            "label": "Sector",
+            "placeholder": "Select your sector",
+            "public": "Public Sector",
+            "private": "Private Sector"
+        },
+        "interests": {
+            "label": "Interests",
+            "placeholder": "Select your interests",
+            "search_placeholder": "Search interests...",
+            "no_results": "No matching interests found",
+            "options": {
+                "startups": "Startups",
+                "proptech": "PropTech",
+                "investment": "Investment",
+                "ventureBuilding": "Venture Building",
+                "technology": "Technology",
+                "realEstate": "Real Estate",
+                "entrepreneurship": "Entrepreneurship",
+                "innovation": "Innovation"
+            }
+        },
+        "subscribe_checkbox": "I'd like to receive the RV Club newsletter"
     },
-    "sector": {
-      "label": "Sector",
-      "public": "Public Sector",
-      "private": "Private Sector"
-    },
-    "interests": {
-      "label": "Interests",
-      "options": {
-        "startups": "Startups",
-        "proptech": "PropTech",
-        "investment": "Investment",
-        "ventureBuilding": "Venture Building",
-        "technology": "Technology",
-        "realEstate": "Real Estate",
-        "entrepreneurship": "Entrepreneurship",
-        "innovation": "Innovation"
-      }
-    }
-  },
-  "and": "and"
+    "and": "and"
 }

@@ -23,11 +23,12 @@ class SubscribeToNewsletterRequest extends FormRequest
             'fullname' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:20', 'regex:/^(?:\+?966|0)?5\d{8}$/'],
-            'position' => ['nullable', 'string', 'max:100'],
-            'interests' => ['nullable', 'array'],
+            'position' => ['required', 'string', 'max:100'],
+            'interests' => ['required', 'array'],
             'interests.*' => ['string', Rule::in(array_column(ClubInterest::cases(), 'value'))],
-            'city' => ['nullable', 'string', 'max:100'],
-            'sector' => ['nullable', 'string', Rule::in(array_column(Sector::cases(), 'value'))],
+            'city' => ['required', 'string', 'max:100'],
+            'sector' => ['required', 'string', Rule::in(array_column(Sector::cases(), 'value'))],
+            'subscribe_newsletter' => ['required', 'boolean'],
         ];
     }
 

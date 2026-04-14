@@ -3,15 +3,15 @@ import { Check, ChevronDown, X, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
 
-interface SelectOption {
+interface Option {
     value: string;
     label: string;
 }
 
-interface SelectProps {
-    options: SelectOption[];
-    value: string;
-    onChange: (value: string) => void;
+interface MultiSelectProps {
+    options: Option[];
+    value: string[];
+    onChange: (value: string[]) => void;
     placeholder?: string;
     searchPlaceholder?: string;
     noResultsText?: string;
@@ -20,11 +20,11 @@ interface SelectProps {
     label?: string;
 }
 
-export const Select: React.FC<SelectProps> = ({
+export const MultiSelect: React.FC<MultiSelectProps> = ({
     options,
     value,
     onChange,
-    placeholder = "Select an option...",
+    placeholder = "Select options...",
     searchPlaceholder = "Search...",
     noResultsText = "No results found",
     className = "",
@@ -50,20 +50,28 @@ export const Select: React.FC<SelectProps> = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleSelect = (optionValue: string) => {
-        onChange(optionValue);
-        setIsOpen(false);
-        setSearchTerm("");
+    const toggleOption = (optionValue: string) => {
+        const newValue = value.includes(optionValue)
+            ? value.filter((v) => v !== optionValue)
+            : [...value, optionValue];
+        onChange(newValue);
+    };
+
+    const removeOption = (optionValue: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        onChange(value.filter((v) => v !== optionValue));
     };
 
     const filteredOptions = options.filter((option) =>
         option.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const selectedOption = options.find((option) => option.value === value);
+    const selectedOptions = options.filter((option) =>
+        value.includes(option.value)
+    );
 
     return (
-        <div className={`relative w-full ${className}`} ref={containerRef}>
+        <div className={`relative w-full text-start ${className}`} ref={containerRef}>
             {label && (
                 <label className="text-sm font-medium text-gray-700 ps-1 mb-1.5 block">
                     {label}
@@ -71,18 +79,40 @@ export const Select: React.FC<SelectProps> = ({
             )}
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`h-11 w-full px-4 rounded-md bg-white border ${
+                className={`min-h-[44px] w-full px-3 py-2 rounded-md bg-white border ${
                     error ? "border-red-500" : "border-gray-500"
-                } text-black cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-black/40`}
+                } text-black cursor-pointer flex flex-wrap gap-2 items-center transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-black/40`}
             >
-                <span className={`text-sm ${!selectedOption ? "text-black/50" : "text-black"}`}>
-                    {selectedOption ? selectedOption.label : placeholder}
-                </span>
-                <ChevronDown
-                    className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                        isOpen ? "rotate-180" : ""
-                    }`}
-                />
+                {selectedOptions.length > 0 ? (
+                    <div className="flex flex-wrap gap-1.5 flex-1">
+                        {selectedOptions.map((option) => (
+                            <span
+                                key={option.value}
+                                className="inline-flex items-center gap-1 px-2 py-1 bg-primary-100 text-primary-900 text-xs font-semibold rounded-md border border-primary-200 transition-colors hover:bg-primary-200"
+                            >
+                                {option.label}
+                                <button
+                                    type="button"
+                                    onClick={(e) => removeOption(option.value, e)}
+                                    className="p-0.5 hover:bg-primary-300 rounded-full transition-colors"
+                                >
+                                    <X className="w-3 h-3" />
+                                </button>
+                            </span>
+                        ))}
+                    </div>
+                ) : (
+                    <span className="text-black/50 text-sm flex-1 ps-1">
+                        {placeholder}
+                    </span>
+                )}
+                <div className="flex items-center gap-2 border-s border-gray-200 ps-2 ms-auto">
+                    <ChevronDown
+                        className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                            isOpen ? "rotate-180" : ""
+                        }`}
+                    />
+                </div>
             </div>
 
             <AnimatePresence>
@@ -121,26 +151,34 @@ export const Select: React.FC<SelectProps> = ({
                             {filteredOptions.length > 0 ? (
                                 <div className="p-1">
                                     {filteredOptions.map((option) => {
-                                        const isSelected = option.value === value;
+                                        const isSelected = value.includes(option.value);
                                         return (
                                             <div
                                                 key={option.value}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleSelect(option.value);
+                                                    toggleOption(option.value);
                                                 }}
-                                                className={`flex items-center justify-between px-3 py-2.5 rounded-md cursor-pointer transition-colors ${
+                                                className={`flex items-center gap-2 px-3 py-2.5 rounded-md cursor-pointer transition-colors ${
                                                     isSelected
                                                         ? "bg-primary-50 text-primary-900"
                                                         : "hover:bg-gray-50 text-gray-700"
                                                 }`}
                                             >
+                                                <div
+                                                    className={`w-4 h-4 border rounded flex items-center justify-center transition-colors ${
+                                                        isSelected
+                                                            ? "bg-primary border-primary"
+                                                            : "border-gray-300"
+                                                    }`}
+                                                >
+                                                    {isSelected && (
+                                                        <Check className="w-3 h-3 text-white" />
+                                                    )}
+                                                </div>
                                                 <span className="text-sm font-medium">
                                                     {option.label}
                                                 </span>
-                                                {isSelected && (
-                                                    <Check className="w-4 h-4 text-primary" />
-                                                )}
                                             </div>
                                         );
                                     })}
@@ -155,7 +193,7 @@ export const Select: React.FC<SelectProps> = ({
                 )}
             </AnimatePresence>
 
-            {error && <p className="mt-1.5 text-xs text-red-500 font-medium ps-1">{error}</p>}
+            {error && <p className="mt-1.5 text-xs text-red-500 font-medium">{error}</p>}
 
             <style dangerouslySetInnerHTML={{ __html: `
                 .custom-scrollbar::-webkit-scrollbar {

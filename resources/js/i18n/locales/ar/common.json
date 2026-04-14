@@ -44,7 +44,7 @@
     },
     "newsletter": {
         "phone": {
-            "placeholder": "05X XXX XXXX",
+            "placeholder": "ادخل رقم الهاتف",
             "label": "الهاتف"
         },
         "fullname": {
@@ -68,7 +68,7 @@
             "badge": "ابقَ على اطلاع"
         },
         "clubFields": {
-            "toggle": "عرّفنا عن نفسك أكثر (اختياري)"
+            "toggle": "عرّفنا عن نفسك أكثر"
         },
         "position": {
             "placeholder": "منصبك / مسماك الوظيفي",
@@ -80,11 +80,15 @@
         },
         "sector": {
             "label": "القطاع",
+            "placeholder": "اختر القطاع",
             "public": "القطاع العام",
             "private": "القطاع الخاص"
         },
         "interests": {
             "label": "الاهتمامات",
+            "placeholder": "اختر اهتماماتك",
+            "search_placeholder": "ابحث عن الاهتمامات...",
+            "no_results": "لم يتم العثور على اهتمامات مطابقة",
             "options": {
                 "startups": "الشركات الناشئة",
                 "proptech": "تقنية العقارات",
@@ -95,7 +99,8 @@
                 "entrepreneurship": "ريادة الأعمال",
                 "innovation": "الابتكار"
             }
-        }
+        },
+        "subscribe_checkbox": "أرغب في الاشتراك في النشرة الإخبارية لنادي RV"
     },
     "and": "و"
 }
