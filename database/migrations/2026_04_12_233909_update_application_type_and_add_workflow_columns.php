@@ -13,22 +13,40 @@ return new class extends Migration
             ->where('type', 'general')
             ->update(['type' => 'initial']);
 
-        DB::table('applications')
-            ->where('type', 'startup')
-            ->update(['type' => 'startup']);
-
         Schema::table('applications', function (Blueprint $table) {
             $table->string('type')->default('initial')->change();
         });
 
-        Schema::table('applications', function (Blueprint $table) {
-            $table->json('evaluation_notes')->nullable()->after('attachment_path');
-            $table->dateTime('interview_scheduled_at')->nullable()->after('evaluation_notes');
-            $table->string('interview_type')->nullable()->after('interview_scheduled_at');
-            $table->dateTime('demo_day_date')->nullable()->after('interview_type');
-            $table->string('demo_day_location')->nullable()->after('demo_day_date');
-            $table->json('demo_day_requirements')->nullable()->after('demo_day_location');
-        });
+        if (! Schema::hasColumn('applications', 'evaluation_notes')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->json('evaluation_notes')->nullable()->after('attachment_path');
+            });
+        }
+        if (! Schema::hasColumn('applications', 'interview_scheduled_at')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->dateTime('interview_scheduled_at')->nullable()->after('evaluation_notes');
+            });
+        }
+        if (! Schema::hasColumn('applications', 'interview_type')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->string('interview_type')->nullable()->after('interview_scheduled_at');
+            });
+        }
+        if (! Schema::hasColumn('applications', 'demo_day_date')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->dateTime('demo_day_date')->nullable()->after('interview_type');
+            });
+        }
+        if (! Schema::hasColumn('applications', 'demo_day_location')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->string('demo_day_location')->nullable()->after('demo_day_date');
+            });
+        }
+        if (! Schema::hasColumn('applications', 'demo_day_requirements')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->json('demo_day_requirements')->nullable()->after('demo_day_location');
+            });
+        }
     }
 
     public function down(): void
