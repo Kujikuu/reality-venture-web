@@ -9,6 +9,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::table('applications', function (Blueprint $table) {
+            $table->enum('type', ['general', 'startup', 'initial', 'applying'])->change();
+        });
+
         DB::table('applications')
             ->where('type', 'general')
             ->update(['type' => 'initial']);
@@ -29,7 +33,16 @@ return new class extends Migration
 
     public function down(): void
     {
+        DB::table('applications')
+            ->where('type', 'initial')
+            ->update(['type' => 'general']);
+
+        DB::table('applications')
+            ->where('type', 'applying')
+            ->update(['type' => 'startup']);
+
         Schema::table('applications', function (Blueprint $table) {
+            $table->enum('type', ['general', 'startup'])->change();
             $table->dropColumn([
                 'evaluation_notes',
                 'interview_scheduled_at',
@@ -39,13 +52,5 @@ return new class extends Migration
                 'demo_day_requirements',
             ]);
         });
-
-        DB::table('applications')
-            ->where('type', 'initial')
-            ->update(['type' => 'general']);
-
-        DB::table('applications')
-            ->where('type', 'applying')
-            ->update(['type' => 'startup']);
     }
 };
