@@ -23,9 +23,9 @@ export const AvailabilityTable: React.FC<AvailabilityTableProps> = ({ availabili
                 <table className="w-full text-sm">
                     <thead>
                         <tr className="bg-surface text-gray-500">
-                            <th className="text-left px-4 py-3 font-medium">Date</th>
-                            <th className="text-left px-4 py-3 font-medium">Start Time</th>
-                            <th className="text-left px-4 py-3 font-medium">End Time</th>
+                            <th className="text-left px-4 py-3 font-medium">{t('booking.date')}</th>
+                            <th className="text-left px-4 py-3 font-medium">{t('booking.startTime')}</th>
+                            <th className="text-left px-4 py-3 font-medium">{t('booking.endTime')}</th>
                         </tr>
                     </thead>
                     <tbody>

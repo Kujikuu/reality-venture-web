@@ -1,4 +1,5 @@
 import { Head, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 
 interface SeoProps {
     title?: string;
@@ -17,6 +18,7 @@ interface PageProps {
 
 export function SEO(overrides: Partial<SeoProps> = {}) {
     const { seo } = usePage<PageProps>().props;
+    const { t } = useTranslation('common');
 
     const title = overrides.title ?? seo.title;
     const description = overrides.description ?? seo.description;
@@ -36,7 +38,7 @@ export function SEO(overrides: Partial<SeoProps> = {}) {
             {ogImage && <meta property="og:image" content={ogImage} />}
             {canonical && <meta property="og:url" content={canonical} />}
             {ogType && <meta property="og:type" content={ogType} />}
-            <meta property="og:site_name" content="Reality Venture" />
+            <meta property="og:site_name" content={t('company.name')} />
             <meta name="twitter:card" content="summary_large_image" />
             {title && <meta name="twitter:title" content={title} />}
             {description && <meta name="twitter:description" content={description} />}

@@ -14,49 +14,44 @@ class ApplicationSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Seed 5 "Initial" stage applications
+        // 1. Initial stage
         Application::factory()->count(5)->create([
-            'type' => ApplicationType::Initial,
             'status' => ApplicationStatus::Pending,
         ]);
 
-        // 2. Seed 5 "Applying" stage applications (Startups filling their profile)
-        Application::factory()->count(5)->startup()->create([
-            'type' => ApplicationType::Applying,
+        // 2. Startup (Applying)
+        Application::factory()->count(5)->startupStage()->create([
             'status' => ApplicationStatus::InProgress,
         ]);
 
-        // 3. Seed 5 "Evaluation" stage applications (Shortlisted for interview)
-        Application::factory()->count(5)->startup()->create([
-            'type' => ApplicationType::Evaluation,
+        // 3. Interview
+        Application::factory()->count(4)->interview()->create([
             'status' => ApplicationStatus::UnderReview,
-            'interview_scheduled_at' => fake()->dateTimeBetween('now', '+2 weeks'),
-            'interview_type' => fake()->randomElement(\App\Enums\InterviewType::cases()),
         ]);
 
-        // 4. Seed 3 "Decision" stage applications (Approved)
-        Application::factory()->count(3)->startup()->create([
+        // 4. Evaluation
+        Application::factory()->count(4)->evaluation()->create([
+            'status' => ApplicationStatus::UnderReview,
+        ]);
+
+        // 5. Decision (Approved)
+        Application::factory()->count(3)->approved()->create();
+
+        // 6. Sign Agreement
+        Application::factory()->count(2)->approved()->create([
+            'type' => ApplicationType::SignAgreement,
+        ]);
+
+        // 7. Demo Day
+        Application::factory()->count(3)->demoDay()->create();
+
+        // 8. Investors
+        Application::factory()->count(2)->investor()->create();
+
+        // Extra: Mixed rejections/suspensions
+        Application::factory()->count(5)->startupStage()->create([
             'type' => ApplicationType::Decision,
-            'status' => ApplicationStatus::Approved,
-        ]);
-
-        // 5. Seed 3 "Decision" stage applications (Rejected)
-        Application::factory()->count(3)->startup()->create([
-            'type' => ApplicationType::Decision,
-            'status' => ApplicationStatus::Rejected,
-        ]);
-
-        // 6. Seed 2 "Demo Day" applications
-        Application::factory()->count(2)->startup()->create([
-            'type' => ApplicationType::DemoDay,
-            'status' => ApplicationStatus::Approved,
-            'demo_day_date' => fake()->dateTimeBetween('+1 month', '+2 months'),
-            'demo_day_location' => fake()->randomElement(['Riyadh Front', 'KAFD', 'Online via Zoom']),
-            'demo_day_requirements' => [
-                ['item' => 'Prepare 5-minute pitch deck'],
-                ['item' => 'Bring physical prototype if available'],
-                ['item' => 'Ensure 2 founders present'],
-            ],
+            'status' => fake()->randomElement([ApplicationStatus::Rejected, ApplicationStatus::Suspended]),
         ]);
     }
 }

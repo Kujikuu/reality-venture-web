@@ -5,19 +5,25 @@ namespace App\Enums;
 enum ApplicationType: string
 {
     case Initial = 'initial';
-    case Applying = 'applying';
+    case Startup = 'startup';
+    case Interview = 'interview';
     case Evaluation = 'evaluation';
     case Decision = 'decision';
+    case SignAgreement = 'sign_agreement';
     case DemoDay = 'demo_day';
+    case Investors = 'investors';
 
     public function label(): string
     {
         return match ($this) {
             self::Initial => 'Initial',
-            self::Applying => 'Applying',
+            self::Startup => 'Startup',
+            self::Interview => 'Interview',
             self::Evaluation => 'Evaluation',
             self::Decision => 'Decision',
+            self::SignAgreement => 'Sign Agreement',
             self::DemoDay => 'Demo Day',
+            self::Investors => 'Investors',
         };
     }
 
@@ -25,10 +31,13 @@ enum ApplicationType: string
     {
         return match ($this) {
             self::Initial => 'أولي',
-            self::Applying => 'متابعة التقديم',
+            self::Startup => 'شركة ناشئة',
+            self::Interview => 'مقابلة',
             self::Evaluation => 'تقييم',
-            self::Decision => 'قرار مستثمر',
+            self::Decision => 'قرار',
+            self::SignAgreement => 'توقيع الاتفاقية',
             self::DemoDay => 'يوم العرض',
+            self::Investors => 'المستثمرون',
         };
     }
 
@@ -36,10 +45,13 @@ enum ApplicationType: string
     {
         return match ($this) {
             self::Initial => 'gray',
-            self::Applying => 'info',
+            self::Startup => 'info',
+            self::Interview => 'warning',
             self::Evaluation => 'warning',
             self::Decision => 'primary',
+            self::SignAgreement => 'info',
             self::DemoDay => 'success',
+            self::Investors => 'success',
         };
     }
 
@@ -47,10 +59,13 @@ enum ApplicationType: string
     {
         return match ($this) {
             self::Initial => 'New application received',
-            self::Applying => 'Applicant completing project details',
-            self::Evaluation => 'Under evaluation and interview',
-            self::Decision => 'Decision has been made',
+            self::Startup => 'Advanced to startup stage',
+            self::Interview => 'Scheduled for an interview',
+            self::Evaluation => 'Under detailed evaluation',
+            self::Decision => 'Decision phase',
+            self::SignAgreement => 'Signing the agreement',
             self::DemoDay => 'Invited to Demo Day',
+            self::Investors => 'Connected with investors',
         };
     }
 }

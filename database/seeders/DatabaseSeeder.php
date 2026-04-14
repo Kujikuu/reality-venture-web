@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             SpecializationSeeder::class,
             TeamConsultantsSeeder::class,
             MarketplaceTestSeeder::class,
+            ApplicationSeeder::class,
         ]);
+
     }
 }

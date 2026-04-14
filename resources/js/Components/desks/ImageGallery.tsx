@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ImageGalleryProps {
     coverImage: string | null;
@@ -9,6 +10,7 @@ interface ImageGalleryProps {
 }
 
 export const ImageGallery: React.FC<ImageGalleryProps> = ({ coverImage, images, name, typeBadge }) => {
+    const { t } = useTranslation('common');
     const allImages = [
         ...(coverImage ? [coverImage] : []),
         ...images.filter((img) => img !== coverImage),
@@ -26,7 +28,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ coverImage, images, 
                 ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-400">
                         <MapPin className="w-10 h-10" />
-                        <span className="text-sm">No photos yet</span>
+                        <span className="text-sm">{t('status.noPhotos')}</span>
                     </div>
                 )}
                 {/* Type badge */}

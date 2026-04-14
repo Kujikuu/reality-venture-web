@@ -5,7 +5,7 @@ import { UserPlus, Search, Briefcase } from 'lucide-react';
 import { SEO } from '../../Components/SEO';
 
 export default function Register() {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation(['auth', 'common']);
   const { data, setData, post, processing, errors } = useForm({
     name: '',
     email: '',
@@ -32,7 +32,7 @@ export default function Register() {
           />
           <div className="absolute inset-0 bg-linear-to-br from-primary/80 to-black/60" />
           <div className="relative z-10 max-w-md text-white">
-            <a href="/"><img src="/assets/images/RVHorizonal.png" alt="Reality Venture" className="h-10 mb-12 brightness-0 invert" /></a>
+            <a href="/"><img src="/assets/images/RVHorizonal.png" alt={t('common:company.logoAlt')} className="h-10 mb-12 brightness-0 invert" /></a>
             <h2 className="text-4xl font-bold tracking-tight mb-4">{t('register.heroTitle')}</h2>
             <p className="text-white/70 text-lg leading-relaxed">{t('register.heroDesc')}</p>
           </div>

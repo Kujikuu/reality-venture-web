@@ -1,99 +1,93 @@
 <x-mail::message>
 <div dir="rtl">
 
-# حياك الله {{ $application->first_name }}! 👋
+# حياك الله {{ $application->first_name }} 👋
 
-وصلنا طلبك المبدئي وتم تسجيله بنجاح. رقم المرجع حقّك هو:
+وصلنا طلبك وتم تسجيله بنجاح 🎉
+سعداء بانضمامك معنا.
 
+**رقم المرجع الخاص بك:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
 
-احتفظ فيه عشان تقدر تتابع طلبك، وتقدر تستخدمه وقت التقديم أو التواصل معنا.
-
-## ملخص الطلب
-
-**الاسم:** {{ $application->first_name }} {{ $application->last_name }}
-
-**البريد الإلكتروني:** {{ $application->email }}
-
+**ملخص الطلب:**
+* **الاسم:** {{ $application->first_name }} {{ $application->last_name }}
+* **البريد الإلكتروني:** {{ $application->email }}
 @if($application->phone)
-**رقم الجوال:** {{ $application->phone }}
+* **رقم الجوال:** {{ $application->phone }}
 @endif
+* **المدينة:** {{ $application->city ?? '—' }}
 
 @if($application->social_profile)
-**حساب التواصل:** {{ $application->social_profile }}
+* **رابط حساب التواصل:** [{{ $application->social_profile }}]({{ $application->social_profile }})
 @endif
 
-@if($application->program_interest)
-**البرنامج المهتم فيه:** {{ $application->program_interest->label() }}
-@endif
-
-@if($application->description)
 **الوصف:**
-
 {{ $application->description }}
-@endif
 
-## الخطوات الجاية
+الخطوة الجاية هي استكمال بيانات مشروعك، عشان نقدر نراجعه ونتواصل معك بشكل أدق.
 
-فريقنا بيراجع طلبك وبنتواصل معك قريب. في هالوقت، إذا عندك شركة ناشئة وحاب تقدمها، تقدر تبدأ من الرابط اللي تحت (بيكون جاهز بمعلوماتك باستخدام رقم المرجع).
+**الخطوات القادمة:**
+* استكمل بيانات المشروع من خلال الرابط أدناه
+* ارفع أي ملفات تدعم طلبك (عرض تقديمي، خطة عمل، وغيرها)
+* بعد الإكمال، راح يقوم فريقنا بمراجعة طلبك والتواصل معك
 
-<x-mail::button :url="url('/startup-application?ref=' . $application->uid)">
-تقديم شركة ناشئة
+<x-mail::button :url="config('app.url') . '/startup-application?ref=' . $application->uid">
+استكمال بيانات المشروع
 </x-mail::button>
 
-مع التحية،<br>
+بانتظار مشروعك، ونتمنى لك التوفيق 🚀
+
+مع خالص التحية،<br>
 فريق {{ config('app.name') }}
+
 </div>
 
 ---
 
 <div dir="ltr">
 
-# Welcome to Reality Venture, {{ $application->first_name }}!
+# Hi {{ $application->first_name }} 👋
 
-Thank you for submitting your application. Here is your reference ID:
+We’ve received your application and it has been successfully registered 🎉
+We’re glad to have you with us.
 
+**Your Reference Number:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
 
-Keep this reference ID for your records. You can use it when contacting our team about your application.
-
-## Your Application Summary
-
-**Name:** {{ $application->first_name }} {{ $application->last_name }}
-
-**Email:** {{ $application->email }}
-
+**Application Summary:**
+* **Name:** {{ $application->first_name }} {{ $application->last_name }}
+* **Email:** {{ $application->email }}
 @if($application->phone)
-**Phone:** {{ $application->phone }}
+* **Phone Number:** {{ $application->phone }}
 @endif
+* **City:** {{ $application->city ?? '—' }}
 
 @if($application->social_profile)
-**Social Profile:** {{ $application->social_profile }}
+* **Social Profile:** [{{ $application->social_profile }}]({{ $application->social_profile }})
 @endif
 
-@if($application->program_interest)
-**Program Interest:** {{ $application->program_interest->label() }}
-@endif
-
-@if($application->description)
 **Description:**
-
 {{ $application->description }}
-@endif
 
-## What Happens Next
+The next step is to complete your project details so we can review your application more effectively.
 
-Our team will review your application and get back to you. In the meantime, if you have a startup you would like to submit for consideration, you can apply through our startup form below.
+**Next Steps:**
+* Complete your project details using the link below
+* Upload any supporting documents (pitch deck, business plan, etc.)
+* Once completed, our team will review your application and get in touch
 
-<x-mail::button :url="url('/startup-application?ref=' . $application->uid)">
-Apply as a Startup
+<x-mail::button :url="config('app.url') . '/startup-application?ref=' . $application->uid">
+Complete Your Application
 </x-mail::button>
 
-Thanks,<br>
-The {{ config('app.name') }} Team
+We look forward to learning more about your project 🚀
+
+Warm regards,<br>
+{{ config('app.name') }} Team
+
 </div>
 </x-mail::message>

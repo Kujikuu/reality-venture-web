@@ -104,7 +104,7 @@ export const Hero: React.FC = () => {
                         <div className="relative w-48 h-48 flex items-center justify-center ">
                           <img
                             src="/assets/images/RV.png"
-                            alt="Reality Venture Logo"
+                            alt={t('common:company.logoAlt')}
                             className="w-40 h-40 object-contain drop-shadow-2xl"
                           />
                         </div>

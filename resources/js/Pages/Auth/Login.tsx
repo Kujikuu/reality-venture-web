@@ -6,7 +6,7 @@ import type { PageProps } from '../../types/marketplace';
 import { SEO } from '../../Components/SEO';
 
 export default function Login() {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation(['auth', 'common']);
   const { flash } = usePage<PageProps>().props;
   const { data, setData, post, processing, errors } = useForm({
     email: '',
@@ -32,7 +32,7 @@ export default function Login() {
           />
           <div className="absolute inset-0 bg-linear-to-br from-primary/80 to-black/60" />
           <div className="relative z-10 max-w-md text-white">
-            <a href="/"><img src="/assets/images/RVHorizonal.png" alt="Reality Venture" className="h-10 mb-12 brightness-0 invert" /></a>
+            <a href="/"><img src="/assets/images/RVHorizonal.png" alt={t('common:company.logoAlt')} className="h-10 mb-12 brightness-0 invert" /></a>
             <h2 className="text-4xl font-bold tracking-tight mb-4">{t('login.heroTitle')}</h2>
             <p className="text-white/70 text-lg leading-relaxed">{t('login.heroDesc')}</p>
           </div>

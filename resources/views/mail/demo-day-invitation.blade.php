@@ -1,14 +1,12 @@
 <x-mail::message>
 <div dir="rtl">
 
-# حياك الله {{ $application->first_name }} 🎤
+# حياك الله {{ $application->first_name }} 👋
 
-يسعدنا ندعوك لعرض مشروعك في يوم العرض (Demo Day)!
+يسرّنا دعوتك لعرض مشروعك في يوم العرض (Demo Day).  
+ستُمنح مدة 5 دقائق لتقديم مشروعك أمام المستثمرين واستعراض رؤيتك.
 
-عندك ٥ دقايق تقدّم مشروعك قدام المستثمرين وتعرض رؤيتك.
-
-رقم المرجع حقّك هو:
-
+**رقم المرجع الخاص بك:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
@@ -24,7 +22,7 @@
 @endforeach
 @endif
 
-مع التحية،<br>
+مع خالص التحية،<br>
 فريق {{ config('app.name') }}
 
 </div>
@@ -33,14 +31,12 @@
 
 <div dir="ltr">
 
-# Hello {{ $application->first_name }} 🎤
+# Hello {{ $application->first_name }} 👋
 
-We're pleased to invite you to present at Demo Day!
+We are pleased to invite you to present your project at Demo Day.  
+You will have 5 minutes to pitch your project to investors and showcase your vision.
 
-You'll have 5 minutes to pitch your project to investors and share your vision.
-
-Here is your reference ID:
-
+**Your Reference Number:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
@@ -56,7 +52,8 @@ Here is your reference ID:
 @endforeach
 @endif
 
-Thanks,<br>
-The {{ config('app.name') }} Team
+Best regards,<br>
+{{ config('app.name') }} Team
+
 </div>
 </x-mail::message>

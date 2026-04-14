@@ -44,7 +44,9 @@
     "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
     "submit": "Submit Application",
     "submitting": "Submitting...",
-    "success": "Application submitted successfully!",
+    "success": "Request received successfully. Check your email for next steps.",
+    "successTitle": "Application Submitted!",
+    "returnHome": "Return to Home",
     "agreement": "By submitting this form, you agree to our"
   },
   "submitted": "Application submitted successfully.",

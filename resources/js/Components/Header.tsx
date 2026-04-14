@@ -57,7 +57,7 @@ export const Header = () => {
           onClick={(e) => handleNavClick(e, 'hero')}
           className="flex items-center gap-3 group cursor-pointer"
         >
-          <img src="/assets/images/RVHorizonal.png" alt="Company Logo" className="w-auto h-7 md:h-10" />
+          <img src="/assets/images/RVHorizonal.png" alt={t('common:company.logoAlt')} className="w-auto h-7 md:h-10" />
         </a>
 
         {/* Desktop Nav */}

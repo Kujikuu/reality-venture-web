@@ -23,7 +23,7 @@ class ViewApplication extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            // EditAction::make(),
             Action::make('sendDemoDayInvite')
                 ->label('Send Demo Day Invite')
                 ->icon('heroicon-m-megaphone')

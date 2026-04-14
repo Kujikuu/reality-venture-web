@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../Components/ui/Button';
 import { Select } from '../Components/ui/Select';
-import { Mail, CheckCircle2, MessageCircle, Upload, X } from 'lucide-react';
+import { Mail, CheckCircle2, MessageCircle, Upload, X, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
-import { useForm } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
 import { SarIcon } from '../Components/ui/SarIcon';
 import { COUNTRIES } from '../data/countries';
@@ -56,7 +56,9 @@ export default function StartupApplication() {
   const { t, i18n } = useTranslation(['common', 'navigation', 'startup-application']);
   const isArabic = i18n.language === 'ar';
 
-  const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
+  const { flash } = usePage<any>().props;
+  const [isSuccess, setIsSuccess] = useState(flash?.success === 'submitted');
+  const { data, setData, post, processing, errors, reset } = useForm({
     first_name: '',
     last_name: '',
     email: '',
@@ -125,7 +127,10 @@ export default function StartupApplication() {
       forceFormData: true,
       preserveState: true,
       preserveScroll: true,
-      onSuccess: () => reset(),
+      onSuccess: () => {
+        reset();
+        setIsSuccess(true);
+      },
     });
   };
 
@@ -170,6 +175,37 @@ export default function StartupApplication() {
 
   const errorText = (field: string, errorKey?: string) =>
     errorKey ? t('startup-application:' + errorKey, errorKey) : '';
+
+  if (isSuccess) {
+    return (
+      <>
+        <SEO />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100"
+          >
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-green-600" />
+            </div>
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
+              {t('startup-application:form.successTitle')}
+            </h1>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              {t('startup-application:form.success')}
+            </p>
+            <Link
+              href="/"
+              className="w-full h-14 bg-primary text-white hover:bg-primary-700 px-10 text-base font-bold tracking-tight rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-primary/20"
+            >
+              {t('startup-application:form.returnHome')}
+            </Link>
+          </motion.div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -254,13 +290,6 @@ export default function StartupApplication() {
             <div className="bg-white border border-gray-200 p-8 md:p-12 rounded-xl shadow-sm">
               <div className="flex items-center justify-between mb-10">
                 <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('startup-application:form.title')}</h2>
-                {recentlySuccessful && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm">
-                    {isArabic 
-                      ? '✓ وصلنا طلبك بنجاح 🎉 راجع إيميلك عشان تعرف الخطوات الجاية'
-                      : '✓ Request received successfully. Check your email for next steps.'}
-                  </div>
-                )}
               </div>
               <form onSubmit={handleSubmit} className="space-y-12">
                 {/* Section 1: Founder Info */}

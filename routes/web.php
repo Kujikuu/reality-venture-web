@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdBannerController;
+use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -32,6 +33,10 @@ Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])->name('startup-applications.store');
 Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])->name('applications.lookup');
+
+// Agreement
+Route::get('/agreement/{uid}', [AgreementController::class, 'show'])->name('agreement.show');
+Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])->name('agreement.approve');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

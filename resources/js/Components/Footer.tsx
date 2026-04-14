@@ -38,7 +38,7 @@ export const Footer = ({ hideNewsletter = false }: FooterProps) => {
           {/* Brand & Address - Span 4 */}
           <div className="lg:col-span-4 space-y-8">
             <div className="flex items-center gap-3">
-              <img src="/assets/images/RVHorizonal.png" alt="Company Logo" className="w-auto h-10" />
+              <img src="/assets/images/RVHorizonal.png" alt={t('common:company.logoAlt')} className="w-auto h-10" />
             </div>
             <p className="text-gray-500 leading-relaxed max-w-sm">
               {t('common:company.tagline')}
@@ -68,7 +68,7 @@ export const Footer = ({ hideNewsletter = false }: FooterProps) => {
               <li><Link href="/#hero" onClick={(e) => smoothScrollTo(e, 'hero')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.about')}</Link></li>
               <li><Link href="/consultants" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.advisory')}</Link></li>
               <li><Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.ventureProgram')}</Link></li>
-              <li><Link href="/grit" className="hover:text-primary transition-colors block py-1">GRIT<sup className="text-[0.6em]">TM</sup></Link></li>
+              <li><Link href="/grit" className="hover:text-primary transition-colors block py-1">{t('common:company.grit')}<sup className="text-[0.6em]">TM</sup></Link></li>
               <li><Link href="/#rv-club" onClick={(e) => smoothScrollTo(e, 'rv-club')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.rvClub')}</Link></li>
               <li><Link href="/blog" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.blog')}</Link></li>
             </ul>

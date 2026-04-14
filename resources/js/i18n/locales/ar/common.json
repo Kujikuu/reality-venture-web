@@ -1,94 +1,101 @@
 {
-  "buttons": {
-    "getStarted": "ابدأ الآن",
-    "applyNow": "قدم الآن",
-    "viewPrograms": "عرض البرامج",
-    "submit": "إرسال",
-    "learnMore": "اعرف المزيد",
-    "close": "إغلاق"
-  },
-  "labels": {
-    "email": "عنوان البريد الإلكتروني",
-    "firstName": "الاسم الأول",
-    "lastName": "اسم العائلة",
-    "phone": "رقم الهاتف",
-    "company": "اسم الشركة",
-    "website": "الموقع الإلكتروني",
-    "linkedin": "حساب التواصل الاجتماعي"
-  },
-  "status": {
-    "loading": "جاري التحميل...",
-    "success": "تم بنجاح",
-    "error": "خطأ",
-    "noSpam": "بدون إزعاج، هذا وعد!"
-  },
-  "company": {
-    "name": "رياليتي فينتشر",
-    "tagline": "نبني. ننفذ. نطوّر شركات حقيقية.",
-    "slogan": "بناء مشاريع حقيقية",
-    "executionFirst": "مسرّع يضع التنفيذ أولًا",
-    "ventureBuilder": "بناء المشاريع",
-    "accelerator": "المسرع"
-  },
-  "footer": {
-    "privacyPolicy": "سياسة الخصوصية",
-    "termsOfService": "شروط الخدمة"
-  },
-  "apply": {
-    "pageTitle": "التقديم"
-  },
-  "newsletter": {
-    "phone": {
-      "placeholder": "05X XXX XXXX",
-      "label": "الهاتف"
+    "buttons": {
+        "getStarted": "ابدأ الآن",
+        "applyNow": "قدم الآن",
+        "viewPrograms": "عرض البرامج",
+        "submit": "إرسال",
+        "learnMore": "اعرف المزيد",
+        "close": "إغلاق"
     },
-    "fullname": {
-      "placeholder": "ادخل اسمك بالكامل",
-      "label": "الاسم بالكامل"
+    "labels": {
+        "email": "عنوان البريد الإلكتروني",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "phone": "رقم الهاتف",
+        "company": "اسم الشركة",
+        "website": "الموقع الإلكتروني",
+        "linkedin": "حساب التواصل الاجتماعي"
     },
-    "email": {
-      "placeholder": "أدخل بريدك الإلكتروني",
-      "label": "البريد الإلكتروني"
+    "status": {
+        "loading": "جاري التحميل...",
+        "success": "تم بنجاح",
+        "error": "خطأ",
+        "noSpam": "بدون إزعاج، هذا وعد!",
+        "noPhotos": "لا توجد صور بعد"
     },
-    "home": {
-      "heading": "انضم لنادي ريالتي فنتشر",
-      "description": "رؤى حول الشركات الناشئة وتقنية العقارات وبناء المشاريع — مباشرة إلى بريدك الإلكتروني.",
-      "badge": "تحديثات أسبوعية"
+
+    "company": {
+        "name": "رياليتي فينتشر",
+        "tagline": "نبني. ننفذ. نطوّر شركات حقيقية.",
+        "slogan": "بناء مشاريع حقيقية",
+        "executionFirst": "مسرّع يضع التنفيذ أولًا",
+        "ventureBuilder": "بناء المشاريع",
+        "accelerator": "المسرع",
+        "logoAlt": "شعار رياليتي فينتشر",
+        "grit": "GRIT"
     },
-    "blog": {
-      "heading": "لا تفوّت أي قصة",
-      "description": "اشترك لتصلك أحدث مقالاتنا حول بناء المشاريع وتقنية العقارات.",
-      "badge": "ابقَ على اطلاع"
+
+    "footer": {
+        "privacyPolicy": "سياسة الخصوصية",
+        "termsOfService": "شروط الخدمة"
     },
-    "clubFields": {
-      "toggle": "عرّفنا عن نفسك أكثر (اختياري)"
+    "apply": {
+        "pageTitle": "التقديم"
     },
-    "position": {
-      "placeholder": "منصبك / مسماك الوظيفي",
-      "label": "المنصب"
+    "newsletter": {
+        "phone": {
+            "placeholder": "05X XXX XXXX",
+            "label": "الهاتف"
+        },
+        "fullname": {
+            "placeholder": "ادخل اسمك بالكامل",
+            "label": "الاسم بالكامل"
+        },
+        "email": {
+            "placeholder": "أدخل بريدك الإلكتروني",
+            "label": "البريد الإلكتروني"
+        },
+        "home": {
+            "heading": "انضم لنادي RV",
+            "clubHeading": "انضم لنادي RV",
+            "description": "رؤى حول الشركات الناشئة وتقنية العقارات وبناء المشاريع — مباشرة إلى بريدك الإلكتروني.",
+            "badge": "تحديثات أسبوعية"
+        },
+
+        "blog": {
+            "heading": "لا تفوّت أي قصة",
+            "description": "اشترك لتصلك أحدث مقالاتنا حول بناء المشاريع وتقنية العقارات.",
+            "badge": "ابقَ على اطلاع"
+        },
+        "clubFields": {
+            "toggle": "عرّفنا عن نفسك أكثر (اختياري)"
+        },
+        "position": {
+            "placeholder": "منصبك / مسماك الوظيفي",
+            "label": "المنصب"
+        },
+        "city": {
+            "placeholder": "مدينتك",
+            "label": "المدينة"
+        },
+        "sector": {
+            "label": "القطاع",
+            "public": "القطاع العام",
+            "private": "القطاع الخاص"
+        },
+        "interests": {
+            "label": "الاهتمامات",
+            "options": {
+                "startups": "الشركات الناشئة",
+                "proptech": "تقنية العقارات",
+                "investment": "الاستثمار",
+                "ventureBuilding": "بناء المشاريع",
+                "technology": "التقنية",
+                "realEstate": "العقارات",
+                "entrepreneurship": "ريادة الأعمال",
+                "innovation": "الابتكار"
+            }
+        }
     },
-    "city": {
-      "placeholder": "مدينتك",
-      "label": "المدينة"
-    },
-    "sector": {
-      "label": "القطاع",
-      "public": "القطاع العام",
-      "private": "القطاع الخاص"
-    },
-    "interests": {
-      "label": "الاهتمامات",
-      "options": {
-        "startups": "الشركات الناشئة",
-        "proptech": "تقنية العقارات",
-        "investment": "الاستثمار",
-        "ventureBuilding": "بناء المشاريع",
-        "technology": "التقنية",
-        "realEstate": "العقارات",
-        "entrepreneurship": "ريادة الأعمال",
-        "innovation": "الابتكار"
-      }
-    }
-  },
-  "and": "و"
+    "and": "و"
 }

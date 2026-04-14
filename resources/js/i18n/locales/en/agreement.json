@@ -1,0 +1,35 @@
+{
+  "pageTitle": "Review & Sign Agreement - Reality Venture",
+  "successPageTitle": "Agreement Signed - Reality Venture",
+  "securePortal": "Secure Agreement Portal",
+  "investmentAgreement": "Investment Agreement",
+  "reviewTermsFor": "Review the terms for <span class='text-gray-900 font-bold'>{{company_name}}</span> and provide your digital signature below.",
+  "documentRef": "Document Ref: {{uid}}",
+  "partnershipAgreement": "Mutual Partnership Agreement",
+  "enteredBetween": "This Preliminary Agreement is entered into between <strong>Reality Venture</strong> and <strong>{{company_name}}</strong> represented by <strong>{{first_name}} {{last_name}}</strong>.",
+  "sections": {
+    "purpose": {
+      "title": "1. Purpose of Agreement",
+      "content": "The purpose of this agreement is to define the preliminary terms of the investment and partnership between the parties as they move towards the final evaluation and demo day stages of the Reality Venture program."
+    },
+    "confidentiality": {
+      "title": "2. Confidentiality",
+      "content": "Both parties agree to keep all shared business secrets, financial data, and strategic plans confidential and not to disclose them to any third parties without prior written consent."
+    },
+    "nonBinding": {
+      "title": "3. Non-Binding Nature",
+      "content": "This document serves as a Letter of Intent and is not a legally binding commitment to invest until a final Investment Agreement is signed by both parties after due diligence."
+    }
+  },
+  "acknowledgement": "By signing this document electronically, you acknowledge that you have read, understood, and agree to the terms listed above.",
+  "iAgree": "I agree to the terms and conditions mentioned in this document.",
+  "signatureLabel": "Full Name (Digital Signature)",
+  "signaturePlaceholder": "Type your full name",
+  "submitButton": "Approve & Sign Agreement",
+  "processing": "Processing...",
+  "success": {
+    "title": "Agreement Signed!",
+    "message": "Thank you, {{name}}. Your agreement has been successfully submitted. Our team will review it and get back to you shortly.",
+    "returnHome": "Return to Home"
+  }
+}

@@ -45,4 +45,8 @@ return [
         'sheets_webhook_url' => env('GOOGLE_SHEETS_WEBHOOK_URL'),
     ],
 
+    'rv_club' => [
+        'whatsapp_link' => env('RV_CLUB_WHATSAPP_LINK'),
+    ],
+
 ];

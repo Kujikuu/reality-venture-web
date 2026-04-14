@@ -1,12 +1,12 @@
 <x-mail::message>
 <div dir="rtl">
 
-# حياك الله {{ $application->first_name }} 👋
+# هلا {{ $application->first_name }} 👋
 
-تم مراجعة طلبك وحالته الحين: **{{ $application->status->labelAr() }}**
+تمت مراجعة طلبك بنجاح، وحالته حالياً: **{{ $application->status?->labelAr() ?? 'قيد المراجعة' }}**.
+نقدّر صبرك، وراح نوافيك بأي تحديثات قريباً بإذن الله.
 
-رقم المرجع حقّك هو:
-
+**رقم المرجع الخاص بك:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
@@ -21,8 +21,8 @@
 طلبك قيد المعالجة. بنتواصل معك قريب بالتفاصيل.
 @endif
 
-مع التحية،<br>
-فريق {{ config('app.name') }}
+مع خالص التحية،<br>
+فريق Reality Venture
 
 </div>
 
@@ -30,12 +30,12 @@
 
 <div dir="ltr">
 
-# Hello {{ $application->first_name }} 👋
+# Hi {{ $application->first_name }} 👋
 
-Your application has been reviewed. Current status: **{{ $application->status->label() }}**
+Your application has been successfully reviewed and is currently **{{ $application->status?->label() ?? 'under review' }}**.
+We appreciate your patience and will keep you updated soon.
 
-Here is your reference ID:
-
+**Your Reference Number:**
 <x-mail::panel>
 **{{ $application->uid }}**
 </x-mail::panel>
@@ -50,7 +50,8 @@ Your application has been temporarily suspended. We will contact you if we need 
 Your application is being processed. We will be in touch with details shortly.
 @endif
 
-Thanks,<br>
-The {{ config('app.name') }} Team
+Warm regards,<br>
+Reality Venture Team
+
 </div>
 </x-mail::message>

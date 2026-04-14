@@ -76,7 +76,7 @@ class ApplicationInfolist
                 Section::make('Company Details')
                     ->icon(Heroicon::OutlinedBuildingOffice2)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('business_stage')
                             ->label('Business Stage')
@@ -120,7 +120,7 @@ class ApplicationInfolist
                 Section::make('Investment Details')
                     ->icon(Heroicon::OutlinedBanknotes)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('current_funding_round')
                             ->label('Current Funding Round')
@@ -148,7 +148,7 @@ class ApplicationInfolist
                 Section::make('Evaluation & Interview')
                     ->icon(Heroicon::OutlinedClipboardDocumentCheck)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Interview, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::SignAgreement, ApplicationType::DemoDay, ApplicationType::Investors]))
                     ->schema([
                         TextEntry::make('interview_type')
                             ->label('Interview Type')
@@ -158,6 +158,32 @@ class ApplicationInfolist
                             ->label('Interview Scheduled')
                             ->dateTime('M d, Y H:i')
                             ->placeholder('Not scheduled'),
+                        TextEntry::make('interview_url')
+                            ->label('Meeting URL')
+                            ->url(fn (Application $record): ?string => $record->interview_url)
+
+                            ->openUrlInNewTab()
+                            ->visible(fn (Application $record) => $record->interview_type === InterviewType::Online)
+                            ->placeholder('—'),
+                        TextEntry::make('interview_location')
+                            ->label('Location / Address')
+                            ->visible(fn (Application $record) => $record->interview_type === InterviewType::InPerson)
+                            ->placeholder('—'),
+                        TextEntry::make('evaluation_checklist')
+                            ->label('Checklist')
+                            ->listWithLineBreaks()
+                            ->bulleted()
+                            ->formatStateUsing(fn (string $state): string => match ($state) {
+                                'cr' => 'Commercial Registration / ID',
+                                'logo' => 'Professional Logo',
+                                'website' => 'Functional Website/App',
+                                'deck' => 'Pitch Deck',
+                                'model' => 'Business Model',
+                                'team' => 'Team Profiles',
+                                'financials' => 'Financial Projections',
+                                default => $state,
+                            })
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Demo Day')
@@ -176,13 +202,14 @@ class ApplicationInfolist
                             ->label('Requirements')
                             ->listWithLineBreaks()
                             ->bulleted()
+                            ->formatStateUsing(fn ($state): string => is_array($state) ? ($state['item'] ?? '') : (string) $state)
                             ->columnSpanFull(),
                     ]),
 
                 Section::make('Discovery')
                     ->icon(Heroicon::OutlinedMegaphone)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Applying, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
                     ->schema([
                         TextEntry::make('discovery_source')
                             ->label('How They Heard')

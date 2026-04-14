@@ -49,11 +49,17 @@ class Application extends Model
         'referral_param',
         'attachment_path',
         'evaluation_notes',
+        'evaluation_checklist',
         'interview_scheduled_at',
         'interview_type',
+        'interview_url',
+        'interview_location',
         'demo_day_date',
         'demo_day_location',
         'demo_day_requirements',
+        'agreement_signer_name',
+        'agreement_signed_at',
+        'is_newsletter_subscribed',
     ];
 
     protected function casts(): array
@@ -70,11 +76,14 @@ class Application extends Model
             'founded_date' => 'date',
             'interview_scheduled_at' => 'datetime',
             'demo_day_date' => 'datetime',
+            'agreement_signed_at' => 'datetime',
             'investment_ask_sar' => 'integer',
             'valuation_sar' => 'integer',
             'number_of_founders' => 'integer',
             'evaluation_notes' => 'array',
+            'evaluation_checklist' => 'array',
             'demo_day_requirements' => 'array',
+            'is_newsletter_subscribed' => 'boolean',
         ];
     }
 
@@ -87,25 +96,32 @@ class Application extends Model
         });
 
         static::updated(function (Application $application) {
+            // 1. Status Changes
+            if ($application->wasChanged('status')) {
+                // When approved, invite to sign agreement
+                if ($application->status === ApplicationStatus::Approved && $application->type === ApplicationType::SignAgreement) {
+                    \Illuminate\Support\Facades\Mail::to($application->email)->queue(new \App\Mail\AgreementInvitationMail($application));
+                }
+            }
+
+            // 2. Stage Changes (Only if not handled by explicit actions/params)
             if ($application->wasChanged('type')) {
                 $mail = match ($application->type) {
-                    ApplicationType::Applying => new \App\Mail\StageAdvancedToApplying($application),
+                    // StageAdvancedToApplying is handled in Filament action to ensure consistency with UID/Links
+                    // ApplicationType::Startup => new \App\Mail\StageAdvancedToApplying($application),
+
                     ApplicationType::Evaluation => new \App\Mail\StageAdvancedToEvaluation($application),
-                    ApplicationType::Decision => new \App\Mail\StageAdvancedToDecision($application),
+                    // ApplicationType::Decision => new \App\Mail\StageAdvancedToDecision($application), // Handled in Filament action
+
                     default => null,
                 };
 
                 if ($mail) {
                     \Illuminate\Support\Facades\Mail::to($application->email)->queue($mail);
-
-                    \Filament\Notifications\Notification::make()
-                        ->title('Stage email queued')
-                        ->body("Notification email queued to {$application->email}")
-                        ->success()
-                        ->send();
                 }
             }
         });
+
     }
 
     public static function generateUid(): string

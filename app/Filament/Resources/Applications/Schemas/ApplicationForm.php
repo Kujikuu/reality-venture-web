@@ -51,16 +51,59 @@ class ApplicationForm
                                 collect(InterviewType::cases())
                                     ->mapWithKeys(fn ($type) => [$type->value => $type->label()])
                             )
-                            ->native(false),
+                            ->native(false)
+                            ->live(),
+
                         DateTimePicker::make('interview_scheduled_at')
                             ->native(false)
                             ->label('Interview Date & Time'),
-                        Textarea::make('evaluation_notes_text')
+
+                        \Filament\Forms\Components\TextInput::make('interview_url')
+                            ->label('Meeting URL')
+                            ->url()
+                            ->visible(fn ($get) => $get('interview_type') === InterviewType::Online->value),
+
+                        \Filament\Forms\Components\TextInput::make('interview_location')
+                            ->label('Location / Address')
+                            ->visible(fn ($get) => $get('interview_type') === InterviewType::InPerson->value),
+
+                        \Filament\Forms\Components\CheckboxList::make('evaluation_checklist')
+                            ->label('Checklist')
+                            ->options([
+                                'cr' => 'Commercial Registration / ID',
+                                'logo' => 'Professional Logo',
+                                'website' => 'Functional Website/App',
+                                'deck' => 'Pitch Deck',
+                                'model' => 'Business Model',
+                                'team' => 'Team Profiles',
+                                'financials' => 'Financial Projections',
+                            ])
+                            ->columns(2)
+                            ->visible(fn ($get) => in_array($get('type'), [ApplicationType::Evaluation->value, ApplicationType::Decision->value])),
+
+                        Textarea::make('evaluation_notes')
                             ->label('Evaluation Notes')
-                            ->helperText('Add notes about this applicant`s evaluation.')
-                            ->dehydrated(false),
+                            ->rows(3),
                     ])
                     ->collapsible(),
+
+                Section::make('Demo Day')
+                    ->description('Demo Day participation details.')
+                    ->schema([
+                        DateTimePicker::make('demo_day_date')
+                            ->label('Date & Time')
+                            ->native(false),
+                        \Filament\Forms\Components\TextInput::make('demo_day_location')
+                            ->label('Location'),
+                        \Filament\Forms\Components\Repeater::make('demo_day_requirements')
+                            ->schema([
+                                \Filament\Forms\Components\TextInput::make('item')->required(),
+                            ])
+                            ->label('Requirements List'),
+                    ])
+                    ->visible(fn ($get) => in_array($get('type'), [ApplicationType::DemoDay->value, ApplicationType::Investors->value]))
+                    ->collapsible(),
+
             ]);
     }
 }

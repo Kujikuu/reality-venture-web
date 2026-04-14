@@ -13,20 +13,38 @@ interface NewsletterSubscribeProps {
 }
 
 const INTEREST_OPTIONS = [
-    { value: "startups", labelKey: "common:newsletter.interests.options.startups" },
-    { value: "proptech", labelKey: "common:newsletter.interests.options.proptech" },
-    { value: "investment", labelKey: "common:newsletter.interests.options.investment" },
+    {
+        value: "startups",
+        labelKey: "common:newsletter.interests.options.startups",
+    },
+    {
+        value: "proptech",
+        labelKey: "common:newsletter.interests.options.proptech",
+    },
+    {
+        value: "investment",
+        labelKey: "common:newsletter.interests.options.investment",
+    },
     {
         value: "venture_building",
         labelKey: "common:newsletter.interests.options.ventureBuilding",
     },
-    { value: "technology", labelKey: "common:newsletter.interests.options.technology" },
-    { value: "real_estate", labelKey: "common:newsletter.interests.options.realEstate" },
+    {
+        value: "technology",
+        labelKey: "common:newsletter.interests.options.technology",
+    },
+    {
+        value: "real_estate",
+        labelKey: "common:newsletter.interests.options.realEstate",
+    },
     {
         value: "entrepreneurship",
         labelKey: "common:newsletter.interests.options.entrepreneurship",
     },
-    { value: "innovation", labelKey: "common:newsletter.interests.options.innovation" },
+    {
+        value: "innovation",
+        labelKey: "common:newsletter.interests.options.innovation",
+    },
 ];
 
 const DEFAULT_BACKGROUND = "/assets/images/newsletter-bg.jpg";
@@ -80,7 +98,7 @@ export const NewsletterSubscribe = ({
         }
     };
 
-    const displayHeading = heading ?? t("common:newsletter.home.heading");
+    const displayHeading = heading ?? t("common:newsletter.clubHeading");
     const displayDescription =
         description ?? t("common:newsletter.home.description");
 
@@ -97,7 +115,14 @@ export const NewsletterSubscribe = ({
                 />
 
                 <div className="relative flex flex-col gap-4 backdrop-blur-xs bg-white/40 border border-white/60 rounded-2xl p-6 sm:p-10 lg:p-12 text-center max-w-2xl mx-auto">
-                    <h2 className="text-base sm:text-lg font-semibold text-gray-600 mb-4 sm:mb-6 tracking-tight leading-tight">
+                    <div className="flex justify-center mb-4">
+                        <img
+                            src="/assets/images/RV.png"
+                            alt={t("common:company.logoAlt")}
+                            className="h-12 w-auto"
+                        />
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight uppercase">
                         {displayHeading}
                     </h2>
 

@@ -79,7 +79,9 @@
 
     "submit": "Submit Application",
     "submitting": "Submitting...",
-    "success": "Application submitted successfully!",
+    "success": "Request received successfully. Check your email for next steps.",
+    "successTitle": "Application Received!",
+    "returnHome": "Return to Home",
     "agreement": "By submitting this form, you agree to our",
     "charCount": "{{count}} / {{max}} characters"
   },

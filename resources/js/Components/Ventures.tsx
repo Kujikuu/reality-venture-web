@@ -41,7 +41,7 @@ export const Ventures: React.FC = () => {
           <motion.div className="relative rounded-lg overflow-hidden group aspect-[4/3] lg:aspect-auto h-full" variants={sectionVariants}>
              <img
                src='/assets/images/saudi-ventures-bg.jpg'
-               alt="PropTech"
+               alt={t('ventures.imgAlt')}
                className="absolute inset-0 w-full h-full min-h-80 object-cover transition-transform duration-700 group-hover:scale-105"
              />
              <div className="absolute inset-0 bg-black/40"></div>

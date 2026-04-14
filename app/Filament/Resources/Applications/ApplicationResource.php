@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Applications;
 
 use App\Enums\ApplicationStatus;
-use App\Filament\Resources\Applications\Pages\EditApplication;
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Filament\Resources\Applications\Pages\ViewApplication;
 use App\Filament\Resources\Applications\Schemas\ApplicationForm;
@@ -90,7 +89,6 @@ class ApplicationResource extends Resource
         return [
             'index' => ListApplications::route('/'),
             'view' => ViewApplication::route('/{record}'),
-            'edit' => EditApplication::route('/{record}/edit'),
         ];
     }
 }

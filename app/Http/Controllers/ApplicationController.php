@@ -32,7 +32,9 @@ class ApplicationController extends Controller
     public function storeStartup(StoreStartupApplicationRequest $request)
     {
         $validated = $request->validated();
-        $validated['type'] = ApplicationType::Applying->value;
+        $uid = $validated['referral_param'] ?? null;
+
+        $validated['type'] = ApplicationType::Startup->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
         if ($request->hasFile('attachment')) {
@@ -41,7 +43,17 @@ class ApplicationController extends Controller
 
         unset($validated['attachment']);
 
-        $application = Application::create($validated);
+        // Check if we are updating an existing application
+        $application = null;
+        if ($uid) {
+            $application = Application::where('uid', $uid)->first();
+        }
+
+        if ($application) {
+            $application->update($validated);
+        } else {
+            $application = Application::create($validated);
+        }
 
         Mail::to('be@rv.com.sa')->send(new NewApplicationSubmitted($application));
         SyncApplicationToGoogleSheet::dispatch($application);

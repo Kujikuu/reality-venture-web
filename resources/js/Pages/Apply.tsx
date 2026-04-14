@@ -1,81 +1,122 @@
-import { Button } from '../Components/ui/Button';
-import { Select } from '../Components/ui/Select';
-import { Mail, CheckCircle2, MessageCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { heroContainerVariants, heroItemVariants } from '../Components/animations/HeroAnimations';
-import { useForm } from '@inertiajs/react';
-import { SEO } from '../Components/SEO';
-import { SAUDI_CITIES } from '../data/saudi-cities';
+import React, { useState } from "react";
+import { Button } from "../Components/ui/Button";
+import { Select } from "../Components/ui/Select";
+import { Mail, Check, MessageCircle, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import {
+    heroContainerVariants,
+    heroItemVariants,
+} from "../Components/animations/HeroAnimations";
+import { useForm, Link, usePage } from "@inertiajs/react";
+import { SEO } from "../Components/SEO";
+import { SAUDI_CITIES } from "../data/saudi-cities";
 
 export default function Apply() {
-  const { t, i18n } = useTranslation(['common', 'navigation', 'apply']);
+    const { t, i18n } = useTranslation(["common", "navigation", "apply"]);
 
-  const { data, setData, post, processing, errors, recentlySuccessful, reset } = useForm({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    city: '',
-    social_profile: '',
-    description: '',
-  });
-
-  const isArabic = i18n.language === 'ar';
-
-  const cityOptions = SAUDI_CITIES.map((c) => ({
-    value: c.code,
-    label: isArabic ? c.name_ar : c.name_en,
-  }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    post('/applications', {
-      preserveState: true,
-      preserveScroll: true,
-      onSuccess: () => reset(),
+    const { flash } = usePage<any>().props;
+    const [isSuccess, setIsSuccess] = useState(flash?.success === 'submitted');
+    const { data, setData, post, processing, errors, reset } = useForm({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        city: "",
+        social_profile: "",
+        description: "",
     });
-  };
 
-  return (
-    <>
-    <SEO />
-      <div className="flex flex-col min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 pb-16">
+    const isArabic = i18n.language === "ar";
 
-          <div className="relative max-w-7xl mx-auto px-6 lg:px-6">
-            <motion.div
-              className="flex items-center"
-              variants={heroContainerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {/* Left Content */}
-              <div>
-                {/* <motion.span
+    const cityOptions = SAUDI_CITIES.map((c) => ({
+        value: c.code,
+        label: isArabic ? c.name_ar : c.name_en,
+    }));
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        post("/applications", {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                setIsSuccess(true);
+            },
+        });
+    };
+
+    if (isSuccess) {
+        return (
+            <>
+                <SEO />
+                <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100"
+                    >
+                        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Check className="w-10 h-10 text-green-600" />
+                        </div>
+                        <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
+                            {t("apply:form.successTitle")}
+                        </h1>
+                        <p className="text-gray-600 mb-8 leading-relaxed">
+                            {t("apply:form.success")}
+                        </p>
+                        <Link
+                            href="/"
+                            className="w-full h-14 bg-primary text-white hover:bg-primary-700 px-10 text-base font-bold tracking-tight rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-primary/20"
+                        >
+                            {t("apply:form.returnHome")}
+                        </Link>
+                    </motion.div>
+                </div>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <SEO />
+            <div className="flex flex-col min-h-screen bg-white">
+                {/* Hero Section */}
+                <section className="relative overflow-hidden pt-24 pb-16">
+                    <div className="relative max-w-7xl mx-auto px-6 lg:px-6">
+                        <motion.div
+                            className="flex items-center"
+                            variants={heroContainerVariants}
+                            initial="hidden"
+                            animate="visible"
+                        >
+                            {/* Left Content */}
+                            <div>
+                                {/* <motion.span
                   variants={heroItemVariants}
                   className="inline-block py-1 px-3 rounded-md bg-primary-50 text-primary text-xs font-bold tracking-wide mb-6 w-fit uppercase"
                 >
                   {t('apply:hero.badge')}
                 </motion.span> */}
 
-                <motion.h1
-                  variants={heroItemVariants}
-                  className="flex flex-wrap gap-3 text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-6"
-                >
-                  {t('apply:hero.title')}
-                  <span className="text-primary">{t('apply:hero.titleHighlighted')}</span>
-                </motion.h1>
+                                <motion.h1
+                                    variants={heroItemVariants}
+                                    className="flex flex-wrap gap-3 text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-6"
+                                >
+                                    {t("apply:hero.title")}
+                                    <span className="text-primary">
+                                        {t("apply:hero.titleHighlighted")}
+                                    </span>
+                                </motion.h1>
 
-                <motion.p
-                  variants={heroItemVariants}
-                  className="text-gray-500 text-lg max-w-2xl mb-8 leading-relaxed"
-                >
-                  {t('apply:hero.subtitle')}
-                </motion.p>
+                                <motion.p
+                                    variants={heroItemVariants}
+                                    className="text-gray-500 text-lg max-w-2xl mb-8 leading-relaxed"
+                                >
+                                    {t("apply:hero.subtitle")}
+                                </motion.p>
 
-                {/* <motion.div
+                                {/* <motion.div
                   variants={heroItemVariants}
                   className="flex flex-wrap gap-6 text-xs font-bold uppercase tracking-widest text-gray-400"
                 >
@@ -83,10 +124,10 @@ export default function Apply() {
                   <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary/60"></span>{t('apply:hero.responseTime')}</span>
                   <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary/60"></span>{t('apply:hero.founderFirst')}</span>
                 </motion.div> */}
-              </div>
+                            </div>
 
-              {/* Right Content (Card) */}
-              {/* <motion.div
+                            {/* Right Content (Card) */}
+                            {/* <motion.div
                 variants={heroItemVariants}
                 className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-xl shadow-primary-500/5 p-8 lg:p-10 rounded-3xl relative overflow-hidden"
               >
@@ -106,171 +147,320 @@ export default function Apply() {
                   </div>
                 </div>
               </motion.div> */}
-            </motion.div>
-          </div>
-        </section>
+                        </motion.div>
+                    </div>
+                </section>
 
-        {/* Form Section */}
-        <section className="flex-1 py-20 px-6 lg:px-12 bg-gray-50/50">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10">
-            <div className="bg-white border border-gray-200 p-8 md:p-12 rounded-xl shadow-xs">
-              <div className="flex items-center justify-between mb-10">
-                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('apply:form.title')}</h2>
-                {recentlySuccessful && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm">
-                    {isArabic 
-                      ? '✓ وصلنا طلبك بنجاح 🎉 راجع إيميلك عشان تعرف الخطوات الجاية'
-                      : '✓ Request received successfully. Check your email for next steps.'}
-                  </div>
-                )}
-              </div>
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label htmlFor="firstName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.firstName')}</label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      value={data.first_name}
-                      onChange={(e) => setData('first_name', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('apply:form.firstName')}
-                    />
-                    {errors.first_name && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.first_name, errors.first_name)}</p>}
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.lastName')}</label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      value={data.last_name}
-                      onChange={(e) => setData('last_name', e.target.value)}
-                      className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                      placeholder={t('apply:form.lastName')}
-                    />
-                    {errors.last_name && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.last_name, errors.last_name)}</p>}
-                  </div>
-                </div>
+                {/* Form Section */}
+                <section className="flex-1 py-20 px-6 lg:px-12 bg-gray-50/50">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10">
+                        <div className="bg-white border border-gray-200 p-8 md:p-12 rounded-xl shadow-xs">
+                            <div className="flex items-center justify-between mb-10">
+                                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">
+                                    {t("apply:form.title")}
+                                </h2>
+                            </div>
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-2">
+                                        <label
+                                            htmlFor="firstName"
+                                            className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                        >
+                                            {t("apply:form.firstName")}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            value={data.first_name}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "first_name",
+                                                    e.target.value,
+                                                )
+                                            }
+                                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                                            placeholder={t(
+                                                "apply:form.firstName",
+                                            )}
+                                        />
+                                        {errors.first_name && (
+                                            <p className="text-red-500 text-xs mt-1">
+                                                {t(
+                                                    "apply:" +
+                                                        errors.first_name,
+                                                    errors.first_name,
+                                                )}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label
+                                            htmlFor="lastName"
+                                            className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                        >
+                                            {t("apply:form.lastName")}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            value={data.last_name}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "last_name",
+                                                    e.target.value,
+                                                )
+                                            }
+                                            className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                                            placeholder={t(
+                                                "apply:form.lastName",
+                                            )}
+                                        />
+                                        {errors.last_name && (
+                                            <p className="text-red-500 text-xs mt-1">
+                                                {t(
+                                                    "apply:" + errors.last_name,
+                                                    errors.last_name,
+                                                )}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.email')}</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={data.email}
-                    onChange={(e) => setData('email', e.target.value)}
-                    className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                    placeholder={t('apply:form.emailPlaceholder')}
-                  />
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.email, errors.email)}</p>}
-                </div>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="email"
+                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                    >
+                                        {t("apply:form.email")}
+                                    </label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        value={data.email}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                                        placeholder={t(
+                                            "apply:form.emailPlaceholder",
+                                        )}
+                                    />
+                                    {errors.email && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {t(
+                                                "apply:" + errors.email,
+                                                errors.email,
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.phone')}</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    dir="ltr"
-                    value={data.phone}
-                    onChange={(e) => setData('phone', e.target.value)}
-                    className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                    placeholder={t('apply:form.phonePlaceholder')}
-                  />
-                  {errors.phone && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.phone, errors.phone)}</p>}
-                </div>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="phone"
+                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                    >
+                                        {t("apply:form.phone")}
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        dir="ltr"
+                                        value={data.phone}
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
+                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                                        placeholder={t(
+                                            "apply:form.phonePlaceholder",
+                                        )}
+                                    />
+                                    {errors.phone && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {t(
+                                                "apply:" + errors.phone,
+                                                errors.phone,
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="city" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.city')}</label>
-                  <Select
-                    id="city"
-                    value={data.city}
-                    onChange={(e) => setData('city', e.target.value)}
-                    options={cityOptions}
-                    placeholder={t('apply:form.cityPlaceholder')}
-                  />
-                  {errors.city && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.city, errors.city)}</p>}
-                </div>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="city"
+                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                    >
+                                        {t("apply:form.city")}
+                                    </label>
+                                    <Select
+                                        id="city"
+                                        value={data.city}
+                                        onChange={(e) =>
+                                            setData("city", e.target.value)
+                                        }
+                                        options={cityOptions}
+                                        placeholder={t(
+                                            "apply:form.cityPlaceholder",
+                                        )}
+                                    />
+                                    {errors.city && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {t(
+                                                "apply:" + errors.city,
+                                                errors.city,
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="socialProfile" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.linkedin')}</label>
-                  <input
-                    type="text"
-                    id="socialProfile"
-                    value={data.social_profile}
-                    onChange={(e) => setData('social_profile', e.target.value)}
-                    className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
-                    placeholder={t('apply:form.linkedinPlaceholder')}
-                  />
-                  {errors.social_profile && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.social_profile, errors.social_profile)}</p>}
-                </div>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="socialProfile"
+                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                    >
+                                        {t("apply:form.linkedin")}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="socialProfile"
+                                        value={data.social_profile}
+                                        onChange={(e) =>
+                                            setData(
+                                                "social_profile",
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="w-full h-14 px-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all rounded-lg text-gray-900"
+                                        placeholder={t(
+                                            "apply:form.linkedinPlaceholder",
+                                        )}
+                                    />
+                                    {errors.social_profile && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {t(
+                                                "apply:" +
+                                                    errors.social_profile,
+                                                errors.social_profile,
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('apply:form.describe')}</label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    value={data.description}
-                    onChange={(e) => setData('description', e.target.value)}
-                    className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
-                    placeholder={t('apply:form.messagePlaceholder')}
-                  ></textarea>
-                  {errors.description && <p className="text-red-500 text-xs mt-1">{t('apply:' + errors.description, errors.description)}</p>}
-                </div>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="message"
+                                        className="text-xs font-bold uppercase tracking-wide text-gray-500"
+                                    >
+                                        {t("apply:form.describe")}
+                                    </label>
+                                    <textarea
+                                        id="message"
+                                        rows={6}
+                                        value={data.description}
+                                        onChange={(e) =>
+                                            setData(
+                                                "description",
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="w-full p-6 bg-gray-50 border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none rounded-lg text-gray-900"
+                                        placeholder={t(
+                                            "apply:form.messagePlaceholder",
+                                        )}
+                                    ></textarea>
+                                    {errors.description && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {t(
+                                                "apply:" + errors.description,
+                                                errors.description,
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="pt-4 flex flex-col gap-4">
-                  <Button type="submit" className="w-full md:w-auto h-14 px-8" withArrow disabled={processing}>
-                    {processing ? t('apply:form.submitting', 'Submitting...') : t('apply:form.submit')}
-                  </Button>
-                  <p className="text-xs text-gray-400">
-                    {t('apply:form.agreement')} {t('common:footer.privacyPolicy')} {t('common:and')} {t('common:footer.termsOfService')}.
-                  </p>
-                </div>
-              </form>
+                                <div className="pt-4 flex flex-col gap-4">
+                                    <Button
+                                        type="submit"
+                                        className="w-full md:w-auto h-14 px-8"
+                                        withArrow
+                                        disabled={processing}
+                                    >
+                                        {processing
+                                            ? t(
+                                                  "apply:form.submitting",
+                                                  "Submitting...",
+                                              )
+                                            : t("apply:form.submit")}
+                                    </Button>
+                                    <p className="text-xs text-gray-400">
+                                        {t("apply:form.agreement")}{" "}
+                                        {t("common:footer.privacyPolicy")}{" "}
+                                        {t("common:and")}{" "}
+                                        {t("common:footer.termsOfService")}.
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+
+                        <aside className="space-y-6">
+                            <div className="border border-gray-200 bg-white p-8 rounded-xl shadow-xs">
+                                <h3 className="text-lg font-bold uppercase tracking-tight mb-6 text-gray-900">
+                                    {t("apply:sidebar.title")}
+                                </h3>
+                                <div className="space-y-5">
+                                    <div className="flex items-start gap-4">
+                                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                        <p className="text-sm text-gray-600 leading-relaxed">
+                                            {t("apply:sidebar.reviewProcess")}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-start gap-4">
+                                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                        <p className="text-sm text-gray-600 leading-relaxed">
+                                            {t("apply:sidebar.ndaPolicy")}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-start gap-4">
+                                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                        <p className="text-sm text-gray-600 leading-relaxed">
+                                            {t("apply:sidebar.responseTime")}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-primary text-white p-8 rounded-xl shadow-lg">
+                                <h3 className="text-lg font-bold uppercase tracking-tight mb-3">
+                                    {t("apply:sidebar.title")}
+                                </h3>
+                                <p className="text-sm text-gray-50 mb-6 leading-relaxed">
+                                    {t("apply:sidebar.description")}
+                                </p>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
+                                        <Mail className="w-4 h-4" />{" "}
+                                        <a href="mailto:be@rv.com.sa">
+                                            {t("apply:sidebar.email")}
+                                        </a>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
+                                        <MessageCircle className="w-4 h-4" />
+                                        <a
+                                            href={`https://wa.me/${t("apply:sidebar.whatsappNumber").replace(/\D/g, "")}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            dir="ltr"
+                                        >
+                                            {t("apply:sidebar.whatsapp")}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
             </div>
-
-            <aside className="space-y-6">
-              <div className="border border-gray-200 bg-white p-8 rounded-xl shadow-xs">
-                <h3 className="text-lg font-bold uppercase tracking-tight mb-6 text-gray-900">{t('apply:sidebar.title')}</h3>
-                <div className="space-y-5">
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-gray-600 leading-relaxed">{t('apply:sidebar.reviewProcess')}</p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-gray-600 leading-relaxed">{t('apply:sidebar.ndaPolicy')}</p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-gray-600 leading-relaxed">{t('apply:sidebar.responseTime')}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-primary text-white p-8 rounded-xl shadow-lg">
-                <h3 className="text-lg font-bold uppercase tracking-tight mb-3">{t('apply:sidebar.title')}</h3>
-                <p className="text-sm text-gray-50 mb-6 leading-relaxed">{t('apply:sidebar.description')}</p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
-                    <Mail className="w-4 h-4" /> <a href="mailto:be@rv.com.sa">{t('apply:sidebar.email')}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white">
-                    <MessageCircle className="w-4 h-4" />
-                    <a
-                      href={`https://wa.me/${t('apply:sidebar.whatsappNumber').replace(/\D/g, '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      dir='ltr'
-                    >
-                      {t('apply:sidebar.whatsapp')}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </section>
-      </div>
-    </>
-  );
+        </>
+    );
 }

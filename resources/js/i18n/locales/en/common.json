@@ -20,16 +20,21 @@
     "loading": "Loading...",
     "success": "Success",
     "error": "Error",
-    "noSpam": "No Spam, Promise!"
+    "noSpam": "No Spam, Promise!",
+    "noPhotos": "No photos yet"
   },
+
   "company": {
     "name": "Reality Venture",
     "tagline": "We build. We execute. We scale real ventures.",
     "slogan": "Building Real Ventures",
     "executionFirst": "EXECUTION-FIRST ACCELERATOR",
     "ventureBuilder": "Venture Builder",
-    "accelerator": "Accelerator"
+    "accelerator": "Accelerator",
+    "logoAlt": "Reality Venture Logo",
+    "grit": "GRIT"
   },
+
   "footer": {
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
@@ -52,9 +57,11 @@
     },
     "home": {
       "heading": "Join the Reality Venture Club",
+      "clubHeading": "Join the RV Club",
       "description": "Insights on startups, PropTech, and venture building — straight to your inbox.",
       "badge": "Weekly updates"
     },
+
     "blog": {
       "heading": "Never miss a story",
       "description": "Subscribe to get our latest articles on venture building and PropTech.",
