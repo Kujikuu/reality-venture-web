@@ -10,7 +10,19 @@
 **{{ $application->uid }}**
 </x-mail::panel>
 
+@if($scheduledAt)
+### تفاصيل موعد المقابلة:
+- **التاريخ والوقت:** {{ $scheduledAt }}
+- **نوع الاجتماع:** {{ $meetingType }}
+@if($meetingUrl)
+- **رابط الاجتماع:** [اضغط هنا للانضمام]({{ $meetingUrl }})
+@endif
+@if($meetingLocation)
+- **المكان:** {{ $meetingLocation }}
+@endif
+@else
 سيقوم فريقنا بالتواصل معك خلال الفترة القادمة لتحديد موعد مقابلة مدتها 10 دقائق، وذلك إما عن بُعد أو حضورياً.
+@endif
 
 **إرشادات هامة للمقابلة:**
 * إعداد عرض احترافي ومختصر عن مشروعك (3–5 دقائق)
@@ -37,7 +49,19 @@ We are pleased to inform you that your application has been successfully shortli
 **{{ $application->uid }}**
 </x-mail::panel>
 
+@if($scheduledAt)
+### Interview Details:
+- **Date & Time:** {{ $scheduledAt }}
+- **Meeting Type:** {{ $meetingType }}
+@if($meetingUrl)
+- **Meeting URL:** [Click here to join]({{ $meetingUrl }})
+@endif
+@if($meetingLocation)
+- **Location:** {{ $meetingLocation }}
+@endif
+@else
 Our team will be in touch shortly to schedule a 10-minute interview, either online or in person.
+@endif
 
 **Interview Guidelines:**
 * Prepare a concise and professional pitch (3–5 minutes)

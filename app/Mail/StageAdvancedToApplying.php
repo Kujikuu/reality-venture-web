@@ -29,7 +29,9 @@ class StageAdvancedToApplying extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'mail.stage-applying',
-            with: ['application' => $this->application],
+            with: [
+                'application' => $this->application,
+            ],
         );
     }
 }

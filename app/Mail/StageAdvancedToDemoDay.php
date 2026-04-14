@@ -2,13 +2,15 @@
 
 namespace App\Mail;
 
+use App\Models\Application;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class StageAdvancedToInterview extends Mailable
+class StageAdvancedToDemoDay extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -16,14 +18,8 @@ class StageAdvancedToInterview extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public \App\Models\Application $application,
-        public ?string $scheduledAt = null,
-        public ?string $meetingType = null,
-        public ?string $meetingUrl = null,
-        public ?string $meetingLocation = null
-    ) {
-        //
-    }
+        public Application $application
+    ) {}
 
     /**
      * Get the message envelope.
@@ -31,7 +27,7 @@ class StageAdvancedToInterview extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reality Venture - Interview Invitation / دعوة للمقابلة',
+            subject: "تحديث: مرحلة يوم العرض | Stage: Demo Day — {$this->application->uid}",
         );
     }
 
@@ -41,13 +37,9 @@ class StageAdvancedToInterview extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.applications.stage-interview',
+            markdown: 'mail.stage-demo-day-welcome',
             with: [
                 'application' => $this->application,
-                'scheduledAt' => $this->scheduledAt,
-                'meetingType' => $this->meetingType,
-                'meetingUrl' => $this->meetingUrl,
-                'meetingLocation' => $this->meetingLocation,
             ],
         );
     }

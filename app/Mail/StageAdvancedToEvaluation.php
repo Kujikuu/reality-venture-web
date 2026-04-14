@@ -29,7 +29,9 @@ class StageAdvancedToEvaluation extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'mail.stage-evaluation',
-            with: ['application' => $this->application],
+            with: [
+                'application' => $this->application,
+            ],
         );
     }
 }

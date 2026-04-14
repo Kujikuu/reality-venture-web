@@ -16,6 +16,9 @@ class DemoDayInvitation extends Mailable implements ShouldQueue
 
     public function __construct(
         public Application $application,
+        public ?string $date = null,
+        public ?string $location = null,
+        public array $requirements = []
     ) {}
 
     public function envelope(): Envelope
@@ -29,7 +32,12 @@ class DemoDayInvitation extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'mail.demo-day-invitation',
-            with: ['application' => $this->application],
+            with: [
+                'application' => $this->application,
+                'date' => $this->date,
+                'location' => $this->location,
+                'requirements' => $this->requirements,
+            ],
         );
     }
 }

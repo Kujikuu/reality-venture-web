@@ -8,6 +8,7 @@ use App\Enums\InterviewType;
 use App\Mail\DemoDayInvitation;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
+use App\Mail\StageAdvancedToDemoDay;
 use App\Mail\StageAdvancedToInterview;
 use App\Mail\StatusUpdateMail;
 use App\Models\Application;
@@ -89,7 +90,16 @@ class ApplicationActions
                     'interview_location' => $data['interview_location'] ?? null,
                 ]);
 
-                Mail::to($record->email)->queue(new StageAdvancedToInterview($record->fresh()));
+                $scheduledAt = \Carbon\Carbon::parse($data['interview_scheduled_at'])->format('Y-m-d H:i');
+                $meetingType = InterviewType::from($data['interview_type'])->label();
+
+                Mail::to($record->email)->queue(new StageAdvancedToInterview(
+                    application: $record->fresh(),
+                    scheduledAt: $scheduledAt,
+                    meetingType: $meetingType,
+                    meetingUrl: $data['interview_url'] ?? null,
+                    meetingLocation: $data['interview_location'] ?? null
+                ));
 
                 Notification::make()
                     ->title('Interview scheduled')
@@ -243,6 +253,8 @@ class ApplicationActions
             ->action(function (Application $record) {
                 $record->update(['type' => ApplicationType::DemoDay]);
 
+                Mail::to($record->email)->queue(new StageAdvancedToDemoDay($record));
+
                 Notification::make()
                     ->title('Agreement approved')
                     ->body('Application moved to Demo Day stage.')
@@ -290,7 +302,12 @@ class ApplicationActions
                     'demo_day_requirements' => $data['demo_day_requirements'] ?? $record->demo_day_requirements,
                 ]);
 
-                Mail::to($record->email)->queue(new DemoDayInvitation($record->fresh()));
+                Mail::to($record->email)->queue(new DemoDayInvitation(
+                    application: $record->fresh(),
+                    date: \Carbon\Carbon::parse($data['demo_day_date'])->format('Y-m-d H:i'),
+                    location: $data['demo_day_location'],
+                    requirements: $data['demo_day_requirements'] ?? []
+                ));
 
                 Notification::make()
                     ->title('Demo Day details updated')
@@ -341,23 +358,44 @@ class ApplicationActions
                 'status' => $record->status->value,
             ])
             ->action(function (array $data, Application $record) {
+                $status = ApplicationStatus::from($data['status']);
+                $note = $data['note'] ?? null;
+                $rvClubInvite = $data['rv_club_invite'] ?? false;
+
+                // 1. Determine the correct stage transition based on status
+                $type = $record->type;
+                if ($status === ApplicationStatus::Approved && $type->value < ApplicationType::SignAgreement->value) {
+                    $type = ApplicationType::SignAgreement;
+                } elseif ($status === ApplicationStatus::Rejected && $type->value < ApplicationType::Decision->value) {
+                    $type = ApplicationType::Decision;
+                }
+
                 $record->update([
-                    'status' => $data['status'],
+                    'status' => $status,
+                    'type' => $type,
                 ]);
 
-                $status = ApplicationStatus::from($data['status']);
-
-                Mail::to($record->email)->queue(new StatusUpdateMail(
-                    application: $record,
-                    status: $status,
-                    statusLabel: $status->label(),
-                    statusLabelAr: $status->labelAr(),
-                    note: $data['note'],
-                    rvClubInvite: $data['rv_club_invite'] ?? false
-                ));
+                // 2. Send appropriate mail
+                if ($status === ApplicationStatus::Approved && $type === ApplicationType::SignAgreement) {
+                    Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
+                        application: $record,
+                        note: $note,
+                        rvClubInvite: $rvClubInvite
+                    ));
+                } else {
+                    Mail::to($record->email)->queue(new StatusUpdateMail(
+                        application: $record,
+                        status: $status,
+                        statusLabel: $status->label(),
+                        statusLabelAr: $status->labelAr(),
+                        note: $note,
+                        rvClubInvite: $rvClubInvite
+                    ));
+                }
 
                 Notification::make()
                     ->title('Status updated & email queued')
+                    ->body($status === ApplicationStatus::Approved ? 'Advanced to Sign Agreement' : null)
                     ->success()
                     ->send();
             });

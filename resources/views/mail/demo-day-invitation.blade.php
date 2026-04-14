@@ -12,12 +12,12 @@
 </x-mail::panel>
 
 ### تفاصيل يوم العرض:
-- **التاريخ والوقت:** {{ $application->demo_day_date?->format('Y-m-d H:i') }}
-- **المكان:** {{ $application->demo_day_location }}
+- **التاريخ والوقت:** {{ $date }}
+- **المكان:** {{ $location }}
 
-@if($application->demo_day_requirements && count($application->demo_day_requirements) > 0)
+@if($requirements && count($requirements) > 0)
 ### المتطلبات:
-@foreach($application->demo_day_requirements as $requirement)
+@foreach($requirements as $requirement)
 - ✅ {{ $requirement }}
 @endforeach
 @endif
@@ -42,12 +42,12 @@ You will have 5 minutes to pitch your project to investors and showcase your vis
 </x-mail::panel>
 
 ### Demo Day Details:
-- **Date & Time:** {{ $application->demo_day_date?->format('Y-m-d H:i') }}
-- **Location:** {{ $application->demo_day_location }}
+- **Date & Time:** {{ $date }}
+- **Location:** {{ $location }}
 
-@if($application->demo_day_requirements && count($application->demo_day_requirements) > 0)
+@if($requirements && count($requirements) > 0)
 ### Requirements:
-@foreach($application->demo_day_requirements as $requirement)
+@foreach($requirements as $requirement)
 - ✅ {{ $requirement }}
 @endforeach
 @endif
