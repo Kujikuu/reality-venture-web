@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SubscribeToNewsletterRequest;
+use App\Mail\WelcomeToClub;
 use App\Models\Subscriber;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
@@ -14,25 +16,34 @@ class NewsletterController extends Controller
         $email = $request->validated('email');
         $phone = $this->normalizePhone($request->validated('phone'));
 
-        $subscriber = Subscriber::where('email', $email)->first();
-
-        $clubData = [
-            'fullname' => $fullname,
-            'is_active' => (bool) $request->validated('subscribe_newsletter'),
-            'phone' => $phone,
-            'position' => $request->validated('position'),
-            'interests' => $request->validated('interests'),
-            'city' => $request->validated('city'),
-            'sector' => $request->validated('sector'),
-        ];
+        $subscriber = Subscriber::where('email', $email)
+            ->orWhere('phone', $phone)
+            ->first();
 
         if ($subscriber) {
-            $subscriber->update($clubData);
+            $subscriber->update([
+                'fullname' => $fullname,
+                'is_active' => true,
+                'phone' => $phone,
+                'position' => $request->validated('position'),
+                'interests' => $request->validated('interests'),
+                'city' => $request->validated('city'),
+                'organization' => $request->validated('organization'),
+            ]);
         } else {
-            Subscriber::create(array_merge($clubData, [
+            $subscriber = Subscriber::create([
+                'fullname' => $fullname,
                 'email' => $email,
-            ]));
+                'phone' => $phone,
+                'is_active' => true,
+                'position' => $request->validated('position'),
+                'interests' => $request->validated('interests'),
+                'city' => $request->validated('city'),
+                'organization' => $request->validated('organization'),
+            ]);
         }
+
+        Mail::to($email)->send(new WelcomeToClub($subscriber));
 
         return back()->with('newsletter_success', true);
     }

@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ClubInterest;
-use App\Enums\Sector;
+use App\Enums\Organization;
 use App\Models\Subscriber;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -30,7 +30,7 @@ class SubscriberFactory extends Factory
                 fake()->numberBetween(1, 3)
             ),
             'city' => fake()->optional(weight: 0.5)->city(),
-            'sector' => fake()->optional(weight: 0.5)->randomElement(Sector::cases()),
+            'organization' => fake()->optional(weight: 0.5)->randomElement(Organization::cases()),
             'unsubscribe_token' => Str::random(64),
             'is_active' => true,
             'subscribed_at' => fake()->dateTimeBetween('-6 months', 'now'),

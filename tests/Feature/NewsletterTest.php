@@ -21,6 +21,11 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertRedirect();
@@ -38,6 +43,11 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertRedirect();
@@ -57,6 +67,11 @@ class NewsletterTest extends TestCase
                 'fullname' => 'Test User',
                 'email' => 'test@example.com',
                 'phone' => $phone,
+                'position' => 'CEO',
+                'interests' => ['startups'],
+                'city' => 'Riyadh',
+                'organization' => 'private',
+                'subscribe_newsletter' => true,
             ]);
 
             $response->assertSessionHasErrors('phone');
@@ -81,6 +96,11 @@ class NewsletterTest extends TestCase
                 'fullname' => 'Test User',
                 'email' => "{$key}@example.com",
                 'phone' => $phone,
+                'position' => 'CEO',
+                'interests' => ['startups'],
+                'city' => 'Riyadh',
+                'organization' => 'private',
+                'subscribe_newsletter' => true,
             ]);
 
             $stored = Subscriber::where('email', "{$key}@example.com")->value('phone');
@@ -103,6 +123,11 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0522222222',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $this->assertDatabaseHas('subscribers', [
@@ -118,6 +143,11 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => 'not-an-email',
             'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertSessionHasErrors('email');
@@ -129,6 +159,11 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => '',
             'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertSessionHasErrors('email');
@@ -139,6 +174,11 @@ class NewsletterTest extends TestCase
         $response = $this->post('/newsletter/subscribe', [
             'email' => 'test@example.com',
             'phone' => '0512345678',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertSessionHasErrors('fullname');
@@ -149,41 +189,32 @@ class NewsletterTest extends TestCase
         $response = $this->post('/newsletter/subscribe', [
             'fullname' => 'Test User',
             'email' => 'test@example.com',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertSessionHasErrors('phone');
     }
 
-    public function test_duplicate_subscription_is_idempotent(): void
+    public function test_duplicate_email_is_rejected(): void
     {
         Subscriber::factory()->create(['email' => 'test@example.com']);
 
         $response = $this->post('/newsletter/subscribe', [
             'fullname' => 'Test User',
             'email' => 'test@example.com',
-            'phone' => '0512345678',
+            'phone' => '0512345679',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
-        $response->assertRedirect();
-        $this->assertDatabaseCount('subscribers', 1);
-    }
-
-    public function test_resubscribe_reactivates_inactive_subscriber(): void
-    {
-        $subscriber = Subscriber::factory()->unsubscribed()->create([
-            'email' => 'test@example.com',
-        ]);
-
-        $this->assertFalse($subscriber->is_active);
-
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-        ]);
-
-        $response->assertRedirect();
-        $this->assertTrue($subscriber->fresh()->is_active);
+        $response->assertSessionHasErrors('email');
     }
 
     public function test_unsubscribe_deactivates_subscriber(): void
@@ -220,7 +251,8 @@ class NewsletterTest extends TestCase
             'position' => 'CEO',
             'interests' => ['startups', 'proptech', 'investment'],
             'city' => 'Riyadh',
-            'sector' => 'private',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertRedirect();
@@ -230,31 +262,23 @@ class NewsletterTest extends TestCase
             'phone' => '+966512345678',
             'position' => 'CEO',
             'city' => 'Riyadh',
-            'sector' => 'private',
+            'organization' => 'private',
         ]);
 
         $subscriber = Subscriber::where('email', 'ahmed@example.com')->first();
         $this->assertEquals(['startups', 'proptech', 'investment'], $subscriber->interests);
     }
 
-    public function test_user_can_subscribe_without_optional_club_fields(): void
+    public function test_subscribe_requires_club_fields(): void
     {
         $response = $this->post('/newsletter/subscribe', [
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
+            'subscribe_newsletter' => true,
         ]);
 
-        $response->assertRedirect();
-        $this->assertDatabaseHas('subscribers', [
-            'email' => 'test@example.com',
-            'position' => null,
-            'city' => null,
-            'sector' => null,
-        ]);
-
-        $subscriber = Subscriber::where('email', 'test@example.com')->first();
-        $this->assertNull($subscriber->interests);
+        $response->assertSessionHasErrors(['position', 'interests', 'city', 'organization']);
     }
 
     public function test_subscribe_rejects_invalid_interest_values(): void
@@ -263,22 +287,30 @@ class NewsletterTest extends TestCase
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
+            'position' => 'CEO',
             'interests' => ['invalid_interest', 'another_bad_one'],
+            'city' => 'Riyadh',
+            'organization' => 'private',
+            'subscribe_newsletter' => true,
         ]);
 
         $response->assertSessionHasErrors('interests.0');
     }
 
-    public function test_subscribe_rejects_invalid_sector_value(): void
+    public function test_subscribe_rejects_invalid_organization_value(): void
     {
         $response = $this->post('/newsletter/subscribe', [
             'fullname' => 'Test User',
             'email' => 'test@example.com',
             'phone' => '0512345678',
-            'sector' => 'government',
+            'position' => 'CEO',
+            'interests' => ['startups'],
+            'city' => 'Riyadh',
+            'organization' => 'government',
+            'subscribe_newsletter' => true,
         ]);
 
-        $response->assertSessionHasErrors('sector');
+        $response->assertSessionHasErrors('organization');
     }
 
     public function test_resubscribe_updates_club_fields(): void
@@ -287,6 +319,7 @@ class NewsletterTest extends TestCase
             'email' => 'test@example.com',
             'position' => 'Manager',
             'city' => 'Jeddah',
+            'organization' => 'private',
         ]);
 
         $this->post('/newsletter/subscribe', [
@@ -295,15 +328,16 @@ class NewsletterTest extends TestCase
             'phone' => '0522222222',
             'position' => 'CEO',
             'city' => 'Riyadh',
-            'sector' => 'public',
+            'organization' => 'public',
             'interests' => ['technology', 'innovation'],
+            'subscribe_newsletter' => true,
         ]);
 
         $subscriber = Subscriber::where('email', 'test@example.com')->first();
         $this->assertTrue($subscriber->is_active);
         $this->assertEquals('CEO', $subscriber->position);
         $this->assertEquals('Riyadh', $subscriber->city);
-        $this->assertEquals('public', $subscriber->sector->value);
+        $this->assertEquals('public', $subscriber->organization->value);
         $this->assertEquals(['technology', 'innovation'], $subscriber->interests);
     }
 

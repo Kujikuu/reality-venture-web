@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Sector;
+use App\Enums\Organization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +20,7 @@ class Subscriber extends Model
         'position',
         'interests',
         'city',
-        'sector',
+        'organization',
         'unsubscribe_token',
         'is_active',
         'subscribed_at',
@@ -32,7 +32,7 @@ class Subscriber extends Model
             'is_active' => 'boolean',
             'subscribed_at' => 'datetime',
             'interests' => 'array',
-            'sector' => Sector::class,
+            'organization' => Organization::class,
         ];
     }
 
