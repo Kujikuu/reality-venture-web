@@ -99,9 +99,9 @@ class Application extends Model
             // 1. Status Changes
             if ($application->wasChanged('status')) {
                 // When approved, invite to sign agreement
-                if ($application->status === ApplicationStatus::Approved && $application->type === ApplicationType::SignAgreement) {
-                    \Illuminate\Support\Facades\Mail::to($application->email)->queue(new \App\Mail\AgreementInvitationMail($application));
-                }
+                // if ($application->status === ApplicationStatus::Approved && $application->type === ApplicationType::SignAgreement) {
+                //     \Illuminate\Support\Facades\Mail::to($application->email)->queue(new \App\Mail\AgreementInvitationMail($application));
+                // }
             }
 
             // 2. Stage Changes (Only if not handled by explicit actions/params)

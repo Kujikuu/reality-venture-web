@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Enums\ApplicationStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -17,6 +18,7 @@ class StatusUpdateMail extends Mailable
      */
     public function __construct(
         public \App\Models\Application $application,
+        public ApplicationStatus $status,
         public string $statusLabel,
         public string $statusLabelAr,
         public ?string $note = null,
@@ -42,6 +44,14 @@ class StatusUpdateMail extends Mailable
     {
         return new Content(
             markdown: 'emails.applications.status-update',
+            with: [
+                'application' => $this->application,
+                'status' => $this->status,
+                'statusLabel' => $this->statusLabel,
+                'statusLabelAr' => $this->statusLabelAr,
+                'note' => $this->note,
+                'rvClubInvite' => $this->rvClubInvite,
+            ],
         );
     }
 

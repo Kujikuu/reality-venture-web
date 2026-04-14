@@ -147,14 +147,52 @@ class ApplicationActions
             ->icon('heroicon-m-academic-cap')
             ->color('warning')
             ->visible(fn (Application $record): bool => $record->type === ApplicationType::Evaluation)
-            ->requiresConfirmation()
-            ->action(function (Application $record) {
-                $record->update(['type' => ApplicationType::Decision]);
+            ->form([
+                Select::make('status')
+                    ->options(collect(ApplicationStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()]))
+                    ->default(ApplicationStatus::InProgress->value)
+                    ->required()
+                    ->native(false),
+                Checkbox::make('rv_club_invite')
+                    ->label('Invite to RV Club?'),
+                Textarea::make('note')
+                    ->label('Internal Note / Email Message')
+                    ->rows(3),
+            ])
+            ->action(function (array $data, Application $record) {
+                $status = ApplicationStatus::from($data['status']);
+                $rvClubInvite = $data['rv_club_invite'] ?? false;
+                $note = $data['note'] ?? null;
 
-                Mail::to($record->email)->queue(new StageAdvancedToDecision($record));
+                if ($status === ApplicationStatus::Approved) {
+                    $record->update([
+                        'status' => ApplicationStatus::Approved,
+                        'type' => ApplicationType::SignAgreement,
+                    ]);
+
+                    Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
+                        application: $record,
+                        note: $note,
+                        rvClubInvite: $rvClubInvite
+                    ));
+                } else {
+                    $record->update([
+                        'status' => $status,
+                        'type' => ApplicationType::Decision,
+                    ]);
+
+                    Mail::to($record->email)->queue(new StatusUpdateMail(
+                        application: $record,
+                        status: $status,
+                        statusLabel: $status->label(),
+                        statusLabelAr: $status->labelAr(),
+                        note: $note,
+                        rvClubInvite: $rvClubInvite
+                    ));
+                }
 
                 Notification::make()
-                    ->title('Moved to Decision phase')
+                    ->title($status === ApplicationStatus::Approved ? 'Approved & Agreement sent' : 'Moved to Decision phase')
                     ->success()
                     ->send();
             });
@@ -166,13 +204,26 @@ class ApplicationActions
             ->label('Send Agreement')
             ->icon('heroicon-m-document-text')
             ->color('success')
-            ->visible(fn (Application $record): bool => $record->type === ApplicationType::Decision)
-            ->requiresConfirmation()
-            ->action(function (Application $record) {
+            ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Decision, ApplicationType::SignAgreement]))
+            ->form([
+                Checkbox::make('rv_club_invite')
+                    ->label('Invite to RV Club?')
+                    ->default(true),
+                Textarea::make('note')
+                    ->label('Internal Note / Email Message')
+                    ->rows(3),
+            ])
+            ->action(function (array $data, Application $record) {
                 $record->update([
                     'status' => ApplicationStatus::Approved,
                     'type' => ApplicationType::SignAgreement,
                 ]);
+
+                Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
+                    application: $record,
+                    note: $data['note'] ?? null,
+                    rvClubInvite: $data['rv_club_invite'] ?? false
+                ));
 
                 Notification::make()
                     ->title('Agreement invitation sent')
@@ -298,6 +349,7 @@ class ApplicationActions
 
                 Mail::to($record->email)->queue(new StatusUpdateMail(
                     application: $record,
+                    status: $status,
                     statusLabel: $status->label(),
                     statusLabelAr: $status->labelAr(),
                     note: $data['note'],

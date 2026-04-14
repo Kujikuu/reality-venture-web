@@ -15,8 +15,11 @@ class AgreementInvitationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public \App\Models\Application $application)
-    {
+    public function __construct(
+        public \App\Models\Application $application,
+        public ?string $note = null,
+        public bool $rvClubInvite = false
+    ) {
         //
     }
 
@@ -37,6 +40,11 @@ class AgreementInvitationMail extends Mailable
     {
         return new Content(
             markdown: 'emails.applications.agreement-invitation',
+            with: [
+                'application' => $this->application,
+                'note' => $this->note,
+                'rvClubInvite' => $this->rvClubInvite,
+            ],
         );
     }
 
