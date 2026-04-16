@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDesksApi } from '../../hooks/useDesksApi';
 import { useDesksAuth } from '../../hooks/useDesksAuth';
 import { ImageGallery } from '../../Components/desks/ImageGallery';
-import { AvailabilityTable } from '../../Components/desks/AvailabilityTable';
+import { AvailabilitySchedule } from '../../Components/desks/AvailabilitySchedule';
 import { BookingCard } from '../../Components/desks/BookingCard';
 import { AuthModal } from '../../Components/desks/AuthModal';
 
@@ -243,7 +243,7 @@ export default function DesksShow({ workspaceSlug }: ShowProps) {
 
                             {/* Availability */}
                             {workspace.availability && workspace.availability.length > 0 && (
-                                <AvailabilityTable availability={workspace.availability} />
+                                <AvailabilitySchedule availability={workspace.availability} />
                             )}
                         </div>
 

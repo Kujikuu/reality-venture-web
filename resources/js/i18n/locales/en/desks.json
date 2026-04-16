@@ -35,6 +35,8 @@
     "description": "About this space",
     "host": "Hosted by",
     "closed": "Closed",
+    "openToday": "Open today {{from}} – {{to}}",
+    "closedToday": "Closed today",
     "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   },
   "booking": {
