@@ -44,6 +44,8 @@
     "date": "Date",
     "startTime": "Start Time",
     "endTime": "End Time",
+    "selectTime": "Select time",
+    "selectDate": "Select date",
     "guests": "Guests",
     "total": "Total",
     "reserve": "Reserve Now",

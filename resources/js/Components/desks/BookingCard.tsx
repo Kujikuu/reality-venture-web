@@ -1,9 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
-import { Calendar, Clock, Users, Check } from 'lucide-react';
+import { Users, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useDesksApi } from '../../hooks/useDesksApi';
 import { SarIcon } from '../ui/SarIcon';
+import { TimeSelect } from '../ui/TimeSelect';
+import { DateSelect } from '../ui/DateSelect';
+import { generateTimeSlots } from '../../lib/time';
 
 interface Pricing {
     price_per_hour: number | null;
@@ -74,6 +77,43 @@ export const BookingCard: React.FC<BookingCardProps> = ({
         if (selectedDayOfWeek === null) return null;
         return availability.find((s) => s.day_of_week === selectedDayOfWeek && !s.is_closed) ?? null;
     }, [selectedDayOfWeek, availability]);
+
+    const closedDaysOfWeek = useMemo(
+        () =>
+            availability
+                .filter((s) => s.is_closed)
+                .map((s) => s.day_of_week),
+        [availability],
+    );
+
+    const todayIso = useMemo(() => new Date().toISOString().split('T')[0], []);
+
+    const timeOptions = useMemo(() => {
+        if (!openSlot) return [];
+        return generateTimeSlots(openSlot.open_from, openSlot.open_to, 30);
+    }, [openSlot]);
+
+    const endTimeOptions = useMemo(() => {
+        if (timeOptions.length === 0) return [];
+        return timeOptions.filter((option) => option > startTime);
+    }, [timeOptions, startTime]);
+
+    useEffect(() => {
+        if (timeOptions.length < 2) return;
+
+        const startInRange = timeOptions.includes(startTime);
+        const nextStart = startInRange ? startTime : timeOptions[0];
+        if (nextStart !== startTime) {
+            setStartTime(nextStart);
+        }
+
+        const validEnds = timeOptions.filter((option) => option > nextStart);
+        const endInRange = validEnds.includes(endTime);
+        if (!endInRange) {
+            setEndTime(validEnds[0] ?? '');
+        }
+
+    }, [timeOptions]);
 
     const total = useMemo(() => {
         if (!date || isClosedDay) return null;
@@ -211,16 +251,14 @@ export const BookingCard: React.FC<BookingCardProps> = ({
 
             {/* Date */}
             <div>
-                <div className={fieldClass}>
-                    <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        min={new Date().toISOString().split('T')[0]}
-                        className={inputClass}
-                    />
-                </div>
+                <DateSelect
+                    value={date}
+                    onChange={setDate}
+                    min={todayIso}
+                    closedDaysOfWeek={closedDaysOfWeek}
+                    placeholder={t('booking.selectDate')}
+                    ariaLabel={t('booking.date')}
+                />
                 {isClosedDay && (
                     <p className="text-red-500 text-xs mt-1">{t('booking.closedDay')}</p>
                 )}
@@ -230,27 +268,25 @@ export const BookingCard: React.FC<BookingCardProps> = ({
             {bookingType === 'hourly' && (
                 <div className="grid grid-cols-2 gap-3">
                     <div>
-                        <div className={fieldClass}>
-                            <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                            <input
-                                type="time"
-                                value={startTime}
-                                onChange={(e) => setStartTime(e.target.value)}
-                                className={inputClass}
-                            />
-                        </div>
+                        <TimeSelect
+                            value={startTime}
+                            onChange={setStartTime}
+                            options={timeOptions}
+                            placeholder={t('booking.selectTime')}
+                            ariaLabel={t('booking.startTime')}
+                            disabled={timeOptions.length === 0}
+                        />
                         <p className="text-xs text-gray-400 mt-1">{t('booking.startTime')}</p>
                     </div>
                     <div>
-                        <div className={fieldClass}>
-                            <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                            <input
-                                type="time"
-                                value={endTime}
-                                onChange={(e) => setEndTime(e.target.value)}
-                                className={inputClass}
-                            />
-                        </div>
+                        <TimeSelect
+                            value={endTime}
+                            onChange={setEndTime}
+                            options={endTimeOptions}
+                            placeholder={t('booking.selectTime')}
+                            ariaLabel={t('booking.endTime')}
+                            disabled={endTimeOptions.length === 0}
+                        />
                         <p className="text-xs text-gray-400 mt-1">{t('booking.endTime')}</p>
                     </div>
                 </div>
