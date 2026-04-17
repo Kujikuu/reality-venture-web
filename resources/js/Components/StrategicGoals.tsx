@@ -16,49 +16,47 @@ export const StrategicGoals: React.FC = () => {
   ];
 
   return (
-    <section className="py-24" style={{
-      backgroundColor: 'transparent',
-      backgroundImage: 'radial-gradient(rgba(99, 102, 242, 0.1) 1px, transparent 1px), radial-gradient(rgba(99, 102, 242, 0.1) 1px, rgba(33, 222, 222, 0) 1px)',
-      backgroundPosition: '0 0, 10px 10px',
-      backgroundSize: '20px 20px',
-    }}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-8" >
-
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-3">{t('strategicGoals.badge')}</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">
-            {t('strategicGoals.title')}
-          </h3>
-          <p className="text-lg text-gray-500">
-            {t('strategicGoals.description')}
-          </p>
-        </div>
+    <section className="py-28 lg:py-36 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {goals.map((goal, idx) => (
-            <motion.div key={idx} className="bg-white rounded-lg p-8 border border-gray-100 transition-all duration-300 group" variants={cardVariants}>
-              <div className="w-12 h-12 bg-primary-50 rounded-md flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
-                <goal.icon className="w-6 h-6" />
-              </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-3">{t(`strategicGoals.goals.${idx}.title`)}</h4>
-              <p className="text-gray-500 leading-relaxed">
-                {t(`strategicGoals.goals.${idx}.description`)}
-              </p>
-            </motion.div>
-          ))}
+          {/* Section header -- left column */}
+          <div className="lg:col-span-4">
+            <span className="text-primary font-bold tracking-wider text-xs uppercase mb-5 block">{t('strategicGoals.badge')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6 leading-tight">
+              {t('strategicGoals.title')}
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {t('strategicGoals.description')}
+            </p>
+          </div>
+
+          {/* Goals -- right column, no cards */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+              {goals.map((goal, idx) => (
+                <motion.div key={idx} className="flex gap-4" variants={cardVariants}>
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
+                    <goal.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{t(`strategicGoals.goals.${idx}.title`)}</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {t(`strategicGoals.goals.${idx}.description`)}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
-        {/* CTA Stat Card - visually distinct to create hierarchy */}
-        <motion.div className="bg-primary rounded-lg p-8 flex flex-col justify-center items-center text-center text-white mt-8" variants={cardVariants}>
-          <h4 className="text-4xl font-bold mb-2">{t('strategicGoals.statCard.percentage')}</h4>
-          <p className="text-primary-100">{t('strategicGoals.statCard.label')}</p>
-        </motion.div>
       </div>
     </section>
   );
