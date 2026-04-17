@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Menu, X, User, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ export const Header = () => {
   const { t } = useTranslation('navigation');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   const navLinks: NavLink[] = [
     { nameKey: 'about', link: 'hero' },
@@ -24,11 +24,6 @@ export const Header = () => {
     { nameKey: 'advisory', link: '/consultants', isPage: true },
     { nameKey: 'rvClub', link: 'rv-club' },
     { nameKey: 'blog', link: '/blog', isPage: true },
-  ];
-
-  const marketplaceLinks = [
-    { nameKey: 'advisory', link: '/consultants' },
-    { nameKey: 'desks', link: '/grit' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -45,10 +40,94 @@ export const Header = () => {
     window.location.href = `/#${targetId}`;
   };
 
+  const closeAllMenus = useCallback(() => {
+    setIsMenuOpen(false);
+    setIsUserMenuOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeAllMenus();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [closeAllMenus]);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const dashboardUrl = auth.user?.role === 'consultant' ? '/consultant/dashboard' : '/dashboard';
 
+  const renderNavLink = (item: NavLink) => {
+    const linkClasses = "text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group";
+    const underline = <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />;
+
+    if (item.isPage) {
+      return (
+        <Link key={item.nameKey} href={item.link} className={linkClasses}>
+          {t(`header.${item.nameKey}`)}
+          {underline}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        key={item.nameKey}
+        href={`/#${item.link}`}
+        onClick={(e) => handleNavClick(e, item.link)}
+        className={linkClasses}
+      >
+        {t(`header.${item.nameKey}`)}
+        {underline}
+      </a>
+    );
+  };
+
+  const renderMobileNavLink = (item: NavLink) => {
+    const linkClasses = "text-lg font-bold uppercase tracking-wide text-gray-900 hover:text-primary transition-colors";
+
+    if (item.isPage) {
+      return (
+        <Link
+          key={item.nameKey}
+          href={item.link}
+          className={linkClasses}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          {t(`header.${item.nameKey}`)}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        key={item.nameKey}
+        href={`/#${item.link}`}
+        className={linkClasses}
+        onClick={(e) => {
+          handleNavClick(e, item.link);
+          setIsMenuOpen(false);
+        }}
+      >
+        {t(`header.${item.nameKey}`)}
+      </a>
+    );
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-background-dark dark:border-gray-800">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="mx-auto max-w-7xl px-6 lg:px-12 h-20 flex items-center justify-between">
 
         {/* Logo */}
@@ -62,94 +141,23 @@ export const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.slice(0, 2).map((item) =>
-            item.isPage ? (
-              <Link
-                key={item.nameKey}
-                href={item.link}
-                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-              >
-                {t(`header.${item.nameKey}`)}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ) : (
-              <a
-                key={item.nameKey}
-                href={`/#${item.link}`}
-                onClick={(e) => handleNavClick(e, item.link)}
-                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-              >
-                {t(`header.${item.nameKey}`)}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-              </a>
-            )
-          )}
-
-          {/* Marketplace Dropdown */}
-          {/* <div className="relative">
-            <button
-              onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
-              className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-            >
-              {t('header.marketplace')}
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMarketplaceOpen ? 'rotate-180' : ''}`} />
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-            </button>
-            {isMarketplaceOpen && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setIsMarketplaceOpen(false)} />
-                <div className="absolute start-0 mt-3 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1">
-                  {marketplaceLinks.map((item) => (
-                    <Link
-                      key={item.nameKey}
-                      href={item.link}
-                      className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors"
-                      onClick={() => setIsMarketplaceOpen(false)}
-                    >
-                      {t(`header.${item.nameKey}`)}
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
-          </div> */}
-
-          {navLinks.slice(2).map((item) =>
-            item.isPage ? (
-              <Link
-                key={item.nameKey}
-                href={item.link}
-                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-              >
-                {t(`header.${item.nameKey}`)}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ) : (
-              <a
-                key={item.nameKey}
-                href={`/#${item.link}`}
-                onClick={(e) => handleNavClick(e, item.link)}
-                className="text-sm font-medium text-gray-600 hover:text-secondary transition-colors relative group"
-              >
-                {t(`header.${item.nameKey}`)}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
-              </a>
-            )
-          )}
+          {navLinks.map(renderNavLink)}
         </nav>
 
         {/* Actions: Language Switcher + Auth */}
         <div className="hidden lg:flex items-center gap-4">
           <LanguageSwitcher />
           {auth.user ? (
-            <div className="relative">
+            <div className="relative" ref={userMenuRef}>
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                aria-expanded={isUserMenuOpen}
+                aria-haspopup="true"
                 className="flex items-center gap-2 h-10 px-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
               >
                 <User className="w-4 h-4" />
                 <span className="max-w-[120px] truncate">{auth.user.name}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
               </button>
               {isUserMenuOpen && (
                 <>
@@ -185,15 +193,17 @@ export const Header = () => {
               >
                 {t('buttons.login', 'Login')}
               </Link>
-              <Link href="/application-form">
-                <button className="h-10 px-6 items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 transition-all rounded-md">
-                  {t('buttons.applyNow')}
-                </button>
+              <Link
+                href="/application-form"
+                className="h-10 px-6 flex items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 active:scale-95 transition-all rounded-lg"
+              >
+                {t('buttons.applyNow')}
               </Link>
-              <Link href="/grit">
-                <button className="h-10 px-6 items-center justify-center bg-secondary text-white text-sm font-bold tracking-tight hover:bg-secondary-800 transition-all rounded-md">
-                  {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
-                </button>
+              <Link
+                href="/grit"
+                className="h-10 px-6 flex items-center justify-center bg-secondary text-white text-sm font-bold tracking-tight hover:bg-secondary-800 active:scale-95 transition-all rounded-lg"
+              >
+                {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
               </Link>
             </div>
           )}
@@ -203,65 +213,42 @@ export const Header = () => {
         <div className="lg:hidden flex items-center gap-3">
           <LanguageSwitcher />
           <button
-            className="p-2 text-black"
+            className="p-2 text-gray-900"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav Dropdown */}
-      {isMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col gap-4 z-50">
-          {navLinks.map((item) =>
-            item.isPage ? (
-              <Link
-                key={item.nameKey}
-                href={item.link}
-                className="text-lg font-bold uppercase tracking-wide hover:text-primary"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t(`header.${item.nameKey}`)}
-              </Link>
-            ) : (
-              <a
-                key={item.nameKey}
-                href={`/#${item.link}`}
-                className="text-lg font-bold uppercase tracking-wide hover:text-primary"
-                onClick={(e) => {
-                  handleNavClick(e, item.link);
-                  setIsMenuOpen(false);
-                }}
-              >
-                {t(`header.${item.nameKey}`)}
-              </a>
-            )
-          )}
+      {/* Mobile Nav Overlay */}
+      <div
+        className={`lg:hidden fixed inset-0 top-20 z-40 transition-opacity duration-200 ${
+          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/20"
+          onClick={() => setIsMenuOpen(false)}
+        />
 
-          {/* Marketplace section */}
-          {/* <div className="border-t border-gray-200 pt-4 mt-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3 block">{t('header.marketplace')}</span>
-            <div className="flex flex-col gap-3">
-              {marketplaceLinks.map((item) => (
-                <Link
-                  key={item.nameKey}
-                  href={item.link}
-                  className="text-lg font-bold uppercase tracking-wide hover:text-primary"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {t(`header.${item.nameKey}`)}
-                </Link>
-              ))}
-            </div>
-          </div> */}
+        {/* Panel */}
+        <div
+          className={`relative bg-white border-b border-gray-200 p-6 flex flex-col gap-4 shadow-lg transition-transform duration-200 ${
+            isMenuOpen ? 'translate-y-0' : '-translate-y-4'
+          }`}
+        >
+          {navLinks.map(renderMobileNavLink)}
 
           <div className="border-t border-gray-200 pt-4 mt-2">
             {auth.user ? (
               <div className="flex flex-col gap-3">
                 <Link
                   href={dashboardUrl}
-                  className="text-lg font-bold uppercase tracking-wide hover:text-primary"
+                  className="text-lg font-bold uppercase tracking-wide text-gray-900 hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('buttons.dashboard')}
@@ -270,7 +257,7 @@ export const Header = () => {
                   href="/logout"
                   method="post"
                   as="button"
-                  className="text-lg font-bold uppercase tracking-wide hover:text-primary text-start"
+                  className="text-lg font-bold uppercase tracking-wide text-gray-900 hover:text-primary transition-colors text-start"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('buttons.logout')}
@@ -278,26 +265,32 @@ export const Header = () => {
               </div>
             ) : (
               <div className="flex flex-col gap-3">
-                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  <button className="h-12 w-full bg-white border border-primary text-primary font-bold uppercase tracking-wide rounded-sm">
-                    {t('buttons.login')}
-                  </button>
+                <Link
+                  href="/login"
+                  className="h-12 w-full flex items-center justify-center bg-white border border-primary text-primary font-bold uppercase tracking-wide rounded-lg transition-colors hover:bg-primary-50"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('buttons.login')}
                 </Link>
-                <Link href="/application-form" onClick={() => setIsMenuOpen(false)}>
-                  <button className="h-12 w-full bg-primary text-white font-bold uppercase tracking-wide rounded-sm">
-                    {t('buttons.applyNow')}
-                  </button>
+                <Link
+                  href="/application-form"
+                  className="h-12 w-full flex items-center justify-center bg-primary text-white font-bold uppercase tracking-wide rounded-lg transition-colors hover:bg-primary-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('buttons.applyNow')}
                 </Link>
-                <Link href="/grit" onClick={() => setIsMenuOpen(false)}>
-                  <button className="h-12 w-full bg-secondary text-white font-bold uppercase tracking-wide rounded-sm">
-                    {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
-                  </button>
+                <Link
+                  href="/grit"
+                  className="h-12 w-full flex items-center justify-center bg-secondary text-white font-bold uppercase tracking-wide rounded-lg transition-colors hover:bg-secondary-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
                 </Link>
               </div>
             )}
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };
