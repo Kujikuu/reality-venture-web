@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useId, useCallback } from "react";
 import { Check, ChevronDown, X, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
@@ -31,11 +31,19 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
     error,
     label,
 }) => {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const containerRef = useRef<HTMLDivElement>(null);
-    const isRtl = i18n.language === "ar";
+    const listRef = useRef<HTMLDivElement>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const generatedId = useId();
+    const triggerId = `multiselect-trigger-${generatedId}`;
+    const listboxId = `multiselect-listbox-${generatedId}`;
+    const labelId = label ? `multiselect-label-${generatedId}` : undefined;
+    const errorId = error ? `multiselect-error-${generatedId}` : undefined;
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -50,17 +58,14 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const toggleOption = (optionValue: string) => {
-        const newValue = value.includes(optionValue)
-            ? value.filter((v) => v !== optionValue)
-            : [...value, optionValue];
-        onChange(newValue);
-    };
-
-    const removeOption = (optionValue: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        onChange(value.filter((v) => v !== optionValue));
-    };
+    useEffect(() => {
+        if (isOpen) {
+            searchInputRef.current?.focus();
+            setHighlightedIndex(-1);
+        } else {
+            setSearchTerm("");
+        }
+    }, [isOpen]);
 
     const filteredOptions = options.filter((option) =>
         option.label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,18 +75,86 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         value.includes(option.value)
     );
 
+    const toggleOption = useCallback((optionValue: string) => {
+        const newValue = value.includes(optionValue)
+            ? value.filter((v) => v !== optionValue)
+            : [...value, optionValue];
+        onChange(newValue);
+    }, [value, onChange]);
+
+    const removeOption = (optionValue: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        onChange(value.filter((v) => v !== optionValue));
+    };
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        switch (e.key) {
+            case "Enter":
+            case " ":
+                e.preventDefault();
+                if (!isOpen) {
+                    setIsOpen(true);
+                } else if (highlightedIndex >= 0 && highlightedIndex < filteredOptions.length) {
+                    toggleOption(filteredOptions[highlightedIndex].value);
+                }
+                break;
+            case "Escape":
+                e.preventDefault();
+                setIsOpen(false);
+                break;
+            case "ArrowDown":
+                e.preventDefault();
+                if (!isOpen) {
+                    setIsOpen(true);
+                } else {
+                    setHighlightedIndex((prev) =>
+                        prev < filteredOptions.length - 1 ? prev + 1 : 0
+                    );
+                }
+                break;
+            case "ArrowUp":
+                e.preventDefault();
+                if (isOpen) {
+                    setHighlightedIndex((prev) =>
+                        prev > 0 ? prev - 1 : filteredOptions.length - 1
+                    );
+                }
+                break;
+            case "Tab":
+                if (isOpen) setIsOpen(false);
+                break;
+        }
+    }, [isOpen, highlightedIndex, filteredOptions, toggleOption]);
+
+    useEffect(() => {
+        if (highlightedIndex >= 0 && listRef.current) {
+            const highlighted = listRef.current.querySelector(`[data-index="${highlightedIndex}"]`);
+            highlighted?.scrollIntoView({ block: "nearest" });
+        }
+    }, [highlightedIndex]);
+
     return (
         <div className={`relative w-full text-start ${className}`} ref={containerRef}>
             {label && (
-                <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                <label id={labelId} className="text-xs font-bold uppercase tracking-wide text-gray-600 mb-2 block">
                     {label}
                 </label>
             )}
-            <div
+            <button
+                type="button"
+                id={triggerId}
+                role="combobox"
+                aria-expanded={isOpen}
+                aria-haspopup="listbox"
+                aria-controls={isOpen ? listboxId : undefined}
+                aria-labelledby={labelId}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={errorId}
                 onClick={() => setIsOpen(!isOpen)}
+                onKeyDown={handleKeyDown}
                 className={`h-14 w-full px-6 rounded-lg bg-gray-50 border ${
                     error ? "border-red-500" : "border-gray-200"
-                } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus-within:ring-1 focus-within:ring-primary focus-within:border-primary`}
+                } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none`}
             >
                 {selectedOptions.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5 flex-1">
@@ -95,8 +168,9 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                                     type="button"
                                     onClick={(e) => removeOption(option.value, e)}
                                     className="p-0.5 hover:bg-primary-300 rounded-full transition-colors"
+                                    aria-label={`Remove ${option.label}`}
                                 >
-                                    <X className="w-3 h-3" />
+                                    <X className="w-3 h-3" aria-hidden="true" />
                                 </button>
                             </span>
                         ))}
@@ -110,8 +184,9 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                     className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
                         isOpen ? "rotate-180" : ""
                     }`}
+                    aria-hidden="true"
                 />
-            </div>
+            </button>
 
             <AnimatePresence>
                 {isOpen && (
@@ -123,36 +198,49 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                         className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden"
                     >
                         <div className="p-2 border-b border-gray-100 flex items-center gap-2 bg-gray-50/50">
-                            <Search className="w-4 h-4 text-gray-400" />
+                            <Search className="w-4 h-4 text-gray-400" aria-hidden="true" />
                             <input
+                                ref={searchInputRef}
                                 type="text"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                onClick={(e) => e.stopPropagation()}
+                                onKeyDown={handleKeyDown}
                                 placeholder={searchPlaceholder}
                                 className="w-full bg-transparent border-none focus:ring-0 text-sm py-1 outline-none"
+                                aria-label={searchPlaceholder}
                             />
                             {searchTerm && (
                                 <button
+                                    type="button"
                                     onClick={() => setSearchTerm("")}
-                                    className="p-1 hover:bg-gray-200 rounded-full"
+                                    className="p-1.5 hover:bg-gray-200 rounded-full"
+                                    aria-label="Clear search"
                                 >
-                                    <X className="w-3 h-3 text-gray-400" />
+                                    <X className="w-3 h-3 text-gray-400" aria-hidden="true" />
                                 </button>
                             )}
                         </div>
 
                         <div
-                            className="max-h-60 overflow-y-auto custom-scrollbar"
+                            ref={listRef}
+                            role="listbox"
+                            id={listboxId}
+                            aria-labelledby={labelId}
+                            aria-multiselectable="true"
+                            className="max-h-60 overflow-y-auto select-scrollbar"
                             onWheel={(e) => e.stopPropagation()}
                         >
                             {filteredOptions.length > 0 ? (
                                 <div className="p-1">
-                                    {filteredOptions.map((option) => {
+                                    {filteredOptions.map((option, index) => {
                                         const isSelected = value.includes(option.value);
+                                        const isHighlighted = index === highlightedIndex;
                                         return (
                                             <div
                                                 key={option.value}
+                                                role="option"
+                                                aria-selected={isSelected}
+                                                data-index={index}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     toggleOption(option.value);
@@ -160,7 +248,9 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                                                 className={`flex items-center gap-2 px-3 py-2.5 rounded-md cursor-pointer transition-colors ${
                                                     isSelected
                                                         ? "bg-primary-50 text-primary-900"
-                                                        : "hover:bg-gray-50 text-gray-700"
+                                                        : isHighlighted
+                                                            ? "bg-gray-100 text-gray-900"
+                                                            : "hover:bg-gray-50 text-gray-700"
                                                 }`}
                                             >
                                                 <div
@@ -169,6 +259,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                                                             ? "bg-primary border-primary"
                                                             : "border-gray-300"
                                                     }`}
+                                                    aria-hidden="true"
                                                 >
                                                     {isSelected && (
                                                         <Check className="w-3 h-3 text-white" />
@@ -191,23 +282,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                 )}
             </AnimatePresence>
 
-            {error && <p className="mt-1.5 text-xs text-red-500 font-medium">{error}</p>}
-
-            <style dangerouslySetInnerHTML={{ __html: `
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: #e5e7eb;
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: #d1d5db;
-                }
-            `}} />
+            {error && <p id={errorId} className="mt-1.5 text-xs text-red-500 font-medium" role="alert">{error}</p>}
         </div>
     );
 };

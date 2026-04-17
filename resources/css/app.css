@@ -52,6 +52,21 @@
     .tilt-card-float { animation: none; }
 }
 
+/* Custom select dropdown scrollbar */
+.select-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.select-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.select-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-gray-200, #e5e7eb);
+    border-radius: 10px;
+}
+.select-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-300, #d1d5db);
+}
+
 /* Rich content: responsive video embeds */
 .prose iframe {
     width: 100%;

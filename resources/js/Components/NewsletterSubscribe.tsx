@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckCircle2, Send, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle2, Send } from "lucide-react";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -158,8 +158,8 @@ export const NewsletterSubscribe = ({
                     </h2>
 
                     {recentlySuccessful ? (
-                        <div className="flex items-center justify-center gap-2 text-green-300 font-medium">
-                            <CheckCircle2 className="w-5 h-5" />
+                        <div className="flex items-center justify-center gap-2 text-green-700 font-medium" role="status">
+                            <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
                             {t("navigation:footer.newsletter.success")}
                         </div>
                     ) : step === 1 ? (
@@ -216,7 +216,6 @@ export const NewsletterSubscribe = ({
                                     type="submit"
                                     className="w-full"
                                 >
-                                    {/* <Send className="w-4 h-4" /> */}
                                     {t("navigation:footer.newsletter.getUpdates")}
                                 </Button>
                                 <Button
