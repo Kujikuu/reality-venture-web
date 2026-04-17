@@ -38,6 +38,9 @@
       "description": "Get the latest insights on startups, venture building, and PropTech delivered to your inbox.",
       "placeholder": "Enter your email address",
       "subscribe": "Subscribe",
+      "getUpdates": "Get Updates",
+      "addDetails": "Add more details",
+      "back": "Back",
       "success": "You're subscribed! Thank you."
     }
   }

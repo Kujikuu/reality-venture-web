@@ -213,7 +213,7 @@ export const Header = () => {
         <div className="lg:hidden flex items-center gap-3">
           <LanguageSwitcher />
           <button
-            className="p-2 text-gray-900"
+            className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-900"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}

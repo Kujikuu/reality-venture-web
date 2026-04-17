@@ -46,7 +46,10 @@ export const VisionMission: React.FC = () => {
           {/* Text Side */}
           <motion.div variants={sectionVariants}>
             <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('visionMission.whyWeExistBadge')}</span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t('visionMission.whyWeExistTitle') }} />
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+              {t('visionMission.whyWeExistTitle')}{' '}
+              <span className="text-primary">{t('visionMission.whyWeExistTitleHighlight')}</span>
+            </h2>
             <p className="text-lg text-gray-500 mb-8 leading-relaxed">
               {t('visionMission.whyWeExistDescription')}
             </p>

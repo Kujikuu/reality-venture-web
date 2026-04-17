@@ -113,6 +113,13 @@ export const NewsletterSubscribe = ({
         subscribe_newsletter: true,
     });
 
+    const [step, setStep] = useState(1);
+
+    const handleSubmitStep1 = (e: React.FormEvent) => {
+        e.preventDefault();
+        setStep(2);
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post("/newsletter/subscribe", {
@@ -143,6 +150,7 @@ export const NewsletterSubscribe = ({
                             src="/assets/images/RV.png"
                             alt={t("common:company.logoAlt")}
                             className="h-12 w-auto"
+                            loading="lazy"
                         />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">
@@ -154,9 +162,9 @@ export const NewsletterSubscribe = ({
                             <CheckCircle2 className="w-5 h-5" />
                             {t("navigation:footer.newsletter.success")}
                         </div>
-                    ) : (
+                    ) : step === 1 ? (
                         <form
-                            onSubmit={handleSubmit}
+                            onSubmit={handleSubmitStep1}
                             className="max-w-2xl w-full mx-auto"
                         >
                             <div className="flex flex-col gap-4 w-full">
@@ -172,7 +180,7 @@ export const NewsletterSubscribe = ({
                                     error={errors.fullname}
                                 />
 
-                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                     <Input
                                         type="email"
                                         required
@@ -184,7 +192,6 @@ export const NewsletterSubscribe = ({
                                             "common:newsletter.email.placeholder",
                                         )}
                                         error={errors.email}
-                                        containerClassName="flex-1"
                                     />
                                     <Input
                                         style={{
@@ -202,13 +209,34 @@ export const NewsletterSubscribe = ({
                                             "common:newsletter.phone.placeholder",
                                         )}
                                         error={errors.phone}
-                                        containerClassName="flex-1"
                                     />
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                >
+                                    {/* <Send className="w-4 h-4" /> */}
+                                    {t("navigation:footer.newsletter.getUpdates")}
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    onClick={() => setStep(2)}
+                                    className="text-sm"
+                                >
+                                    {t("navigation:footer.newsletter.addDetails")}
+                                </Button>
+                            </div>
+                        </form>
+                    ) : (
+                        <form
+                            onSubmit={handleSubmit}
+                            className="max-w-2xl w-full mx-auto"
+                        >
+                            <div className="flex flex-col gap-4 w-full">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                     <Input
-                                        required
                                         value={data.position}
                                         onChange={(e) =>
                                             setData("position", e.target.value)
@@ -217,10 +245,8 @@ export const NewsletterSubscribe = ({
                                             "common:newsletter.position.placeholder",
                                         )}
                                         error={errors.position}
-                                        containerClassName="flex-1"
                                     />
                                     <Input
-                                        required
                                         value={data.city}
                                         onChange={(e) =>
                                             setData("city", e.target.value)
@@ -229,101 +255,96 @@ export const NewsletterSubscribe = ({
                                             "common:newsletter.city.placeholder",
                                         )}
                                         error={errors.city}
-                                        containerClassName="flex-1"
                                     />
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row gap-4 w-full">
-                                    <div className="flex-1">
-                                        <Select
-                                            options={[
-                                                {
-                                                    value: "public",
-                                                    label: t(
-                                                        "common:newsletter.organization.public",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "private",
-                                                    label: t(
-                                                        "common:newsletter.organization.private",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "nonProfit",
-                                                    label: t(
-                                                        "common:newsletter.organization.nonProfit",
-                                                    ),
-                                                },
-                                            ]}
-                                            value={data.organization}
-                                            onChange={(val) => setData("organization", val)}
-                                            placeholder={t(
-                                                "common:newsletter.organization.placeholder",
-                                            )}
-                                            searchPlaceholder={t(
-                                                "common:newsletter.organization.searchPlaceholder",
-                                            )}
-                                            noResultsText={t(
-                                                "common:newsletter.organization.noResults",
-                                            )}
-                                            error={errors.organization}
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <Select
-                                            options={[
-                                                {
-                                                    value: "investor",
-                                                    label: t(
-                                                        "common:newsletter.role.investor",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "owner",
-                                                    label: t(
-                                                        "common:newsletter.role.owner",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "ceo",
-                                                    label: t(
-                                                        "common:newsletter.role.ceo",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "developer",
-                                                    label: t(
-                                                        "common:newsletter.role.developer",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "consultant",
-                                                    label: t(
-                                                        "common:newsletter.role.consultant",
-                                                    ),
-                                                },
-                                                {
-                                                    value: "employee",
-                                                    label: t(
-                                                        "common:newsletter.role.employee",
-                                                    ),
-                                                },
-                                            ]}
-                                            value={data.role}
-                                            onChange={(val) => setData("role", val)}
-                                            placeholder={t(
-                                                "common:newsletter.role.placeholder",
-                                            )}
-                                            searchPlaceholder={t(
-                                                "common:newsletter.role.searchPlaceholder",
-                                            )}
-                                            noResultsText={t(
-                                                "common:newsletter.role.noResults",
-                                            )}
-                                            error={errors.role}
-                                        />
-                                    </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                    <Select
+                                        options={[
+                                            {
+                                                value: "public",
+                                                label: t(
+                                                    "common:newsletter.organization.public",
+                                                ),
+                                            },
+                                            {
+                                                value: "private",
+                                                label: t(
+                                                    "common:newsletter.organization.private",
+                                                ),
+                                            },
+                                            {
+                                                value: "nonProfit",
+                                                label: t(
+                                                    "common:newsletter.organization.nonProfit",
+                                                ),
+                                            },
+                                        ]}
+                                        value={data.organization}
+                                        onChange={(val) => setData("organization", val)}
+                                        placeholder={t(
+                                            "common:newsletter.organization.placeholder",
+                                        )}
+                                        searchPlaceholder={t(
+                                            "common:newsletter.organization.searchPlaceholder",
+                                        )}
+                                        noResultsText={t(
+                                            "common:newsletter.organization.noResults",
+                                        )}
+                                        error={errors.organization}
+                                    />
+                                    <Select
+                                        options={[
+                                            {
+                                                value: "investor",
+                                                label: t(
+                                                    "common:newsletter.role.investor",
+                                                ),
+                                            },
+                                            {
+                                                value: "owner",
+                                                label: t(
+                                                    "common:newsletter.role.owner",
+                                                ),
+                                            },
+                                            {
+                                                value: "ceo",
+                                                label: t(
+                                                    "common:newsletter.role.ceo",
+                                                ),
+                                            },
+                                            {
+                                                value: "developer",
+                                                label: t(
+                                                    "common:newsletter.role.developer",
+                                                ),
+                                            },
+                                            {
+                                                value: "consultant",
+                                                label: t(
+                                                    "common:newsletter.role.consultant",
+                                                ),
+                                            },
+                                            {
+                                                value: "employee",
+                                                label: t(
+                                                    "common:newsletter.role.employee",
+                                                ),
+                                            },
+                                        ]}
+                                        value={data.role}
+                                        onChange={(val) => setData("role", val)}
+                                        placeholder={t(
+                                            "common:newsletter.role.placeholder",
+                                        )}
+                                        searchPlaceholder={t(
+                                            "common:newsletter.role.searchPlaceholder",
+                                        )}
+                                        noResultsText={t(
+                                            "common:newsletter.role.noResults",
+                                        )}
+                                        error={errors.role}
+                                    />
                                 </div>
 
                                 <MultiSelect
@@ -348,7 +369,6 @@ export const NewsletterSubscribe = ({
                                 />
 
                                 <Checkbox
-                                    required
                                     checked={data.subscribe_newsletter}
                                     onChange={(e) =>
                                         setData(
@@ -363,16 +383,26 @@ export const NewsletterSubscribe = ({
                                     className="py-1"
                                 />
 
-                                <Button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="w-full h-12 disabled:opacity-50"
-                                >
-                                    <Send className="w-4 h-4" />
-                                    {t(
-                                        "navigation:footer.newsletter.subscribe",
-                                    )}
-                                </Button>
+                                <div className="flex flex-col sm:flex-row gap-3 w-full">
+                                    <Button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="flex-auto md:flex-1"
+                                    >
+                                        <Send className="w-4 h-4" />
+                                        {t(
+                                            "navigation:footer.newsletter.subscribe",
+                                        )}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => setStep(1)}
+                                        className="sm:w-auto"
+                                    >
+                                        {t("navigation:footer.newsletter.back")}
+                                    </Button>
+                                </div>
                             </div>
                         </form>
                     )}

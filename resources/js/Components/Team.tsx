@@ -108,12 +108,14 @@ export const Team: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => {
-        const next = prev + forwardStep;
-        if (next > maxIndex) return 0;
-        if (next < 0) return maxIndex;
-        return next;
-      });
+      if (document.visibilityState === 'visible') {
+        setCurrent((prev) => {
+          const next = prev + forwardStep;
+          if (next > maxIndex) return 0;
+          if (next < 0) return maxIndex;
+          return next;
+        });
+      }
     }, 5000);
 
     return () => clearInterval(timer);
@@ -175,6 +177,7 @@ export const Team: React.FC = () => {
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover grayscale transition-all duration-300"
+                        loading="lazy"
                       />
                     </div>
                     <h4 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h4>

@@ -40,7 +40,7 @@ export default function DashboardLayout({ children, links, title }: Props) {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 bg-[#4d3070] text-white">
+      <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 bg-primary text-white">
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="px-6 py-6 border-b border-white/10">
@@ -60,7 +60,7 @@ export default function DashboardLayout({ children, links, title }: Props) {
                   href={link.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     active
-                      ? 'bg-white/10 text-white border-s-3 border-[#C88B00]'
+                      ? 'bg-white/10 text-white'
                       : 'text-white/70 hover:bg-white/5 hover:text-white'
                   }`}
                 >
@@ -135,7 +135,7 @@ export default function DashboardLayout({ children, links, title }: Props) {
                 key={link.href}
                 href={link.href}
                 className={`flex flex-col items-center gap-0.5 py-1 px-3 ${
-                  active ? 'text-[#C88B00]' : 'text-gray-400'
+                  active ? 'text-secondary' : 'text-gray-400'
                 }`}
               >
                 <Icon className="w-5 h-5" />

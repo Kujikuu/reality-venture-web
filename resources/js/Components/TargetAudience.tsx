@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Users, Briefcase, Network } from 'lucide-react';
+import { Users, Briefcase, Network, Pause, Play } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const AUTOPLAY_DURATION = 5000; // 5 seconds per slide
@@ -27,8 +27,9 @@ export const TargetAudience: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const startTimeRef = useRef<number | null>(null);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
 
   const resetTimer = () => {
     startTimeRef.current = null;
@@ -36,6 +37,8 @@ export const TargetAudience: React.FC = () => {
   };
 
   const animate = (time: number) => {
+    if (isPaused) return;
+
     if (!startTimeRef.current) startTimeRef.current = time;
     const elapsed = time - startTimeRef.current;
     const newProgress = Math.min((elapsed / AUTOPLAY_DURATION) * 100, 100);
@@ -56,11 +59,15 @@ export const TargetAudience: React.FC = () => {
   };
 
   useEffect(() => {
+    if (isPaused) {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      return;
+    }
     requestRef.current = requestAnimationFrame(animate);
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [activeTab]);
+  }, [activeTab, isPaused]);
 
   const handleTabClick = (index: number) => {
     if (requestRef.current) cancelAnimationFrame(requestRef.current);
@@ -70,6 +77,10 @@ export const TargetAudience: React.FC = () => {
     requestRef.current = requestAnimationFrame(animate);
   };
 
+  const togglePause = () => {
+    setIsPaused((prev) => !prev);
+  };
+
   const activeContent = targets[activeTab];
   const targetKeys = ['founders', 'operators', 'investors'] as const;
 
@@ -77,7 +88,7 @@ export const TargetAudience: React.FC = () => {
     <section className="py-24 overflow-hidden" id="community">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-        <div className="text-center max-w-3xl mx-auto mb-12">
+<div className="text-center max-w-3xl mx-auto mb-12">
            <span className="text-primary font-bold tracking-wider text-xs uppercase mb-4 block">{t('targetAudience.badge')}</span>
            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
              {t('targetAudience.title')}
@@ -85,7 +96,24 @@ export const TargetAudience: React.FC = () => {
            <p className="text-lg text-gray-500">
              {t('targetAudience.description')}
            </p>
-        </div>
+           <button
+             onClick={togglePause}
+             className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 hover:text-primary transition-colors"
+             aria-label={isPaused ? 'Play carousel' : 'Pause carousel'}
+           >
+             {isPaused ? (
+               <>
+                 <Play className="w-4 h-4" />
+                 <span>Auto-play</span>
+               </>
+             ) : (
+               <>
+                 <Pause className="w-4 h-4" />
+                 <span>Pause</span>
+               </>
+             )}
+           </button>
+         </div>
 
         {/* Feature Component */}
         <div className="bg-white rounded-lg border border-gray-100 overflow-hidden">

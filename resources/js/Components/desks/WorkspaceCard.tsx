@@ -46,6 +46,7 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                                 src={workspace.cover_image}
                                 alt={workspace.name}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
                             />
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-400">

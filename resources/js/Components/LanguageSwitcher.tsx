@@ -29,7 +29,7 @@ export const LanguageSwitcher: React.FC = () => {
     <div className="relative z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-md border border-gray-200 hover:border-primary transition-all"
+        className="flex items-center gap-2 px-4 py-3 min-w-[44px] min-h-[44px] rounded-md border border-gray-200 hover:border-primary transition-all"
         aria-label="Switch language"
       >
         <Globe className="w-4 h-4 text-primary" />

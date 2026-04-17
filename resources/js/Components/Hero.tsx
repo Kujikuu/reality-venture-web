@@ -79,18 +79,7 @@ export const Hero: React.FC = () => {
                   {/* Main Card */}
                   <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-2xl overflow-hidden">
 
-                    {/* Animated gradient mesh background */}
-                    <div className="absolute inset-0 opacity-40">
-                      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-                      <div className="absolute bottom-0 right-0 w-96 h-96 bg-p-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
-                    </div>
-
-                    {/* Floating decorative elements */}
-                    <div className="absolute top-8 right-8 w-4 h-4 bg-primary/30 rounded-full animate-bounce" style={{ animationDuration: '3s' }} />
-                    <div className="absolute top-20 right-20 w-2 h-2 bg-secondary/40 rounded-full animate-bounce" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
-                    <div className="absolute bottom-12 left-8 w-3 h-3 bg-primary/25 rounded-full animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }} />
-
-                    {/* Geometric accent lines */}
+                    {/* Geometric accent corners - subtle static design elements */}
                     <div className="absolute top-12 left-12 w-20 h-20 border-l-2 border-t-2 border-primary/10 rounded-tl-3xl" />
                     <div className="absolute bottom-12 right-12 w-20 h-20 border-r-2 border-b-2 border-primary/10 rounded-br-3xl" />
 
@@ -98,9 +87,6 @@ export const Hero: React.FC = () => {
                     <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
                       {/* Logo Image */}
                       <div className="relative mb-8">
-                        {/* Glowing ring effect */}
-                        <div className="absolute inset-0 bg-linear-to-br from-primary/20 to-primary-300/20 rounded-full blur-xl animate-pulse" style={{ animationDuration: '3s' }} />
-
                         <div className="relative w-48 h-48 flex items-center justify-center ">
                           <img
                             src="/assets/images/RV.png"
@@ -108,10 +94,6 @@ export const Hero: React.FC = () => {
                             className="w-40 h-40 object-contain drop-shadow-2xl"
                           />
                         </div>
-
-                        {/* Orbiting dots */}
-                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full shadow-lg animate-ping" style={{ animationDuration: '2s' }} />
-                        <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-primary-300 rounded-full shadow-lg animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
                       </div>
 
                       {/* Text Content */}
@@ -143,16 +125,7 @@ export const Hero: React.FC = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* Glassmorphism overlay */}
-                    <div className="absolute inset-0 bg-linear-to-tr from-white/10 via-transparent to-white/5 pointer-events-none" />
-
-                    {/* Corner shine effect */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-bl from-white/40 to-transparent rounded-bl-full pointer-events-none" />
                   </div>
-
-                  {/* Shadow/depth element */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-4 bg-primary/10 rounded-full blur-2xl" />
                 </a>
               </div>
             </InteractiveTiltCard>

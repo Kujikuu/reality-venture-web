@@ -21,7 +21,7 @@ export const Programs: React.FC = () => {
 
         <div className="max-w-4xl mx-auto">
           {/* Accelerator Program */}
-          <div className="bg-white rounded-2xl p-8 lg:p-10 border border-secondary/40 ring-1 ring-secondary/20 relative shadow-lg shadow-secondary/5">
+          <div className="bg-white rounded-2xl p-8 lg:p-10 border border-gray-200 ring-1 ring-gray-100 relative shadow-lg shadow-gray-200/50">
             <div className="grid md:grid-cols-2 md:gap-10 lg:gap-12">
               {/* Left column — copy + CTA */}
               <div className="flex flex-col">

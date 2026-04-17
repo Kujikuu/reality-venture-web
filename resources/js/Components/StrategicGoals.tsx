@@ -52,12 +52,12 @@ export const StrategicGoals: React.FC = () => {
               </p>
             </motion.div>
           ))}
+        </motion.div>
 
-          {/* Add a CTA card or stat card to make it even */}
-          <motion.div className="bg-primary rounded-lg p-8 flex flex-col justify-center items-center text-center text-white" variants={cardVariants}>
-            <h4 className="text-4xl font-bold mb-2">{t('strategicGoals.statCard.percentage')}</h4>
-            <p className="text-primary-100 mb-6">{t('strategicGoals.statCard.label')}</p>
-          </motion.div>
+        {/* CTA Stat Card - visually distinct to create hierarchy */}
+        <motion.div className="bg-primary rounded-lg p-8 flex flex-col justify-center items-center text-center text-white mt-8" variants={cardVariants}>
+          <h4 className="text-4xl font-bold mb-2">{t('strategicGoals.statCard.percentage')}</h4>
+          <p className="text-primary-100">{t('strategicGoals.statCard.label')}</p>
         </motion.div>
       </div>
     </section>
