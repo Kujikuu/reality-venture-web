@@ -3,6 +3,7 @@ import { Variants } from 'framer-motion';
 /**
  * Animation variants for the Hero component
  * Using spring physics for natural, smooth motion
+ * Respects prefers-reduced-motion via Framer Motion's built-in support
  */
 
 // Container variant for staggered children animations
@@ -11,8 +12,8 @@ export const heroContainerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // 150ms between each child
-      delayChildren: 0.3,    // 300ms initial delay before first animation
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
     },
   },
 };
@@ -21,16 +22,16 @@ export const heroContainerVariants: Variants = {
 export const heroItemVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 30, // Start 30px below
+    y: 20,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring', // Natural spring physics
-      stiffness: 100, // Snappy but smooth
-      damping: 15,    // Reduces bounce
-      mass: 1,        // Standard weight
+      type: 'spring',
+      stiffness: 100,
+      damping: 15,
+      mass: 1,
     },
   },
 };

@@ -28,10 +28,10 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 hero-gradient -z-10" />
 
       {/* Floating Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="shape absolute top-20 left-10 w-20 h-20 border-2 border-primary/10 rotate-45" />
-        <div className="shape absolute top-40 right-20 w-16 h-16 rounded-full bg-primary-50/50" />
-        <div className="shape absolute bottom-20 left-1/4 w-12 h-12 border border-primary/20" />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+        <div className="shape absolute top-20 start-10 w-20 h-20 border-2 border-primary/10 rotate-45" />
+        <div className="shape absolute top-40 end-20 w-16 h-16 rounded-full bg-primary-50/50" />
+        <div className="shape absolute bottom-20 start-1/4 w-12 h-12 border border-primary/20" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
               <span className="text-primary leading-normal">{t('home:hero.titleHighlighted')}</span>
             </motion.h1>
 
-            <motion.p variants={heroItemVariants} className="max-w-2xl text-lg sm:text-xl text-gray-500 mb-10 leading-normal">
+            <motion.p variants={heroItemVariants} className="max-w-2xl text-lg sm:text-xl text-gray-600 mb-10 leading-normal">
               {t('home:hero.description')}
             </motion.p>
 
@@ -62,7 +62,7 @@ export const Hero: React.FC = () => {
                 <Button withArrow className="w-full sm:w-auto px-10 h-14 text-lg">{t('common:buttons.getStarted')}</Button>
               </Link>
               <a href="/#programs" onClick={(e) => handleSmoothScroll(e, 'programs')}>
-                <Button variant="outline" className="w-full sm:w-auto px-10 h-14 text-lg border-gray-200 bg-white">{t('common:buttons.viewPrograms')}</Button>
+                <Button variant="outline" className="w-full sm:w-auto px-10 h-14 text-lg">{t('common:buttons.viewPrograms')}</Button>
               </a>
             </motion.div>
 
@@ -75,58 +75,51 @@ export const Hero: React.FC = () => {
           >
             <InteractiveTiltCard className="w-full max-w-lg aspect-square">
               <div className="relative w-full h-full">
-                <a href="/#programs" onClick={(e) => handleSmoothScroll(e, 'programs')}>
-                  {/* Main Card */}
-                  <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-2xl overflow-hidden">
+                {/* Main Card */}
+                <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-xl overflow-hidden">
 
-                    {/* Geometric accent corners - subtle static design elements */}
-                    <div className="absolute top-12 left-12 w-20 h-20 border-l-2 border-t-2 border-primary/10 rounded-tl-3xl" />
-                    <div className="absolute bottom-12 right-12 w-20 h-20 border-r-2 border-b-2 border-primary/10 rounded-br-3xl" />
-
-                    {/* Logo and Content */}
-                    <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
-                      {/* Logo Image */}
-                      <div className="relative mb-8">
-                        <div className="relative w-48 h-48 flex items-center justify-center ">
-                          <img
-                            src="/assets/images/RV.png"
-                            alt={t('common:company.logoAlt')}
-                            className="w-40 h-40 object-contain drop-shadow-2xl"
-                          />
-                        </div>
+                  {/* Logo and Content */}
+                  <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
+                    {/* Logo Image */}
+                    <div className="relative mb-8">
+                      <div className="relative w-48 h-48 flex items-center justify-center">
+                        <img
+                          src="/assets/images/RV.png"
+                          alt={t('common:company.logoAlt')}
+                          className="w-40 h-40 object-contain drop-shadow-lg"
+                        />
                       </div>
+                    </div>
 
-                      {/* Text Content */}
-                      <div className="text-center space-y-3">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-                          <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                          <span className="text-sm font-semibold text-primary tracking-wide">{t('home:hero.card.badge')}</span>
+                    {/* Text Content */}
+                    <div className="text-center space-y-3">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+                        <span className="text-sm font-semibold text-primary tracking-wide">{t('home:hero.card.badge')}</span>
+                      </div>
+                      <h3 className="text-4xl font-black text-gray-900 tracking-tight">
+                        {t('home:hero.card.building')}
+                      </h3>
+                      <p className="text-5xl font-black text-primary tracking-tight">
+                        {t('home:hero.card.ventures')}
+                      </p>
+                      <div className="pt-4 flex items-center justify-center gap-6 text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                          <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                          <span className="font-semibold">{t('common:company.ventureBuilder')}</span>
                         </div>
-                        <h3 className="text-4xl font-black text-gray-900 tracking-tight">
-                          {t('home:hero.card.building')}
-                        </h3>
-                        <p className="text-5xl font-black text-primary tracking-tight">
-                          {t('home:hero.card.ventures')}
-                        </p>
-                        <div className="pt-4 flex items-center justify-center gap-6 text-sm text-gray-600">
-                          <div className="flex items-center gap-2">
-                            <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <span className="font-semibold">{t('common:company.ventureBuilder')}</span>
-                          </div>
-                          <div className="w-px h-4 bg-gray-300" />
-                          <div className="flex items-center gap-2">
-                            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            <span className="font-semibold">{t('common:company.accelerator')}</span>
-                          </div>
+                        <div className="w-px h-4 bg-gray-300" aria-hidden="true" />
+                        <div className="flex items-center gap-2">
+                          <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                          <span className="font-semibold">{t('common:company.accelerator')}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             </InteractiveTiltCard>
 
