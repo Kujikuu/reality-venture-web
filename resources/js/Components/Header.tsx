@@ -194,7 +194,7 @@ export const Header = () => {
                 {t('buttons.login', 'Login')}
               </Link>
               <Link
-                href="/application-form"
+                href="/startuphub"
                 className="h-10 px-6 flex items-center justify-center bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary-800 active:scale-95 transition-all rounded-lg"
               >
                 {t('buttons.applyNow')}
@@ -273,7 +273,7 @@ export const Header = () => {
                   {t('buttons.login')}
                 </Link>
                 <Link
-                  href="/application-form"
+                  href="/startuphub"
                   className="h-12 w-full flex items-center justify-center bg-primary text-white font-bold uppercase tracking-wide rounded-lg transition-colors hover:bg-primary-800"
                   onClick={() => setIsMenuOpen(false)}
                 >

@@ -15,7 +15,7 @@ class ApplicationTest extends TestCase
 
     public function test_renders_application_form_page(): void
     {
-        $response = $this->get('/application-form');
+        $response = $this->get('/startuphub');
 
         $response->assertStatus(200);
     }

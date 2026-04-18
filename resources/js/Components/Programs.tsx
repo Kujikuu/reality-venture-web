@@ -32,7 +32,7 @@ export const Programs: React.FC = () => {
                 <p className="text-gray-600 mb-8 text-sm leading-relaxed">
                   {t('accelerator.description')}
                 </p>
-                <Link href="/application-form" className="w-full mt-auto">
+                <Link href="/startuphub" className="w-full mt-auto">
                   <Button variant="primary" className="w-full rounded-xl" withArrow>{t('accelerator.cta')}</Button>
                 </Link>
               </div>
@@ -64,7 +64,7 @@ export const Programs: React.FC = () => {
                 {t('ventureBuilder.description')}
               </p>
 
-              <Link href="/application-form" className="w-full mb-8">
+              <Link href="/startuphub" className="w-full mb-8">
                 <Button variant="outline" className="w-full rounded-xl">{t('ventureBuilder.cta')}</Button>
               </Link>
 

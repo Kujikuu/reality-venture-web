@@ -36,7 +36,7 @@ class GenerateSitemap extends Command
         $urls[] = ['loc' => url('/'), 'lastmod' => null, 'changefreq' => 'weekly', 'priority' => '1.0'];
         $urls[] = ['loc' => url('/blog'), 'lastmod' => null, 'changefreq' => 'daily', 'priority' => '0.8'];
         $urls[] = ['loc' => url('/consultants'), 'lastmod' => null, 'changefreq' => 'weekly', 'priority' => '0.8'];
-        $urls[] = ['loc' => url('/application-form'), 'lastmod' => null, 'changefreq' => 'monthly', 'priority' => '0.7'];
+        $urls[] = ['loc' => url('/startuphub'), 'lastmod' => null, 'changefreq' => 'monthly', 'priority' => '0.7'];
         $urls[] = ['loc' => url('/privacy-policy'), 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => '0.3'];
         $urls[] = ['loc' => url('/terms-of-service'), 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => '0.3'];
 

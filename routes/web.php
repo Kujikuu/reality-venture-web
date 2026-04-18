@@ -24,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 // Static pages
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/application-form', [PageController::class, 'applicationForm'])->name('application.form');
+Route::get('/application-form', fn () => redirect('/startuphub', 301));
+Route::get('/startuphub', [PageController::class, 'applicationForm'])->name('application.form');
 Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->name('startup-application.form');
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms.service');

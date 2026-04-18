@@ -58,7 +58,7 @@ export const Hero: React.FC = () => {
             </motion.p>
 
             <motion.div variants={heroItemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="/application-form">
+              <Link href="/startuphub">
                 <Button withArrow className="w-full sm:w-auto px-10 h-14 text-lg">{t('common:buttons.getStarted')}</Button>
               </Link>
               <a href="/#programs" onClick={(e) => handleSmoothScroll(e, 'programs')}>

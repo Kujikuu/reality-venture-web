@@ -41,7 +41,7 @@ class GenerateSitemapTest extends TestCase
         $this->assertStringContainsString('<loc>'.url('/').'</loc>', $content);
         $this->assertStringContainsString('<loc>'.url('/blog').'</loc>', $content);
         $this->assertStringContainsString('<loc>'.url('/consultants').'</loc>', $content);
-        $this->assertStringContainsString('<loc>'.url('/application-form').'</loc>', $content);
+        $this->assertStringContainsString('<loc>'.url('/startuphub').'</loc>', $content);
         $this->assertStringContainsString('<loc>'.url('/privacy-policy').'</loc>', $content);
         $this->assertStringContainsString('<loc>'.url('/terms-of-service').'</loc>', $content);
     }
