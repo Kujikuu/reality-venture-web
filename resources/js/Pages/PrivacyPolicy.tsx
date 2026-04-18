@@ -98,7 +98,18 @@ export default function PrivacyPolicy() {
                     <h2 className="text-2xl font-bold text-gray-900">{section.title}</h2>
                   </div>
                   <div className="prose prose-lg text-gray-600 max-w-none">
-                    {section.contentList ? (
+                    {section.items ? (
+                      <ul className="space-y-3">
+                        {section.items.map((item: string, i: number) => (
+                          <li key={i} className="flex gap-3 text-gray-600">
+                            <span className="text-primary mt-1.5 shrink-0">
+                              <svg className="w-2 h-2 fill-current" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" /></svg>
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : section.contentList ? (
                       <>
                         <p className="mb-4">{section.contentIntro}</p>
                         <ul className="list-disc pl-5 space-y-2">

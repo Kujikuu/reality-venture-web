@@ -1,7 +1,7 @@
 {
-  "pageTitle": "Terms of Service",
+  "pageTitle": "Terms, Conditions, and Admission Criteria",
   "legal": {
-    "pageTitle": "Terms of Service"
+    "pageTitle": "Terms, Conditions, and Admission Criteria"
   },
   "privacyPolicy": {
     "pageTitle": "Privacy Policy",
@@ -10,9 +10,9 @@
       "title": "Privacy <span class='text-primary'>Policy</span>",
       "description": "We respect your data and are committed to protecting it with clear, transparent practices.",
       "lastUpdatedLabel": "Last updated",
-      "lastUpdated": "January 2026",
+      "lastUpdated": "April 2026",
       "contactLabel": "For questions, contact",
-      "contactEmail": "privacy@rv.com.sa"
+      "contactEmail": "be@rv.com.sa"
     },
     "intro": "At Reality Venture, we take your privacy seriously. This policy describes how we collect, use, and protect your personal information when you use our website and apply to our programs.",
     "sections": [
@@ -48,8 +48,19 @@
         "content": "We implement reasonable security measures to protect your information. However, no method of transmission over the Internet is 100% secure."
       },
       {
+        "id": "use-of-information",
+        "title": "5. Use of Information and Data",
+        "items": [
+          "The Applicant expressly grants the Program the right to collect, use, process, store, and analyze all information and data provided during the application or participation, for purposes including but not limited to evaluation, operations, development, reporting, and program-related activities.",
+          "The Program may use non-confidential information, or information disclosed with the Applicant's consent, for promotional and communication purposes, including but not limited to websites, marketing materials, reports, and presentations.",
+          "The Program may share such information with its partners, investors, or relevant stakeholders, provided that confidentiality obligations are respected where applicable, for purposes related to program development, support, or evaluation.",
+          "This clause does not constitute a transfer of ownership of any information or intellectual property but represents a limited license for use within the scope of the Program.",
+          "The Program shall not publicly disclose confidential information without prior written consent from the Applicant unless required by applicable laws or competent authorities."
+        ]
+      },
+      {
         "id": "contact-us",
-        "title": "5. Contact Us",
+        "title": "6. Contact Us",
         "content": "If you have questions about this policy, please contact us at",
         "email": "privacy@rv.com.sa"
       }
@@ -57,45 +68,134 @@
   },
   "termsOfService": {
     "hero": {
-      "badge": "Terms",
-      "title": "Terms of <span class='text-primary'>Service</span>",
-      "description": "These terms outline the rules, responsibilities, and limitations for using our site and services.",
+      "badge": "Terms & Conditions",
+      "title": "Terms, Conditions & <span class='text-primary'>Admission Criteria</span>",
+      "description": "Reality Venture Accelerator Program",
       "lastUpdatedLabel": "Last updated",
-      "lastUpdated": "January 2026",
+      "lastUpdated": "April 2026",
       "contactLabel": "For questions, contact",
-      "contactEmail": "legal@rv.com.sa"
+      "contactEmail": "be@rv.com.sa"
     },
-    "intro": "Welcome to Reality Venture. By accessing our website and services, you agree to be bound by these Terms of Service.",
+    "intro": "Terms, Conditions, and Admission Criteria for the Reality Venture Accelerator Program. Please read carefully before applying.",
     "sections": [
       {
-        "id": "acceptance",
-        "title": "1. Acceptance of Terms",
-        "content": "By accessing or using our website, you agree to these Terms. If you do not agree, you may not use our services."
+        "id": "definitions",
+        "title": "1. Definitions",
+        "intro": "For the purposes of this Agreement, the following terms shall have the meanings assigned to them below unless the context requires otherwise:",
+        "definitions": [
+          { "term": "Program", "definition": "Reality Venture Accelerator Program in all its current and future components, activities, and operations." },
+          { "term": "Management", "definition": "The owning, operating, or authorized entity managing the Program, including its representatives and personnel." },
+          { "term": "Applicant", "definition": "Any natural or legal person applying to join the Program." },
+          { "term": "Project", "definition": "The idea, business, product, or service subject to the application." },
+          { "term": "Confidential Information", "definition": "Any non-public information disclosed by any means." }
+        ]
       },
       {
-        "id": "use-of-services",
-        "title": "2. Use of Services",
-        "content": "You agree to use our website only for lawful purposes. You must not use our website to transmit any malicious code, spam, or engage in any activity that interferes with the proper working of the site."
+        "id": "general-eligibility",
+        "title": "2. General Eligibility",
+        "items": [
+          "The Applicant must be a founder or co-founder and warrants the legal validity of such status.",
+          "The Applicant shall provide accurate, complete, and final information and shall bear full legal liability for any false or misleading information. The Management reserves the right to disqualify the Applicant immediately without notice or liability.",
+          "The Project must demonstrate a minimum level of readiness (viable idea or existing business with an initial business model), as determined solely by Management.",
+          "The Applicant confirms the absence of any material legal dispute or regulatory violation and acknowledges Management's right to verify without obligation to disclose findings.",
+          "The Applicant must comply with the Program's defined geographic scope (if applicable), and any breach constitutes grounds for rejection or termination."
+        ]
+      },
+      {
+        "id": "specific",
+        "title": "3. Specific",
+        "subsections": [
+          { "subtitle": "Project Stage", "content": "Acceptance of the Project stage is subject to the sole and absolute discretion of Management without obligation of justification or equal treatment." },
+          { "subtitle": "Project Domain", "content": "Management reserves the unrestricted right to accept or reject any industry, activity, or sector without explanation. All decisions are final and binding." },
+          { "subtitle": "Innovation and Value", "content": "Assessment of value and innovation is solely determined by Management. The Applicant has no right to challenge or request justification." },
+          { "subtitle": "Scalability", "content": "Management may reject any Project that does not meet scalability expectations at its sole discretion." },
+          { "subtitle": "Team", "content": "Evaluation of team competence is solely determined by Management, which may disqualify any Applicant without explanation." },
+          { "subtitle": "Investment Readiness", "content": "No evaluation outcome shall create any explicit or implied obligation for the Program to invest or provide funding." },
+          { "subtitle": "Commitment", "content": "Accepted Applicants must comply with all Program requirements. Any breach constitutes sufficient grounds for immediate removal without notice or compensation." }
+        ]
+      },
+      {
+        "id": "evaluation-criteria",
+        "title": "4. Evaluation Criteria",
+        "items": [
+          "Applications are subject to a purely discretionary internal evaluation process.",
+          "Management reserves the right to modify, interpret, or cancel evaluation criteria at any time without notice.",
+          "Applicants have no right to object, request clarification, or seek review.",
+          "All evaluation decisions are final, binding, and non-appealable."
+        ]
+      },
+      {
+        "id": "admission-process",
+        "title": "5. Admission Process",
+        "items": [
+          "Admission is subject to the sole and absolute discretion of Management.",
+          "Submission of an application does not create any legal right, entitlement, or obligation.",
+          "The Program is under no obligation to request documents, conduct interviews, or engage in discussions.",
+          "The Program is not obligated to enter into negotiations or communications.",
+          "No communication shall be deemed acceptance unless issued through a formal written approval."
+        ]
+      },
+      {
+        "id": "representations",
+        "title": "6. Representations and Acknowledgments",
+        "items": [
+          "The Applicant irrevocably and unconditionally agrees to all terms herein.",
+          "This document constitutes a legally binding agreement and represents the entire understanding between the parties.",
+          "The Applicant expressly waives any right to claims, objections, or compensation.",
+          "All decisions made by Management are final and not subject to challenge by any means."
+        ]
+      },
+      {
+        "id": "limitation-of-liability",
+        "title": "7. Limitation of Liability",
+        "items": [
+          "The Program disclaims all liability for any direct, indirect, incidental, or consequential damages.",
+          "The Program bears no responsibility for participation outcomes or rejection.",
+          "The Program has no obligation to provide funding, investment, or support.",
+          "The Applicant bears full responsibility for all decisions and consequences."
+        ]
       },
       {
         "id": "intellectual-property",
-        "title": "3. Intellectual Property",
-        "content": "The content, features, and functionality of this website, including text, graphics, logos, and software, are the exclusive property of Reality Venture and are protected by copyright and other intellectual property laws."
+        "title": "8. Intellectual Property",
+        "items": [
+          "Each party retains full ownership of its intellectual property rights.",
+          "No rights, licenses, or ownership transfers arise from application or participation unless expressly agreed in writing.",
+          "All Program materials, methodologies, and content are protected and may not be used, reproduced, or distributed without prior written consent.",
+          "Any unauthorized use may result in legal action."
+        ]
       },
       {
-        "id": "applications",
-        "title": "4. Applications",
-        "content": "Submission of an application does not guarantee acceptance into any Reality Venture program. We reserve the right to accept or reject any applicant at our sole discretion."
+        "id": "confidentiality",
+        "title": "9. Confidentiality & Non-Disclosure (NDA)",
+        "items": [
+          "Both parties shall maintain strict confidentiality of all non-public information disclosed.",
+          "Confidential Information includes, but is not limited to: business plans, financials, strategies, technical data, and operational information.",
+          "No disclosure to any third party is permitted without prior written consent, unless required by law.",
+          "Confidential Information shall be used solely for evaluation or participation purposes.",
+          "Confidentiality obligations shall remain in effect for a minimum of three (3) years or as otherwise agreed in writing.",
+          "The Program reserves the right to take legal action in case of breach."
+        ]
       },
       {
-        "id": "limitation",
-        "title": "5. Limitation of Liability",
-        "content": "Reality Venture shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of, or inability to access or use, our services."
+        "id": "supplemental-terms",
+        "title": "10. Supplemental Terms and Amendments",
+        "items": [
+          "Management reserves the absolute right to amend, add, or remove any provisions at any time without prior notice.",
+          "Any future policies, conditions, or requirements shall be deemed an integral and binding part of this Agreement.",
+          "Continued participation or engagement constitutes explicit acceptance of all modifications.",
+          "In case of conflict, Management's interpretation shall prevail and be binding."
+        ]
       },
       {
-        "id": "changes",
-        "title": "6. Changes to Terms",
-        "content": "We reserve the right to modify these terms at any time. We will provide notice of significant changes by updating the date at the top of this policy."
+        "id": "general-provisions",
+        "title": "11. General Provisions",
+        "items": [
+          "This Agreement shall be governed by the laws and regulations of the Kingdom of Saudi Arabia.",
+          "Competent courts within the Kingdom shall have exclusive jurisdiction over any dispute.",
+          "This document constitutes the entire agreement and supersedes all prior understandings.",
+          "If any provision is deemed invalid, the remaining provisions shall remain in full force and effect."
+        ]
       }
     ]
   }
