@@ -555,9 +555,9 @@ export default function StartupApplication() {
                   <Button type="submit" className="w-full md:w-auto h-14 px-8" withArrow disabled={processing}>
                     {processing ? t('startup-application:form.submitting') : t('startup-application:form.submit')}
                   </Button>
-                  <p className="text-xs text-gray-400">
+                  {/* <p className="text-xs text-gray-400">
                     {t('startup-application:form.agreement')} {t('common:footer.privacyPolicy')} {t('common:and')} {t('common:footer.termsOfService')}.
-                  </p>
+                  </p> */}
                 </div>
               </form>
             </div>

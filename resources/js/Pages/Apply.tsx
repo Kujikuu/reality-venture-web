@@ -279,12 +279,12 @@ export default function Apply() {
                                               )
                                             : t("apply:form.submit")}
                                     </Button>
-                                    <p className="text-xs text-gray-400">
+                                    {/* <p className="text-xs text-gray-400">
                                         {t("apply:form.agreement")}{" "}
                                         {t("common:footer.privacyPolicy")}{" "}
                                         {t("common:and")}{" "}
                                         {t("common:footer.termsOfService")}.
-                                    </p>
+                                    </p> */}
                                 </div>
                             </form>
                         </div>
