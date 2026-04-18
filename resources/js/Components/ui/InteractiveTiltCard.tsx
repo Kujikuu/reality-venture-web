@@ -7,6 +7,7 @@ interface InteractiveTiltCardProps {
   perspective?: number;
   scaleOnHover?: number;
   parallaxDepth?: number;
+  onClick?: () => void;
 }
 
 interface TiltState {
@@ -38,6 +39,7 @@ export const InteractiveTiltCard: React.FC<InteractiveTiltCardProps> = ({
   perspective = 1000,
   scaleOnHover = 1.02,
   parallaxDepth = 5,
+  onClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState<TiltState>(IDLE_STATE);
@@ -122,7 +124,11 @@ export const InteractiveTiltCard: React.FC<InteractiveTiltCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className={`will-change-transform rounded-3xl ${className}`}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined}
+      className={`will-change-transform rounded-3xl ${className}${onClick ? ' cursor-pointer' : ''}`}
       style={{
         transform: tilt.transform,
         boxShadow: tilt.shadow,

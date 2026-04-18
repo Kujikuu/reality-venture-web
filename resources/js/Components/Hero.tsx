@@ -73,7 +73,12 @@ export const Hero: React.FC = () => {
             variants={heroItemVariants}
             className="hidden lg:flex justify-center items-center"
           >
-            <InteractiveTiltCard className="w-full max-w-lg aspect-square">
+            <InteractiveTiltCard className="w-full max-w-lg aspect-square" onClick={() => {
+                const element = document.getElementById('programs');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}>
               <div className="relative w-full h-full">
                 {/* Main Card */}
                 <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white via-primary-50/30 to-white border border-primary-100/50 shadow-xl overflow-hidden">
