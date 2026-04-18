@@ -59,7 +59,7 @@ class PageController extends Controller
     public function applicationForm(): Response
     {
         Inertia::share('seo', fn () => [
-            'title' => 'Startup Hub Application',
+            'title' => 'Startup Hub',
             'description' => 'Apply to join Reality Venture accelerator program and connect with expert consultants to grow your startup.',
             'canonical' => url('/startuphub'),
             'ogImage' => asset('images/og-default.jpg'),
