@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -45,10 +46,16 @@ class AdBannerForm
                             ->helperText('Recommended size: 1440x480px. Max 5MB.'),
                         TextInput::make('link_url')
                             ->label('Link URL')
-                            ->url()
                             ->maxLength(500)
-                            ->placeholder('https://example.com')
-                            ->prefixIcon('heroicon-o-link'),
+                            ->placeholder('https://example.com, /page, or #section')
+                            ->prefixIcon('heroicon-o-link')
+                            ->live(),
+                        Toggle::make('external')
+                            ->label('External Link')
+                            ->default(true)
+                            ->inline(false)
+                            ->helperText('Open in new tab (external URLs) vs same window (internal/anchors)')
+                            ->visible(fn (Get $get): bool => ! empty($get('link_url'))),
                         TextInput::make('alt_text')
                             ->label('Alt Text')
                             ->maxLength(255)

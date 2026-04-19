@@ -38,6 +38,7 @@ class PageController extends Controller
                 'title' => $banner->title,
                 'image_url' => asset('storage/'.$banner->image_path),
                 'link_url' => $banner->link_url,
+                'external' => $banner->external,
                 'alt_text' => $banner->alt_text ?? $banner->title,
                 'position' => $banner->position->value,
             ]));

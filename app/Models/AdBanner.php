@@ -16,6 +16,7 @@ class AdBanner extends Model
         'title',
         'image_path',
         'link_url',
+        'external',
         'position',
         'is_active',
         'display_order',
@@ -31,6 +32,7 @@ class AdBanner extends Model
         return [
             'position' => BannerPosition::class,
             'is_active' => 'boolean',
+            'external' => 'boolean',
             'starts_at' => 'datetime',
             'ends_at' => 'datetime',
             'click_count' => 'integer',
