@@ -172,9 +172,9 @@ export const AdBanner: React.FC<AdBannerProps> = ({ position, className = '', in
                 </motion.div>
               )}
             </AnimatePresence>
-            <div className="absolute top-2 right-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-medium text-gray-500 uppercase tracking-wider shadow-xs z-10">
+            {/* <div className="absolute top-2 right-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-medium text-gray-500 uppercase tracking-wider shadow-xs z-10">
               Ad
-            </div>
+            </div> */}
           </div>
           {items.length > 1 && (
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
