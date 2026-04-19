@@ -68,10 +68,10 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
   const sanitizedContent = content ? DOMPurify.sanitize(content, {
     ADD_TAGS: ['iframe', 'video', 'source', 'figure', 'figcaption'],
     ADD_ATTR: [
-      'allow', 'allowfullscreen', 'frameborder', 'scrolling',
-      'src', 'width', 'height', 'loading', 'title',
-      'controls', 'autoplay', 'muted', 'loop', 'poster',
-      'type', 'referrerpolicy',
+        'allow', 'allowfullscreen', 'frameborder', 'scrolling',
+        'src', 'width', 'height', 'loading', 'title',
+        'controls', 'autoplay', 'muted', 'loop', 'poster',
+        'type', 'referrerpolicy', 'target', 'rel',
     ],
   }) : '';
 
