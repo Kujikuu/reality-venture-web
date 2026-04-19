@@ -1,9 +1,10 @@
 import { Link } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Hash, User, Share2, Lock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Calendar, Hash, User, Share2, Lock, Check, Copy, ExternalLink } from 'lucide-react';
 import DOMPurify from 'dompurify';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { sectionVariants, staggerContainer } from '../Components/animations/CommonAnimations';
 import { BlogCard } from '../Components/BlogCard';
 import { RvClubGate } from '../Components/RvClubGate';
@@ -18,14 +19,24 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
   const { t, i18n } = useTranslation('blog');
   const isArabic = i18n.language === 'ar';
 
+  const [shareOpen, setShareOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const shareRef = useRef<HTMLDivElement>(null);
+
   const title = isArabic ? post.title_ar : post.title_en;
   const content = isArabic ? post.content_ar : post.content_en;
+  const excerpt = isArabic
+    ? (post.excerpt_ar || post.excerpt_en)
+    : (post.excerpt_en || post.excerpt_ar);
   const categoryName = post.category
     ? (isArabic ? post.category.name_ar : post.category.name_en)
     : null;
 
   const isGated = post.is_rv_club_only === true;
   const hasAccess = post.has_access !== false;
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = excerpt || title;
 
   const formattedDate = new Date(post.published_at).toLocaleDateString(
     isArabic ? 'ar-SA' : 'en-US',
@@ -66,23 +77,43 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
 
   DOMPurify.removeHook('uponSanitizeElement');
 
-  const handleShare = async () => {
-    try {
-      const shareData = {
-        title: title,
-        text: excerpt || title,
-        url: window.location.href,
-      };
-
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
+  useEffect(() => {
+    if (!shareOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+        setShareOpen(false);
       }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShareOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [shareOpen]);
+
+  const handleCopyLink = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
-      // User cancelled share or clipboard access denied
+      // Clipboard access denied
     }
-  };
+  }, [shareUrl]);
+
+  const handleNativeShare = useCallback(async () => {
+    try {
+      await navigator.share({ title, text: shareText, url: shareUrl });
+    } catch {
+      // User cancelled
+    }
+  }, [title, shareText, shareUrl]);
+
+  const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   return (
     <>
@@ -145,13 +176,82 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
                   <Calendar className="w-4 h-4" />
                   {formattedDate}
                 </span>
-                <button
-                  onClick={handleShare}
-                  className="flex items-center gap-1.5 hover:text-primary transition-colors"
-                >
-                  <Share2 className="w-4 h-4" />
-                  {t('sharePost')}
-                </button>
+                <div className="relative" ref={shareRef}>
+                  <button
+                    onClick={() => canNativeShare ? handleNativeShare() : setShareOpen(!shareOpen)}
+                    className="flex items-center gap-1.5 hover:text-primary transition-colors"
+                    aria-label={t('sharePost')}
+                  >
+                    <Share2 className="w-4 h-4" />
+                    {t('sharePost')}
+                  </button>
+
+                  <AnimatePresence>
+                    {shareOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -4, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute end-0 top-full mt-2 w-52 bg-white rounded-lg shadow-lg border border-gray-100 py-1.5 z-50"
+                      >
+                        <button
+                          onClick={handleCopyLink}
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-start"
+                        >
+                          {copied ? (
+                            <Check className="w-4 h-4 text-green-600" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-gray-400" />
+                          )}
+                          {copied ? t('shareCopied') : t('shareCopyLink')}
+                        </button>
+
+                        <div className="h-px bg-gray-100 my-1" />
+
+                        <a
+                          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4 text-gray-400" />
+                          X / Twitter
+                        </a>
+
+                        <a
+                          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4 text-gray-400" />
+                          LinkedIn
+                        </a>
+
+                        <a
+                          href={`https://wa.me/?text=${encodeURIComponent(title + ' ' + shareUrl)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4 text-gray-400" />
+                          WhatsApp
+                        </a>
+
+                        <a
+                          href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4 text-gray-400" />
+                          Telegram
+                        </a>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
           </div>
