@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, CheckCircle2, ArrowLeft, Send } from "lucide-react";
+import { Lock, Info, ArrowLeft, Send } from "lucide-react";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -10,28 +10,25 @@ import { MultiSelect } from "./ui/MultiSelect";
 import { Checkbox } from "./ui/Checkbox";
 import { Button } from "./ui/Button";
 import { sectionVariants } from "./animations/CommonAnimations";
+import { INTEREST_OPTIONS } from "../lib/newsletter";
 
 interface RvClubGateProps {
     postSlug: string;
 }
 
-const INTEREST_OPTIONS = [
-    { value: "startups", labelKey: "common:newsletter.interests.options.startups" },
-    { value: "proptech", labelKey: "common:newsletter.interests.options.proptech" },
-    { value: "investment", labelKey: "common:newsletter.interests.options.investment" },
-    { value: "venture_building", labelKey: "common:newsletter.interests.options.ventureBuilding" },
-    { value: "technology", labelKey: "common:newsletter.interests.options.technology" },
-    { value: "real_estate", labelKey: "common:newsletter.interests.options.realEstate" },
-    { value: "entrepreneurship", labelKey: "common:newsletter.interests.options.entrepreneurship" },
-    { value: "innovation", labelKey: "common:newsletter.interests.options.innovation" },
-    { value: "games", labelKey: "common:newsletter.interests.options.games" },
-    { value: "sport", labelKey: "common:newsletter.interests.options.sport" },
-    { value: "hospitality", labelKey: "common:newsletter.interests.options.hospitality" },
-    { value: "foodAndBeverage", labelKey: "common:newsletter.interests.options.foodAndBeverage" },
-    { value: "healthcare", labelKey: "common:newsletter.interests.options.healthcare" },
-    { value: "aiAndTech", labelKey: "common:newsletter.interests.options.aiAndTech" },
-    { value: "manufacturing", labelKey: "common:newsletter.interests.options.manufacturing" },
-];
+const stepVariants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { type: "spring", stiffness: 100, damping: 16 },
+    },
+    exit: {
+        opacity: 0,
+        y: -8,
+        transition: { duration: 0.15 },
+    },
+};
 
 export const RvClubGate: React.FC<RvClubGateProps> = ({
     postSlug,
@@ -133,7 +130,7 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
                 {t("blog:rvClub.exclusive")}
             </span>
 
-            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900 mb-2">
+            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900 mb-4">
                 {t("common:newsletter.home.clubHeading")}
             </h2>
 
@@ -145,14 +142,14 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
                 {step === 1 ? (
                     <motion.form
                         key="step1"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
+                        variants={stepVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                         onSubmit={handleEmailCheck}
                         className="w-full mx-auto mt-6"
                     >
-                        <div className="flex flex-col gap-5 w-full">
+                        <div className="flex flex-col gap-4 w-full">
                             <Input
                                 type="email"
                                 required
@@ -176,16 +173,16 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
                 ) : (
                     <motion.form
                         key="step2"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
+                        variants={stepVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                         onSubmit={handleSubscribe}
                         className="w-full mx-auto mt-6"
                     >
-                        <div className="flex flex-col gap-5 w-full">
+                        <div className="flex flex-col gap-4 w-full">
                             <p className="text-sm text-gray-500 flex items-center gap-1.5 justify-center">
-                                <CheckCircle2 className="w-4 h-4 text-gray-400" />
+                                <Info className="w-4 h-4 text-gray-400" />
                                 {t("blog:rvClub.notFound")}
                             </p>
 

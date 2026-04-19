@@ -20,7 +20,6 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
 
   const title = isArabic ? post.title_ar : post.title_en;
   const content = isArabic ? post.content_ar : post.content_en;
-  const excerpt = isArabic ? (post.excerpt_ar || post.excerpt_en) : (post.excerpt_en || post.excerpt_ar);
   const categoryName = post.category
     ? (isArabic ? post.category.name_ar : post.category.name_en)
     : null;
@@ -55,7 +54,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
     }
   });
 
-  const sanitizedContent = content ? DOMPurify.sanitize(content || '', {
+  const sanitizedContent = content ? DOMPurify.sanitize(content, {
     ADD_TAGS: ['iframe', 'video', 'source', 'figure', 'figcaption'],
     ADD_ATTR: [
       'allow', 'allowfullscreen', 'frameborder', 'scrolling',

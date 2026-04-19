@@ -8,6 +8,7 @@ import { Input } from "./ui/Input";
 import { Select } from "./ui/Select";
 import { Checkbox } from "./ui/Checkbox";
 import { Button } from "./ui/Button";
+import { INTEREST_OPTIONS } from "../lib/newsletter";
 
 interface NewsletterSubscribeProps {
     heading?: string;
@@ -17,69 +18,6 @@ interface NewsletterSubscribeProps {
     className?: string;
     sectionId?: string;
 }
-
-const INTEREST_OPTIONS = [
-    {
-        value: "startups",
-        labelKey: "common:newsletter.interests.options.startups",
-    },
-    {
-        value: "proptech",
-        labelKey: "common:newsletter.interests.options.proptech",
-    },
-    {
-        value: "investment",
-        labelKey: "common:newsletter.interests.options.investment",
-    },
-    {
-        value: "venture_building",
-        labelKey: "common:newsletter.interests.options.ventureBuilding",
-    },
-    {
-        value: "technology",
-        labelKey: "common:newsletter.interests.options.technology",
-    },
-    {
-        value: "real_estate",
-        labelKey: "common:newsletter.interests.options.realEstate",
-    },
-    {
-        value: "entrepreneurship",
-        labelKey: "common:newsletter.interests.options.entrepreneurship",
-    },
-    {
-        value: "innovation",
-        labelKey: "common:newsletter.interests.options.innovation",
-    },
-    {
-        value: "games",
-        labelKey: "common:newsletter.interests.options.games",
-    },
-    {
-        value: "sport",
-        labelKey: "common:newsletter.interests.options.sport",
-    },
-    {
-        value: "hospitality",
-        labelKey: "common:newsletter.interests.options.hospitality",
-    },
-    {
-        value: "foodAndBeverage",
-        labelKey: "common:newsletter.interests.options.foodAndBeverage",
-    },
-    {
-        value: "healthcare",
-        labelKey: "common:newsletter.interests.options.healthcare",
-    },
-    {
-        value: "aiAndTech",
-        labelKey: "common:newsletter.interests.options.aiAndTech",
-    },
-    {
-        value: "manufacturing",
-        labelKey: "common:newsletter.interests.options.manufacturing",
-    },
-];
 
 const DEFAULT_BACKGROUND = "/assets/images/newsletter-bg.jpg";
 
