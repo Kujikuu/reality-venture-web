@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { Calendar, User } from 'lucide-react';
+import { Calendar, User, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cardVariants } from './animations/CommonAnimations';
 import type { BlogPost } from '../types';
@@ -48,11 +48,19 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         {/* Content */}
         <div className="p-5">
           {/* Category Badge */}
-          {categoryName && (
-            <span className="inline-block text-xs font-semibold text-primary bg-primary-50 px-3 py-1 rounded-full mb-3">
-              {categoryName}
-            </span>
-          )}
+          <div className="flex items-center gap-2 flex-wrap mb-3">
+            {post.is_rv_club_only && (
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-secondary bg-secondary-50 px-3 py-1 rounded-full">
+                <Lock className="w-3 h-3" />
+                {t('rvClub.badge')}
+              </span>
+            )}
+            {categoryName && (
+              <span className="inline-block text-xs font-semibold text-primary bg-primary-50 px-3 py-1 rounded-full">
+                {categoryName}
+              </span>
+            )}
+          </div>
 
           {/* Title */}
           <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">

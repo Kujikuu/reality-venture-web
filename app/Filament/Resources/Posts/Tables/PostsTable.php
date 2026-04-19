@@ -8,6 +8,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -39,6 +40,13 @@ class PostsTable
                     ->badge()
                     ->formatStateUsing(fn (PostStatus $state): string => $state->label())
                     ->color(fn (PostStatus $state): string => $state->color()),
+                IconColumn::make('is_rv_club_only')
+                    ->label('RV Club')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-lock-closed')
+                    ->falseIcon('heroicon-o-lock-open')
+                    ->trueColor('warning')
+                    ->falseColor('gray'),
                 TextColumn::make('published_at')
                     ->label('Published')
                     ->dateTime('M d, Y')

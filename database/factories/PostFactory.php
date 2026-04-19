@@ -57,4 +57,11 @@ class PostFactory extends Factory
             'published_at' => fake()->dateTimeBetween('+1 day', '+1 month'),
         ]);
     }
+
+    public function rvClubOnly(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_rv_club_only' => true,
+        ]);
+    }
 }

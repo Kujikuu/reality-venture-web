@@ -11,6 +11,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -156,6 +157,10 @@ class PostForm
                             ->nullable()
                             ->native(false)
                             ->prefixIcon('heroicon-o-calendar'),
+                        Toggle::make('is_rv_club_only')
+                            ->label('RV Club Only')
+                            ->helperText('Restricts this post to RV Club subscribers only.')
+                            ->default(false),
                     ]),
                 Section::make('Media')
                     ->description('Upload post images.')

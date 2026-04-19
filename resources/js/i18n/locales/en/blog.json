@@ -19,5 +19,15 @@
     "title": "Latest Insights",
     "subtitle": "Stay updated with our latest articles, news, and thought leadership.",
     "viewAll": "View All Posts"
+  },
+  "rvClub": {
+    "badge": "RV Club",
+    "exclusive": "RV Club Exclusive",
+    "description": "This content is available exclusively to RV Club subscribers. Enter your email to check your access.",
+    "emailPlaceholder": "Enter your email to check access",
+    "unlock": "Unlock",
+    "notFound": "You're not a subscriber yet. Fill the form below to join the RV Club.",
+    "checkError": "Something went wrong. Please try again.",
+    "backToEmail": "Back to email"
   }
 }

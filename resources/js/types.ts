@@ -39,12 +39,14 @@ export interface BlogPost {
   slug: string;
   excerpt_en: string | null;
   excerpt_ar: string | null;
-  content_en?: string;
-  content_ar?: string;
+  content_en?: string | null;
+  content_ar?: string | null;
   featured_image: string | null;
   meta_title?: string | null;
   meta_description?: string | null;
   og_image?: string | null;
+  is_rv_club_only?: boolean;
+  has_access?: boolean;
   published_at: string;
   author: {
     name: string;

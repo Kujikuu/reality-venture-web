@@ -33,6 +33,7 @@ class Post extends Model implements HasRichContent
         'meta_description',
         'og_image',
         'status',
+        'is_rv_club_only',
         'published_at',
     ];
 
@@ -40,6 +41,7 @@ class Post extends Model implements HasRichContent
     {
         return [
             'status' => PostStatus::class,
+            'is_rv_club_only' => 'boolean',
             'published_at' => 'datetime',
         ];
     }
@@ -94,6 +96,7 @@ class Post extends Model implements HasRichContent
             'featured_image' => $this->featured_image
                 ? asset('storage/'.$this->featured_image)
                 : null,
+            'is_rv_club_only' => $this->is_rv_club_only,
             'published_at' => $this->published_at->toISOString(),
             'author' => ['name' => $this->author->name],
             'category' => $this->category ? [

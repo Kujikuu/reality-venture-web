@@ -2,10 +2,11 @@ import { Link } from '@inertiajs/react';
 import { SEO } from '../Components/SEO';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Hash, User, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar, Hash, User, Share2, Lock } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { sectionVariants, staggerContainer } from '../Components/animations/CommonAnimations';
 import { BlogCard } from '../Components/BlogCard';
+import { RvClubGate } from '../Components/RvClubGate';
 import type { BlogPost as BlogPostType } from '../types';
 
 interface BlogPostPageProps {
@@ -23,6 +24,9 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
   const categoryName = post.category
     ? (isArabic ? post.category.name_ar : post.category.name_en)
     : null;
+
+  const isGated = post.is_rv_club_only === true;
+  const hasAccess = post.has_access !== false;
 
   const formattedDate = new Date(post.published_at).toLocaleDateString(
     isArabic ? 'ar-SA' : 'en-US',
@@ -51,7 +55,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
     }
   });
 
-  const sanitizedContent = DOMPurify.sanitize(content || '', {
+  const sanitizedContent = content ? DOMPurify.sanitize(content || '', {
     ADD_TAGS: ['iframe', 'video', 'source', 'figure', 'figcaption'],
     ADD_ATTR: [
       'allow', 'allowfullscreen', 'frameborder', 'scrolling',
@@ -59,7 +63,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
       'controls', 'autoplay', 'muted', 'loop', 'poster',
       'type', 'referrerpolicy',
     ],
-  });
+  }) : '';
 
   DOMPurify.removeHook('uponSanitizeElement');
 
@@ -109,14 +113,22 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
                   {t('backToBlog')}
                 </Link>
 
-                {categoryName && (
-                  <Link
-                    href={`/blog?category=${post.category!.slug}`}
-                    className="inline-block text-xs font-semibold text-primary bg-primary-50 px-3 py-1 rounded-full hover:bg-primary-100 transition-colors"
-                  >
-                    {categoryName}
-                  </Link>
-                )}
+                <div className="flex items-center gap-2">
+                  {isGated && (
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-secondary bg-secondary-50 px-3 py-1 rounded-full">
+                      <Lock className="w-3 h-3" />
+                      {t('rvClub.badge')}
+                    </span>
+                  )}
+                  {categoryName && (
+                    <Link
+                      href={`/blog?category=${post.category!.slug}`}
+                      className="inline-block text-xs font-semibold text-primary bg-primary-50 px-3 py-1 rounded-full hover:bg-primary-100 transition-colors"
+                    >
+                      {categoryName}
+                    </Link>
+                  )}
+                </div>
               </div>
 
               {/* Title */}
@@ -162,27 +174,44 @@ export default function BlogPost({ post, relatedPosts }: BlogPostPageProps) {
         {/* Content */}
         <section className="py-16 lg:py-24">
           <div className="max-w-3xl mx-auto px-6 lg:px-8">
-            <div
-              className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-            />
-
-            {/* Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="mt-10 pt-8 border-t border-gray-100">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Hash className="w-4 h-4 text-gray-400" />
-                  {post.tags.map((tag) => (
-                    <Link
-                      key={tag.slug}
-                      href={`/blog?tag=${tag.slug}`}
-                      className="text-xs font-medium text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-primary-50 hover:text-primary transition-colors"
-                    >
-                      {isArabic ? tag.name_ar : tag.name_en}
-                    </Link>
-                  ))}
+            {isGated && !hasAccess ? (
+              <>
+                {/* Preview: first ~3 lines with fade */}
+                <div className="relative">
+                  <div
+                    className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline max-h-[6.5rem] overflow-hidden"
+                    dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-white pointer-events-none" />
                 </div>
-              </div>
+
+                <RvClubGate postSlug={post.slug} />
+              </>
+            ) : (
+              <>
+                <div
+                  className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
+                  dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                />
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="mt-10 pt-8 border-t border-gray-100">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Hash className="w-4 h-4 text-gray-400" />
+                      {post.tags.map((tag) => (
+                        <Link
+                          key={tag.slug}
+                          href={`/blog?tag=${tag.slug}`}
+                          className="text-xs font-medium text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-primary-50 hover:text-primary transition-colors"
+                        >
+                          {isArabic ? tag.name_ar : tag.name_en}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>
