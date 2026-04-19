@@ -17,7 +17,7 @@ const HIDE_SHELL_PAGES = [
 const HIDE_FOOTER_NEWSLETTER_PAGES = [
     'Home',
     'Blog',
-    'BlogPost',
+    // 'BlogPost',
 ];
 
 function AppLayout({ children }: { children: React.ReactNode }) {
