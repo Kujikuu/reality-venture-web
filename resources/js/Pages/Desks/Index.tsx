@@ -20,6 +20,7 @@ interface Pricing {
 
 interface Workspace {
     id: number;
+    slug: string;
     type: string;
     name: string;
     city: string;
