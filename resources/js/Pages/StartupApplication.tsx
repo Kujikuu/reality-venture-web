@@ -344,7 +344,7 @@ export default function StartupApplication() {
                   <Select
                     label={t('startup-application:form.city')}
                     value={data.city}
-                    onChange={(e) => setData('city', e.target.value)}
+                    onChange={(value) => setData('city', value)}
                     options={cityOptions}
                     placeholder={t('startup-application:form.cityPlaceholder')}
                     error={errorText('city', errors.city)}
@@ -368,7 +368,7 @@ export default function StartupApplication() {
                   <Select
                     label={t('startup-application:form.businessStage')}
                     value={data.business_stage}
-                    onChange={(e) => setData('business_stage', e.target.value)}
+                    onChange={(value) => setData('business_stage', value)}
                     options={businessStageOptions}
                     placeholder={t('startup-application:form.businessStagePlaceholder')}
                     error={errorText('business_stage', errors.business_stage)}
@@ -397,7 +397,7 @@ export default function StartupApplication() {
                     <Select
                       label={t('startup-application:form.hqCountry')}
                       value={data.hq_country}
-                      onChange={(e) => setData('hq_country', e.target.value)}
+                      onChange={(value) => setData('hq_country', value)}
                       options={countryOptions}
                       placeholder={t('startup-application:form.hqCountryPlaceholder')}
                       error={errorText('hq_country', errors.hq_country)}
@@ -416,13 +416,13 @@ export default function StartupApplication() {
                     <div className="grid grid-cols-2 gap-6">
                       <Select
                         value={data.founded_month}
-                        onChange={(e) => setData('founded_month', e.target.value)}
+                        onChange={(value) => setData('founded_month', value)}
                         options={monthOptions}
                         placeholder={t('startup-application:form.foundedDateMonth')}
                       />
                       <Select
                         value={data.founded_year}
-                        onChange={(e) => setData('founded_year', e.target.value)}
+                        onChange={(value) => setData('founded_year', value)}
                         options={yearOptions}
                         placeholder={t('startup-application:form.foundedDateYear')}
                       />
@@ -433,7 +433,7 @@ export default function StartupApplication() {
                   <Select
                     label={t('startup-application:form.industry')}
                     value={data.industry}
-                    onChange={(e) => setData('industry', e.target.value)}
+                    onChange={(value) => setData('industry', value)}
                     options={industryOptions}
                     placeholder={t('startup-application:form.industryPlaceholder')}
                     error={errorText('industry', errors.industry)}
@@ -482,7 +482,7 @@ export default function StartupApplication() {
                   <Select
                     label={t('startup-application:form.currentFundingRound')}
                     value={data.current_funding_round}
-                    onChange={(e) => setData('current_funding_round', e.target.value)}
+                    onChange={(value) => setData('current_funding_round', value)}
                     options={fundingRoundOptions}
                     placeholder={t('startup-application:form.currentFundingRoundPlaceholder')}
                     error={errorText('current_funding_round', errors.current_funding_round)}
@@ -534,7 +534,7 @@ export default function StartupApplication() {
                   <Select
                     label={t('startup-application:form.discoverySource')}
                     value={data.discovery_source}
-                    onChange={(e) => setData('discovery_source', e.target.value)}
+                    onChange={(value) => setData('discovery_source', value)}
                     options={discoverySourceOptions}
                     placeholder={t('startup-application:form.discoverySourcePlaceholder')}
                     error={errorText('discovery_source', errors.discovery_source)}

@@ -224,9 +224,7 @@ export default function Apply() {
                                 <Select
                                     label={t("apply:form.city")}
                                     value={data.city}
-                                    onChange={(e) =>
-                                        setData("city", e.target.value)
-                                    }
+                                    onChange={(value) => setData("city", value)}
                                     options={cityOptions}
                                     placeholder={t(
                                         "apply:form.cityPlaceholder",

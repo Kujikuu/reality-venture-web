@@ -156,8 +156,8 @@ export default function DesksIndex() {
                             >
                                 <option value="">{t('search.cityPlaceholder')}</option>
                                 {cities.map((city) => (
-                                    <option key={city} value={city}>
-                                        {city}
+                                    <option key={city.id} value={city.slug}>
+                                        {city.name}
                                     </option>
                                 ))}
                             </select>

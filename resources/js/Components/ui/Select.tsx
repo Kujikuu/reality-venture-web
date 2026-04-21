@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface SelectOption {
     value: string;
-    label: string;
+    label?: unknown;
+    name?: string;
 }
 
 interface SelectProps {
@@ -67,8 +68,29 @@ export const Select: React.FC<SelectProps> = ({
         }
     }, [isOpen]);
 
+    const getOptionLabel = useCallback((option: SelectOption): string => {
+        if (typeof option.label === "string") {
+            return option.label;
+        }
+
+        if (
+            option.label &&
+            typeof option.label === "object" &&
+            "name" in option.label &&
+            typeof option.label.name === "string"
+        ) {
+            return option.label.name;
+        }
+
+        if (typeof option.name === "string") {
+            return option.name;
+        }
+
+        return option.value;
+    }, []);
+
     const filteredOptions = options.filter((option) =>
-        option.label.toLowerCase().includes(searchTerm.toLowerCase())
+        getOptionLabel(option).toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const selectedOption = options.find((option) => option.value === value);
@@ -149,7 +171,7 @@ export const Select: React.FC<SelectProps> = ({
                 } text-gray-900 cursor-pointer flex items-center justify-between transition-all focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none`}
             >
                 <span className={`text-sm ${!selectedOption ? "text-gray-400" : "text-gray-900"}`}>
-                    {selectedOption ? selectedOption.label : placeholder}
+                    {selectedOption ? getOptionLabel(selectedOption) : placeholder}
                 </span>
                 <ChevronDown
                     className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
@@ -224,7 +246,7 @@ export const Select: React.FC<SelectProps> = ({
                                                 }`}
                                             >
                                                 <span className="text-sm font-medium">
-                                                    {option.label}
+                                                    {getOptionLabel(option)}
                                                 </span>
                                                 {isSelected && (
                                                     <Check className="w-4 h-4 text-primary" aria-hidden="true" />

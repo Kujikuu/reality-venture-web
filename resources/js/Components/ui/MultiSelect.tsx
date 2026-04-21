@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface Option {
     value: string;
-    label: string;
+    label?: unknown;
+    name?: string;
 }
 
 interface MultiSelectProps {
@@ -96,8 +97,29 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         }
     }, [isOpen, updateDropdownPos]);
 
+    const getOptionLabel = useCallback((option: Option): string => {
+        if (typeof option.label === "string") {
+            return option.label;
+        }
+
+        if (
+            option.label &&
+            typeof option.label === "object" &&
+            "name" in option.label &&
+            typeof option.label.name === "string"
+        ) {
+            return option.label.name;
+        }
+
+        if (typeof option.name === "string") {
+            return option.name;
+        }
+
+        return option.value;
+    }, []);
+
     const filteredOptions = options.filter((option) =>
-        option.label.toLowerCase().includes(searchTerm.toLowerCase())
+        getOptionLabel(option).toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const selectedOptions = options.filter((option) =>
@@ -193,12 +215,12 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                                 key={option.value}
                                 className="inline-flex items-center gap-1 px-2 py-1 bg-primary-100 text-primary-900 text-xs font-semibold rounded-md border border-primary-200 transition-colors hover:bg-primary-200"
                             >
-                                {option.label}
+                                {getOptionLabel(option)}
                                 <button
                                     type="button"
                                     onClick={(e) => removeOption(option.value, e)}
                                     className="p-0.5 hover:bg-primary-300 rounded-full transition-colors"
-                                    aria-label={`Remove ${option.label}`}
+                                    aria-label={`Remove ${getOptionLabel(option)}`}
                                 >
                                     <X className="w-3 h-3" aria-hidden="true" />
                                 </button>
@@ -301,7 +323,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                                                         )}
                                                     </div>
                                                     <span className="text-sm font-medium">
-                                                        {option.label}
+                                                        {getOptionLabel(option)}
                                                     </span>
                                                 </div>
                                             );
