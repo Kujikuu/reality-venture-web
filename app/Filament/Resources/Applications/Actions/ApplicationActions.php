@@ -71,7 +71,6 @@ class ApplicationActions
                     ->live(),
                 TextInput::make('interview_url')
                     ->label('Meeting URL')
-                    ->url()
                     ->visible(fn ($get) => $get('interview_type') === InterviewType::Online->value)
                     ->required(fn ($get) => $get('interview_type') === InterviewType::Online->value),
                 TextInput::make('interview_location')
