@@ -1,4 +1,4 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { LogOut, Home, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PageProps } from '../types/marketplace';
@@ -35,6 +35,8 @@ export default function DashboardLayout({ children, links, title }: Props) {
     const next = i18n.language === 'ar' ? 'en' : 'ar';
     i18n.changeLanguage(next);
     localStorage.setItem('i18nextLng', next);
+    document.cookie = `rv_locale=${next}; path=/; max-age=31536000; SameSite=Lax`;
+    router.reload({ preserveScroll: true });
   };
 
   return (

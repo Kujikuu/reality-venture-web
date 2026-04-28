@@ -62,11 +62,6 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_admin;
     }
 
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
-
     public function consultantProfile(): HasOne
     {
         return $this->hasOne(ConsultantProfile::class);

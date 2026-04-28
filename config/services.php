@@ -49,4 +49,9 @@ return [
         'whatsapp_link' => env('RV_CLUB_WHATSAPP_LINK'),
     ],
 
+    'blog' => [
+        'url' => env('BLOG_API_URL', 'https://blog.test'),
+        'api_key' => env('BLOG_API_KEY'),
+    ],
+
 ];

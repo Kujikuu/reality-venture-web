@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\ConsultantProfile;
-use App\Models\Post;
+use App\Services\BlogApiService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -12,6 +13,11 @@ class GenerateSitemap extends Command
     protected $signature = 'seo:generate-sitemap';
 
     protected $description = 'Generate the sitemap.xml file for all public pages';
+
+    public function __construct(private readonly BlogApiService $blogApi)
+    {
+        parent::__construct();
+    }
 
     public function handle(): int
     {
@@ -40,18 +46,18 @@ class GenerateSitemap extends Command
         $urls[] = ['loc' => url('/privacy-policy'), 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => '0.3'];
         $urls[] = ['loc' => url('/terms-of-service'), 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => '0.3'];
 
-        // Published blog posts
-        Post::query()
-            ->published()
-            ->select(['slug', 'updated_at'])
-            ->each(function (Post $post) use (&$urls) {
-                $urls[] = [
-                    'loc' => url("/blog/{$post->slug}"),
-                    'lastmod' => $post->updated_at->toDateString(),
-                    'changefreq' => 'monthly',
-                    'priority' => '0.6',
-                ];
-            });
+        foreach ($this->blogApi->getSitemapPosts() as $post) {
+            if (! isset($post['slug'])) {
+                continue;
+            }
+
+            $urls[] = [
+                'loc' => url("/blog/{$post['slug']}"),
+                'lastmod' => isset($post['published_at']) ? Carbon::parse($post['published_at'])->toDateString() : null,
+                'changefreq' => 'monthly',
+                'priority' => '0.6',
+            ];
+        }
 
         // Approved consultants
         ConsultantProfile::query()

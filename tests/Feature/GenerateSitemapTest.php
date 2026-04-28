@@ -4,10 +4,10 @@ namespace Tests\Feature;
 
 use App\Enums\ConsultantStatus;
 use App\Models\ConsultantProfile;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class GenerateSitemapTest extends TestCase
@@ -26,6 +26,10 @@ class GenerateSitemapTest extends TestCase
 
     public function test_sitemap_command_generates_xml_file(): void
     {
+        Http::fake([
+            'https://blog.test/api/blog/posts*' => Http::response($this->emptyPostsResponse(), 200),
+        ]);
+
         $this->artisan('seo:generate-sitemap')
             ->assertSuccessful();
 
@@ -34,6 +38,10 @@ class GenerateSitemapTest extends TestCase
 
     public function test_sitemap_contains_static_pages(): void
     {
+        Http::fake([
+            'https://blog.test/api/blog/posts*' => Http::response($this->emptyPostsResponse(), 200),
+        ]);
+
         $this->artisan('seo:generate-sitemap');
 
         $content = File::get(public_path('sitemap.xml'));
@@ -48,20 +56,36 @@ class GenerateSitemapTest extends TestCase
 
     public function test_sitemap_contains_published_blog_posts(): void
     {
-        $user = User::factory()->create();
-        $post = Post::factory()->create([
-            'user_id' => $user->id,
-            'slug' => 'sitemap-test-post',
+        Http::fake([
+            'https://blog.test/api/blog/posts*' => Http::response([
+                'data' => [
+                    [
+                        'slug' => 'sitemap-test-post',
+                        'published_at' => '2026-04-28T10:00:00.000000Z',
+                    ],
+                ],
+                'meta' => [
+                    'current_page' => 1,
+                    'last_page' => 1,
+                    'per_page' => 50,
+                    'total' => 1,
+                ],
+            ], 200),
         ]);
 
         $this->artisan('seo:generate-sitemap');
 
         $content = File::get(public_path('sitemap.xml'));
         $this->assertStringContainsString('/blog/sitemap-test-post', $content);
+        $this->assertStringContainsString('<lastmod>2026-04-28</lastmod>', $content);
     }
 
     public function test_sitemap_contains_approved_consultants(): void
     {
+        Http::fake([
+            'https://blog.test/api/blog/posts*' => Http::response($this->emptyPostsResponse(), 200),
+        ]);
+
         $user = User::factory()->create();
         $profile = ConsultantProfile::factory()->create([
             'user_id' => $user->id,
@@ -77,11 +101,31 @@ class GenerateSitemapTest extends TestCase
 
     public function test_sitemap_excludes_auth_and_dashboard_pages(): void
     {
+        Http::fake([
+            'https://blog.test/api/blog/posts*' => Http::response($this->emptyPostsResponse(), 200),
+        ]);
+
         $this->artisan('seo:generate-sitemap');
 
         $content = File::get(public_path('sitemap.xml'));
         $this->assertStringNotContainsString('/login', $content);
         $this->assertStringNotContainsString('/register', $content);
         $this->assertStringNotContainsString('/dashboard', $content);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function emptyPostsResponse(): array
+    {
+        return [
+            'data' => [],
+            'meta' => [
+                'current_page' => 1,
+                'last_page' => 1,
+                'per_page' => 50,
+                'total' => 0,
+            ],
+        ];
     }
 }

@@ -48,8 +48,8 @@ Route::post('/banners/{adBanner}/click', [AdBannerController::class, 'trackClick
 
 // Blog
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::post('/blog/{post:slug}/check-access', [BlogController::class, 'checkAccess'])->name('blog.check-access');
+Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{post}/check-access', [BlogController::class, 'checkAccess'])->name('blog.check-access');
 
 // Desks / Workspaces
 Route::get('/grit', fn () => inertia('Desks/Index'))->name('desks.index');

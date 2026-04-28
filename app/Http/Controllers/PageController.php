@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdBanner;
-use App\Models\Post;
+use App\Services\BlogApiService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PageController extends Controller
 {
+    public function __construct(
+        private readonly BlogApiService $blogApi
+    ) {}
+
     public function home(): Response
     {
         Inertia::share('seo', fn () => [
@@ -43,18 +47,49 @@ class PageController extends Controller
                 'position' => $banner->position->value,
             ]));
 
-        $latestPosts = Post::query()
-            ->published()
-            ->with(['author:id,name', 'category:id,name_en,name_ar,slug'])
-            ->latest('published_at')
-            ->limit(3)
-            ->get()
-            ->map(fn (Post $post) => $post->toCardArray());
+        $locale = app()->getLocale();
+        $postsResponse = $this->blogApi->getPosts([
+            'locale' => $locale,
+            'per_page' => 3,
+        ]);
+
+        $latestPosts = array_map(fn ($post) => $this->transformPostToCardArray($post, $locale), $postsResponse['data'] ?? []);
 
         return Inertia::render('Home', [
             'banners' => $banners,
             'latestPosts' => $latestPosts,
         ]);
+    }
+
+    private function transformPostToCardArray(array $post, string $locale): array
+    {
+        return [
+            'id' => $post['id'],
+            'title_en' => $post['title'] ?? '',
+            'title_ar' => $post['title'] ?? '',
+            'slug' => $post['slug'],
+            'excerpt_en' => $post['excerpt'] ?? null,
+            'excerpt_ar' => $post['excerpt'] ?? null,
+            'featured_image' => $post['featured_image'] ?? null,
+            'meta_title' => $post['meta_title'] ?? null,
+            'meta_description' => $post['meta_description'] ?? null,
+            'og_image' => $post['og_image'] ?? null,
+            'is_rv_club_only' => $post['is_rv_club_only'] ?? false,
+            'published_at' => $post['published_at'] ?? now()->toISOString(),
+            'author' => [
+                'name' => $post['author']['name'] ?? 'Reality Venture',
+            ],
+            'category' => ($post['category'] ?? null) ? [
+                'name_en' => $post['category']['name'] ?? '',
+                'name_ar' => $post['category']['name'] ?? '',
+                'slug' => $post['category']['slug'] ?? '',
+            ] : null,
+            'tags' => array_map(fn ($tag) => [
+                'name_en' => $tag['name'] ?? '',
+                'name_ar' => $tag['name'] ?? '',
+                'slug' => $tag['slug'] ?? '',
+            ], $post['tags'] ?? []),
+        ];
     }
 
     public function applicationForm(): Response

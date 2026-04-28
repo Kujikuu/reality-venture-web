@@ -5,6 +5,7 @@ use App\Http\Middleware\EnsureUserIsClient;
 use App\Http\Middleware\EnsureUserIsConsultant;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SeoMiddleware;
+use App\Http\Middleware\SetLocaleFromPreference;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
+            SetLocaleFromPreference::class,
             HandleInertiaRequests::class,
             SeoMiddleware::class,
         ]);
@@ -30,6 +32,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',
             'webhooks/calendly',
+        ]);
+
+        $middleware->encryptCookies(except: [
+            'rv_locale',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

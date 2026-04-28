@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
 
@@ -21,8 +22,9 @@ export const LanguageSwitcher: React.FC = () => {
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
     setIsOpen(false);
-    // Store preference
     localStorage.setItem('i18nextLng', langCode);
+    document.cookie = `rv_locale=${langCode}; path=/; max-age=31536000; SameSite=Lax`;
+    router.reload({ preserveScroll: true });
   };
 
   return (
