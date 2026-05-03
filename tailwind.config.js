@@ -45,8 +45,8 @@ export default {
                 'text-main': '#181411',
             },
             fontFamily: {
-                sans: ['Public Sans', 'Cairo', ...defaultTheme.fontFamily.sans],
-                display: ['Public Sans', 'Cairo', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', 'Cairo', ...defaultTheme.fontFamily.sans],
+                display: ['Inter', 'Cairo', ...defaultTheme.fontFamily.sans],
             },
         },
     },
