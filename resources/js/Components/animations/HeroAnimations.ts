@@ -40,7 +40,7 @@ export const heroItemVariants: Variants = {
 export const buttonHoverVariants: Variants = {
   hover: {
     scale: 1.05,
-    boxShadow: '0 10px 40px -10px rgba(223, 104, 55, 0.4)',
+    boxShadow: '0 10px 40px -10px rgba(6, 45, 45, 0.35)',
     transition: {
       type: 'spring',
       stiffness: 400,

@@ -11,8 +11,8 @@
 نقدّر صبرك، وراح نوافيك بأي تحديثات قريباً بإذن الله.
 </p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
-<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 @if(trim($status->value) === 'approved')
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">🎉 مبروك! تم قبول طلبك. بنتواصل معك بالتفاصيل والخطوات الجاية إن شاء الله.</p>
@@ -44,8 +44,8 @@ Your application has been successfully reviewed and is currently <strong>{{ $app
 We appreciate your patience and will keep you updated soon.
 </p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
-<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 @if(trim($status->value) === 'approved')
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">🎉 Congratulations! Your application has been approved. We will be in touch with further details and next steps.</p>

@@ -8,10 +8,10 @@
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">وصلنا طلبك وتم تسجيله بنجاح 🎉<br>سعداء بانضمامك معنا.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
-<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">ملخص الطلب:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">ملخص الطلب:</h2>
 <ul style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
 <li style="direction: rtl; text-align: right;"><strong>الاسم:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: rtl; text-align: right;"><strong>البريد الإلكتروني:</strong> {{ $application->email }}</li>
@@ -24,12 +24,12 @@
 @endif
 </ul>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">الوصف:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">الوصف:</h2>
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">{{ $application->description }}</p>
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">الخطوة الجاية هي استكمال بيانات مشروعك، عشان نقدر نراجعه ونتواصل معك بشكل أدق.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">الخطوات القادمة:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">الخطوات القادمة:</h2>
 <ul style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
 <li style="direction: rtl; text-align: right;">استكمل بيانات المشروع من خلال الرابط أدناه</li>
 <li style="direction: rtl; text-align: right;">ارفع أي ملفات تدعم طلبك (عرض تقديمي، خطة عمل، وغيرها)</li>
@@ -38,7 +38,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
 <tr>
-<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<td align="center" style="border-radius: 8px;" bgcolor="#062D2D">
 <a href="{{ config('app.url') . '/startup-application?ref=' . $application->uid }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">استكمال بيانات المشروع</a>
 </td>
 </tr>
@@ -63,10 +63,10 @@
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">We've received your application and it has been successfully registered 🎉<br>We're glad to have you with us.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
-<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Application Summary:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Application Summary:</h2>
 <ul style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
 <li style="direction: ltr; text-align: left;"><strong>Name:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: ltr; text-align: left;"><strong>Email:</strong> {{ $application->email }}</li>
@@ -79,12 +79,12 @@
 @endif
 </ul>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Description:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Description:</h2>
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">{{ $application->description }}</p>
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">The next step is to complete your project details so we can review your application more effectively.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Next Steps:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Next Steps:</h2>
 <ul style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
 <li style="direction: ltr; text-align: left;">Complete your project details using the link below</li>
 <li style="direction: ltr; text-align: left;">Upload any supporting documents (pitch deck, business plan, etc.)</li>
@@ -93,7 +93,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
 <tr>
-<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<td align="center" style="border-radius: 8px;" bgcolor="#062D2D">
 <a href="{{ config('app.url') . '/startup-application?ref=' . $application->uid }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">Complete Your Application</a>
 </td>
 </tr>

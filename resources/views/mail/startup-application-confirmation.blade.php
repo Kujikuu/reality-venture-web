@@ -8,11 +8,11 @@
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">تم استلام طلبك الخاص بالشركة الناشئة وتسجيله بنجاح. يسعدنا اهتمامك بالانضمام إلى {{ config('app.name') }}.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
-<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 <p style="direction: rtl; text-align: right; font-size: 16px;">نأمل الاحتفاظ به لاستخدامه عند التواصل معنا بخصوص طلبك.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">ملخص الطلب:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">ملخص الطلب:</h2>
 <ul style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
 <li style="direction: rtl; text-align: right;"><strong>مقدم الطلب:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: rtl; text-align: right;"><strong>البريد الإلكتروني:</strong> {{ $application->email }}</li>
@@ -34,10 +34,10 @@
 @endif
 </ul>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">وصف الشركة:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">وصف الشركة:</h2>
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">{{ $application->company_description }}</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">الخطوات القادمة:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">الخطوات القادمة:</h2>
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">سيقوم فريقنا بمراجعة طلبك بعناية، وسيتم التواصل معك بخصوص المرحلة التالية بإذن الله.<br>في حال وجود أي استفسار، يسعدنا تواصلك معنا باستخدام رقم المرجع أعلاه.</p>
 
 <p style="direction: rtl; text-align: right; font-size: 16px;">مع خالص التحية،<br><strong>فريق {{ config('app.name') }}</strong></p>
@@ -57,11 +57,11 @@
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Your startup application has been successfully received and registered. We're pleased to have you apply with {{ config('app.name') }}.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
-<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 <p style="direction: ltr; text-align: left; font-size: 16px;">Please keep this for any future communication with our team.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Application Summary:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Application Summary:</h2>
 <ul style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
 <li style="direction: ltr; text-align: left;"><strong>Applicant:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: ltr; text-align: left;"><strong>Email:</strong> {{ $application->email }}</li>
@@ -83,10 +83,10 @@
 @endif
 </ul>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Company Description:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Company Description:</h2>
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">{{ $application->company_description }}</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Next Steps:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Next Steps:</h2>
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Our team will carefully review your application and reach out regarding the next stage.<br>If you have any questions, feel free to contact us using your reference number.</p>
 
 <p style="direction: ltr; text-align: left; font-size: 16px;">Warm regards,<br><strong>{{ config('app.name') }} Team</strong></p>

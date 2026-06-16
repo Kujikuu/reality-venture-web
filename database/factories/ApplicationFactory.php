@@ -67,6 +67,11 @@ class ApplicationFactory extends Factory
         ]);
     }
 
+    public function startup(): static
+    {
+        return $this->startupStage();
+    }
+
     public function interview(): static
     {
         return $this->startupStage()->state(fn (array $attributes) => [

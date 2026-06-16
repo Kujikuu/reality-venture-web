@@ -8,8 +8,8 @@
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">شكراً لك على وقتك في المقابلة. نود إبلاغك بأن طلبك قد انتقل الآن إلى مرحلة التقييم النهائي. يقوم فريقنا حالياً بمراجعة كافة التفاصيل والنتائج من المقابلة ليتخذ القرار النهائي بشأن قبول مشروعك.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
-<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">سنوافيك بالتحديثات قريباً بإذن الله. نتطلع لمواصلة الرحلة معك!</p>
 
@@ -30,8 +30,8 @@
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">Thank you for your time during the interview. We are pleased to inform you that your application has now moved to the Final Evaluation stage. Our team is currently reviewing all details and findings from the interview to make a final decision regarding your venture's acceptance.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
-<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">We will be in touch with updates shortly. We look forward to continuing this journey with you!</p>
 

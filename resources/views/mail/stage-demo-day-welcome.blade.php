@@ -8,8 +8,8 @@
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">يشرّفنا إبلاغك بأنه قد تم اعتماد اتفاقية الاستثمار الخاصة بك بنجاح، وقد انتقل طلبك الآن رسمياً إلى <strong>مرحلة يوم العرض (Demo Day)</strong>.</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">رقم المرجع الخاص بك:</h2>
-<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">رقم المرجع الخاص بك:</h2>
+<p style="direction: rtl; text-align: right; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">هذه خطوة كبيرة في رحلتنا معك! سنقوم قريباً بالتواصل معك لتزويدك بجدول يوم العرض، وكافة التفاصيل المتعلقة بمكان العرض والمتطلبات الفنية.</p>
 
@@ -32,8 +32,8 @@
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">We are pleased to inform you that your investment agreement has been successfully approved, and your application has now officially moved to the <strong>Demo Day stage</strong>.</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Your Reference Number:</h2>
-<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #4d3070;">{{ $application->uid }}</p>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Your Reference Number:</h2>
+<p style="direction: ltr; text-align: left; font-size: 20px; font-weight: bold; color: #062D2D;">{{ $application->uid }}</p>
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">This is a major milestone in our journey together! We will be in touch shortly with the Demo Day schedule, location details, and technical requirements.</p>
 

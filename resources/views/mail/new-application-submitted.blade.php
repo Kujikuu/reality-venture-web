@@ -8,7 +8,7 @@
 
 <p style="direction: rtl; text-align: right; font-size: 16px; line-height: 1.6;">تم استلام طلب جديد عبر موقع {{ config('app.name') }} ضمن فئة ({{ $application->type?->label() ?? 'Initial' }}).</p>
 
-<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #4d3070;">تفاصيل الطلب:</h2>
+<h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">تفاصيل الطلب:</h2>
 <ul style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
 <li style="direction: rtl; text-align: right;"><strong>الاسم:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: rtl; text-align: right;"><strong>البريد الإلكتروني:</strong> {{ $application->email }}</li>
@@ -24,7 +24,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
 <tr>
-<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<td align="center" style="border-radius: 8px;" bgcolor="#062D2D">
 <a href="{{ config('app.url') . '/admin/applications/' . $application->id }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">عرض الطلب في لوحة التحكم</a>
 </td>
 </tr>
@@ -47,7 +47,7 @@
 
 <p style="direction: ltr; text-align: left; font-size: 16px; line-height: 1.6;">A new application has been received via {{ config('app.name') }} in category ({{ $application->type?->label() ?? 'Initial' }}).</p>
 
-<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #4d3070;">Application Details:</h2>
+<h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Application Details:</h2>
 <ul style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
 <li style="direction: ltr; text-align: left;"><strong>Name:</strong> {{ $application->first_name }} {{ $application->last_name }}</li>
 <li style="direction: ltr; text-align: left;"><strong>Email:</strong> {{ $application->email }}</li>
@@ -63,7 +63,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
 <tr>
-<td align="center" style="border-radius: 8px;" bgcolor="#4d3070">
+<td align="center" style="border-radius: 8px;" bgcolor="#062D2D">
 <a href="{{ config('app.url') . '/admin/applications/' . $application->id }}" style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block; font-weight: bold;">View in Admin Panel</a>
 </td>
 </tr>
