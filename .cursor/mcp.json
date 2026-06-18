@@ -13,7 +13,7 @@
                 "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
             ],
             "env": {
-                "SITE_PATH": "/Users/apple/Desktop/reality_venture/reality-venture-web"
+                "SITE_PATH": "/Users/apple/Desktop/Desktop Archive/reality_venture/reality-venture-web"
             }
         }
     }
