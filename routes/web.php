@@ -41,6 +41,9 @@ Route::get('/applications/status/{uid}', [ApplicationController::class, 'status'
 // Agreement
 Route::get('/agreement/{uid}', [AgreementController::class, 'show'])->name('agreement.show');
 Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])->name('agreement.approve');
+Route::get('/admin/applications/{application}/agreement-pdf', [AgreementController::class, 'downloadPdf'])
+    ->middleware(['auth'])
+    ->name('admin.applications.agreement-pdf');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

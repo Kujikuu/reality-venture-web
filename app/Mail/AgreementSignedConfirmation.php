@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AgreementSignedNotification extends Mailable implements ShouldQueue
+class AgreementSignedConfirmation extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -22,17 +22,16 @@ class AgreementSignedNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Agreement Signed — {$this->application->uid}",
+            subject: "Your Signed Agreement — {$this->application->uid} | نسخة اتفاقيتك الموقعة",
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.applications.agreement-signed-notification',
+            markdown: 'emails.applications.agreement-signed-confirmation',
             with: [
                 'application' => $this->application,
-                'adminUrl' => url('/admin/applications/'.$this->application->id),
             ],
         );
     }

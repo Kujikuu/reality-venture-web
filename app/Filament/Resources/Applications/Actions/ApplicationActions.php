@@ -7,6 +7,7 @@ use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
 use App\Mail\AgreementInvitationMail;
 use App\Mail\DemoDayInvitation;
+use App\Mail\InterviewScheduledAdminNotification;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
 use App\Mail\StageAdvancedToEvaluation;
@@ -14,6 +15,7 @@ use App\Mail\StageAdvancedToInterview;
 use App\Mail\StatusUpdateMail;
 use App\Models\Application;
 use App\Services\ApplicationWorkflowService;
+use App\Services\GoogleCalendarService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
@@ -74,10 +76,6 @@ class ApplicationActions
                     ->required()
                     ->native(false)
                     ->live(),
-                TextInput::make('interview_url')
-                    ->label('Meeting URL')
-                    ->visible(fn ($get) => $get('interview_type') === InterviewType::Online->value)
-                    ->required(fn ($get) => $get('interview_type') === InterviewType::Online->value),
                 TextInput::make('interview_location')
                     ->label('Location / Address')
                     ->visible(fn ($get) => $get('interview_type') === InterviewType::InPerson->value)
@@ -85,28 +83,89 @@ class ApplicationActions
                 Textarea::make('note')
                     ->label('Meeting Notes'),
             ])
+            ->fillForm(fn (Application $record): array => [
+                'interview_scheduled_at' => $record->interview_scheduled_at,
+                'interview_type' => $record->interview_type?->value,
+                'interview_location' => $record->interview_location,
+            ])
             ->action(function (array $data, Application $record) {
+                $interviewType = InterviewType::from($data['interview_type']);
+                $scheduledAt = \Carbon\Carbon::parse($data['interview_scheduled_at']);
+                $meetingUrl = null;
+                $googleEventId = $record->interview_google_event_id;
+
+                if ($interviewType === InterviewType::Online) {
+                    $calendar = app(GoogleCalendarService::class);
+
+                    if (! $calendar->isConfigured()) {
+                        Notification::make()
+                            ->title('Google Calendar not configured')
+                            ->body('Set GOOGLE_CALENDAR_* environment variables to schedule online meetings.')
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+
+                    try {
+                        $title = 'RV Interview — '.($record->company_name ?: $record->first_name)." ({$record->uid})";
+                        $attendees = [$record->email, config('services.rv.admin_email')];
+                        $duration = 10;
+
+                        $event = $googleEventId
+                            ? $calendar->updateMeetEvent($googleEventId, $title, $scheduledAt, $duration, $attendees, $data['note'] ?? null)
+                            : $calendar->createMeetEvent($title, $scheduledAt, $duration, $attendees, $data['note'] ?? null);
+
+                        $meetingUrl = $event['meet_url'];
+                        $googleEventId = $event['event_id'];
+
+                        if (! $meetingUrl) {
+                            throw new \RuntimeException('Google Meet link was not returned.');
+                        }
+                    } catch (\Throwable $exception) {
+                        Notification::make()
+                            ->title('Failed to create Google Meet')
+                            ->body($exception->getMessage())
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+                } else {
+                    static::cancelGoogleCalendarEvent($record->interview_google_event_id);
+                    $googleEventId = null;
+                }
+
                 $workflow = app(ApplicationWorkflowService::class);
                 $application = $workflow->updateApplication($record, [
                     'type' => ApplicationType::Interview,
                     'interview_scheduled_at' => $data['interview_scheduled_at'],
                     'interview_type' => $data['interview_type'],
-                    'interview_url' => $data['interview_url'] ?? null,
+                    'interview_url' => $meetingUrl,
                     'interview_location' => $data['interview_location'] ?? null,
+                    'interview_google_event_id' => $googleEventId,
                     'evaluation_notes' => filled($data['note'] ?? null)
                         ? ($record->evaluation_notes ? $record->evaluation_notes."\n\n".$data['note'] : $data['note'])
                         : $record->evaluation_notes,
                 ]);
 
-                $scheduledAt = \Carbon\Carbon::parse($data['interview_scheduled_at'])->format('Y-m-d H:i');
-                $meetingType = InterviewType::from($data['interview_type'])->label();
+                $formattedDate = $scheduledAt->format('Y-m-d H:i');
+                $meetingTypeLabel = $interviewType->label();
 
                 Mail::to($application->email)->queue(new StageAdvancedToInterview(
                     application: $application,
-                    scheduledAt: $scheduledAt,
-                    meetingType: $meetingType,
-                    meetingUrl: $data['interview_url'] ?? null,
+                    scheduledAt: $formattedDate,
+                    meetingType: $meetingTypeLabel,
+                    meetingUrl: $meetingUrl,
                     meetingLocation: $data['interview_location'] ?? null
+                ));
+
+                Mail::to(config('services.rv.admin_email'))->queue(new InterviewScheduledAdminNotification(
+                    application: $application,
+                    scheduledAt: $formattedDate,
+                    meetingType: $meetingTypeLabel,
+                    meetingUrl: $meetingUrl,
+                    meetingLocation: $data['interview_location'] ?? null,
                 ));
 
                 Notification::make()
@@ -271,9 +330,16 @@ class ApplicationActions
                     ->label('Date & Time')
                     ->native(false)
                     ->required(),
-                TextInput::make('demo_day_location')
-                    ->label('Location')
+                Select::make('demo_day_type')
+                    ->label('Meeting Type')
+                    ->options(collect(InterviewType::cases())->mapWithKeys(fn ($t) => [$t->value => $t->label()]))
                     ->required()
+                    ->native(false)
+                    ->live(),
+                TextInput::make('demo_day_location')
+                    ->label('Location / Address')
+                    ->visible(fn ($get) => $get('demo_day_type') === InterviewType::InPerson->value)
+                    ->required(fn ($get) => $get('demo_day_type') === InterviewType::InPerson->value)
                     ->maxLength(500),
                 Repeater::make('demo_day_requirements')
                     ->label('Requirements Checklist')
@@ -287,29 +353,87 @@ class ApplicationActions
             ])
             ->fillForm(fn (Application $record): array => [
                 'demo_day_date' => $record->demo_day_date,
+                'demo_day_type' => $record->demo_day_type?->value ?? InterviewType::InPerson->value,
                 'demo_day_location' => $record->demo_day_location,
                 'demo_day_requirements' => ApplicationWorkflowService::normalizeDemoDayRequirements($record->demo_day_requirements),
             ])
             ->action(function (array $data, Application $record) {
                 $requirements = ApplicationWorkflowService::normalizeDemoDayRequirements($data['demo_day_requirements'] ?? []);
+                $demoDayType = InterviewType::from($data['demo_day_type']);
+                $scheduledAt = \Carbon\Carbon::parse($data['demo_day_date']);
+                $location = $data['demo_day_location'] ?? null;
+                $meetingUrl = null;
+                $googleEventId = $record->demo_day_google_event_id;
+
+                if ($demoDayType === InterviewType::Online) {
+                    $calendar = app(GoogleCalendarService::class);
+
+                    if (! $calendar->isConfigured()) {
+                        Notification::make()
+                            ->title('Google Calendar not configured')
+                            ->body('Set GOOGLE_CALENDAR_* environment variables to schedule online Demo Day meetings.')
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+
+                    try {
+                        $title = 'RV Demo Day — '.($record->company_name ?: $record->first_name)." ({$record->uid})";
+                        $attendees = [$record->email, config('services.rv.admin_email')];
+                        $duration = (int) config('services.google.calendar.default_duration_minutes', 30);
+
+                        $event = $googleEventId
+                            ? $calendar->updateMeetEvent($googleEventId, $title, $scheduledAt, $duration, $attendees)
+                            : $calendar->createMeetEvent($title, $scheduledAt, $duration, $attendees);
+
+                        $meetingUrl = $event['meet_url'];
+                        $googleEventId = $event['event_id'];
+                        $location = $meetingUrl;
+
+                        if (! $meetingUrl) {
+                            throw new \RuntimeException('Google Meet link was not returned.');
+                        }
+                    } catch (\Throwable $exception) {
+                        Notification::make()
+                            ->title('Failed to create Google Meet')
+                            ->body($exception->getMessage())
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+                } else {
+                    static::cancelGoogleCalendarEvent($record->demo_day_google_event_id);
+                    $googleEventId = null;
+                }
 
                 $workflow = app(ApplicationWorkflowService::class);
                 $application = $workflow->updateApplication($record, [
                     'demo_day_date' => $data['demo_day_date'],
-                    'demo_day_location' => $data['demo_day_location'],
+                    'demo_day_type' => $data['demo_day_type'],
+                    'demo_day_location' => $location,
+                    'demo_day_google_event_id' => $googleEventId,
                     'demo_day_requirements' => $requirements,
                 ]);
 
-                Mail::to($application->email)->queue(new DemoDayInvitation(
+                $formattedDate = $scheduledAt->format('Y-m-d H:i');
+
+                $invitation = new DemoDayInvitation(
                     application: $application,
-                    date: \Carbon\Carbon::parse($data['demo_day_date'])->format('Y-m-d H:i'),
-                    location: $data['demo_day_location'],
+                    date: $formattedDate,
+                    location: $location ?? '',
                     requirements: $requirements,
-                ));
+                    meetingUrl: $meetingUrl,
+                    isOnline: $demoDayType === InterviewType::Online,
+                );
+
+                Mail::to($application->email)->queue($invitation);
+                Mail::to(config('services.rv.admin_email'))->queue($invitation);
 
                 Notification::make()
                     ->title('Demo Day details updated')
-                    ->body("Invitation emailed to {$application->email}")
+                    ->body("Invitation emailed to {$application->email} and admin.")
                     ->success()
                     ->send();
             });
@@ -386,5 +510,24 @@ class ApplicationActions
                     ->success()
                     ->send();
             });
+    }
+
+    protected static function cancelGoogleCalendarEvent(?string $eventId): void
+    {
+        if (! $eventId) {
+            return;
+        }
+
+        $calendar = app(GoogleCalendarService::class);
+
+        if (! $calendar->isConfigured()) {
+            return;
+        }
+
+        try {
+            $calendar->cancelEvent($eventId);
+        } catch (\Throwable) {
+            // Clearing the local reference is still correct if the remote event is already gone.
+        }
     }
 }

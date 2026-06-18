@@ -6,10 +6,12 @@ use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
 use App\Filament\Resources\Applications\Pages\ViewApplication;
+use App\Mail\InterviewScheduledAdminNotification;
 use App\Mail\StatusUpdateMail;
 use App\Models\Application;
 use App\Models\User;
 use App\Services\ApplicationWorkflowService;
+use App\Services\GoogleCalendarService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -132,8 +134,8 @@ class ApplicationFilamentQualityTest extends TestCase
             ->test(ViewApplication::class, ['record' => $application->getKey()])
             ->callAction('scheduleInterview', [
                 'interview_scheduled_at' => now()->addDays(3)->format('Y-m-d H:i:s'),
-                'interview_type' => InterviewType::Online->value,
-                'interview_url' => 'https://meet.test/interview',
+                'interview_type' => InterviewType::InPerson->value,
+                'interview_location' => 'Riyadh Office',
                 'note' => 'Bring pitch deck.',
             ])
             ->assertHasNoActionErrors();
@@ -141,6 +143,74 @@ class ApplicationFilamentQualityTest extends TestCase
         $application->refresh();
         $this->assertStringContainsString('Existing note.', $application->evaluation_notes);
         $this->assertStringContainsString('Bring pitch deck.', $application->evaluation_notes);
+    }
+
+    public function test_schedule_online_interview_creates_google_meet_and_emails_admin(): void
+    {
+        Mail::fake();
+
+        $this->mock(GoogleCalendarService::class, function ($mock): void {
+            $mock->shouldReceive('isConfigured')->andReturn(true);
+            $mock->shouldReceive('createMeetEvent')->once()->andReturn([
+                'event_id' => 'google-event-123',
+                'meet_url' => 'https://meet.google.com/abc-defg-hij',
+                'html_link' => 'https://calendar.google.com/event/123',
+            ]);
+        });
+
+        $application = Application::factory()->startup()->create([
+            'type' => ApplicationType::Startup,
+            'company_name' => 'Meet Test Co',
+        ]);
+
+        Livewire::actingAs($this->admin)
+            ->test(ViewApplication::class, ['record' => $application->getKey()])
+            ->callAction('scheduleInterview', [
+                'interview_scheduled_at' => now()->addDays(3)->format('Y-m-d H:i:s'),
+                'interview_type' => InterviewType::Online->value,
+            ])
+            ->assertHasNoActionErrors();
+
+        $application->refresh();
+        $this->assertEquals('https://meet.google.com/abc-defg-hij', $application->interview_url);
+        $this->assertEquals('google-event-123', $application->interview_google_event_id);
+
+        Mail::assertQueued(InterviewScheduledAdminNotification::class, function (InterviewScheduledAdminNotification $mail) {
+            return $mail->hasTo(config('services.rv.admin_email'));
+        });
+    }
+
+    public function test_switching_interview_from_online_to_in_person_clears_google_event_id(): void
+    {
+        Mail::fake();
+
+        $this->mock(GoogleCalendarService::class, function ($mock): void {
+            $mock->shouldReceive('isConfigured')->andReturn(true);
+            $mock->shouldReceive('cancelEvent')->once()->with('stale-interview-event');
+        });
+
+        $application = Application::factory()->startup()->create([
+            'type' => ApplicationType::Startup,
+            'company_name' => 'Switch Test Co',
+            'interview_type' => InterviewType::Online,
+            'interview_url' => 'https://meet.google.com/old-link',
+            'interview_google_event_id' => 'stale-interview-event',
+        ]);
+
+        Livewire::actingAs($this->admin)
+            ->test(ViewApplication::class, ['record' => $application->getKey()])
+            ->callAction('scheduleInterview', [
+                'interview_scheduled_at' => now()->addDays(5)->format('Y-m-d H:i:s'),
+                'interview_type' => InterviewType::InPerson->value,
+                'interview_location' => 'Riyadh HQ',
+            ])
+            ->assertHasNoActionErrors();
+
+        $application->refresh();
+
+        $this->assertNull($application->interview_google_event_id);
+        $this->assertNull($application->interview_url);
+        $this->assertEquals('Riyadh HQ', $application->interview_location);
     }
 
     public function test_investors_stage_hides_change_status(): void

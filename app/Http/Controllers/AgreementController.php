@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ApplicationType;
-use App\Mail\AgreementSignedNotification;
+use App\Jobs\GenerateSignedAgreementPdf;
 use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AgreementController extends Controller
@@ -56,8 +57,20 @@ class AgreementController extends Controller
             'agreement_signed_at' => now(),
         ]);
 
-        Mail::to('be@rv.com.sa')->queue(new AgreementSignedNotification($application->fresh()));
+        GenerateSignedAgreementPdf::dispatch($application->fresh());
 
         return back()->with('success', 'signed');
+    }
+
+    public function downloadPdf(Application $application): StreamedResponse
+    {
+        if (! $application->agreement_pdf_path || ! Storage::disk('local')->exists($application->agreement_pdf_path)) {
+            abort(404);
+        }
+
+        return Storage::disk('local')->download(
+            $application->agreement_pdf_path,
+            "agreement-{$application->uid}.pdf",
+        );
     }
 }

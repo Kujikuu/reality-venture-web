@@ -223,16 +223,21 @@ class ApplicationInfolist
                             ->label('Date & Time')
                             ->dateTime('M d, Y H:i')
                             ->icon('heroicon-o-calendar'),
+                        TextEntry::make('demo_day_type')
+                            ->label('Meeting Type')
+                            ->badge()
+                            ->formatStateUsing(fn (?InterviewType $state): string => $state?->label() ?? '—'),
                         TextEntry::make('demo_day_location')
-                            ->label('Location')
-                            ->icon('heroicon-o-map-pin'),
+                            ->label(fn (Application $record): string => $record->demo_day_type === InterviewType::Online ? 'Google Meet Link' : 'Location')
+                            ->icon('heroicon-o-map-pin')
+                            ->url(fn (Application $record): ?string => $record->demo_day_type === InterviewType::Online ? $record->demo_day_location : null)
+                            ->openUrlInNewTab()
+                            ->color('primary'),
                         TextEntry::make('demo_day_requirements')
                             ->label('Requirements')
+                            ->state(fn (Application $record): array => ApplicationWorkflowService::normalizeDemoDayRequirements($record->demo_day_requirements))
                             ->listWithLineBreaks()
                             ->bulleted()
-                            ->formatStateUsing(fn ($state): string => is_array($state)
-                                ? (string) ($state['requirement'] ?? $state['item'] ?? '')
-                                : (string) $state)
                             ->columnSpanFull(),
                     ]),
 
@@ -248,6 +253,14 @@ class ApplicationInfolist
                             ->label('Signed At')
                             ->dateTime('M d, Y H:i')
                             ->placeholder('Not signed yet'),
+                        TextEntry::make('agreement_pdf_path')
+                            ->label('Signed PDF')
+                            ->placeholder('Not generated yet')
+                            ->visible(fn (Application $record): bool => filled($record->agreement_pdf_path))
+                            ->url(fn (Application $record): string => route('admin.applications.agreement-pdf', $record))
+                            ->openUrlInNewTab()
+                            ->color('primary')
+                            ->formatStateUsing(fn (): string => 'Download signed PDF'),
                         TextEntry::make('agreement_url')
                             ->label('Agreement Page')
                             ->state(fn (Application $record): string => url('/agreement/'.$record->uid))

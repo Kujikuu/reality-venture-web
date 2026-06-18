@@ -10,37 +10,36 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DemoDayInvitation extends Mailable implements ShouldQueue
+class InterviewScheduledAdminNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public function __construct(
         public Application $application,
-        public ?string $date = null,
-        public ?string $location = null,
-        public array $requirements = [],
+        public ?string $scheduledAt = null,
+        public ?string $meetingType = null,
         public ?string $meetingUrl = null,
-        public bool $isOnline = false,
+        public ?string $meetingLocation = null,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "دعوة ليوم العرض | Demo Day Invitation — {$this->application->uid}",
+            subject: "Interview Scheduled — {$this->application->uid}",
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.demo-day-invitation',
+            markdown: 'emails.applications.interview-scheduled-admin',
             with: [
                 'application' => $this->application,
-                'date' => $this->date,
-                'location' => $this->location,
-                'requirements' => $this->requirements,
+                'scheduledAt' => $this->scheduledAt,
+                'meetingType' => $this->meetingType,
                 'meetingUrl' => $this->meetingUrl,
-                'isOnline' => $this->isOnline,
+                'meetingLocation' => $this->meetingLocation,
+                'adminUrl' => url('/admin/applications/'.$this->application->id),
             ],
         );
     }

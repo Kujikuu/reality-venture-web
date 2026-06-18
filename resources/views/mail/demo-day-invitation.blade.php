@@ -14,7 +14,11 @@
 <h2 style="direction: rtl; text-align: right; font-size: 18px; color: #062D2D;">تفاصيل يوم العرض:</h2>
 <ul style="direction: rtl; text-align: right; padding-right: 25px; font-size: 16px;">
 <li style="direction: rtl; text-align: right;"><strong>التاريخ والوقت:</strong> {{ $date }}</li>
+@if($isOnline && $meetingUrl)
+<li style="direction: rtl; text-align: right;"><strong>رابط الاجتماع:</strong> <a href="{{ $meetingUrl }}">{{ $meetingUrl }}</a></li>
+@else
 <li style="direction: rtl; text-align: right;"><strong>المكان:</strong> {{ $location }}</li>
+@endif
 </ul>
 
 @if($requirements && count($requirements) > 0)
@@ -49,7 +53,11 @@
 <h2 style="direction: ltr; text-align: left; font-size: 18px; color: #062D2D;">Demo Day Details:</h2>
 <ul style="direction: ltr; text-align: left; padding-left: 25px; font-size: 16px;">
 <li style="direction: ltr; text-align: left;"><strong>Date & Time:</strong> {{ $date }}</li>
+@if($isOnline && $meetingUrl)
+<li style="direction: ltr; text-align: left;"><strong>Meeting Link:</strong> <a href="{{ $meetingUrl }}">{{ $meetingUrl }}</a></li>
+@else
 <li style="direction: ltr; text-align: left;"><strong>Location:</strong> {{ $location }}</li>
+@endif
 </ul>
 
 @if($requirements && count($requirements) > 0)

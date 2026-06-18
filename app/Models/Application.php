@@ -59,6 +59,10 @@ class Application extends Model
         'demo_day_requirements',
         'agreement_signer_name',
         'agreement_signed_at',
+        'agreement_pdf_path',
+        'interview_google_event_id',
+        'demo_day_type',
+        'demo_day_google_event_id',
         'is_newsletter_subscribed',
     ];
 
@@ -73,6 +77,7 @@ class Application extends Model
             'business_stage' => BusinessStage::class,
             'discovery_source' => DiscoverySource::class,
             'interview_type' => InterviewType::class,
+            'demo_day_type' => InterviewType::class,
             'founded_date' => 'date',
             'interview_scheduled_at' => 'datetime',
             'demo_day_date' => 'datetime',

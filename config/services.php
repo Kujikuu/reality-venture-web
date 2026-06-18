@@ -43,6 +43,17 @@ return [
 
     'google' => [
         'sheets_webhook_url' => env('GOOGLE_SHEETS_WEBHOOK_URL'),
+        'calendar' => [
+            'client_id' => env('GOOGLE_CALENDAR_CLIENT_ID'),
+            'client_secret' => env('GOOGLE_CALENDAR_CLIENT_SECRET'),
+            'refresh_token' => env('GOOGLE_CALENDAR_REFRESH_TOKEN'),
+            'calendar_id' => env('GOOGLE_CALENDAR_ID', 'primary'),
+            'default_duration_minutes' => (int) env('GOOGLE_MEET_DEFAULT_DURATION_MINUTES', 30),
+        ],
+    ],
+
+    'rv' => [
+        'admin_email' => env('RV_ADMIN_EMAIL', 'be@rv.com.sa'),
     ],
 
     'rv_club' => [

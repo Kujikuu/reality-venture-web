@@ -11,9 +11,11 @@ use App\Enums\Industry;
 use App\Enums\InterviewType;
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Mail\AgreementInvitationMail;
+use App\Mail\AgreementSignedConfirmation;
 use App\Mail\AgreementSignedNotification;
 use App\Mail\DemoDayInvitation;
 use App\Mail\GeneralApplicationConfirmation;
+use App\Mail\InterviewScheduledAdminNotification;
 use App\Mail\NewApplicationSubmitted;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
@@ -22,6 +24,7 @@ use App\Mail\StageAdvancedToInterview;
 use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
 use App\Models\User;
+use App\Services\GoogleCalendarService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
@@ -47,6 +50,16 @@ class ApplicationEndToEndFlowTest extends TestCase
         Mail::fake();
         Http::fake();
         Storage::fake('public');
+        Storage::fake('local');
+
+        $this->mock(GoogleCalendarService::class, function ($mock): void {
+            $mock->shouldReceive('isConfigured')->andReturn(true);
+            $mock->shouldReceive('createMeetEvent')->andReturn([
+                'event_id' => 'google-event-e2e',
+                'meet_url' => 'https://meet.google.com/e2e-test-link',
+                'html_link' => 'https://calendar.google.com/event/e2e',
+            ]);
+        });
 
         // --- STAGE 1: Initial Submission (Public) ---
         $initialData = [
@@ -123,14 +136,14 @@ class ApplicationEndToEndFlowTest extends TestCase
             ->callTableAction('scheduleInterview', $application, [
                 'interview_scheduled_at' => $interviewDate,
                 'interview_type' => InterviewType::Online->value,
-                'interview_url' => 'https://zoom.us/test',
             ])
             ->assertHasNoTableActionErrors();
 
         $application->refresh();
         $this->assertEquals(ApplicationType::Interview, $application->type);
-        $this->assertEquals('https://zoom.us/test', $application->interview_url);
+        $this->assertEquals('https://meet.google.com/e2e-test-link', $application->interview_url);
         Mail::assertQueued(StageAdvancedToInterview::class);
+        Mail::assertQueued(InterviewScheduledAdminNotification::class);
 
         // --- STAGE 5: Evaluation (Filament) ---
         Livewire::actingAs($this->admin)
@@ -182,6 +195,8 @@ class ApplicationEndToEndFlowTest extends TestCase
         $this->assertEquals('John Doe', $application->agreement_signer_name);
         $this->assertNotNull($application->agreement_signed_at);
         $this->assertEquals(ApplicationType::SignAgreement, $application->type, 'Should remain in SignAgreement until admin promotes');
+        $this->assertNotNull($application->agreement_pdf_path);
+        Mail::assertQueued(AgreementSignedConfirmation::class);
         Mail::assertQueued(AgreementSignedNotification::class);
 
         // --- STAGE 9: Approve Agreement & Promotion (Filament) ---
@@ -199,6 +214,7 @@ class ApplicationEndToEndFlowTest extends TestCase
             ->test(ListApplications::class)
             ->callTableAction('sendDemoDayInvite', $application, [
                 'demo_day_date' => $demoDayDate,
+                'demo_day_type' => InterviewType::InPerson->value,
                 'demo_day_location' => 'Riyadh HQ',
                 'demo_day_requirements' => [
                     ['requirement' => 'Pitch deck'],
