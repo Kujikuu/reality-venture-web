@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\StartupApplicationConfirmation;
+use App\Models\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -49,8 +51,12 @@ class ApplicationConfirmationEmailTest extends TestCase
     public function test_startup_application_sends_confirmation_to_applicant(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = Application::factory()->create(['email' => 'sara@startup.com']);
 
         $this->post('/startup-applications', [
+            'referral_param' => $application->uid,
             'first_name' => 'Sara',
             'last_name' => 'Al-Qahtani',
             'email' => 'sara@startup.com',
@@ -78,8 +84,12 @@ class ApplicationConfirmationEmailTest extends TestCase
     public function test_startup_confirmation_contains_uid(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = Application::factory()->create(['email' => 'uid-startup@test.com']);
 
         $this->post('/startup-applications', [
+            'referral_param' => $application->uid,
             'first_name' => 'Sara',
             'last_name' => 'Test',
             'email' => 'uid-startup@test.com',

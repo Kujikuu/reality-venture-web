@@ -4,12 +4,12 @@ namespace Tests\Feature;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
-use App\Enums\InterviewType;
-use App\Filament\Resources\Applications\Pages\EditApplication;
-use App\Mail\StageAdvancedToApplying;
+use App\Filament\Resources\Applications\Pages\ViewApplication;
+use App\Mail\StageAdvancedToEvaluation;
 use App\Models\Application;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -24,75 +24,48 @@ class ApplicationStageWorkflowTest extends TestCase
     {
         parent::setUp();
         $this->admin = User::factory()->create();
+        Http::fake();
     }
 
-    public function test_changing_stage_to_startup_queues_email()
+    public function test_evaluate_action_advances_to_evaluation_and_emails_applicant(): void
     {
         Mail::fake();
 
-        $application = Application::factory()->create([
-            'type' => ApplicationType::Initial,
+        $application = Application::factory()->interview()->create([
+            'type' => ApplicationType::Interview,
         ]);
 
         Livewire::actingAs($this->admin)
-            ->test(EditApplication::class, ['record' => $application->getKey()])
-            ->fillForm([
-                'type' => ApplicationType::Startup->value,
-                'status' => ApplicationStatus::Pending->value,
+            ->test(ViewApplication::class, ['record' => $application->getKey()])
+            ->callAction('evaluate', [
+                'evaluation_checklist' => ['cr', 'deck'],
+                'evaluation_notes' => 'Strong team.',
             ])
-            ->call('save')
-            ->assertHasNoFormErrors();
-
-        $application->refresh();
-        $this->assertEquals(ApplicationType::Startup, $application->type);
-
-        Mail::assertQueued(StageAdvancedToApplying::class, function (StageAdvancedToApplying $mail) use ($application) {
-            return $mail->hasTo($application->email) && $mail->application->id === $application->id;
-        });
-    }
-
-    public function test_changing_stage_to_evaluation_queues_email()
-    {
-        Mail::fake();
-
-        $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Startup,
-        ]);
-
-        Livewire::actingAs($this->admin)
-            ->test(EditApplication::class, ['record' => $application->getKey()])
-            ->fillForm([
-                'type' => ApplicationType::Evaluation->value,
-                'status' => ApplicationStatus::UnderReview->value,
-                'interview_type' => InterviewType::Online->value,
-            ])
-            ->call('save')
-            ->assertHasNoFormErrors();
+            ->assertHasNoActionErrors();
 
         $application->refresh();
         $this->assertEquals(ApplicationType::Evaluation, $application->type);
-        $this->assertEquals(InterviewType::Online, $application->interview_type);
+        $this->assertEquals(ApplicationStatus::UnderReview, $application->status);
+        $this->assertEquals('Strong team.', $application->evaluation_notes);
+
+        Mail::assertQueued(StageAdvancedToEvaluation::class);
     }
 
-    public function test_changing_stage_to_decision_queues_email()
+    public function test_send_agreement_hidden_until_decision_is_approved(): void
     {
-        Mail::fake();
-
-        $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Evaluation,
+        $pendingDecision = Application::factory()->evaluation()->create([
+            'type' => ApplicationType::Decision,
+            'status' => ApplicationStatus::InProgress,
         ]);
 
         Livewire::actingAs($this->admin)
-            ->test(EditApplication::class, ['record' => $application->getKey()])
-            ->fillForm([
-                'type' => ApplicationType::Decision->value,
-                'status' => ApplicationStatus::Approved->value,
-                'evaluation_notes_text' => 'Strong team.',
-            ])
-            ->call('save')
-            ->assertHasNoFormErrors();
+            ->test(ViewApplication::class, ['record' => $pendingDecision->getKey()])
+            ->assertActionHidden('sendAgreement');
 
-        $application->refresh();
-        $this->assertEquals(ApplicationType::Decision, $application->type);
+        $approvedDecision = Application::factory()->approved()->create();
+
+        Livewire::actingAs($this->admin)
+            ->test(ViewApplication::class, ['record' => $approvedDecision->getKey()])
+            ->assertActionVisible('sendAgreement');
     }
 }

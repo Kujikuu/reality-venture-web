@@ -46,6 +46,8 @@
     "submitting": "Submitting...",
     "success": "Request received successfully. Check your email for next steps.",
     "successTitle": "Application Submitted!",
+    "successUidLabel": "Your reference number",
+    "successNextStep": "Check your email for a link to complete your startup profile. Keep this reference number for your records.",
     "returnHome": "Return to Home",
     "agreement": "By submitting this form, you agree to our"
   },

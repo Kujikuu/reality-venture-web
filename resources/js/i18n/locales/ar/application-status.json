@@ -1,0 +1,24 @@
+{
+  "pageTitle": "حالة الطلب - رياليتي فينتشر",
+  "title": "حالة الطلب",
+  "subtitle": "تابع مكان طلبك في مسار البرنامج.",
+  "reference": "المرجع",
+  "stage": "المرحلة الحالية",
+  "status": "حالة المراجعة",
+  "nextStep": "الخطوة التالية",
+  "greeting": "مرحباً {{name}}،",
+  "returnHome": "العودة إلى الرئيسية",
+  "notFound": "لم يتم العثور على الطلب.",
+  "recommendedActions": {
+    "advanceToStartup": "الانتقال إلى مرحلة الشركة الناشئة",
+    "scheduleInterview": "جدولة المقابلة",
+    "waitingForStartupProfile": "في انتظار إكمال المتقدم لملف الشركة الناشئة",
+    "runEvaluation": "إجراء التقييم",
+    "moveToDecision": "الانتقال إلى مرحلة القرار",
+    "sendAgreement": "إرسال الاتفاقية",
+    "setDecisionOrSendAgreement": "تحديد حالة القرار أو إرسال الاتفاقية في حال الموافقة",
+    "approveAndMoveToDemoDay": "الموافقة والانتقال إلى يوم العرض",
+    "waitingForAgreementSignature": "في انتظار توقيع المتقدم على الاتفاقية",
+    "scheduleDemoDayOrMoveToInvestors": "جدولة يوم العرض أو الانتقال إلى المستثمرين"
+  }
+}

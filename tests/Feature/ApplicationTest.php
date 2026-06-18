@@ -37,6 +37,7 @@ class ApplicationTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHas('success');
+        $response->assertSessionHas('application_uid');
 
         $this->assertDatabaseHas('applications', [
             'email' => 'ahmed@example.com',
@@ -45,7 +46,7 @@ class ApplicationTest extends TestCase
             'type' => ApplicationType::Initial->value,
         ]);
 
-        Mail::assertSent(NewApplicationSubmitted::class);
+        Mail::assertQueued(NewApplicationSubmitted::class);
     }
 
     public function test_rejects_duplicate_email(): void

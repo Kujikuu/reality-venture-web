@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdBanner;
+use App\Models\Application;
 use App\Services\BlogApiService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -107,19 +109,38 @@ class PageController extends Controller
         return Inertia::render('Apply');
     }
 
-    public function startupApplicationForm(): Response
+    public function startupApplicationForm(): Response|RedirectResponse
     {
+        $ref = request()->query('ref');
+
+        if (! $ref) {
+            return redirect()
+                ->route('application.form')
+                ->with('error', 'startup-application:validation.referralRequired');
+        }
+
+        $application = Application::where('uid', $ref)->first();
+
+        if (! $application || ! $application->type->allowsStartupProfileSubmission()) {
+            return redirect()
+                ->route('application.form')
+                ->with('error', 'startup-application:validation.referralInvalid');
+        }
+
         Inertia::share('seo', fn () => [
             'title' => 'Startup Application',
-            'description' => 'Submit your startup application to Reality Venture accelerator and incubator program.',
-            'canonical' => url('/startup-application'),
+            'description' => 'Complete your startup application for Reality Venture accelerator program.',
+            'canonical' => url('/startup-application?ref='.$ref),
             'ogImage' => asset('images/og-default.jpg'),
             'ogType' => 'website',
-            'robots' => 'index, follow',
+            'robots' => 'noindex, nofollow',
             'jsonLd' => null,
         ]);
 
-        return Inertia::render('StartupApplication');
+        return Inertia::render('StartupApplication', [
+            'referralUid' => $ref,
+            'applicantName' => trim($application->first_name.' '.$application->last_name),
+        ]);
     }
 
     public function privacyPolicy(): Response

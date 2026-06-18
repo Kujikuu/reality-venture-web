@@ -10,6 +10,7 @@ use App\Enums\FundingRound;
 use App\Enums\Industry;
 use App\Enums\InterviewType;
 use App\Models\Application;
+use App\Services\ApplicationWorkflowService;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -21,6 +22,29 @@ class ApplicationInfolist
     {
         return $schema
             ->components([
+                Section::make('Pipeline')
+                    ->icon(Heroicon::OutlinedArrowPath)
+                    ->schema([
+                        TextEntry::make('pipeline_progress')
+                            ->label('Progress')
+                            ->state(function (Application $record): string {
+                                $stages = ApplicationType::ordered();
+                                $labels = array_map(
+                                    fn (ApplicationType $stage): string => $stage === $record->type
+                                        ? '▶ '.$stage->label()
+                                        : ($stage->order() < $record->type->order() ? '✓ '.$stage->label() : '○ '.$stage->label()),
+                                    $stages,
+                                );
+
+                                return implode(' → ', $labels);
+                            })
+                            ->columnSpanFull(),
+                        TextEntry::make('recommended_action')
+                            ->label('Recommended Next Action')
+                            ->state(fn (Application $record): string => app(ApplicationWorkflowService::class)->recommendedAction($record) ?? 'No further action required')
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Applicant Information')
                     ->icon(Heroicon::OutlinedUser)
                     ->columns(2)
@@ -76,7 +100,7 @@ class ApplicationInfolist
                 Section::make('Company Details')
                     ->icon(Heroicon::OutlinedBuildingOffice2)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => filled($record->company_name))
                     ->schema([
                         TextEntry::make('business_stage')
                             ->label('Business Stage')
@@ -120,7 +144,7 @@ class ApplicationInfolist
                 Section::make('Investment Details')
                     ->icon(Heroicon::OutlinedBanknotes)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => filled($record->company_name))
                     ->schema([
                         TextEntry::make('current_funding_round')
                             ->label('Current Funding Round')
@@ -169,6 +193,10 @@ class ApplicationInfolist
                             ->label('Location / Address')
                             ->visible(fn (Application $record) => $record->interview_type === InterviewType::InPerson)
                             ->placeholder('—'),
+                        TextEntry::make('evaluation_notes')
+                            ->label('Evaluation Notes')
+                            ->placeholder('—')
+                            ->columnSpanFull(),
                         TextEntry::make('evaluation_checklist')
                             ->label('Checklist')
                             ->listWithLineBreaks()
@@ -189,7 +217,7 @@ class ApplicationInfolist
                 Section::make('Demo Day')
                     ->icon(Heroicon::OutlinedPresentationChartBar)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => $record->type === ApplicationType::DemoDay)
+                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::DemoDay, ApplicationType::Investors], true))
                     ->schema([
                         TextEntry::make('demo_day_date')
                             ->label('Date & Time')
@@ -202,14 +230,37 @@ class ApplicationInfolist
                             ->label('Requirements')
                             ->listWithLineBreaks()
                             ->bulleted()
-                            ->formatStateUsing(fn ($state): string => is_array($state) ? ($state['item'] ?? '') : (string) $state)
+                            ->formatStateUsing(fn ($state): string => is_array($state)
+                                ? (string) ($state['requirement'] ?? $state['item'] ?? '')
+                                : (string) $state)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Agreement')
+                    ->icon(Heroicon::OutlinedDocumentCheck)
+                    ->columns(2)
+                    ->visible(fn (Application $record): bool => $record->type->order() >= ApplicationType::SignAgreement->order())
+                    ->schema([
+                        TextEntry::make('agreement_signer_name')
+                            ->label('Signer Name')
+                            ->placeholder('Not signed yet'),
+                        TextEntry::make('agreement_signed_at')
+                            ->label('Signed At')
+                            ->dateTime('M d, Y H:i')
+                            ->placeholder('Not signed yet'),
+                        TextEntry::make('agreement_url')
+                            ->label('Agreement Page')
+                            ->state(fn (Application $record): string => url('/agreement/'.$record->uid))
+                            ->url(fn (Application $record): string => url('/agreement/'.$record->uid))
+                            ->openUrlInNewTab()
+                            ->color('primary')
                             ->columnSpanFull(),
                     ]),
 
                 Section::make('Discovery')
                     ->icon(Heroicon::OutlinedMegaphone)
                     ->columns(2)
-                    ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Startup, ApplicationType::Evaluation, ApplicationType::Decision, ApplicationType::DemoDay]))
+                    ->visible(fn (Application $record): bool => filled($record->company_name))
                     ->schema([
                         TextEntry::make('discovery_source')
                             ->label('How They Heard')

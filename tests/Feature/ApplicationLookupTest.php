@@ -44,4 +44,12 @@ class ApplicationLookupTest extends TestCase
                 'message' => 'Application not found',
             ]);
     }
+
+    public function test_returns_404_if_application_past_startup_stage(): void
+    {
+        $application = Application::factory()->interview()->create();
+
+        $this->getJson("/applications/lookup/{$application->uid}")
+            ->assertNotFound();
+    }
 }

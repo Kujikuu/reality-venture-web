@@ -78,6 +78,30 @@ class ApplicationExporter extends Exporter
                 ->label('Referral Name'),
             ExportColumn::make('referral_param')
                 ->label('Referral Code'),
+            ExportColumn::make('description')
+                ->label('Initial Description'),
+            ExportColumn::make('interview_scheduled_at')
+                ->label('Interview Scheduled'),
+            ExportColumn::make('interview_type')
+                ->label('Interview Type')
+                ->formatStateUsing(fn ($state) => $state?->label()),
+            ExportColumn::make('interview_url')
+                ->label('Interview URL'),
+            ExportColumn::make('interview_location')
+                ->label('Interview Location'),
+            ExportColumn::make('evaluation_notes')
+                ->label('Evaluation Notes'),
+            ExportColumn::make('evaluation_checklist')
+                ->label('Evaluation Checklist')
+                ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : null),
+            ExportColumn::make('demo_day_date')
+                ->label('Demo Day Date'),
+            ExportColumn::make('demo_day_location')
+                ->label('Demo Day Location'),
+            ExportColumn::make('agreement_signer_name')
+                ->label('Agreement Signer'),
+            ExportColumn::make('agreement_signed_at')
+                ->label('Agreement Signed At'),
             ExportColumn::make('created_at')
                 ->label('Submitted At'),
         ];

@@ -109,8 +109,8 @@ class ApplicationFactory extends Factory
             'demo_day_date' => fake()->dateTimeBetween('+1 month', '+2 months'),
             'demo_day_location' => 'Main Hall, Reality Venture HQ',
             'demo_day_requirements' => [
-                ['item' => 'Latest Pitch Deck'],
-                ['item' => 'Product Demo setup'],
+                'Latest Pitch Deck',
+                'Product Demo setup',
             ],
         ]);
     }

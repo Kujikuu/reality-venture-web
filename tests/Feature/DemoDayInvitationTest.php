@@ -9,6 +9,7 @@ use App\Mail\DemoDayInvitation;
 use App\Models\Application;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -23,15 +24,17 @@ class DemoDayInvitationTest extends TestCase
     {
         parent::setUp();
         $this->admin = User::factory()->create();
+        Http::fake();
     }
 
-    public function test_can_send_demo_day_invitation_from_view_page()
+    public function test_can_send_demo_day_invitation_from_demo_day_stage(): void
     {
         Mail::fake();
 
-        $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Decision,
+        $application = Application::factory()->demoDay()->create([
+            'type' => ApplicationType::DemoDay,
             'status' => ApplicationStatus::Approved,
+            'demo_day_requirements' => [],
         ]);
 
         $date = now()->addDays(14)->format('Y-m-d H:i:s');
@@ -44,8 +47,8 @@ class DemoDayInvitationTest extends TestCase
                 'demo_day_date' => $date,
                 'demo_day_location' => 'Riyadh HQ',
                 'demo_day_requirements' => [
-                    'item1' => ['requirement' => 'Pitch deck'],
-                    'item2' => ['requirement' => 'Working demo'],
+                    ['requirement' => 'Pitch deck'],
+                    ['requirement' => 'Working demo'],
                 ],
             ])
             ->callMountedAction()
@@ -57,18 +60,17 @@ class DemoDayInvitationTest extends TestCase
         $this->assertEquals(ApplicationType::DemoDay, $application->type);
         $this->assertEquals($date, $application->demo_day_date->format('Y-m-d H:i:s'));
         $this->assertEquals('Riyadh HQ', $application->demo_day_location);
-        $this->assertCount(2, $application->demo_day_requirements);
-        $this->assertEquals('Pitch deck', $application->demo_day_requirements[0]);
+        $this->assertEquals(['Pitch deck', 'Working demo'], $application->demo_day_requirements);
 
         Mail::assertQueued(DemoDayInvitation::class, function (DemoDayInvitation $mail) use ($application) {
             return $mail->hasTo($application->email) && $mail->application->id === $application->id;
         });
     }
 
-    public function test_demo_day_action_hidden_for_unapproved_applications()
+    public function test_demo_day_action_hidden_for_unapproved_applications(): void
     {
-        $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Decision,
+        $application = Application::factory()->demoDay()->create([
+            'type' => ApplicationType::DemoDay,
             'status' => ApplicationStatus::Rejected,
         ]);
 
@@ -77,10 +79,10 @@ class DemoDayInvitationTest extends TestCase
             ->assertActionHidden('sendDemoDayInvite');
     }
 
-    public function test_demo_day_action_hidden_for_wrong_stage()
+    public function test_demo_day_action_hidden_for_decision_stage(): void
     {
-        $application = Application::factory()->startup()->create([
-            'type' => ApplicationType::Evaluation,
+        $application = Application::factory()->approved()->create([
+            'type' => ApplicationType::Decision,
             'status' => ApplicationStatus::Approved,
         ]);
 

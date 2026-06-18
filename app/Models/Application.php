@@ -80,7 +80,7 @@ class Application extends Model
             'investment_ask_sar' => 'integer',
             'valuation_sar' => 'integer',
             'number_of_founders' => 'integer',
-            'evaluation_notes' => 'array',
+            'evaluation_notes' => 'string',
             'evaluation_checklist' => 'array',
             'demo_day_requirements' => 'array',
             'is_newsletter_subscribed' => 'boolean',
@@ -94,34 +94,6 @@ class Application extends Model
                 $application->uid = static::generateUid();
             }
         });
-
-        static::updated(function (Application $application) {
-            // 1. Status Changes
-            if ($application->wasChanged('status')) {
-                // When approved, invite to sign agreement
-                // if ($application->status === ApplicationStatus::Approved && $application->type === ApplicationType::SignAgreement) {
-                //     \Illuminate\Support\Facades\Mail::to($application->email)->queue(new \App\Mail\AgreementInvitationMail($application));
-                // }
-            }
-
-            // 2. Stage Changes (Only if not handled by explicit actions/params)
-            if ($application->wasChanged('type')) {
-                $mail = match ($application->type) {
-                    // StageAdvancedToApplying is handled in Filament action to ensure consistency with UID/Links
-                    // ApplicationType::Startup => new \App\Mail\StageAdvancedToApplying($application),
-
-                    ApplicationType::Evaluation => new \App\Mail\StageAdvancedToEvaluation($application),
-                    // ApplicationType::Decision => new \App\Mail\StageAdvancedToDecision($application), // Handled in Filament action
-
-                    default => null,
-                };
-
-                if ($mail) {
-                    \Illuminate\Support\Facades\Mail::to($application->email)->queue($mail);
-                }
-            }
-        });
-
     }
 
     public static function generateUid(): string

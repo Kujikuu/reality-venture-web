@@ -48,7 +48,7 @@ class StoreStartupApplicationRequest extends FormRequest
 
             'discovery_source' => ['required', Rule::enum(DiscoverySource::class)],
             'referral_name' => ['nullable', 'required_if:discovery_source,referral', 'string', 'max:255'],
-            'referral_param' => ['nullable', 'string', 'max:255'],
+            'referral_param' => ['required', 'string', 'max:255'],
         ];
     }
 

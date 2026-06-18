@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Applications;
 use App\Enums\ApplicationStatus;
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Filament\Resources\Applications\Pages\ViewApplication;
-use App\Filament\Resources\Applications\Schemas\ApplicationForm;
 use App\Filament\Resources\Applications\Schemas\ApplicationInfolist;
 use App\Filament\Resources\Applications\Tables\ApplicationsTable;
 use App\Models\Application;
@@ -60,13 +59,8 @@ class ApplicationResource extends Resource
         /** @var Application $record */
         return [
             'Name' => $record->first_name.' '.$record->last_name,
-            'Program' => $record->program_interest->label(),
+            'Stage' => $record->type->label(),
         ];
-    }
-
-    public static function form(Schema $schema): Schema
-    {
-        return ApplicationForm::configure($schema);
     }
 
     public static function infolist(Schema $schema): Schema

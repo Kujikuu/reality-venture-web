@@ -24,8 +24,8 @@
 <li style="direction: rtl; text-align: right;"><strong>المجال:</strong> {{ $application->industry?->label() ?? '—' }}</li>
 <li style="direction: rtl; text-align: right;"><strong>مرحلة العمل:</strong> {{ $application->business_stage?->label() ?? '—' }}</li>
 <li style="direction: rtl; text-align: right;"><strong>الجولة التمويلية الحالية:</strong> {{ $application->current_funding_round?->label() ?? '—' }}</li>
-<li style="direction: rtl; text-align: right;"><strong>المبلغ المطلوب:</strong> {{ number_format($application->investment_ask_sar) }} ريال</li>
-<li style="direction: rtl; text-align: right;"><strong>التقييم:</strong> {{ number_format($application->valuation_sar) }} ريال</li>
+<li style="direction: rtl; text-align: right;"><strong>المبلغ المطلوب:</strong> {{ $application->investment_ask_sar ? number_format($application->investment_ask_sar).' ريال' : '—' }}</li>
+<li style="direction: rtl; text-align: right;"><strong>التقييم:</strong> {{ $application->valuation_sar ? number_format($application->valuation_sar).' ريال' : '—' }}</li>
 @if($application->website_link)
 <li style="direction: rtl; text-align: right;"><strong>الموقع الإلكتروني:</strong> {{ $application->website_link }}</li>
 @endif
@@ -73,8 +73,8 @@
 <li style="direction: ltr; text-align: left;"><strong>Industry:</strong> {{ $application->industry?->label() ?? '—' }}</li>
 <li style="direction: ltr; text-align: left;"><strong>Business Stage:</strong> {{ $application->business_stage?->label() ?? '—' }}</li>
 <li style="direction: ltr; text-align: left;"><strong>Current Round:</strong> {{ $application->current_funding_round?->label() ?? '—' }}</li>
-<li style="direction: ltr; text-align: left;"><strong>Funding Requested:</strong> SAR {{ number_format($application->investment_ask_sar) }}</li>
-<li style="direction: ltr; text-align: left;"><strong>Valuation:</strong> SAR {{ number_format($application->valuation_sar) }}</li>
+<li style="direction: ltr; text-align: left;"><strong>Funding Requested:</strong> {{ $application->investment_ask_sar ? 'SAR '.number_format($application->investment_ask_sar) : '—' }}</li>
+<li style="direction: ltr; text-align: left;"><strong>Valuation:</strong> {{ $application->valuation_sar ? 'SAR '.number_format($application->valuation_sar) : '—' }}</li>
 @if($application->website_link)
 <li style="direction: ltr; text-align: left;"><strong>Website:</strong> {{ $application->website_link }}</li>
 @endif

@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
 use App\Mail\NewApplicationSubmitted;
+use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -45,18 +48,40 @@ class StartupApplicationTest extends TestCase
         ], $overrides);
     }
 
-    public function test_renders_startup_application_page(): void
+    private function createInitialApplication(array $overrides = []): Application
+    {
+        return Application::factory()->create(array_merge([
+            'type' => ApplicationType::Initial,
+            'status' => ApplicationStatus::Pending,
+        ], $overrides));
+    }
+
+    public function test_redirects_startup_application_page_without_ref(): void
     {
         $response = $this->get('/startup-application');
+
+        $response->assertRedirect(route('application.form'));
+    }
+
+    public function test_renders_startup_application_page_with_valid_ref(): void
+    {
+        $application = $this->createInitialApplication();
+
+        $response = $this->get('/startup-application?ref='.$application->uid);
 
         $response->assertStatus(200);
     }
 
-    public function test_submits_valid_startup_application(): void
+    public function test_submits_valid_startup_application_with_ref(): void
     {
         Mail::fake();
+        Http::fake();
 
-        $response = $this->post('/startup-applications', $this->validPayload());
+        $application = $this->createInitialApplication(['email' => 'sara@startup.com']);
+
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
+        ]));
 
         $response->assertRedirect();
         $response->assertSessionHas('success');
@@ -68,22 +93,58 @@ class StartupApplicationTest extends TestCase
             'investment_ask_sar' => 2_000_000,
         ]);
 
-        Mail::assertSent(NewApplicationSubmitted::class);
+        Mail::assertQueued(NewApplicationSubmitted::class);
+        Mail::assertQueued(StartupApplicationConfirmation::class);
     }
 
-    public function test_rejects_duplicate_email_from_existing_application(): void
+    public function test_rejects_startup_submission_without_ref(): void
     {
-        Application::factory()->create(['email' => 'dup@startup.com']);
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => null,
+        ]));
 
-        $response = $this->post('/startup-applications', $this->validPayload(['email' => 'dup@startup.com']));
+        $response->assertSessionHasErrors(['referral_param']);
+    }
 
-        $response->assertSessionHasErrors(['email']);
+    public function test_rejects_startup_submission_with_invalid_ref(): void
+    {
+        $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => 'RV-INVALID',
+        ]));
+
+        $response->assertSessionHasErrors(['referral_param']);
+    }
+
+    public function test_resubmit_with_same_ref_does_not_resend_emails(): void
+    {
+        Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication(['email' => 'resubmit@startup.com']);
+        $payload = $this->validPayload(['referral_param' => $application->uid, 'email' => 'resubmit@startup.com']);
+
+        $this->post('/startup-applications', $payload)->assertSessionHasNoErrors();
+
+        Mail::assertQueued(NewApplicationSubmitted::class, 1);
+        Mail::assertQueued(StartupApplicationConfirmation::class, 1);
+
+        $this->post('/startup-applications', array_merge($payload, [
+            'company_name' => 'RealityCo Updated',
+        ]))->assertSessionHasNoErrors();
+
+        Mail::assertQueued(NewApplicationSubmitted::class, 1);
+        Mail::assertQueued(StartupApplicationConfirmation::class, 1);
+
         $this->assertDatabaseCount('applications', 1);
     }
 
     public function test_requires_core_fields(): void
     {
-        $response = $this->post('/startup-applications', []);
+        $application = $this->createInitialApplication();
+
+        $response = $this->post('/startup-applications', [
+            'referral_param' => $application->uid,
+        ]);
 
         $response->assertSessionHasErrors([
             'first_name',
@@ -99,7 +160,10 @@ class StartupApplicationTest extends TestCase
 
     public function test_requires_business_stage(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'business_stage' => '',
         ]));
 
@@ -109,8 +173,12 @@ class StartupApplicationTest extends TestCase
     public function test_idea_stage_allows_minimal_company_fields(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication();
 
         $response = $this->post('/startup-applications', [
+            'referral_param' => $application->uid,
             'first_name' => 'Ali',
             'last_name' => 'Test',
             'email' => 'ali-idea@test.com',
@@ -131,8 +199,12 @@ class StartupApplicationTest extends TestCase
     public function test_none_funding_round_makes_investment_fields_optional(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication();
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'current_funding_round' => 'none',
             'investment_ask_sar' => '',
             'valuation_sar' => '',
@@ -149,26 +221,32 @@ class StartupApplicationTest extends TestCase
     public function test_accepts_valid_pdf_attachment(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication();
 
         $file = \Illuminate\Http\UploadedFile::fake()->create('pitch.pdf', 5000, 'application/pdf');
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'attachment' => $file,
             'email' => 'upload@test.com',
         ]));
 
         $response->assertSessionHasNoErrors();
 
-        $application = Application::where('email', 'upload@test.com')->first();
-        $this->assertNotNull($application->attachment_path);
-        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($application->attachment_path));
+        $saved = Application::where('email', 'upload@test.com')->first();
+        $this->assertNotNull($saved->attachment_path);
+        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($saved->attachment_path));
     }
 
     public function test_rejects_oversized_attachment(): void
     {
+        $application = $this->createInitialApplication();
         $file = \Illuminate\Http\UploadedFile::fake()->create('huge.pdf', 25000, 'application/pdf');
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'attachment' => $file,
             'email' => 'toobig@test.com',
         ]));
@@ -178,9 +256,11 @@ class StartupApplicationTest extends TestCase
 
     public function test_rejects_invalid_attachment_type(): void
     {
+        $application = $this->createInitialApplication();
         $file = \Illuminate\Http\UploadedFile::fake()->create('doc.docx', 1000, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'attachment' => $file,
             'email' => 'wrongtype@test.com',
         ]));
@@ -190,7 +270,10 @@ class StartupApplicationTest extends TestCase
 
     public function test_industry_other_required_when_industry_is_other(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'industry' => 'other',
             'industry_other' => '',
         ]));
@@ -201,8 +284,12 @@ class StartupApplicationTest extends TestCase
     public function test_industry_other_accepted_when_industry_is_other(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication();
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'industry' => 'other',
             'industry_other' => 'Space Tourism',
         ]));
@@ -213,7 +300,10 @@ class StartupApplicationTest extends TestCase
 
     public function test_referral_name_required_when_discovery_source_is_referral(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'discovery_source' => 'referral',
             'referral_name' => '',
         ]));
@@ -224,8 +314,12 @@ class StartupApplicationTest extends TestCase
     public function test_referral_name_accepted_when_discovery_source_is_referral(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication();
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'discovery_source' => 'referral',
             'referral_name' => 'John Doe',
         ]));
@@ -234,21 +328,12 @@ class StartupApplicationTest extends TestCase
         $this->assertDatabaseHas('applications', ['referral_name' => 'John Doe']);
     }
 
-    public function test_captures_referral_param(): void
-    {
-        Mail::fake();
-
-        $response = $this->post('/startup-applications', $this->validPayload([
-            'referral_param' => 'partner-abc',
-        ]));
-
-        $response->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('applications', ['referral_param' => 'partner-abc']);
-    }
-
     public function test_founded_date_cannot_be_in_future(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'founded_date' => now()->addYears(2)->format('Y-m-d'),
         ]));
 
@@ -257,12 +342,16 @@ class StartupApplicationTest extends TestCase
 
     public function test_number_of_founders_must_be_within_range(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'number_of_founders' => 0,
         ]));
         $response->assertSessionHasErrors(['number_of_founders']);
 
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'number_of_founders' => 25,
             'email' => 'other@startup.com',
         ]));
@@ -271,7 +360,10 @@ class StartupApplicationTest extends TestCase
 
     public function test_company_description_max_600_chars(): void
     {
+        $application = $this->createInitialApplication();
+
         $response = $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'company_description' => str_repeat('a', 601),
         ]));
 
@@ -281,9 +373,13 @@ class StartupApplicationTest extends TestCase
     public function test_dispatches_google_sheet_sync_job(): void
     {
         Mail::fake();
+        Http::fake();
         \Illuminate\Support\Facades\Queue::fake();
 
+        $application = $this->createInitialApplication();
+
         $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'email' => 'sheets@test.com',
         ]));
 
@@ -293,8 +389,12 @@ class StartupApplicationTest extends TestCase
     public function test_startup_submission_blocks_later_general_with_same_email(): void
     {
         Mail::fake();
+        Http::fake();
+
+        $application = $this->createInitialApplication(['email' => 'block@startup.com']);
 
         $this->post('/startup-applications', $this->validPayload([
+            'referral_param' => $application->uid,
             'email' => 'block@startup.com',
         ]));
 

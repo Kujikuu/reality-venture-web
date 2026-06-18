@@ -32,17 +32,20 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
         }
 
         $sheet = $this->application->type === ApplicationType::Startup
+            || $this->application->company_name
             ? 'Startup Applications'
             : 'General Applications';
 
-        $row = $this->application->type === ApplicationType::Startup
+        $row = $this->application->company_name || $this->application->type !== ApplicationType::Initial
             ? $this->buildStartupRow()
             : $this->buildGeneralRow();
 
         Http::post($webhookUrl, [
+            'action' => 'upsert',
+            'uid' => $this->application->uid,
             'sheet' => $sheet,
             'row' => $row,
-        ]);
+        ])->throw();
     }
 
     /** @return array<int, string|null> */
@@ -77,16 +80,18 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->discovery_source?->label(),
             $app->referral_name,
             $app->referral_param,
-            $app->status,
-            $app->type,
+            $app->status->label(),
+            $app->type->label(),
             $app->interview_scheduled_at?->format('Y-m-d H:i'),
-            $app->interview_type,
+            $app->interview_type?->label(),
             $app->interview_url,
             $app->interview_location,
-            $app->evaluation_notes ? json_encode($app->evaluation_notes) : null,
+            $app->evaluation_notes,
             $app->demo_day_date?->format('Y-m-d H:i'),
             $app->demo_day_location,
             $app->demo_day_requirements ? json_encode($app->demo_day_requirements) : null,
+            $app->agreement_signer_name,
+            $app->agreement_signed_at?->format('Y-m-d H:i'),
         ];
     }
 
@@ -105,8 +110,8 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->city,
             $app->social_profile,
             $app->description,
-            $app->status,
-            $app->type,
+            $app->status->label(),
+            $app->type->label(),
         ];
     }
 }

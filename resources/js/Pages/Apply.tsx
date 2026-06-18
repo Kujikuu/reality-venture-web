@@ -19,6 +19,10 @@ export default function Apply() {
 
     const { flash } = usePage<any>().props;
     const [isSuccess, setIsSuccess] = useState(flash?.success === 'submitted');
+    const [submittedUid, setSubmittedUid] = useState<string | undefined>(
+        flash?.success === 'submitted' ? (flash?.application_uid as string | undefined) : undefined,
+    );
+    const applicationUid = submittedUid ?? (flash?.application_uid as string | undefined);
     const { data, setData, post, processing, errors, reset } = useForm({
         first_name: "",
         last_name: "",
@@ -39,11 +43,14 @@ export default function Apply() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post("/applications", {
-            preserveState: true,
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: (page) => {
                 reset();
                 setIsSuccess(true);
+                const uid = (page.props as { flash?: { application_uid?: string } }).flash?.application_uid;
+                if (uid) {
+                    setSubmittedUid(uid);
+                }
             },
         });
     };
@@ -64,8 +71,21 @@ export default function Apply() {
                         <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
                             {t("apply:form.successTitle")}
                         </h1>
-                        <p className="text-gray-600 mb-8 leading-relaxed">
+                        <p className="text-gray-600 mb-4 leading-relaxed">
                             {t("apply:form.success")}
+                        </p>
+                        {applicationUid && (
+                            <div className="mb-6 rounded-2xl bg-gray-50 border border-gray-100 px-6 py-4">
+                                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
+                                    {t("apply:form.successUidLabel")}
+                                </p>
+                                <p className="text-2xl font-extrabold text-primary tracking-wide">
+                                    {applicationUid}
+                                </p>
+                            </div>
+                        )}
+                        <p className="text-gray-600 mb-8 leading-relaxed text-sm">
+                            {t("apply:form.successNextStep")}
                         </p>
                         <Link
                             href="/"

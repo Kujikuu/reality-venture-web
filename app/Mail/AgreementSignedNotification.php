@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Enums\ApplicationStatus;
 use App\Models\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,33 +10,28 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class StageAdvancedToDecision extends Mailable implements ShouldQueue
+class AgreementSignedNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public function __construct(
         public Application $application,
-        public ApplicationStatus $status,
-        public ?string $note = null,
-        public bool $rvClubInvite = false,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "تحديث على طلبك | Application Decision — {$this->application->uid}",
+            subject: "Agreement Signed — {$this->application->uid}",
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.stage-decision',
+            markdown: 'emails.applications.agreement-signed-notification',
             with: [
                 'application' => $this->application,
-                'status' => $this->status,
-                'note' => $this->note,
-                'rvClubInvite' => $this->rvClubInvite,
+                'adminUrl' => url('/admin/applications/'.$this->application->id),
             ],
         );
     }

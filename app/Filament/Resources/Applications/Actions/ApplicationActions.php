@@ -5,13 +5,15 @@ namespace App\Filament\Resources\Applications\Actions;
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
+use App\Mail\AgreementInvitationMail;
 use App\Mail\DemoDayInvitation;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
-use App\Mail\StageAdvancedToDemoDay;
+use App\Mail\StageAdvancedToEvaluation;
 use App\Mail\StageAdvancedToInterview;
 use App\Mail\StatusUpdateMail;
 use App\Models\Application;
+use App\Services\ApplicationWorkflowService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
@@ -39,9 +41,12 @@ class ApplicationActions
             ->visible(fn (Application $record): bool => $record->type === ApplicationType::Initial)
             ->requiresConfirmation()
             ->action(function (Application $record) {
-                $record->update(['type' => ApplicationType::Startup]);
+                $workflow = app(ApplicationWorkflowService::class);
+                $workflow->transition($record, ApplicationType::Startup, ApplicationStatus::InProgress);
 
-                Mail::to($record->email)->queue(new StageAdvancedToApplying($record));
+                if (! $record->fresh()->company_name) {
+                    Mail::to($record->email)->queue(new StageAdvancedToApplying($record->fresh()));
+                }
 
                 Notification::make()
                     ->title('Advanced to Startup stage')
@@ -57,7 +62,7 @@ class ApplicationActions
             ->label('Schedule Interview')
             ->icon('heroicon-m-calendar-days')
             ->color('info')
-            ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup)
+            ->visible(fn (Application $record): bool => $record->type === ApplicationType::Startup && filled($record->company_name))
             ->form([
                 DateTimePicker::make('interview_scheduled_at')
                     ->label('Date & Time')
@@ -81,19 +86,23 @@ class ApplicationActions
                     ->label('Meeting Notes'),
             ])
             ->action(function (array $data, Application $record) {
-                $record->update([
+                $workflow = app(ApplicationWorkflowService::class);
+                $application = $workflow->updateApplication($record, [
                     'type' => ApplicationType::Interview,
                     'interview_scheduled_at' => $data['interview_scheduled_at'],
                     'interview_type' => $data['interview_type'],
                     'interview_url' => $data['interview_url'] ?? null,
                     'interview_location' => $data['interview_location'] ?? null,
+                    'evaluation_notes' => filled($data['note'] ?? null)
+                        ? ($record->evaluation_notes ? $record->evaluation_notes."\n\n".$data['note'] : $data['note'])
+                        : $record->evaluation_notes,
                 ]);
 
                 $scheduledAt = \Carbon\Carbon::parse($data['interview_scheduled_at'])->format('Y-m-d H:i');
                 $meetingType = InterviewType::from($data['interview_type'])->label();
 
-                Mail::to($record->email)->queue(new StageAdvancedToInterview(
-                    application: $record->fresh(),
+                Mail::to($application->email)->queue(new StageAdvancedToInterview(
+                    application: $application,
                     scheduledAt: $scheduledAt,
                     meetingType: $meetingType,
                     meetingUrl: $data['interview_url'] ?? null,
@@ -137,10 +146,15 @@ class ApplicationActions
                 'evaluation_notes' => $record->evaluation_notes,
             ])
             ->action(function (array $data, Application $record) {
-                $record->update([
-                    ...$data,
+                $workflow = app(ApplicationWorkflowService::class);
+                $application = $workflow->updateApplication($record, [
+                    'evaluation_checklist' => $data['evaluation_checklist'] ?? [],
+                    'evaluation_notes' => $data['evaluation_notes'] ?? null,
                     'type' => ApplicationType::Evaluation,
+                    'status' => ApplicationStatus::UnderReview,
                 ]);
+
+                Mail::to($application->email)->queue(new StageAdvancedToEvaluation($application));
 
                 Notification::make()
                     ->title('Evaluation completed')
@@ -163,7 +177,7 @@ class ApplicationActions
                     ->required()
                     ->native(false),
                 Checkbox::make('rv_club_invite')
-                    ->label('Invite to RV Club?'),
+                    ->label('Include RV Club invite copy in email'),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
                     ->rows(3),
@@ -173,35 +187,18 @@ class ApplicationActions
                 $rvClubInvite = $data['rv_club_invite'] ?? false;
                 $note = $data['note'] ?? null;
 
-                if ($status === ApplicationStatus::Approved) {
-                    $record->update([
-                        'status' => ApplicationStatus::Approved,
-                        'type' => ApplicationType::SignAgreement,
-                    ]);
+                $workflow = app(ApplicationWorkflowService::class);
+                $application = $workflow->transition($record, ApplicationType::Decision, $status);
 
-                    Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
-                        application: $record,
-                        note: $note,
-                        rvClubInvite: $rvClubInvite
-                    ));
-                } else {
-                    $record->update([
-                        'status' => $status,
-                        'type' => ApplicationType::Decision,
-                    ]);
-
-                    Mail::to($record->email)->queue(new StatusUpdateMail(
-                        application: $record,
-                        status: $status,
-                        statusLabel: $status->label(),
-                        statusLabelAr: $status->labelAr(),
-                        note: $note,
-                        rvClubInvite: $rvClubInvite
-                    ));
-                }
+                Mail::to($application->email)->queue(new StageAdvancedToDecision(
+                    application: $application,
+                    status: $status,
+                    note: $note,
+                    rvClubInvite: $rvClubInvite,
+                ));
 
                 Notification::make()
-                    ->title($status === ApplicationStatus::Approved ? 'Approved & Agreement sent' : 'Moved to Decision phase')
+                    ->title('Moved to Decision phase')
                     ->success()
                     ->send();
             });
@@ -213,23 +210,22 @@ class ApplicationActions
             ->label('Send Agreement')
             ->icon('heroicon-m-document-text')
             ->color('success')
-            ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Decision, ApplicationType::SignAgreement]))
+            ->visible(fn (Application $record): bool => $record->type === ApplicationType::Decision
+                && $record->status === ApplicationStatus::Approved)
             ->form([
                 Checkbox::make('rv_club_invite')
-                    ->label('Invite to RV Club?')
+                    ->label('Include RV Club invite copy in email')
                     ->default(true),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
                     ->rows(3),
             ])
             ->action(function (array $data, Application $record) {
-                $record->update([
-                    'status' => ApplicationStatus::Approved,
-                    'type' => ApplicationType::SignAgreement,
-                ]);
+                $workflow = app(ApplicationWorkflowService::class);
+                $application = $workflow->transition($record, ApplicationType::SignAgreement, ApplicationStatus::Approved);
 
-                Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
-                    application: $record,
+                Mail::to($application->email)->queue(new AgreementInvitationMail(
+                    application: $application,
                     note: $data['note'] ?? null,
                     rvClubInvite: $data['rv_club_invite'] ?? false
                 ));
@@ -247,16 +243,16 @@ class ApplicationActions
             ->label('Approve & Move to Demo Day')
             ->icon('heroicon-m-check-badge')
             ->color('success')
-            ->visible(fn (Application $record): bool => $record->type === ApplicationType::SignAgreement)
+            ->visible(fn (Application $record): bool => $record->type === ApplicationType::SignAgreement
+                && $record->agreement_signed_at !== null)
             ->requiresConfirmation()
             ->action(function (Application $record) {
-                $record->update(['type' => ApplicationType::DemoDay]);
-
-                Mail::to($record->email)->queue(new StageAdvancedToDemoDay($record));
+                $workflow = app(ApplicationWorkflowService::class);
+                $workflow->transition($record, ApplicationType::DemoDay);
 
                 Notification::make()
                     ->title('Agreement approved')
-                    ->body('Application moved to Demo Day stage.')
+                    ->body('Application moved to Demo Day. Use Schedule Demo Day to send invitation details.')
                     ->success()
                     ->send();
             });
@@ -268,7 +264,8 @@ class ApplicationActions
             ->label('Schedule Demo Day')
             ->icon('heroicon-m-megaphone')
             ->color('success')
-            ->visible(fn (Application $record): bool => in_array($record->type, [ApplicationType::Decision, ApplicationType::DemoDay]) && $record->status === ApplicationStatus::Approved)
+            ->visible(fn (Application $record): bool => $record->type === ApplicationType::DemoDay
+                && $record->status === ApplicationStatus::Approved)
             ->form([
                 DateTimePicker::make('demo_day_date')
                     ->label('Date & Time')
@@ -291,26 +288,28 @@ class ApplicationActions
             ->fillForm(fn (Application $record): array => [
                 'demo_day_date' => $record->demo_day_date,
                 'demo_day_location' => $record->demo_day_location,
-                'demo_day_requirements' => $record->demo_day_requirements ?? [],
+                'demo_day_requirements' => ApplicationWorkflowService::normalizeDemoDayRequirements($record->demo_day_requirements),
             ])
             ->action(function (array $data, Application $record) {
-                $record->update([
-                    'type' => ApplicationType::DemoDay->value,
-                    'demo_day_date' => $data['demo_day_date'] ?? $record->demo_day_date,
-                    'demo_day_location' => $data['demo_day_location'] ?? $record->demo_day_location,
-                    'demo_day_requirements' => $data['demo_day_requirements'] ?? $record->demo_day_requirements,
+                $requirements = ApplicationWorkflowService::normalizeDemoDayRequirements($data['demo_day_requirements'] ?? []);
+
+                $workflow = app(ApplicationWorkflowService::class);
+                $application = $workflow->updateApplication($record, [
+                    'demo_day_date' => $data['demo_day_date'],
+                    'demo_day_location' => $data['demo_day_location'],
+                    'demo_day_requirements' => $requirements,
                 ]);
 
-                Mail::to($record->email)->queue(new DemoDayInvitation(
-                    application: $record->fresh(),
+                Mail::to($application->email)->queue(new DemoDayInvitation(
+                    application: $application,
                     date: \Carbon\Carbon::parse($data['demo_day_date'])->format('Y-m-d H:i'),
                     location: $data['demo_day_location'],
-                    requirements: $data['demo_day_requirements'] ?? []
+                    requirements: $requirements,
                 ));
 
                 Notification::make()
                     ->title('Demo Day details updated')
-                    ->body("Invitation emailed to {$record->email}")
+                    ->body("Invitation emailed to {$application->email}")
                     ->success()
                     ->send();
             });
@@ -325,9 +324,8 @@ class ApplicationActions
             ->visible(fn (Application $record): bool => $record->type === ApplicationType::DemoDay)
             ->requiresConfirmation()
             ->action(function (Application $record) {
-                $record->update([
-                    'type' => ApplicationType::Investors,
-                ]);
+                $workflow = app(ApplicationWorkflowService::class);
+                $workflow->transition($record, ApplicationType::Investors);
 
                 Notification::make()
                     ->title('Moved to Investors')
@@ -342,13 +340,14 @@ class ApplicationActions
             ->label('Update Status')
             ->icon('heroicon-m-arrow-path')
             ->color('gray')
+            ->visible(fn (Application $record): bool => ! in_array($record->type, [ApplicationType::Investors], true))
             ->form([
                 Select::make('status')
                     ->options(collect(ApplicationStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()]))
                     ->required()
                     ->native(false),
                 Checkbox::make('rv_club_invite')
-                    ->label('Invite to RV Club?'),
+                    ->label('Include RV Club invite copy in email'),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
                     ->rows(3),
@@ -360,41 +359,30 @@ class ApplicationActions
                 $status = ApplicationStatus::from($data['status']);
                 $note = $data['note'] ?? null;
                 $rvClubInvite = $data['rv_club_invite'] ?? false;
+                $workflow = app(ApplicationWorkflowService::class);
 
-                // 1. Determine the correct stage transition based on status
                 $type = $record->type;
-                if ($status === ApplicationStatus::Approved && $type->value < ApplicationType::SignAgreement->value) {
-                    $type = ApplicationType::SignAgreement;
-                } elseif ($status === ApplicationStatus::Rejected && $type->value < ApplicationType::Decision->value) {
-                    $type = ApplicationType::Decision;
-                }
 
-                $record->update([
-                    'status' => $status,
-                    'type' => $type,
-                ]);
-
-                // 2. Send appropriate mail
-                if ($status === ApplicationStatus::Approved && $type === ApplicationType::SignAgreement) {
-                    Mail::to($record->email)->queue(new \App\Mail\AgreementInvitationMail(
-                        application: $record,
-                        note: $note,
-                        rvClubInvite: $rvClubInvite
-                    ));
+                if ($status === ApplicationStatus::Rejected && $type->order() < ApplicationType::Decision->order()) {
+                    $application = $workflow->updateApplication($record, [
+                        'type' => ApplicationType::Decision,
+                        'status' => $status,
+                    ]);
                 } else {
-                    Mail::to($record->email)->queue(new StatusUpdateMail(
-                        application: $record,
-                        status: $status,
-                        statusLabel: $status->label(),
-                        statusLabelAr: $status->labelAr(),
-                        note: $note,
-                        rvClubInvite: $rvClubInvite
-                    ));
+                    $application = $workflow->updateStatus($record, $status);
                 }
+
+                Mail::to($application->email)->queue(new StatusUpdateMail(
+                    application: $application,
+                    status: $status,
+                    statusLabel: $status->label(),
+                    statusLabelAr: $status->labelAr(),
+                    note: $note,
+                    rvClubInvite: $rvClubInvite
+                ));
 
                 Notification::make()
                     ->title('Status updated & email queued')
-                    ->body($status === ApplicationStatus::Approved ? 'Advanced to Sign Agreement' : null)
                     ->success()
                     ->send();
             });

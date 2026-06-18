@@ -11,16 +11,20 @@ use App\Enums\Industry;
 use App\Enums\InterviewType;
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Mail\AgreementInvitationMail;
+use App\Mail\AgreementSignedNotification;
+use App\Mail\DemoDayInvitation;
 use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\NewApplicationSubmitted;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
+use App\Mail\StageAdvancedToEvaluation;
 use App\Mail\StageAdvancedToInterview;
 use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -41,6 +45,7 @@ class ApplicationEndToEndFlowTest extends TestCase
     public function test_full_pipeline_flow()
     {
         Mail::fake();
+        Http::fake();
         Storage::fake('public');
 
         // --- STAGE 1: Initial Submission (Public) ---
@@ -51,7 +56,6 @@ class ApplicationEndToEndFlowTest extends TestCase
             'phone' => '0555555555',
             'city' => 'Riyadh',
             'social_profile' => 'https://linkedin.com/in/johndoe',
-            'program_interest' => 'investment',
             'description' => 'A great initial idea.',
         ];
 
@@ -140,15 +144,20 @@ class ApplicationEndToEndFlowTest extends TestCase
         $application->refresh();
         $this->assertEquals(ApplicationType::Evaluation, $application->type);
         $this->assertContains('cr', $application->evaluation_checklist);
+        $this->assertEquals('Looking promising.', $application->evaluation_notes);
+        Mail::assertQueued(StageAdvancedToEvaluation::class);
 
         // --- STAGE 6: Move to Decision (Filament) ---
         Livewire::actingAs($this->admin)
             ->test(ListApplications::class)
-            ->callTableAction('moveToDecision', $application)
+            ->callTableAction('moveToDecision', $application, [
+                'status' => ApplicationStatus::Approved->value,
+            ])
             ->assertHasNoTableActionErrors();
 
         $application->refresh();
         $this->assertEquals(ApplicationType::Decision, $application->type);
+        $this->assertEquals(ApplicationStatus::Approved, $application->status);
         Mail::assertQueued(StageAdvancedToDecision::class);
 
         // --- STAGE 7: Send Agreement (Filament) ---
@@ -167,12 +176,13 @@ class ApplicationEndToEndFlowTest extends TestCase
             'signer_name' => 'John Doe',
         ]);
         $response->assertStatus(302);
-        $response->assertSessionHas('success');
+        $response->assertSessionHas('success', 'signed');
 
         $application->refresh();
         $this->assertEquals('John Doe', $application->agreement_signer_name);
         $this->assertNotNull($application->agreement_signed_at);
         $this->assertEquals(ApplicationType::SignAgreement, $application->type, 'Should remain in SignAgreement until admin promotes');
+        Mail::assertQueued(AgreementSignedNotification::class);
 
         // --- STAGE 9: Approve Agreement & Promotion (Filament) ---
         Livewire::actingAs($this->admin)
@@ -183,7 +193,26 @@ class ApplicationEndToEndFlowTest extends TestCase
         $application->refresh();
         $this->assertEquals(ApplicationType::DemoDay, $application->type);
 
-        // --- STAGE 10: Move to Investors (Filament) ---
+        // --- STAGE 10: Schedule Demo Day (Filament) ---
+        $demoDayDate = now()->addDays(14)->format('Y-m-d H:i:s');
+        Livewire::actingAs($this->admin)
+            ->test(ListApplications::class)
+            ->callTableAction('sendDemoDayInvite', $application, [
+                'demo_day_date' => $demoDayDate,
+                'demo_day_location' => 'Riyadh HQ',
+                'demo_day_requirements' => [
+                    ['requirement' => 'Pitch deck'],
+                    ['requirement' => 'Working demo'],
+                ],
+            ])
+            ->assertHasNoTableActionErrors();
+
+        $application->refresh();
+        $this->assertEquals($demoDayDate, $application->demo_day_date->format('Y-m-d H:i:s'));
+        $this->assertEquals('Riyadh HQ', $application->demo_day_location);
+        Mail::assertQueued(DemoDayInvitation::class);
+
+        // --- STAGE 11: Move to Investors (Filament) ---
         Livewire::actingAs($this->admin)
             ->test(ListApplications::class)
             ->callTableAction('moveToInvestors', $application)
@@ -196,7 +225,7 @@ class ApplicationEndToEndFlowTest extends TestCase
     public function test_initial_application_email_must_be_unique()
     {
         Mail::fake();
-        
+
         $data = [
             'first_name' => 'Sara',
             'last_name' => 'Al-Qahtani',
@@ -211,7 +240,7 @@ class ApplicationEndToEndFlowTest extends TestCase
 
         // Second submission with same email
         $response = $this->post(route('applications.store'), $data);
-        
+
         $response->assertSessionHasErrors(['email']);
         $this->assertEquals(1, Application::where('email', 'duplicate@test.com')->count());
     }

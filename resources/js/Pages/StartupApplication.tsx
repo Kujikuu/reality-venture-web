@@ -56,12 +56,20 @@ const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: 30 }, (_, i) => CURRENT_YEAR - i);
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
-export default function StartupApplication() {
+interface StartupApplicationProps {
+  referralUid?: string;
+  applicantName?: string;
+}
+
+export default function StartupApplication({ referralUid = '', applicantName = '' }: StartupApplicationProps) {
   const { t, i18n } = useTranslation(['common', 'navigation', 'startup-application']);
   const isArabic = i18n.language === 'ar';
 
   const { flash } = usePage<any>().props;
   const [isSuccess, setIsSuccess] = useState(flash?.success === 'submitted');
+  const applicationUid = (flash?.application_uid as string | undefined) ?? referralUid;
+  const [lookupLoading, setLookupLoading] = useState(Boolean(referralUid));
+  const [lookupError, setLookupError] = useState(false);
   const { data, setData, post, processing, errors, reset } = useForm({
     first_name: '',
     last_name: '',
@@ -88,37 +96,45 @@ export default function StartupApplication() {
     demo_link: '',
     discovery_source: '',
     referral_name: '',
-    referral_param: '',
+    referral_param: referralUid,
   });
 
   useEffect(() => {
-    const ref = new URLSearchParams(window.location.search).get('ref');
-    if (ref) {
-      setData('referral_param', ref);
-      
-      fetch(`/applications/lookup/${ref}`)
-        .then(res => {
-            if (!res.ok) return Promise.reject(new Error('Not found'));
-            return res.json();
-        })
-        .then(json => {
-            if (json.uid) {
-                setData(prev => ({
-                    ...prev,
-                    first_name: json.first_name || '',
-                    last_name: json.last_name || '',
-                    email: json.email || '',
-                    phone: json.phone || '',
-                    city: json.city || '',
-                    social_profile: json.social_profile || '',
-                    referral_param: ref,
-                }));
-            }
-        })
-        .catch(() => {});
+    const ref = referralUid || new URLSearchParams(window.location.search).get('ref');
+    if (!ref) {
+      setLookupLoading(false);
+      return;
     }
+
+    setData('referral_param', ref);
+    setLookupLoading(true);
+    setLookupError(false);
+
+    fetch(`/applications/lookup/${ref}`)
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject(new Error('Not found'));
+        }
+        return res.json();
+      })
+      .then((json) => {
+        if (json.uid) {
+          setData((prev) => ({
+            ...prev,
+            first_name: json.first_name || '',
+            last_name: json.last_name || '',
+            email: json.email || '',
+            phone: json.phone || '',
+            city: json.city || '',
+            social_profile: json.social_profile || '',
+            referral_param: ref,
+          }));
+        }
+      })
+      .catch(() => setLookupError(true))
+      .finally(() => setLookupLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [referralUid]);
 
   useEffect(() => {
     if (data.founded_month && data.founded_year) {
@@ -130,6 +146,9 @@ export default function StartupApplication() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (lookupError || !data.referral_param) {
+      return;
+    }
     post('/startup-applications', {
       forceFormData: true,
       preserveState: true,
@@ -199,9 +218,28 @@ export default function StartupApplication() {
             <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
               {t('startup-application:form.successTitle')}
             </h1>
-            <p className="text-gray-600 mb-8 leading-relaxed">
+            <p className="text-gray-600 mb-4 leading-relaxed">
               {t('startup-application:form.success')}
             </p>
+            {applicationUid && (
+              <div className="mb-6 rounded-2xl bg-gray-50 border border-gray-100 px-6 py-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
+                  {t('startup-application:form.successUidLabel')}
+                </p>
+                <p className="text-2xl font-extrabold text-primary tracking-wide">{applicationUid}</p>
+              </div>
+            )}
+            <p className="text-gray-600 mb-6 leading-relaxed text-sm">
+              {t('startup-application:form.successNextStep')}
+            </p>
+            {applicationUid && (
+              <Link
+                href={`/applications/status/${applicationUid}`}
+                className="block w-full mb-4 h-12 text-primary border border-primary/20 hover:bg-primary/5 px-6 text-sm font-bold tracking-tight rounded-xl transition-all duration-300 flex items-center justify-center"
+              >
+                {t('startup-application:pipeline.statusLink')}
+              </Link>
+            )}
             <Link
               href="/"
               className="w-full h-14 bg-primary text-white hover:bg-primary-700 px-10 text-base font-bold tracking-tight rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-primary/20"
@@ -235,12 +273,25 @@ export default function StartupApplication() {
               animate="visible"
             >
               <div>
-                {/* <motion.span
+                {referralUid && (
+                  <motion.div variants={heroItemVariants} className="mb-6 flex flex-wrap items-center gap-3">
+                    <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+                      {t('startup-application:pipeline.stepLabel')}
+                    </span>
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-4 py-1.5 text-xs font-bold text-gray-600">
+                      {t('startup-application:pipeline.refBadge')}: {referralUid}
+                    </span>
+                    {applicantName && (
+                      <span className="text-sm text-gray-500">{applicantName}</span>
+                    )}
+                  </motion.div>
+                )}
+                <motion.p
                   variants={heroItemVariants}
-                  className="inline-block py-1 px-3 rounded-md bg-primary-50 text-primary text-xs font-bold tracking-wide mb-6 w-fit uppercase"
+                  className="text-sm font-semibold uppercase tracking-widest text-primary mb-3"
                 >
-                  {t('startup-application:hero.badge')}
-                </motion.span> */}
+                  {t('startup-application:pipeline.stepTitle')}
+                </motion.p>
 
                 <motion.h1
                   variants={heroItemVariants}
@@ -299,6 +350,16 @@ export default function StartupApplication() {
                 <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900">{t('startup-application:form.title')}</h2>
               </div>
               <form onSubmit={handleSubmit} className="space-y-12">
+                {lookupLoading && (
+                  <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600 animate-pulse">
+                    {t('startup-application:pipeline.loadingProfile')}
+                  </div>
+                )}
+                {lookupError && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {t('startup-application:pipeline.lookupError')}
+                  </div>
+                )}
                 {/* Section 1: Founder Info */}
                 <div className="space-y-6">
                   <h3 className="text-sm font-bold uppercase tracking-widest text-primary border-b border-gray-100 pb-3">

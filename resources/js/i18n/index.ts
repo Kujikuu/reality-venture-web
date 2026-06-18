@@ -20,6 +20,7 @@ import enDashboard from './locales/en/dashboard.json';
 import enPayouts from './locales/en/payouts.json';
 import enDesks from './locales/en/desks.json';
 import enAgreement from './locales/en/agreement.json';
+import enApplicationStatus from './locales/en/application-status.json';
 
 
 import arCommon from './locales/ar/common.json';
@@ -39,6 +40,7 @@ import arDashboard from './locales/ar/dashboard.json';
 import arPayouts from './locales/ar/payouts.json';
 import arDesks from './locales/ar/desks.json';
 import arAgreement from './locales/ar/agreement.json';
+import arApplicationStatus from './locales/ar/application-status.json';
 
 
 // Configure i18next
@@ -65,6 +67,7 @@ i18n
         payouts: enPayouts,
         desks: enDesks,
         agreement: enAgreement,
+        'application-status': enApplicationStatus,
       },
 
       ar: {
@@ -85,6 +88,7 @@ i18n
         payouts: arPayouts,
         desks: arDesks,
         agreement: arAgreement,
+        'application-status': arApplicationStatus,
       },
 
     },

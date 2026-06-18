@@ -33,7 +33,10 @@ Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])->name('startup-applications.store');
-Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])->name('applications.lookup');
+Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])
+    ->middleware('throttle:10,1')
+    ->name('applications.lookup');
+Route::get('/applications/status/{uid}', [ApplicationController::class, 'status'])->name('applications.status');
 
 // Agreement
 Route::get('/agreement/{uid}', [AgreementController::class, 'show'])->name('agreement.show');

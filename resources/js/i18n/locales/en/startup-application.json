@@ -39,7 +39,6 @@
     "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
     "businessStage": "Business Stage",
     "businessStagePlaceholder": "Select your business stage",
-
     "companyName": "Company Name",
     "companyNamePlaceholder": "Your company name",
     "numberOfFounders": "Number of Founders",
@@ -56,7 +55,6 @@
     "industryOtherPlaceholder": "Your industry",
     "companyDescription": "Company Description (3 sentences)",
     "companyDescriptionPlaceholder": "Briefly describe your company in 3 sentences...",
-
     "currentFundingRound": "Current Funding Round",
     "currentFundingRoundPlaceholder": "Select a funding round",
     "investmentAsk": "Investment Ask",
@@ -71,16 +69,16 @@
     "attachmentHelp": "PDF or Image, max 20MB",
     "attachmentBrowse": "Browse files",
     "attachmentDragDrop": "or drag and drop",
-
     "discoverySource": "How did you hear about Reality Venture?",
     "discoverySourcePlaceholder": "Select an option",
     "referralName": "Referral Name",
     "referralNamePlaceholder": "Who referred you?",
-
     "submit": "Submit Application",
     "submitting": "Submitting...",
     "success": "Request received successfully. Check your email for next steps.",
     "successTitle": "Application Received!",
+    "successUidLabel": "Your reference number",
+    "successNextStep": "Our team will review your submission and contact you within 7–10 business days.",
     "returnHome": "Return to Home",
     "agreement": "By submitting this form, you agree to our",
     "charCount": "{{count}} / {{max}} characters"
@@ -137,8 +135,12 @@
     "12": "December"
   },
   "validation": {
-    "firstName": { "required": "First name is required." },
-    "lastName": { "required": "Last name is required." },
+    "firstName": {
+      "required": "First name is required."
+    },
+    "lastName": {
+      "required": "Last name is required."
+    },
     "email": {
       "required": "Email address is required.",
       "format": "Please enter a valid email address.",
@@ -148,14 +150,20 @@
       "required": "Phone number is required.",
       "format": "Please enter a valid KSA mobile number."
     },
-    "linkedin": { "url": "Please enter a valid URL." },
-    "companyName": { "required": "Company name is required." },
+    "linkedin": {
+      "url": "Please enter a valid URL."
+    },
+    "companyName": {
+      "required": "Company name is required."
+    },
     "numberOfFounders": {
       "required": "Number of founders is required.",
       "min": "At least 1 founder is required.",
       "max": "Maximum 20 founders allowed."
     },
-    "hqCountry": { "required": "Please select your HQ country." },
+    "hqCountry": {
+      "required": "Please select your HQ country."
+    },
     "websiteLink": {
       "required": "Website link is required.",
       "url": "Please enter a valid URL."
@@ -164,13 +172,19 @@
       "required": "Founded date is required.",
       "future": "Founded date cannot be in the future."
     },
-    "industry": { "required": "Please select an industry." },
-    "industryOther": { "required": "Please specify your industry." },
+    "industry": {
+      "required": "Please select an industry."
+    },
+    "industryOther": {
+      "required": "Please specify your industry."
+    },
     "companyDescription": {
       "required": "Company description is required.",
       "max": "Description must be 600 characters or less."
     },
-    "currentFundingRound": { "required": "Please select a funding round." },
+    "currentFundingRound": {
+      "required": "Please select a funding round."
+    },
     "investmentAsk": {
       "required": "Investment ask is required.",
       "min": "Investment ask must be greater than 0."
@@ -179,13 +193,33 @@
       "required": "Company valuation is required.",
       "min": "Valuation must be greater than 0."
     },
-    "businessStage": { "required": "Please select your business stage." },
+    "businessStage": {
+      "required": "Please select your business stage."
+    },
     "attachment": {
       "mimes": "File must be a PDF or image (JPG, PNG).",
       "max": "File must be less than 20MB."
     },
-    "demoLink": { "url": "Please enter a valid URL." },
-    "discoverySource": { "required": "Please tell us how you heard about us." },
-    "referralName": { "required": "Please enter the referrer's name." }
+    "demoLink": {
+      "url": "Please enter a valid URL."
+    },
+    "discoverySource": {
+      "required": "Please tell us how you heard about us."
+    },
+    "referralName": {
+      "required": "Please enter the referrer's name."
+    },
+    "referralRequired": "Please start with the initial application to receive your reference link.",
+    "referralInvalid": "This reference link is invalid or expired.",
+    "referralStageInvalid": "This application has already progressed beyond the startup profile stage.",
+    "referralClosed": "This application is no longer accepting submissions."
+  },
+  "pipeline": {
+    "stepLabel": "Step 2 of 8",
+    "stepTitle": "Complete Your Startup Profile",
+    "refBadge": "Reference",
+    "loadingProfile": "Loading your application details...",
+    "lookupError": "We could not verify your reference link. Please use the link from your confirmation email.",
+    "statusLink": "Track your application status"
   }
 }

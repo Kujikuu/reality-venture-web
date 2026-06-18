@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Head, useForm, Link } from "@inertiajs/react";
-
-import { motion, AnimatePresence } from "framer-motion";
+import { Head, useForm, Link, usePage } from "@inertiajs/react";
+import { motion } from "framer-motion";
 import {
     CheckCircle2,
     ShieldCheck,
     FileText,
-    ChevronRight,
     Check,
 } from "lucide-react";
 import { Button } from "../../Components/ui/Button";
+import { SEO } from "../../Components/SEO";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -19,14 +18,20 @@ interface Props {
         last_name: string;
         company_name: string;
     };
+    alreadySigned?: boolean;
+    signedAt?: string | null;
+    signerName?: string | null;
 }
 
-export default function Show({ application }: Props) {
+export default function Show({ application, alreadySigned = false, signedAt = null, signerName = null }: Props) {
     const { t, i18n } = useTranslation(["common", "agreement"]);
     const isArabic = i18n.language === "ar";
+    const { flash } = usePage<any>().props;
 
     const [isAgreed, setIsAgreed] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(
+        flash?.success === 'signed' || flash?.success === 'already_signed'
+    );
 
     const { data, setData, post, processing, errors } = useForm({
         signer_name: "",
@@ -56,12 +61,10 @@ export default function Show({ application }: Props) {
         },
     };
 
-    if (isSuccess) {
+    if (alreadySigned && !isSuccess) {
         return (
-            <div
-                className={`min-h-screen bg-gray-50 flex items-center justify-center p-6`}
-            >
-                <Head title={t("agreement:successPageTitle")} />
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+                <SEO />
                 <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -71,16 +74,56 @@ export default function Show({ application }: Props) {
                         <Check className="w-10 h-10 text-green-600" />
                     </div>
                     <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
-                        {t("agreement:success.title")}
+                        {t("agreement:success.alreadySignedTitle")}
                     </h1>
                     <p className="text-gray-600 mb-8 leading-relaxed">
-                        {t("agreement:success.message", {
-                            name: application.first_name,
+                        {t("agreement:success.alreadySignedMessage", {
+                            date: signedAt ? new Date(signedAt).toLocaleDateString() : '',
                         })}
+                    </p>
+                    {signerName && (
+                        <p className="text-sm text-gray-500 mb-6">{signerName}</p>
+                    )}
+                    <Link
+                        href="/"
+                        className="w-full h-14 bg-primary text-white hover:bg-primary-800 px-10 text-base font-bold tracking-tight rounded-md transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
+                    >
+                        {t("agreement:success.returnHome")}
+                    </Link>
+                </motion.div>
+            </div>
+        );
+    }
+
+    if (isSuccess) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+                <SEO />
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100"
+                >
+                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Check className="w-10 h-10 text-green-600" />
+                    </div>
+                    <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
+                        {flash?.success === 'already_signed'
+                            ? t("agreement:success.alreadySignedTitle")
+                            : t("agreement:success.pendingTitle")}
+                    </h1>
+                    <p className="text-gray-600 mb-8 leading-relaxed">
+                        {flash?.success === 'already_signed'
+                            ? t("agreement:success.alreadySignedMessage", {
+                                date: signedAt ? new Date(signedAt).toLocaleDateString() : '',
+                            })
+                            : t("agreement:success.pendingMessage", {
+                                name: application.first_name,
+                            })}
                     </p>
                     <Link
                         href="/"
-                        className="w-full h-12 bg-primary text-white hover:bg-primary-800 h-14 px-10 text-base font-bold tracking-tight rounded-md transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 relative overflow-hidden"
+                        className="w-full h-14 bg-primary text-white hover:bg-primary-800 px-10 text-base font-bold tracking-tight rounded-md transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
                     >
                         {t("agreement:success.returnHome")}
                     </Link>
@@ -90,7 +133,8 @@ export default function Show({ application }: Props) {
     }
 
     return (
-        <div className={`min-h-screen bg-[#F8FAFC] py-12 px-6 lg:px-12`}>
+        <div className="min-h-screen bg-[#F8FAFC] py-12 px-6 lg:px-12">
+            <SEO />
             <Head title={t("agreement:pageTitle")} />
 
             <motion.div
@@ -99,7 +143,6 @@ export default function Show({ application }: Props) {
                 animate="visible"
                 className="max-w-4xl mx-auto"
             >
-                {/* Header */}
                 <motion.div className="text-center mb-12">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-bold uppercase tracking-wider mb-6">
                         <ShieldCheck className="w-4 h-4" />
@@ -112,13 +155,12 @@ export default function Show({ application }: Props) {
                         className="text-gray-500 text-lg max-w-2xl mx-auto"
                         dangerouslySetInnerHTML={{
                             __html: t("agreement:reviewTermsFor", {
-                                company_name: application.company_name,
+                                company_name: application.company_name || application.first_name,
                             }),
                         }}
                     />
                 </motion.div>
 
-                {/* Document Content */}
                 <motion.div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-200 overflow-hidden mb-10">
                     <div className="p-8 md:p-12">
                         <div className="prose prose-slate max-w-none text-gray-700 leading-relaxed space-y-6">
@@ -139,30 +181,15 @@ export default function Show({ application }: Props) {
                             <p
                                 dangerouslySetInnerHTML={{
                                     __html: t("agreement:enteredBetween", {
-                                        company_name: application.company_name,
+                                        company_name: application.company_name || application.first_name,
                                         first_name: application.first_name,
                                         last_name: application.last_name,
                                     }),
                                 }}
                             />
 
-                            <h3 className="text-gray-900 font-bold text-lg">
-                                {t("agreement:sections.purpose.title")}
-                            </h3>
                             <p>{t("agreement:sections.purpose.content")}</p>
-
-                            <h3 className="text-gray-900 font-bold text-lg">
-                                {t("agreement:sections.confidentiality.title")}
-                            </h3>
-                            <p>
-                                {t(
-                                    "agreement:sections.confidentiality.content",
-                                )}
-                            </p>
-
-                            <h3 className="text-gray-900 font-bold text-lg">
-                                {t("agreement:sections.nonBinding.title")}
-                            </h3>
+                            <p>{t("agreement:sections.confidentiality.content")}</p>
                             <p>{t("agreement:sections.nonBinding.content")}</p>
 
                             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 mt-12">
@@ -173,7 +200,6 @@ export default function Show({ application }: Props) {
                         </div>
                     </div>
 
-                    {/* Signing Section */}
                     <div className="bg-gray-50 border-t border-gray-200 p-8 md:p-12">
                         <form
                             onSubmit={handleSubmit}

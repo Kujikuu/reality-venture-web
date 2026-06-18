@@ -30,6 +30,10 @@
   "success": {
     "title": "Agreement Signed!",
     "message": "Thank you, {{name}}. Your agreement has been successfully submitted. Our team will review it and get back to you shortly.",
-    "returnHome": "Return to Home"
+    "returnHome": "Return to Home",
+    "alreadySignedTitle": "Already Signed",
+    "alreadySignedMessage": "This agreement was signed on {{date}}. Our team will contact you with next steps.",
+    "pendingTitle": "Agreement Received",
+    "pendingMessage": "Thank you, {{name}}. We have received your signature and will confirm shortly."
   }
 }

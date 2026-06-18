@@ -1,0 +1,24 @@
+{
+  "pageTitle": "Application Status - Reality Venture",
+  "title": "Application Status",
+  "subtitle": "Track where your application is in our pipeline.",
+  "reference": "Reference",
+  "stage": "Current Stage",
+  "status": "Review Status",
+  "nextStep": "What happens next",
+  "greeting": "Hi {{name}},",
+  "returnHome": "Return to Home",
+  "notFound": "Application not found.",
+  "recommendedActions": {
+    "advanceToStartup": "Advance to Startup",
+    "scheduleInterview": "Schedule Interview",
+    "waitingForStartupProfile": "Waiting for applicant to complete startup profile",
+    "runEvaluation": "Run Evaluation",
+    "moveToDecision": "Move to Decision",
+    "sendAgreement": "Send Agreement",
+    "setDecisionOrSendAgreement": "Set decision status or send agreement if approved",
+    "approveAndMoveToDemoDay": "Approve & Move to Demo Day",
+    "waitingForAgreementSignature": "Waiting for applicant to sign agreement",
+    "scheduleDemoDayOrMoveToInvestors": "Schedule Demo Day or Move to Investors"
+  }
+}

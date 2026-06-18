@@ -352,7 +352,7 @@ class NewsletterTest extends TestCase
 
         (new SendNewsletterJob($newsletter))->handle();
 
-        Mail::assertSent(NewsletterMail::class, 3);
+        Mail::assertQueued(NewsletterMail::class, 3);
     }
 
     public function test_send_newsletter_job_updates_newsletter_status_and_count(): void

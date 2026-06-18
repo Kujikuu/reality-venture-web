@@ -68,4 +68,61 @@ enum ApplicationType: string
             self::Investors => 'Connected with investors',
         };
     }
+
+    public function order(): int
+    {
+        return match ($this) {
+            self::Initial => 1,
+            self::Startup => 2,
+            self::Interview => 3,
+            self::Evaluation => 4,
+            self::Decision => 5,
+            self::SignAgreement => 6,
+            self::DemoDay => 7,
+            self::Investors => 8,
+        };
+    }
+
+    public function next(): ?self
+    {
+        return match ($this) {
+            self::Initial => self::Startup,
+            self::Startup => self::Interview,
+            self::Interview => self::Evaluation,
+            self::Evaluation => self::Decision,
+            self::Decision => self::SignAgreement,
+            self::SignAgreement => self::DemoDay,
+            self::DemoDay => self::Investors,
+            self::Investors => null,
+        };
+    }
+
+    public function canTransitionTo(self $target): bool
+    {
+        if ($this === $target) {
+            return true;
+        }
+
+        return $target->order() === $this->order() + 1;
+    }
+
+    /** @return list<self> */
+    public static function ordered(): array
+    {
+        return [
+            self::Initial,
+            self::Startup,
+            self::Interview,
+            self::Evaluation,
+            self::Decision,
+            self::SignAgreement,
+            self::DemoDay,
+            self::Investors,
+        ];
+    }
+
+    public function allowsStartupProfileSubmission(): bool
+    {
+        return in_array($this, [self::Initial, self::Startup], true);
+    }
 }
