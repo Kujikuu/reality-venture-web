@@ -1,18 +1,19 @@
-<x-mail::message>
-# Payout Request Rejected
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.payouts.partials.rejected-section', [
+            'payout' => $payout,
+            'consultantName' => $consultantName ?? null,
+            'reason' => $reason ?? null,
+            'locale' => 'ar',
+        ])
+    </x-slot:arabic>
 
-Hello {{ $consultantName }},
-
-Unfortunately, your payout request has been rejected.
-
-**Reference:** {{ $payout->reference }}
-**Amount:** {{ number_format($payout->amount, 2) }} {{ $payout->currency }}
-
-**Reason:** {{ $reason }}
-
-The requested amount has been returned to your available balance. You may submit a new payout request after addressing the issue above.
-
-If you have questions, please contact our support team.
-
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.payouts.partials.rejected-section', [
+            'payout' => $payout,
+            'consultantName' => $consultantName ?? null,
+            'reason' => $reason ?? null,
+            'locale' => 'en',
+        ])
+    </x-slot:english>
+</x-mail.bilingual-layout>

@@ -1,27 +1,25 @@
-<x-mail::message>
-# Interview Scheduled
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.applications.partials.interview-scheduled-admin-section', [
+            'application' => $application,
+            'locale' => 'ar',
+            'scheduledAt' => $scheduledAt,
+            'meetingType' => $meetingType,
+            'meetingUrl' => $meetingUrl,
+            'meetingLocation' => $meetingLocation,
+            'adminUrl' => $adminUrl,
+        ])
+    </x-slot:arabic>
 
-An interview has been scheduled for **{{ $application->company_name ?: $application->first_name }}** ({{ $application->uid }}).
-
-**Applicant:** {{ $application->first_name }} {{ $application->last_name }}  
-**Email:** {{ $application->email }}  
-**Date & Time:** {{ $scheduledAt }}  
-**Meeting Type:** {{ $meetingType }}
-
-@if($meetingUrl)
-**Google Meet:** [Join meeting]({{ $meetingUrl }})
-@endif
-
-@if($meetingLocation)
-**Location:** {{ $meetingLocation }}
-@endif
-
-A calendar invite has been sent to you and the applicant via Google Calendar.
-
-<x-mail::button :url="$adminUrl">
-View Application
-</x-mail::button>
-
-Thanks,<br>
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.applications.partials.interview-scheduled-admin-section', [
+            'application' => $application,
+            'locale' => 'en',
+            'scheduledAt' => $scheduledAt,
+            'meetingType' => $meetingType,
+            'meetingUrl' => $meetingUrl,
+            'meetingLocation' => $meetingLocation,
+            'adminUrl' => $adminUrl,
+        ])
+    </x-slot:english>
+</x-mail.bilingual-layout>

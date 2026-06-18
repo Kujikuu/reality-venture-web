@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,14 +22,14 @@ class StageAdvancedToApplying extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "طلبك تم تسجيله بنجاح | Application Registered — {$this->application->uid}",
+            subject: BilingualSubject::fromKey('emails.subjects.application_registered', $this->application->uid),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.stage-applying',
+            markdown: 'emails.applications.stage-applying',
             with: [
                 'application' => $this->application,
             ],

@@ -1,20 +1,17 @@
-<x-mail::message>
-# Payout Transferred
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.payouts.partials.processed-section', [
+            'payout' => $payout,
+            'consultantName' => $consultantName ?? null,
+            'locale' => 'ar',
+        ])
+    </x-slot:arabic>
 
-Hello {{ $consultantName }},
-
-Your payout request has been processed and transferred to your bank account.
-
-**Reference:** {{ $payout->reference }}
-**Amount:** {{ number_format($payout->amount, 2) }} {{ $payout->currency }}
-**Transfer Reference:** {{ $payout->transfer_reference }}
-**Bank:** {{ $payout->bank_name }}
-**IBAN:** {{ $payout->iban }}
-**Transferred At:** {{ $payout->transferred_at->format('l, F j, Y g:i A') }}
-
-Please allow 1-3 business days for the funds to appear in your account.
-
-Thank you for using Reality Venture Marketplace.
-
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.payouts.partials.processed-section', [
+            'payout' => $payout,
+            'consultantName' => $consultantName ?? null,
+            'locale' => 'en',
+        ])
+    </x-slot:english>
+</x-mail.bilingual-layout>

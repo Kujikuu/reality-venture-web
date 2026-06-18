@@ -14,6 +14,7 @@ use App\Mail\AgreementInvitationMail;
 use App\Mail\AgreementSignedConfirmation;
 use App\Mail\AgreementSignedNotification;
 use App\Mail\DemoDayInvitation;
+use App\Mail\DemoDayScheduledAdminNotification;
 use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\InterviewScheduledAdminNotification;
 use App\Mail\NewApplicationSubmitted;
@@ -227,6 +228,7 @@ class ApplicationEndToEndFlowTest extends TestCase
         $this->assertEquals($demoDayDate, $application->demo_day_date->format('Y-m-d H:i:s'));
         $this->assertEquals('Riyadh HQ', $application->demo_day_location);
         Mail::assertQueued(DemoDayInvitation::class);
+        Mail::assertQueued(DemoDayScheduledAdminNotification::class);
 
         // --- STAGE 11: Move to Investors (Filament) ---
         Livewire::actingAs($this->admin)

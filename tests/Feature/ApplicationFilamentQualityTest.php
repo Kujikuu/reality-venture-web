@@ -116,7 +116,18 @@ class ApplicationFilamentQualityTest extends TestCase
         $this->assertEquals(ApplicationStatus::Rejected, $application->status);
 
         Mail::assertQueued(StatusUpdateMail::class, function (StatusUpdateMail $mail) use ($application) {
-            return $mail->hasTo($application->email);
+            if (! $mail->hasTo($application->email)) {
+                return false;
+            }
+
+            $html = $mail->render();
+            $rtlPos = strpos($html, 'dir="rtl"');
+            $ltrPos = strpos($html, 'dir="ltr"');
+
+            return $rtlPos !== false
+                && $ltrPos !== false
+                && $rtlPos < $ltrPos
+                && str_contains($mail->envelope()->subject, ' | ');
         });
     }
 

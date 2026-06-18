@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,14 +20,17 @@ class GeneralApplicationConfirmation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Application to Reality Venture - '.$this->application->uid,
+            subject: BilingualSubject::fromKey('emails.subjects.general_confirmation', $this->application->uid),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.general-application-confirmation',
+            markdown: 'emails.applications.general-confirmation',
+            with: [
+                'application' => $this->application,
+            ],
         );
     }
 

@@ -1,17 +1,9 @@
-<x-mail::message>
-# Booking Cancelled
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.bookings.partials.cancelled-section', ['booking' => $booking, 'locale' => 'ar'])
+    </x-slot:arabic>
 
-The following booking has been cancelled.
-
-**Reference:** {{ $booking->reference }}
-**Date:** {{ $booking->start_at->format('l, F j, Y') }}
-**Time:** {{ $booking->start_at->format('g:i A') }}
-
-@if($booking->cancellation_reason)
-**Reason:** {{ $booking->cancellation_reason }}
-@endif
-
-If you have any questions, please contact our support team.
-
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.bookings.partials.cancelled-section', ['booking' => $booking, 'locale' => 'en'])
+    </x-slot:english>
+</x-mail.bilingual-layout>

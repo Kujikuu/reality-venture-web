@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Payout;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +20,7 @@ class PayoutRejectedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Payout Request Rejected - {$this->payout->reference}",
+            subject: BilingualSubject::fromKey('emails.subjects.payout_rejected', $this->payout->reference),
         );
     }
 

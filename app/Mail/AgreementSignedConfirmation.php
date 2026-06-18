@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -22,7 +23,7 @@ class AgreementSignedConfirmation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Your Signed Agreement — {$this->application->uid} | نسخة اتفاقيتك الموقعة",
+            subject: BilingualSubject::fromKey('emails.subjects.agreement_signed', $this->application->uid),
         );
     }
 

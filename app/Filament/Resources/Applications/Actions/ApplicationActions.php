@@ -7,6 +7,7 @@ use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
 use App\Mail\AgreementInvitationMail;
 use App\Mail\DemoDayInvitation;
+use App\Mail\DemoDayScheduledAdminNotification;
 use App\Mail\InterviewScheduledAdminNotification;
 use App\Mail\StageAdvancedToApplying;
 use App\Mail\StageAdvancedToDecision;
@@ -429,7 +430,15 @@ class ApplicationActions
                 );
 
                 Mail::to($application->email)->queue($invitation);
-                Mail::to(config('services.rv.admin_email'))->queue($invitation);
+                Mail::to(config('services.rv.admin_email'))->queue(new DemoDayScheduledAdminNotification(
+                    application: $application,
+                    date: $formattedDate,
+                    location: $location ?? '',
+                    requirements: $requirements,
+                    meetingUrl: $meetingUrl,
+                    meetingType: $demoDayType->label(),
+                    isOnline: $demoDayType === InterviewType::Online,
+                ));
 
                 Notification::make()
                     ->title('Demo Day details updated')

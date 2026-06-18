@@ -1,11 +1,9 @@
-<x-mail::message>
-# Congratulations, {{ $name }}!
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.consultants.partials.approved-section', ['name' => $name, 'locale' => 'ar'])
+    </x-slot:arabic>
 
-Your consultant profile has been approved. You are now visible on the Reality Venture marketplace and can start receiving bookings.
-
-<x-mail::button url="{{ url('/consultant/dashboard') }}">
-Go to Dashboard
-</x-mail::button>
-
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.consultants.partials.approved-section', ['name' => $name, 'locale' => 'en'])
+    </x-slot:english>
+</x-mail.bilingual-layout>

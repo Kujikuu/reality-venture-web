@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Booking;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +20,7 @@ class BookingConfirmedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Booking Confirmed - {$this->booking->reference}",
+            subject: BilingualSubject::fromKey('emails.subjects.booking_confirmed', $this->booking->reference),
         );
     }
 

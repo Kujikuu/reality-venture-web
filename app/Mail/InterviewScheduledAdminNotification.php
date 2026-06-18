@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -25,7 +26,7 @@ class InterviewScheduledAdminNotification extends Mailable implements ShouldQueu
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Interview Scheduled — {$this->application->uid}",
+            subject: BilingualSubject::fromKey('emails.subjects.interview_scheduled_admin', $this->application->uid),
         );
     }
 

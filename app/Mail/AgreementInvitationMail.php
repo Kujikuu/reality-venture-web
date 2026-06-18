@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -12,30 +14,19 @@ class AgreementInvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
     public function __construct(
-        public \App\Models\Application $application,
+        public Application $application,
         public ?string $note = null,
         public bool $rvClubInvite = false
-    ) {
-        //
-    }
+    ) {}
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reality Venture - Investment Agreement / اتفاقية استثمار',
+            subject: BilingualSubject::fromKey('emails.subjects.agreement_invitation', $this->application->uid),
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
@@ -48,11 +39,6 @@ class AgreementInvitationMail extends Mailable
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];

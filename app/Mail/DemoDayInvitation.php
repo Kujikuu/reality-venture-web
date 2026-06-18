@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -26,14 +27,14 @@ class DemoDayInvitation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "دعوة ليوم العرض | Demo Day Invitation — {$this->application->uid}",
+            subject: BilingualSubject::fromKey('emails.subjects.demo_day_invitation', $this->application->uid),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.demo-day-invitation',
+            markdown: 'emails.applications.demo-day-invitation',
             with: [
                 'application' => $this->application,
                 'date' => $this->date,

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\ConsultantProfile;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +20,7 @@ class ConsultantRejectedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Update on Your Consultant Application',
+            subject: BilingualSubject::fromKey('emails.subjects.consultant_rejected'),
         );
     }
 

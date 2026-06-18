@@ -7,6 +7,7 @@ use App\Enums\ApplicationType;
 use App\Enums\InterviewType;
 use App\Filament\Resources\Applications\Pages\ViewApplication;
 use App\Mail\DemoDayInvitation;
+use App\Mail\DemoDayScheduledAdminNotification;
 use App\Models\Application;
 use App\Models\User;
 use App\Services\GoogleCalendarService;
@@ -69,8 +70,9 @@ class DemoDayInvitationTest extends TestCase
             return $mail->hasTo($application->email) && $mail->application->id === $application->id;
         });
 
-        Mail::assertQueued(DemoDayInvitation::class, function (DemoDayInvitation $mail) {
-            return $mail->hasTo(config('services.rv.admin_email'));
+        Mail::assertQueued(DemoDayScheduledAdminNotification::class, function (DemoDayScheduledAdminNotification $mail) use ($application) {
+            return $mail->hasTo(config('services.rv.admin_email'))
+                && $mail->application->id === $application->id;
         });
     }
 
@@ -118,8 +120,9 @@ class DemoDayInvitationTest extends TestCase
             return $mail->hasTo($application->email) && $mail->isOnline;
         });
 
-        Mail::assertQueued(DemoDayInvitation::class, function (DemoDayInvitation $mail) {
-            return $mail->hasTo(config('services.rv.admin_email'));
+        Mail::assertQueued(DemoDayScheduledAdminNotification::class, function (DemoDayScheduledAdminNotification $mail) use ($application) {
+            return $mail->hasTo(config('services.rv.admin_email'))
+                && $mail->application->id === $application->id;
         });
     }
 

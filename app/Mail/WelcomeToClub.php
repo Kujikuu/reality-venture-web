@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Subscriber;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,14 +20,17 @@ class WelcomeToClub extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to the Reality Venture Club - You\'re In!',
+            subject: BilingualSubject::fromKey('emails.subjects.welcome_club'),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.welcome-to-club',
+            markdown: 'emails.applications.welcome-to-club',
+            with: [
+                'subscriber' => $this->subscriber,
+            ],
         );
     }
 

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Application;
+use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,14 +22,14 @@ class StageAdvancedToEvaluation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "طلبك دخل مرحلة التقييم | Evaluation Stage — {$this->application->uid}",
+            subject: BilingualSubject::fromKey('emails.subjects.evaluation_stage', $this->application->uid),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.stage-evaluation',
+            markdown: 'emails.applications.stage-evaluation',
             with: [
                 'application' => $this->application,
             ],

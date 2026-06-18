@@ -1,15 +1,17 @@
-<x-mail::message>
-# Application Update
+<x-mail.bilingual-layout>
+    <x-slot:arabic>
+        @include('emails.consultants.partials.rejected-section', [
+            'name' => $name,
+            'reason' => $reason ?? null,
+            'locale' => 'ar',
+        ])
+    </x-slot:arabic>
 
-Dear {{ $name }},
-
-We have reviewed your consultant application. Unfortunately, we are unable to approve your profile at this time.
-
-@if($reason)
-**Feedback:** {{ $reason }}
-@endif
-
-You are welcome to update your profile and reapply.
-
-{{ config('app.name') }}
-</x-mail::message>
+    <x-slot:english>
+        @include('emails.consultants.partials.rejected-section', [
+            'name' => $name,
+            'reason' => $reason ?? null,
+            'locale' => 'en',
+        ])
+    </x-slot:english>
+</x-mail.bilingual-layout>
