@@ -174,4 +174,46 @@ class BilingualEmailConsistencyTest extends TestCase
         $this->assertStringNotContainsString(__('emails.demo_day.invite', [], 'en'), $html);
         $this->assertStringContainsString('نظام '.config('app.name'), $html);
     }
+
+    public function test_rendered_emails_do_not_escape_html_layout(): void
+    {
+        $application = Application::factory()->create();
+
+        $html = (new GeneralApplicationConfirmation($application))->render();
+
+        $this->assertMatchesRegularExpression('/<table[^>]*dir="rtl"/', $html);
+        $this->assertStringNotContainsString('&lt;table', $html);
+        $this->assertStringNotContainsString('&lt;hr', $html);
+    }
+
+    public function test_general_confirmation_excludes_application_summary(): void
+    {
+        $application = Application::factory()->create([
+            'phone' => '+966505050505',
+            'description' => 'Sensitive test description',
+            'city' => 'RUH',
+        ]);
+
+        $html = (new GeneralApplicationConfirmation($application))->render();
+
+        $this->assertStringContainsString($application->uid, $html);
+        $this->assertStringNotContainsString('+966505050505', $html);
+        $this->assertStringNotContainsString('Sensitive test description', $html);
+        $this->assertStringNotContainsString(__('emails.general_confirmation.summary_title', [], 'ar'), $html);
+    }
+
+    public function test_startup_confirmation_excludes_application_summary(): void
+    {
+        $application = Application::factory()->startup()->create([
+            'company_description' => 'Secret startup pitch details',
+            'investment_ask_sar' => 2_000_000,
+        ]);
+
+        $html = (new StartupApplicationConfirmation($application))->render();
+
+        $this->assertStringContainsString($application->uid, $html);
+        $this->assertStringNotContainsString('Secret startup pitch details', $html);
+        $this->assertStringNotContainsString('2,000,000', $html);
+        $this->assertStringNotContainsString(__('emails.startup_confirmation.summary_title', [], 'ar'), $html);
+    }
 }

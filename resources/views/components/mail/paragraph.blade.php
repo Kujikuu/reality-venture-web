@@ -7,5 +7,5 @@
 @endphp
 
 <p style="direction: {{ $direction }}; text-align: {{ $alignment }}; font-size: 16px; line-height: 1.6;">
-    {{ $slot }}
+    {!! $slot !!}
 </p>

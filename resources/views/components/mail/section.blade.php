@@ -6,7 +6,7 @@
             dir="{{ $dir }}"
             style="direction: {{ $dir === 'rtl' ? 'rtl' : 'ltr' }}; text-align: {{ $dir === 'rtl' ? 'right' : 'left' }}; font-family: Arial, sans-serif;"
         >
-            {{ $slot }}
+            {!! $slot !!}
         </td>
     </tr>
 </table>

@@ -17,22 +17,6 @@
 
 <x-mail.reference :uid="$application->uid" :locale="$locale" />
 
-<x-mail.heading :locale="$locale">{{ __('emails.general_confirmation.summary_title', [], $lang) }}</x-mail.heading>
-
-<x-mail.detail-list
-    :locale="$locale"
-    :items="array_filter([
-        __('emails.general_confirmation.name', [], $lang) => $application->first_name.' '.$application->last_name,
-        __('emails.general_confirmation.email', [], $lang) => $application->email,
-        __('emails.general_confirmation.phone', [], $lang) => $application->phone,
-        __('emails.general_confirmation.city', [], $lang) => $application->city ?? '—',
-        __('emails.general_confirmation.social', [], $lang) => $application->social_profile,
-    ])"
-/>
-
-<x-mail.heading :locale="$locale">{{ __('emails.general_confirmation.description_title', [], $lang) }}</x-mail.heading>
-<x-mail.paragraph :locale="$locale">{{ $application->description }}</x-mail.paragraph>
-
 <x-mail.paragraph :locale="$locale">
     {{ __('emails.general_confirmation.next_prompt', [], $lang) }}
 </x-mail.paragraph>
