@@ -24,6 +24,21 @@ use Illuminate\Support\Facades\Route;
 
 // Static pages
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/locale/{locale}', function (string $locale) {
+    abort_unless(in_array($locale, ['en', 'ar'], true), 404);
+
+    return redirect()
+        ->route('home')
+        ->withCookie(cookie(
+            name: 'rv_locale',
+            value: $locale,
+            minutes: 60 * 24 * 365,
+            path: '/',
+            httpOnly: false,
+            sameSite: 'lax',
+        ));
+})
+    ->name('locale.switch');
 Route::get('/application-form', fn () => redirect('/startuphub', 301));
 Route::get('/startuphub', [PageController::class, 'applicationForm'])->name('application.form');
 Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->name('startup-application.form');

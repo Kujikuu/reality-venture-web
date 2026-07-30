@@ -93,6 +93,7 @@ i18n
 
     },
     fallbackLng: 'en', // Use English if translation is missing
+    supportedLngs: ['en', 'ar'],
     debug: true, // Set to true for development debugging
 
     interpolation: {
@@ -101,9 +102,10 @@ i18n
 
     detection: {
       // Order of language detection (from highest to lowest priority)
-      order: ['localStorage', 'navigator'],
+      order: ['cookie', 'localStorage', 'navigator'],
 
-      // Keys to look for in localStorage
+      // Keys to look for in cookies and localStorage
+      lookupCookie: 'rv_locale',
       lookupLocalStorage: 'i18nextLng',
 
       // Cache user language
