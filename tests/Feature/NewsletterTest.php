@@ -8,346 +8,69 @@ use App\Mail\NewsletterMail;
 use App\Models\Newsletter;
 use App\Models\Subscriber;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class NewsletterTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_subscribe_to_newsletter(): void
+    protected function setUp(): void
     {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertRedirect();
-        $this->assertDatabaseHas('subscribers', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '+966512345678',
-            'is_active' => true,
-        ]);
+        parent::setUp();
+        Http::preventStrayRequests();
+        config()->set('services.dome.url', 'https://the-dome.test');
+        config()->set('services.dome.token', 'reality-token');
     }
 
-    public function test_user_can_subscribe_with_email_and_phone(): void
+    public function test_new_subscription_is_forwarded_without_writing_the_legacy_table(): void
     {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
+        Http::fake(['*' => Http::response(['data' => ['reference' => 'SUB-01', 'status' => 'subscribed', 'duplicate' => false]], 201)]);
 
-        $response->assertRedirect();
-        $this->assertDatabaseHas('subscribers', [
-            'email' => 'test@example.com',
-            'phone' => '+966512345678',
-            'is_active' => true,
-        ]);
+        $this->post('/newsletter/subscribe', $this->subscriptionPayload())
+            ->assertRedirect()->assertSessionHas('success');
+
+        $this->assertDatabaseCount('subscribers', 0);
+        Http::assertSent(fn (Request $request): bool => $request->hasHeader('Authorization', 'Bearer reality-token')
+            && $request['full_name'] === 'Test User'
+            && $request['email'] === 'test@example.com'
+            && $request['preferred_locale'] === 'en'
+            && $request['consent_version'] === 'reality-venture-privacy-v1');
     }
 
-    public function test_subscribe_rejects_invalid_saudi_phone_format(): void
+    public function test_legacy_form_payload_is_validated_and_unknown_profile_fields_are_not_persisted(): void
     {
-        $invalid = ['123', '+14155551234', 'abcdef', '0412345678', '05123'];
-
-        foreach ($invalid as $phone) {
-            $response = $this->post('/newsletter/subscribe', [
-                'fullname' => 'Test User',
-                'email' => 'test@example.com',
-                'phone' => $phone,
-                'position' => 'CEO',
-                'interests' => ['startups'],
-                'city' => 'Riyadh',
-                'organization' => 'private',
-                'subscribe_newsletter' => true,
-            ]);
-
-            $response->assertSessionHasErrors('phone');
-        }
-
+        $this->post('/newsletter/subscribe', $this->subscriptionPayload(['email' => 'invalid']))->assertSessionHasErrors('email');
+        $this->post('/newsletter/subscribe', $this->subscriptionPayload(['interests' => ['invalid']]))->assertSessionHasErrors('interests.0');
         $this->assertDatabaseCount('subscribers', 0);
     }
 
-    public function test_phone_is_normalized_to_saudi_e164_format(): void
-    {
-        $inputs = [
-            'local-with-zero' => '0512345678',
-            'international-plus' => '+966512345678',
-            'international-no-plus' => '966512345678',
-            'bare-nine-digits' => '512345678',
-        ];
-
-        foreach ($inputs as $key => $phone) {
-            Subscriber::query()->delete();
-
-            $this->post('/newsletter/subscribe', [
-                'fullname' => 'Test User',
-                'email' => "{$key}@example.com",
-                'phone' => $phone,
-                'position' => 'CEO',
-                'interests' => ['startups'],
-                'city' => 'Riyadh',
-                'organization' => 'private',
-                'subscribe_newsletter' => true,
-            ]);
-
-            $stored = Subscriber::where('email', "{$key}@example.com")->value('phone');
-            $this->assertSame(
-                '+966512345678',
-                $stored,
-                "Failed normalizing input '{$phone}' (key: {$key}), got: ".var_export($stored, true)
-            );
-        }
-    }
-
-    public function test_resubscribe_updates_phone_to_new_value(): void
-    {
-        Subscriber::factory()->unsubscribed()->create([
-            'email' => 'test@example.com',
-            'phone' => '+966511111111',
-        ]);
-
-        $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0522222222',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $this->assertDatabaseHas('subscribers', [
-            'email' => 'test@example.com',
-            'phone' => '+966522222222',
-            'is_active' => true,
-        ]);
-    }
-
-    public function test_subscribe_requires_valid_email(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'not-an-email',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('email');
-    }
-
-    public function test_subscribe_requires_email(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => '',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('email');
-    }
-
-    public function test_subscribe_requires_fullname(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('fullname');
-    }
-
-    public function test_subscribe_requires_phone(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('phone');
-    }
-
-    public function test_duplicate_email_is_rejected(): void
-    {
-        Subscriber::factory()->create(['email' => 'test@example.com']);
-
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345679',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('email');
-    }
-
-    public function test_unsubscribe_deactivates_subscriber(): void
+    public function test_legacy_unsubscribe_links_remain_operational(): void
     {
         $subscriber = Subscriber::factory()->create();
-
-        $response = $this->get('/newsletter/unsubscribe/'.$subscriber->unsubscribe_token);
-
-        $response->assertRedirect('/');
+        $this->get('/newsletter/unsubscribe/'.$subscriber->unsubscribe_token)->assertRedirect('/');
         $this->assertFalse($subscriber->fresh()->is_active);
     }
 
     public function test_unsubscribe_with_invalid_token_redirects_without_error(): void
     {
-        $response = $this->get('/newsletter/unsubscribe/invalid-token-that-does-not-exist');
-
-        $response->assertRedirect('/');
+        $this->get('/newsletter/unsubscribe/missing')->assertRedirect('/');
     }
 
     public function test_subscriber_token_is_auto_generated_on_creation(): void
     {
         $subscriber = Subscriber::create(['email' => 'auto@example.com']);
-
-        $this->assertNotNull($subscriber->unsubscribe_token);
-        $this->assertEquals(64, strlen($subscriber->unsubscribe_token));
+        $this->assertSame(64, strlen($subscriber->unsubscribe_token));
     }
 
-    public function test_user_can_subscribe_with_club_fields(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Ahmed Al Saud',
-            'email' => 'ahmed@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups', 'proptech', 'investment'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertRedirect();
-        $this->assertDatabaseHas('subscribers', [
-            'fullname' => 'Ahmed Al Saud',
-            'email' => 'ahmed@example.com',
-            'phone' => '+966512345678',
-            'position' => 'CEO',
-            'city' => 'Riyadh',
-            'organization' => 'private',
-        ]);
-
-        $subscriber = Subscriber::where('email', 'ahmed@example.com')->first();
-        $this->assertEquals(['startups', 'proptech', 'investment'], $subscriber->interests);
-    }
-
-    public function test_subscribe_requires_club_fields(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors(['position', 'interests', 'city', 'organization']);
-    }
-
-    public function test_subscribe_rejects_invalid_interest_values(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['invalid_interest', 'another_bad_one'],
-            'city' => 'Riyadh',
-            'organization' => 'private',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('interests.0');
-    }
-
-    public function test_subscribe_rejects_invalid_organization_value(): void
-    {
-        $response = $this->post('/newsletter/subscribe', [
-            'fullname' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '0512345678',
-            'position' => 'CEO',
-            'interests' => ['startups'],
-            'city' => 'Riyadh',
-            'organization' => 'government',
-            'subscribe_newsletter' => true,
-        ]);
-
-        $response->assertSessionHasErrors('organization');
-    }
-
-    public function test_resubscribe_updates_club_fields(): void
-    {
-        Subscriber::factory()->unsubscribed()->create([
-            'email' => 'test@example.com',
-            'position' => 'Manager',
-            'city' => 'Jeddah',
-            'organization' => 'private',
-        ]);
-
-        $this->post('/newsletter/subscribe', [
-            'fullname' => 'Updated Name',
-            'email' => 'test@example.com',
-            'phone' => '0522222222',
-            'position' => 'CEO',
-            'city' => 'Riyadh',
-            'organization' => 'public',
-            'interests' => ['technology', 'innovation'],
-            'subscribe_newsletter' => true,
-        ]);
-
-        $subscriber = Subscriber::where('email', 'test@example.com')->first();
-        $this->assertTrue($subscriber->is_active);
-        $this->assertEquals('CEO', $subscriber->position);
-        $this->assertEquals('Riyadh', $subscriber->city);
-        $this->assertEquals('public', $subscriber->organization->value);
-        $this->assertEquals(['technology', 'innovation'], $subscriber->interests);
-    }
-
-    public function test_send_newsletter_job_sends_to_active_subscribers_only(): void
+    public function test_send_newsletter_job_sends_to_active_legacy_subscribers_only(): void
     {
         Mail::fake();
-
         Subscriber::factory()->count(3)->create();
         Subscriber::factory()->unsubscribed()->create();
-
         $newsletter = Newsletter::factory()->create();
 
         (new SendNewsletterJob($newsletter))->handle();
@@ -358,9 +81,7 @@ class NewsletterTest extends TestCase
     public function test_send_newsletter_job_updates_newsletter_status_and_count(): void
     {
         Mail::fake();
-
         Subscriber::factory()->count(5)->create();
-
         $newsletter = Newsletter::factory()->create();
 
         (new SendNewsletterJob($newsletter))->handle();
@@ -369,5 +90,15 @@ class NewsletterTest extends TestCase
         $this->assertEquals(NewsletterStatus::Sent, $newsletter->status);
         $this->assertEquals(5, $newsletter->sent_count);
         $this->assertNotNull($newsletter->sent_at);
+    }
+
+    /** @return array<string, mixed> */
+    private function subscriptionPayload(array $overrides = []): array
+    {
+        return [
+            'submission_uuid' => (string) Str::uuid(), 'fullname' => 'Test User', 'email' => 'test@example.com',
+            'phone' => '0512345678', 'position' => 'CEO', 'role' => 'owner', 'interests' => ['startups'],
+            'city' => 'Riyadh', 'organization' => 'private', 'subscribe_newsletter' => true, ...$overrides,
+        ];
     }
 }

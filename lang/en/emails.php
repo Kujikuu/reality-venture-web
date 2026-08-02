@@ -19,10 +19,10 @@ return [
     ],
 
     'rv_club' => [
-        'title' => 'Join the RV Club',
-        'body' => 'We are pleased to invite you to join the RV Club WhatsApp group to connect with fellow entrepreneurs and investors.',
+        'title' => 'Join The Dome',
+        'body' => 'We are pleased to invite you to join The Dome WhatsApp group to connect with fellow entrepreneurs and investors.',
         'button' => 'Join WhatsApp Group',
-        'invite_line' => '🎉 We are also pleased to invite you to join the RV Club! Our exclusive community for entrepreneurs.',
+        'invite_line' => '🎉 We are also pleased to invite you to join The Dome! Our exclusive community for entrepreneurs.',
     ],
 
     'subjects' => [
@@ -211,7 +211,7 @@ return [
     ],
 
     'welcome_club' => [
-        'title' => 'Welcome to RV Club! 🎉',
+        'title' => 'Welcome to The Dome! 🎉',
         'intro' => 'Thank you for joining our community. We\'re excited to have you with us on this journey toward building the future of innovation in Saudi Arabia.',
         'membership_title' => 'Your Membership Details',
         'interests_title' => 'Your Interests',

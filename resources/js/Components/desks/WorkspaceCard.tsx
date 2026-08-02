@@ -21,7 +21,7 @@ interface Workspace {
     capacity: number | null;
     cover_image: string | null;
     pricing: Pricing | null;
-    amenities: string[];
+    amenities: Array<string | { id?: number; key?: string; label?: string }>;
 }
 
 interface WorkspaceCardProps {
@@ -89,10 +89,10 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({ workspace }) => {
                             <div className="flex flex-wrap gap-1.5">
                                 {topAmenities.map((amenity) => (
                                     <span
-                                        key={amenity.id || amenity.key}
+                                        key={typeof amenity === 'string' ? amenity : amenity.id ?? amenity.key}
                                         className="bg-surface text-gray-600 text-xs px-2.5 py-1 rounded-full"
                                     >
-                                        {amenity.label || amenity.key}
+                                        {typeof amenity === 'string' ? amenity : amenity.label ?? amenity.key}
                                     </span>
                                 ))}
                             </div>

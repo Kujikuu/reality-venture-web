@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Lock, Info, ArrowLeft, Send } from "lucide-react";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ interface RvClubGateProps {
     postSlug: string;
 }
 
-const stepVariants = {
+const stepVariants: Variants = {
     hidden: { opacity: 0, y: 12 },
     visible: {
         opacity: 1,
@@ -47,6 +47,7 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
         processing,
         errors,
     } = useForm({
+        submission_uuid: crypto.randomUUID(),
         fullname: "",
         email: "",
         phone: "",
@@ -80,6 +81,10 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
             });
 
             const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error('The Dome access check failed');
+            }
 
             if (result.subscribed) {
                 window.location.reload();

@@ -2,6 +2,13 @@
 
 return [
 
+    'dome' => [
+        'url' => env('DOME_API_URL', 'https://the-dome.test'),
+        'token' => env('DOME_API_TOKEN'),
+        'connect_timeout' => env('DOME_CONNECT_TIMEOUT', 3),
+        'timeout' => env('DOME_TIMEOUT', 8),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

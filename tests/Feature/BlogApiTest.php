@@ -144,6 +144,12 @@ class BlogApiTest extends TestCase
 
     public function test_check_access_returns_false_for_inactive_or_unknown_subscriber(): void
     {
+        Http::fake(['https://the-dome.test/api/v1/access/check' => Http::response([
+            'data' => ['eligible' => false, 'subscriber' => false, 'member' => false, 'tier' => null],
+        ])]);
+        config()->set('services.dome.url', 'https://the-dome.test');
+        config()->set('services.dome.token', 'reality-token');
+
         Subscriber::factory()->unsubscribed()->create([
             'email' => 'inactive@example.com',
         ]);

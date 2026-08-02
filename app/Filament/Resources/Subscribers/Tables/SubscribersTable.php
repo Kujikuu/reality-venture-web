@@ -82,7 +82,7 @@ class SubscribersTable
                 ]),
             ])
             ->emptyStateHeading('No subscribers yet')
-            ->emptyStateDescription('Subscribers will appear here when visitors sign up via the RV Club form.')
+            ->emptyStateDescription('Subscribers will appear here when visitors sign up via The Dome form.')
             ->emptyStateIcon('heroicon-o-users')
             ->striped()
             ->paginated([10, 25, 50]);

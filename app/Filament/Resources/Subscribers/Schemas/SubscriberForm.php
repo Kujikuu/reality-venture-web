@@ -37,7 +37,7 @@ class SubscriberForm
                             ->label('Active')
                             ->default(true),
                     ]),
-                Section::make('RV Club Profile')
+                Section::make('The Dome Profile')
                     ->description('Additional membership details for the Reality Venture Club.')
                     ->schema([
                         TextInput::make('position')

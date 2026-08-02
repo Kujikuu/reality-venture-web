@@ -16,6 +16,7 @@ use App\Http\Controllers\ConsultantDashboardController;
 use App\Http\Controllers\ConsultantOnboardingController;
 use App\Http\Controllers\ConsultantPayoutController;
 use App\Http\Controllers\ConsultantProfileController;
+use App\Http\Controllers\DomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReviewController;
@@ -44,6 +45,10 @@ Route::get('/startuphub', [PageController::class, 'applicationForm'])->name('app
 Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->name('startup-application.form');
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms.service');
+Route::get('/the-dome/subscribe', [DomeController::class, 'createSubscribe'])->name('the-dome.subscribe');
+Route::post('/the-dome/subscribe', [DomeController::class, 'subscribe'])->name('the-dome.subscribe.store');
+Route::get('/the-dome/apply', [DomeController::class, 'createApply'])->name('the-dome.apply');
+Route::post('/the-dome/apply', [DomeController::class, 'apply'])->name('the-dome.apply.store');
 
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
@@ -61,7 +66,7 @@ Route::get('/admin/applications/{application}/agreement-pdf', [AgreementControll
     ->name('admin.applications.agreement-pdf');
 
 // Newsletter
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [DomeController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
 // Banner click tracking

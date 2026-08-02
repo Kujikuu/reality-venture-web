@@ -237,7 +237,7 @@ class ApplicationActions
                     ->required()
                     ->native(false),
                 Checkbox::make('rv_club_invite')
-                    ->label('Include RV Club invite copy in email'),
+                    ->label('Include The Dome invite copy in email'),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
                     ->rows(3),
@@ -274,7 +274,7 @@ class ApplicationActions
                 && $record->status === ApplicationStatus::Approved)
             ->form([
                 Checkbox::make('rv_club_invite')
-                    ->label('Include RV Club invite copy in email')
+                    ->label('Include The Dome invite copy in email')
                     ->default(true),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
@@ -480,7 +480,7 @@ class ApplicationActions
                     ->required()
                     ->native(false),
                 Checkbox::make('rv_club_invite')
-                    ->label('Include RV Club invite copy in email'),
+                    ->label('Include The Dome invite copy in email'),
                 Textarea::make('note')
                     ->label('Internal Note / Email Message')
                     ->rows(3),

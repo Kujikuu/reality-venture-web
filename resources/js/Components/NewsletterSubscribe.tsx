@@ -40,6 +40,7 @@ export const NewsletterSubscribe = ({
         recentlySuccessful,
         reset,
     } = useForm({
+        submission_uuid: crypto.randomUUID(),
         fullname: "",
         email: "",
         phone: "",

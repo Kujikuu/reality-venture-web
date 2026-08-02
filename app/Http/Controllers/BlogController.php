@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DomeIntegrationException;
 use App\Http\Requests\CheckBlogAccessRequest;
 use App\Models\Subscriber;
 use App\Services\BlogApiService;
+use App\Services\DomeApiService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +15,8 @@ use Inertia\Response;
 class BlogController extends Controller
 {
     public function __construct(
-        private readonly BlogApiService $blogApi
+        private readonly BlogApiService $blogApi,
+        private readonly DomeApiService $domeApi,
     ) {}
 
     public function index(Request $request): Response
@@ -128,6 +131,14 @@ class BlogController extends Controller
             ->active()
             ->where('email', $request->validated('email'))
             ->exists();
+
+        if (! $isSubscribed) {
+            try {
+                $isSubscribed = $this->domeApi->hasAccess($request->validated('email'));
+            } catch (DomeIntegrationException) {
+                return response()->json(['subscribed' => false], 503);
+            }
+        }
 
         if ($isSubscribed) {
             session(["blog_access_{$slug}" => now()->addDays(7)->timestamp]);

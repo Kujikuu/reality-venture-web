@@ -24,7 +24,7 @@ export const LanguageSwitcher: React.FC = () => {
     setIsOpen(false);
     localStorage.setItem('i18nextLng', langCode);
     document.cookie = `rv_locale=${langCode}; path=/; max-age=31536000; SameSite=Lax`;
-    router.reload({ preserveScroll: true });
+    router.visit(window.location.href, { preserveScroll: true, preserveState: true });
   };
 
   return (

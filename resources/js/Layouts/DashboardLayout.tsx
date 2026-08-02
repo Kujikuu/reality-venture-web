@@ -36,7 +36,7 @@ export default function DashboardLayout({ children, links, title }: Props) {
     i18n.changeLanguage(next);
     localStorage.setItem('i18nextLng', next);
     document.cookie = `rv_locale=${next}; path=/; max-age=31536000; SameSite=Lax`;
-    router.reload({ preserveScroll: true });
+    router.visit(window.location.href, { preserveScroll: true, preserveState: true });
   };
 
   return (
