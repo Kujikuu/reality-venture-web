@@ -19,10 +19,10 @@ return [
     ],
 
     'rv_club' => [
-        'title' => 'Join The Dome',
-        'body' => 'We are pleased to invite you to join The Dome WhatsApp group to connect with fellow entrepreneurs and investors.',
+        'title' => 'Join DOME™',
+        'body' => 'We are pleased to invite you to join DOME™ WhatsApp group to connect with fellow entrepreneurs and investors.',
         'button' => 'Join WhatsApp Group',
-        'invite_line' => '🎉 We are also pleased to invite you to join The Dome! Our exclusive community for entrepreneurs.',
+        'invite_line' => '🎉 We are also pleased to invite you to join DOME™! Our exclusive community for entrepreneurs.',
     ],
 
     'subjects' => [
@@ -211,7 +211,7 @@ return [
     ],
 
     'welcome_club' => [
-        'title' => 'Welcome to The Dome! 🎉',
+        'title' => 'Welcome to DOME™! 🎉',
         'intro' => 'Thank you for joining our community. We\'re excited to have you with us on this journey toward building the future of innovation in Saudi Arabia.',
         'membership_title' => 'Your Membership Details',
         'interests_title' => 'Your Interests',

@@ -83,7 +83,7 @@ export const RvClubGate: React.FC<RvClubGateProps> = ({
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error('The Dome access check failed');
+                throw new Error('DOME™ access check failed');
             }
 
             if (result.subscribed) {

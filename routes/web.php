@@ -46,9 +46,13 @@ Route::get('/startup-application', [PageController::class, 'startupApplicationFo
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms.service');
 Route::get('/the-dome/subscribe', [DomeController::class, 'createSubscribe'])->name('the-dome.subscribe');
-Route::post('/the-dome/subscribe', [DomeController::class, 'subscribe'])->name('the-dome.subscribe.store');
+Route::post('/the-dome/subscribe', [DomeController::class, 'subscribe'])
+    ->middleware('throttle:10,1')
+    ->name('the-dome.subscribe.store');
 Route::get('/the-dome/apply', [DomeController::class, 'createApply'])->name('the-dome.apply');
-Route::post('/the-dome/apply', [DomeController::class, 'apply'])->name('the-dome.apply.store');
+Route::post('/the-dome/apply', [DomeController::class, 'apply'])
+    ->middleware('throttle:10,1')
+    ->name('the-dome.apply.store');
 
 // Form submission
 Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');

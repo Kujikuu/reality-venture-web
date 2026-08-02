@@ -23,12 +23,12 @@
     "viewAll": "View All Posts"
   },
   "rvClub": {
-    "badge": "The Dome",
-    "exclusive": "The Dome Exclusive",
-    "description": "This content is available exclusively to The Dome subscribers. Enter your email to check your access.",
+    "badge": "DOME™",
+    "exclusive": "DOME™ Exclusive",
+    "description": "This content is available exclusively to DOME™ subscribers. Enter your email to check your access.",
     "emailPlaceholder": "Enter your email to check access",
     "unlock": "Unlock",
-    "notFound": "You're not a subscriber yet. Fill the form below to join The Dome.",
+    "notFound": "You're not a subscriber yet. Fill the form below to join DOME™.",
     "checkError": "Something went wrong. Please try again.",
     "backToEmail": "Back to email"
   }

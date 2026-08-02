@@ -54,7 +54,7 @@ class DomeApiService
         } catch (DomeIntegrationException $exception) {
             throw $exception;
         } catch (Throwable $exception) {
-            Log::error('The Dome API request failed', ['endpoint' => $endpoint, 'exception' => $exception::class, 'message' => $exception->getMessage()]);
+            Log::error('DOME™ API request failed', ['endpoint' => $endpoint, 'exception' => $exception::class, 'message' => $exception->getMessage()]);
             throw new DomeIntegrationException('unavailable', status: 503);
         }
     }

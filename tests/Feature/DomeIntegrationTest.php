@@ -31,6 +31,56 @@ class DomeIntegrationTest extends TestCase
             ->assertOk()->assertInertia(fn (Assert $page) => $page->component('TheDome')->where('mode', 'apply')->where('locale', 'en')->where('requestedTier', 'engage'));
     }
 
+    public function test_dedicated_forms_share_the_localized_two_step_field_structure(): void
+    {
+        $source = file_get_contents(resource_path('js/Pages/TheDome.tsx'));
+
+        $this->assertStringContainsString('data-dome-step="1"', $source);
+        $this->assertStringContainsString('data-dome-step="2"', $source);
+        $this->assertStringContainsString('name="phone"', $source);
+        $this->assertStringContainsString("aria-current={active ? 'step' : undefined}", $source);
+        $this->assertStringContainsString('DOME™', $source);
+        $this->assertStringNotContainsString('DOME'.mb_chr(226), $source);
+
+        foreach ([
+            'startups',
+            'proptech',
+            'investment',
+            'venture_building',
+            'technology',
+            'real_estate',
+            'entrepreneurship',
+            'innovation',
+            'games',
+            'sport',
+            'hospitality',
+            'food_and_beverage',
+            'healthcare',
+            'ai_and_tech',
+            'manufacturing',
+        ] as $interest) {
+            $this->assertStringContainsString("['{$interest}',", $source);
+        }
+    }
+
+    public function test_subscription_requires_a_mobile_number_before_calling_the_central_api(): void
+    {
+        $payload = $this->subscriptionPayload();
+        unset($payload['phone']);
+
+        $this->post('/the-dome/subscribe', $payload)->assertSessionHasErrors('phone');
+
+        Http::assertNothingSent();
+    }
+
+    public function test_dedicated_form_submissions_are_rate_limited(): void
+    {
+        $routes = app('router')->getRoutes();
+
+        $this->assertContains('throttle:10,1', $routes->getByName('the-dome.subscribe.store')?->gatherMiddleware());
+        $this->assertContains('throttle:10,1', $routes->getByName('the-dome.apply.store')?->gatherMiddleware());
+    }
+
     public function test_company_application_is_conditionally_validated_and_forwarded(): void
     {
         $payload = $this->applicationPayload();
@@ -70,7 +120,7 @@ class DomeIntegrationTest extends TestCase
     {
         Http::fake(['*' => Http::failedConnection()]);
         $this->from('/the-dome/subscribe')->post('/the-dome/subscribe', $this->subscriptionPayload())
-            ->assertRedirect('/the-dome/subscribe')->assertSessionHas('error', 'The Dome is temporarily unavailable. Please try again shortly.');
+            ->assertRedirect('/the-dome/subscribe')->assertSessionHas('error', 'DOME™ is temporarily unavailable. Please try again shortly.');
     }
 
     public function test_gated_content_accepts_legacy_or_central_access(): void
@@ -90,7 +140,7 @@ class DomeIntegrationTest extends TestCase
         $this->assertDatabaseCount('subscribers', 0);
     }
 
-    public function test_public_and_email_copy_use_the_dome_without_legacy_or_duplicate_wording(): void
+    public function test_public_and_email_copy_use_dome_tm_without_legacy_or_duplicate_wording(): void
     {
         $englishCommon = json_decode(file_get_contents(resource_path('js/i18n/locales/en/common.json')), true, flags: JSON_THROW_ON_ERROR);
         $arabicCommon = json_decode(file_get_contents(resource_path('js/i18n/locales/ar/common.json')), true, flags: JSON_THROW_ON_ERROR);
@@ -106,14 +156,14 @@ class DomeIntegrationTest extends TestCase
             file_get_contents(app_path('Filament/Resources/Subscribers/Tables/SubscribersTable.php')),
         ]);
 
-        $this->assertSame('Join The Dome', data_get($englishCommon, 'newsletter.home.heading'));
-        $this->assertSame('انضم إلى The Dome', data_get($arabicCommon, 'newsletter.home.heading'));
-        $this->assertStringNotContainsString('the The Dome', $rebrandedCopy);
+        $this->assertSame('Join DOME™', data_get($englishCommon, 'newsletter.home.heading'));
+        $this->assertSame('انضم إلى DOME™', data_get($arabicCommon, 'newsletter.home.heading'));
+        $this->assertStringNotContainsString('the DOME™', $rebrandedCopy);
         $this->assertStringNotContainsString('نـــــادي RV', $rebrandedCopy);
-        $this->assertStringNotContainsString('لThe Dome', $rebrandedCopy);
-        $this->assertStringNotContainsString('بThe Dome', $rebrandedCopy);
-        $this->assertSame('Join The Dome', __('emails.rv_club.title', [], 'en'));
-        $this->assertSame('انضم إلى The Dome', __('emails.rv_club.title', [], 'ar'));
+        $this->assertStringNotContainsString('لDOME™', $rebrandedCopy);
+        $this->assertStringNotContainsString('بDOME™', $rebrandedCopy);
+        $this->assertSame('Join DOME™', __('emails.rv_club.title', [], 'en'));
+        $this->assertSame('انضم إلى DOME™', __('emails.rv_club.title', [], 'ar'));
     }
 
     /** @return array<string, mixed> */

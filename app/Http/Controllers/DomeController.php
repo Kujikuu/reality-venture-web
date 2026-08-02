@@ -27,21 +27,21 @@ class DomeController extends Controller
     {
         return $this->submit(fn (): array => $dome->subscribe([
             ...$request->validated(), 'preferred_locale' => app()->getLocale(), 'consent_version' => 'reality-venture-privacy-v1',
-        ]), app()->isLocale('ar') ? 'تم اشتراكك في The Dome. راجع بريدك للتأكيد.' : 'You are subscribed to The Dome. Check your inbox for confirmation.');
+        ]), app()->isLocale('ar') ? 'تم اشتراكك في DOME™. راجع بريدك للتأكيد.' : 'You are subscribed to DOME™. Check your inbox for confirmation.');
     }
 
     public function apply(StoreDomeApplicationRequest $request, DomeApiService $dome): RedirectResponse
     {
         return $this->submit(fn (): array => $dome->apply([
             ...$request->validated(), 'preferred_locale' => app()->getLocale(), 'consent_version' => 'reality-venture-privacy-v1',
-        ]), app()->isLocale('ar') ? 'تم استلام طلبك للانضمام إلى The Dome.' : 'Your The Dome application has been received.');
+        ]), app()->isLocale('ar') ? 'تم استلام طلبك للانضمام إلى DOME™.' : 'Your DOME™ application has been received.');
     }
 
     private function form(string $mode): Response
     {
         Inertia::share('seo', fn (): array => [
-            'title' => $mode === 'apply' ? 'Apply to The Dome' : 'Subscribe to The Dome',
-            'description' => 'Join The Dome community across Sniper, Reality Venture, and GRIT.',
+            'title' => $mode === 'apply' ? 'Apply to DOME™' : 'Subscribe to DOME™',
+            'description' => 'Join DOME™ community across Sniper, Reality Venture, and GRIT.',
             'canonical' => route("the-dome.{$mode}"), 'robots' => 'index, follow', 'jsonLd' => null,
         ]);
 
@@ -75,10 +75,10 @@ class DomeController extends Controller
     {
         $messages = app()->isLocale('ar') ? [
             'unauthorized' => 'إعدادات الاتصال بالخدمة غير مصرح بها. يرجى المحاولة لاحقاً.', 'rate_limited' => 'تم إرسال طلبات كثيرة. انتظر قليلاً ثم حاول مجدداً.',
-            'conflict' => 'استُخدم مرجع الطلب نفسه لبيانات مختلفة. حدّث الصفحة وحاول مجدداً.', 'unavailable' => 'خدمة The Dome غير متاحة مؤقتاً. حاول بعد قليل.', 'failed' => 'تعذر إرسال الطلب. حاول مجدداً.',
+            'conflict' => 'استُخدم مرجع الطلب نفسه لبيانات مختلفة. حدّث الصفحة وحاول مجدداً.', 'unavailable' => 'خدمة DOME™ غير متاحة مؤقتاً. حاول بعد قليل.', 'failed' => 'تعذر إرسال الطلب. حاول مجدداً.',
         ] : [
             'unauthorized' => 'The service configuration is not authorized. Please try again later.', 'rate_limited' => 'Too many requests were received. Please wait and try again.',
-            'conflict' => 'This reference was used with different information. Refresh and try again.', 'unavailable' => 'The Dome is temporarily unavailable. Please try again shortly.', 'failed' => 'We could not submit your request. Please try again.',
+            'conflict' => 'This reference was used with different information. Refresh and try again.', 'unavailable' => 'DOME™ is temporarily unavailable. Please try again shortly.', 'failed' => 'We could not submit your request. Please try again.',
         ];
 
         return $messages[$reason] ?? $messages['failed'];
