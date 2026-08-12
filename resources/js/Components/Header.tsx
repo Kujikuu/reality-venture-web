@@ -199,12 +199,14 @@ export const Header = () => {
               >
                 {t('buttons.applyNow')}
               </Link>
-              <Link
+              <a
                 href="/grit"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="h-10 px-6 flex items-center justify-center bg-secondary text-white text-sm font-bold tracking-tight hover:bg-secondary-800 active:scale-95 transition-all rounded-lg"
               >
                 {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
-              </Link>
+              </a>
             </div>
           )}
         </div>
@@ -279,13 +281,15 @@ export const Header = () => {
                 >
                   {t('buttons.applyNow')}
                 </Link>
-                <Link
+                <a
                   href="/grit"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="h-12 w-full flex items-center justify-center bg-secondary text-white font-bold uppercase tracking-wide rounded-lg transition-colors hover:bg-secondary-800"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('buttons.grit')}<sup className="text-[0.6em]">TM</sup>
-                </Link>
+                </a>
               </div>
             )}
           </div>

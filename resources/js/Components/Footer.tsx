@@ -68,7 +68,7 @@ export const Footer = ({ hideNewsletter = false }: FooterProps) => {
               <li><Link href="/#hero" onClick={(e) => smoothScrollTo(e, 'hero')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.about')}</Link></li>
               <li><Link href="/consultants" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.advisory')}</Link></li>
               <li><Link href="/#programs" onClick={(e) => smoothScrollTo(e, 'programs')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.ventureProgram')}</Link></li>
-              <li><Link href="/grit" className="hover:text-primary transition-colors block py-1">{t('common:company.grit')}<sup className="text-[0.6em]">TM</sup></Link></li>
+              <li><a href="/grit" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors block py-1">{t('common:company.grit')}<sup className="text-[0.6em]">TM</sup></a></li>
               <li><Link href="/#rv-club" onClick={(e) => smoothScrollTo(e, 'rv-club')} className="hover:text-primary transition-colors block py-1">{t('navigation:footer.rvClub')}</Link></li>
               <li><Link href="/blog" className="hover:text-primary transition-colors block py-1">{t('navigation:footer.blog')}</Link></li>
             </ul>
