@@ -21,6 +21,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StripeWebhookController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 
 // Static pages
@@ -81,10 +82,13 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{post}/check-access', [BlogController::class, 'checkAccess'])->name('blog.check-access');
 
-// Desks / Workspaces
-Route::get('/grit', fn () => inertia('Desks/Index'))->name('desks.index');
-Route::get('/grit/bookings', fn () => inertia('Desks/Bookings'))->name('desks.bookings');
-Route::get('/grit/{slug}', fn (string $slug) => inertia('Desks/Show', ['workspaceSlug' => $slug]))->name('desks.show');
+Route::get('/grit/{path?}', fn (): RedirectResponse => redirect()->away(
+    app()->getLocale() === 'ar'
+        ? 'https://grit.com.sa/ar'
+        : 'https://grit.com.sa/en'
+))
+    ->where('path', '.*')
+    ->name('grit.redirect');
 
 // ─── Auth (Guest Only) ──────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
