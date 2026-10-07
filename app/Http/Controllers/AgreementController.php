@@ -7,6 +7,7 @@ use App\Jobs\GenerateSignedAgreementPdf;
 use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -64,6 +65,8 @@ class AgreementController extends Controller
 
     public function downloadPdf(Application $application): StreamedResponse
     {
+        Gate::authorize('downloadAgreement', $application);
+
         if (! $application->agreement_pdf_path || ! Storage::disk('local')->exists($application->agreement_pdf_path)) {
             abort(404);
         }

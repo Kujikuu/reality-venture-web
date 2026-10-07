@@ -90,7 +90,7 @@ class AgreementWorkflowTest extends TestCase
     {
         Storage::fake('local');
 
-        $admin = User::factory()->create();
+        $admin = User::factory()->admin()->create();
         $path = 'agreements/RV-TEST01/signed.pdf';
         Storage::disk('local')->put($path, '%PDF-1.4 test');
 
@@ -104,6 +104,40 @@ class AgreementWorkflowTest extends TestCase
             ->get(route('admin.applications.agreement-pdf', $application))
             ->assertOk()
             ->assertDownload("agreement-{$application->uid}.pdf");
+    }
+
+    public function test_non_admin_cannot_download_signed_agreement_pdf(): void
+    {
+        Storage::fake('local');
+
+        $path = 'agreements/RV-TEST02/signed.pdf';
+        Storage::disk('local')->put($path, '%PDF-1.4 test');
+
+        $application = Application::factory()->approved()->create([
+            'type' => ApplicationType::SignAgreement,
+            'agreement_pdf_path' => $path,
+            'agreement_signed_at' => now(),
+        ]);
+
+        $this->actingAs(User::factory()->client()->create())
+            ->get(route('admin.applications.agreement-pdf', $application))
+            ->assertForbidden();
+
+        $this->actingAs(User::factory()->consultant()->create())
+            ->get(route('admin.applications.agreement-pdf', $application))
+            ->assertForbidden();
+    }
+
+    public function test_guest_cannot_download_signed_agreement_pdf(): void
+    {
+        $application = Application::factory()->approved()->create([
+            'type' => ApplicationType::SignAgreement,
+            'agreement_pdf_path' => 'agreements/RV-TEST03/signed.pdf',
+            'agreement_signed_at' => now(),
+        ]);
+
+        $this->get(route('admin.applications.agreement-pdf', $application))
+            ->assertRedirect(route('login'));
     }
 
     public function test_signed_agreement_shows_already_signed_state(): void
