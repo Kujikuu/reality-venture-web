@@ -70,7 +70,7 @@ class ApplicationExporter extends Exporter
                 ->label('Demo Link'),
             ExportColumn::make('attachment_path')
                 ->label('Attachment')
-                ->formatStateUsing(fn (?string $state) => $state ? asset('storage/'.$state) : null),
+                ->formatStateUsing(fn (?string $state, Application $record) => $state ? route('admin.applications.attachment', $record) : null),
             ExportColumn::make('discovery_source')
                 ->label('Discovery Source')
                 ->formatStateUsing(fn ($state) => $state?->label()),

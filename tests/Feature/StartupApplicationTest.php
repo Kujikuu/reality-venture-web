@@ -222,6 +222,8 @@ class StartupApplicationTest extends TestCase
     {
         Mail::fake();
         Http::fake();
+        \Illuminate\Support\Facades\Storage::fake('local');
+        \Illuminate\Support\Facades\Storage::fake('public');
 
         $application = $this->createInitialApplication();
 
@@ -237,7 +239,8 @@ class StartupApplicationTest extends TestCase
 
         $saved = Application::where('email', 'upload@test.com')->first();
         $this->assertNotNull($saved->attachment_path);
-        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($saved->attachment_path));
+        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('local')->exists($saved->attachment_path));
+        $this->assertFalse(\Illuminate\Support\Facades\Storage::disk('public')->exists($saved->attachment_path));
     }
 
     public function test_rejects_oversized_attachment(): void

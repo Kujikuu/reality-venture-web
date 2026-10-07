@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdBannerController;
 use App\Http\Controllers\AgreementController;
+use App\Http\Controllers\ApplicationAttachmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -69,6 +70,9 @@ Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])->name('
 Route::get('/admin/applications/{application}/agreement-pdf', [AgreementController::class, 'downloadPdf'])
     ->middleware(['auth'])
     ->name('admin.applications.agreement-pdf');
+Route::get('/admin/applications/{application}/attachment', ApplicationAttachmentController::class)
+    ->middleware(['auth'])
+    ->name('admin.applications.attachment');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [DomeController::class, 'subscribe'])->name('newsletter.subscribe');

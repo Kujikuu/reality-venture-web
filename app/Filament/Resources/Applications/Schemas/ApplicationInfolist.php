@@ -135,7 +135,7 @@ class ApplicationInfolist
                         TextEntry::make('attachment_path')
                             ->label('Attachment')
                             ->formatStateUsing(fn (?string $state): string => $state ? basename($state) : '—')
-                            ->url(fn (Application $record): ?string => $record->attachment_path ? asset('storage/'.$record->attachment_path) : null)
+                            ->url(fn (Application $record): ?string => $record->attachment_path ? route('admin.applications.attachment', $record) : null)
                             ->openUrlInNewTab()
                             ->placeholder('No file uploaded')
                             ->color('primary'),

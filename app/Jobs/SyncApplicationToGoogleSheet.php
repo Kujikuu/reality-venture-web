@@ -76,7 +76,7 @@ class SyncApplicationToGoogleSheet implements ShouldQueue
             $app->valuation_sar ? (string) $app->valuation_sar : null,
             $app->previous_funding,
             $app->demo_link,
-            $app->attachment_path ? asset('storage/'.$app->attachment_path) : null,
+            $app->attachment_path ? 'Yes' : null,
             $app->discovery_source?->label(),
             $app->referral_name,
             $app->referral_param,

@@ -67,7 +67,7 @@ class ApplicationController extends Controller
         $validated['status'] = ApplicationStatus::UnderReview->value;
 
         if ($request->hasFile('attachment')) {
-            $validated['attachment_path'] = $request->file('attachment')->store('application-files', 'public');
+            $validated['attachment_path'] = $request->file('attachment')->store('application-files', 'local');
         }
 
         unset($validated['attachment']);
