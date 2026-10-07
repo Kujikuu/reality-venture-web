@@ -6,6 +6,7 @@ use App\Enums\BusinessStage;
 use App\Enums\DiscoverySource;
 use App\Enums\FundingRound;
 use App\Enums\Industry;
+use App\Rules\Turnstile;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -49,6 +50,8 @@ class StoreStartupApplicationRequest extends FormRequest
             'discovery_source' => ['required', Rule::enum(DiscoverySource::class)],
             'referral_name' => ['nullable', 'required_if:discovery_source,referral', 'string', 'max:255'],
             'referral_param' => ['required', 'string', 'max:255'],
+
+            'captcha_token' => [Turnstile::isEnabled() ? 'required' : 'nullable', 'string', 'max:2048', new Turnstile($this->ip())],
         ];
     }
 
@@ -94,6 +97,8 @@ class StoreStartupApplicationRequest extends FormRequest
 
             'discovery_source.required' => 'validation.discoverySource.required',
             'referral_name.required_if' => 'validation.referralName.required',
+
+            'captcha_token.required' => 'validation.captcha.required',
         ];
     }
 }

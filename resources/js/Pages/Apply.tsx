@@ -12,6 +12,7 @@ import {
 } from "../Components/animations/HeroAnimations";
 import { useForm, Link, usePage } from "@inertiajs/react";
 import { SEO } from "../Components/SEO";
+import { TurnstileWidget } from "../Components/TurnstileWidget";
 import { SAUDI_CITIES } from "../data/saudi-cities";
 
 export default function Apply() {
@@ -31,7 +32,9 @@ export default function Apply() {
         city: "",
         social_profile: "",
         description: "",
+        captcha_token: "",
     });
+    const [captchaResetKey, setCaptchaResetKey] = useState(0);
 
     const isArabic = i18n.language === "ar";
 
@@ -52,6 +55,7 @@ export default function Apply() {
                     setSubmittedUid(uid);
                 }
             },
+            onError: () => setCaptchaResetKey((key) => key + 1),
         });
     };
 
@@ -282,6 +286,19 @@ export default function Apply() {
                                     )}
                                     error={errors.description ? t("apply:" + errors.description, errors.description) : undefined}
                                 />
+
+                                <div>
+                                    <TurnstileWidget
+                                        language={i18n.language}
+                                        resetKey={captchaResetKey}
+                                        onToken={(token) => setData("captcha_token", token)}
+                                    />
+                                    {errors.captcha_token && (
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {t("apply:" + errors.captcha_token, errors.captcha_token)}
+                                        </p>
+                                    )}
+                                </div>
 
                                 <div className="pt-4 flex flex-col gap-4">
                                     <Button

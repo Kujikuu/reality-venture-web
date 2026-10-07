@@ -57,16 +57,26 @@ Route::post('/the-dome/apply', [DomeController::class, 'apply'])
     ->name('the-dome.apply.store');
 
 // Form submission
-Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
-Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])->name('startup-applications.store');
+Route::post('/applications', [ApplicationController::class, 'store'])
+    ->middleware('throttle:applications-submit')
+    ->name('applications.store');
+Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])
+    ->middleware('throttle:applications-submit')
+    ->name('startup-applications.store');
 Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])
     ->middleware('throttle:10,1')
     ->name('applications.lookup');
-Route::get('/applications/status/{uid}', [ApplicationController::class, 'status'])->name('applications.status');
+Route::get('/applications/status/{uid}', [ApplicationController::class, 'status'])
+    ->middleware('throttle:applications-view')
+    ->name('applications.status');
 
 // Agreement
-Route::get('/agreement/{uid}', [AgreementController::class, 'show'])->name('agreement.show');
-Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])->name('agreement.approve');
+Route::get('/agreement/{uid}', [AgreementController::class, 'show'])
+    ->middleware('throttle:applications-view')
+    ->name('agreement.show');
+Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])
+    ->middleware('throttle:agreement-sign')
+    ->name('agreement.approve');
 Route::get('/admin/applications/{application}/agreement-pdf', [AgreementController::class, 'downloadPdf'])
     ->middleware(['auth'])
     ->name('admin.applications.agreement-pdf');

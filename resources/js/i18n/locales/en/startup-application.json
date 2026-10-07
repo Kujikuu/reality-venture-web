@@ -135,6 +135,10 @@
     "12": "December"
   },
   "validation": {
+    "captcha": {
+      "required": "Please complete the security check.",
+      "failed": "The security check failed. Please try again."
+    },
     "firstName": {
       "required": "First name is required."
     },

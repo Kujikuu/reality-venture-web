@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Turnstile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreApplicationRequest extends FormRequest
@@ -12,7 +13,7 @@ class StoreApplicationRequest extends FormRequest
     }
 
     /**
-     * @return array<string, array<int, string>>
+     * @return array<string, array<int, mixed>>
      */
     public function rules(): array
     {
@@ -24,6 +25,8 @@ class StoreApplicationRequest extends FormRequest
             'city' => ['nullable', 'string', 'max:255'],
             'social_profile' => ['nullable', 'url', 'max:500'],
             'description' => ['required', 'string', 'max:5000'],
+
+            'captcha_token' => [Turnstile::isEnabled() ? 'required' : 'nullable', 'string', 'max:2048', new Turnstile($this->ip())],
         ];
     }
 
@@ -42,6 +45,8 @@ class StoreApplicationRequest extends FormRequest
             'phone.regex' => 'validation.phone.format',
             'social_profile.url' => 'validation.linkedin.url',
             'description.required' => 'validation.description.required',
+
+            'captcha_token.required' => 'validation.captcha.required',
         ];
     }
 }

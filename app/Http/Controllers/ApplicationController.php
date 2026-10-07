@@ -21,7 +21,7 @@ class ApplicationController extends Controller
 {
     public function store(StoreApplicationRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $validated = $request->safe()->except(['captcha_token']);
         $validated['type'] = ApplicationType::Initial->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
@@ -39,7 +39,7 @@ class ApplicationController extends Controller
 
     public function storeStartup(StoreStartupApplicationRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $validated = $request->safe()->except(['captcha_token']);
         $uid = $validated['referral_param'] ?? null;
 
         if (! $uid) {

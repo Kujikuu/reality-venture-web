@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                         : $request->user()->avatar_url,
                 ] : null,
             ],
+            'turnstile_site_key' => fn () => config('services.turnstile.secret_key') ? config('services.turnstile.site_key') : null,
             'flash' => [
                 'status' => fn () => $request->session()->get('status'),
                 'success' => fn () => $request->session()->get('success'),
