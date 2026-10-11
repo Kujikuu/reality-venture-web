@@ -15,7 +15,7 @@ import { SEO } from "../Components/SEO";
 import { TurnstileWidget } from "../Components/TurnstileWidget";
 import { SAUDI_CITIES } from "../data/saudi-cities";
 
-export default function Apply() {
+export default function Apply({ requiresConsent = false }: { requiresConsent?: boolean }) {
     const { t, i18n } = useTranslation(["common", "navigation", "apply"]);
 
     const { flash } = usePage<any>().props;
@@ -32,6 +32,9 @@ export default function Apply() {
         city: "",
         social_profile: "",
         description: "",
+        consent: false,
+        // One id per filled-in form, so a double click or retry never sends it twice.
+        submission_id: crypto.randomUUID(),
         captcha_token: "",
     });
     const [captchaResetKey, setCaptchaResetKey] = useState(0);
@@ -287,6 +290,31 @@ export default function Apply() {
                                     error={errors.description ? t("apply:" + errors.description, errors.description) : undefined}
                                 />
 
+                                {requiresConsent && (
+                                    <div>
+                                        <label className="flex items-start gap-3 text-sm text-gray-700">
+                                            <input
+                                                type="checkbox"
+                                                className="mt-1 h-4 w-4 shrink-0 accent-primary"
+                                                checked={data.consent}
+                                                onChange={(e) => setData("consent", e.target.checked)}
+                                            />
+                                            <span>
+                                                {t("apply:form.consentBefore")}{" "}
+                                                <Link href="/privacy-policy" className="underline">
+                                                    {t("common:footer.privacyPolicy")}
+                                                </Link>{" "}
+                                                {t("apply:form.consentAfter")}
+                                            </span>
+                                        </label>
+                                        {errors.consent && (
+                                            <p className="mt-2 text-sm text-red-600">
+                                                {t("apply:" + errors.consent, errors.consent)}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+
                                 <div>
                                     <TurnstileWidget
                                         language={i18n.language}
@@ -296,6 +324,11 @@ export default function Apply() {
                                     {errors.captcha_token && (
                                         <p className="mt-2 text-sm text-red-600">
                                             {t("apply:" + errors.captcha_token, errors.captcha_token)}
+                                        </p>
+                                    )}
+                                    {(errors as Record<string, string>).form && (
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {t("apply:" + (errors as Record<string, string>).form)}
                                         </p>
                                     )}
                                 </div>

@@ -11,17 +11,24 @@ use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\NewApplicationSubmitted;
 use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
+use App\Services\SniperHubIntake;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use RuntimeException;
 
 class ApplicationController extends Controller
 {
-    public function store(StoreApplicationRequest $request): RedirectResponse
+    public function store(StoreApplicationRequest $request, SniperHubIntake $sniperHub): RedirectResponse
     {
-        $validated = $request->safe()->except(['captcha_token']);
+        if (SniperHubIntake::isEnabled()) {
+            return $this->sendToSniperHub($request, $sniperHub);
+        }
+
+        $validated = $request->safe()->except(['captcha_token', 'consent', 'submission_id']);
         $validated['type'] = ApplicationType::Initial->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);
 
@@ -34,6 +41,31 @@ class ApplicationController extends Controller
         return back()->with([
             'success' => 'submitted',
             'application_uid' => $application->uid,
+        ]);
+    }
+
+    /**
+     * Stage 1 goes to Sniper Hub, which stores it, emails the applicant and
+     * updates the sheet. Nothing is stored here.
+     */
+    private function sendToSniperHub(StoreApplicationRequest $request, SniperHubIntake $sniperHub): RedirectResponse
+    {
+        $data = $request->safe()->except(['captcha_token', 'submission_id']);
+
+        try {
+            $uid = $sniperHub->submit(
+                $data,
+                app()->getLocale(),
+                $request->validated('submission_id') ?: (string) Str::uuid(),
+                $request->headers->get('referer'),
+            );
+        } catch (RuntimeException) {
+            return back()->withErrors(['form' => 'validation.form.unavailable']);
+        }
+
+        return back()->with([
+            'success' => 'submitted',
+            'application_uid' => $uid,
         ]);
     }
 

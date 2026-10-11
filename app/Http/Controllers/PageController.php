@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdBanner;
 use App\Models\Application;
 use App\Services\BlogApiService;
+use App\Services\SniperHubIntake;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -106,7 +107,9 @@ class PageController extends Controller
             'jsonLd' => null,
         ]);
 
-        return Inertia::render('Apply');
+        return Inertia::render('Apply', [
+            'requiresConsent' => SniperHubIntake::isEnabled(),
+        ]);
     }
 
     public function startupApplicationForm(): Response|RedirectResponse

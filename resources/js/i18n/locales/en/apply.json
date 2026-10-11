@@ -40,7 +40,6 @@
     "describe": "Describe your venture or idea",
     "messagePlaceholder": "Briefly describe your problem statement, solution, or area of expertise...",
     "emailPlaceholder": "email@example.com",
-    "phonePlaceholder": "05XXXXXXXX",
     "linkedinPlaceholder": "https://x.com/username, https://linkedin.com/in/username, etc.",
     "submit": "Submit Application",
     "submitting": "Submitting...",
@@ -49,7 +48,9 @@
     "successUidLabel": "Your reference number",
     "successNextStep": "Check your email for a link to complete your startup profile. Keep this reference number for your records.",
     "returnHome": "Return to Home",
-    "agreement": "By submitting this form, you agree to our"
+    "agreement": "By submitting this form, you agree to our",
+    "consentBefore": "I agree to the",
+    "consentAfter": "and allow Reality Venture to use my details to review this application."
   },
   "submitted": "Application submitted successfully.",
   "validation": {
@@ -77,6 +78,12 @@
     },
     "description": {
       "required": "Please describe your venture or idea."
+    },
+    "consent": {
+      "required": "Please agree to the privacy policy to send your application."
+    },
+    "form": {
+      "unavailable": "We couldn't send your application right now. Please try again in a few minutes."
     }
   },
   "sidebar": {

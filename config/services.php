@@ -2,6 +2,17 @@
 
 return [
 
+    /*
+    | Sniper Hub intake API. While off, stage 1 stays in this app. At cutover
+    | it is turned on and stage 1 goes to the Reality Venture workspace.
+    */
+    'sniperhub' => [
+        'intake_enabled' => (bool) env('SNIPERHUB_INTAKE_ENABLED', false),
+        'intake_url' => env('SNIPERHUB_INTAKE_URL'),
+        'intake_key' => env('SNIPERHUB_INTAKE_KEY'),
+        'timeout' => (int) env('SNIPERHUB_INTAKE_TIMEOUT', 10),
+    ],
+
     'dome' => [
         'url' => env('DOME_API_URL', 'https://the-dome.test'),
         'token' => env('DOME_API_TOKEN'),
