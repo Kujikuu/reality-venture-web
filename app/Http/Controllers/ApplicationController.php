@@ -29,6 +29,11 @@ class ApplicationController extends Controller
             return $this->sendToSniperHub($request, $sniperHub);
         }
 
+        // After cutover nothing is stored here, even if the Hub settings are missing.
+        if (SniperHubIntake::pipelineMoved()) {
+            return back()->withErrors(['form' => 'validation.form.unavailable']);
+        }
+
         $validated = $request->safe()->except(['captcha_token', 'consent', 'submission_id']);
         $validated['type'] = ApplicationType::Initial->value;
         $validated['phone'] = self::normalizeKsaPhone($validated['phone']);

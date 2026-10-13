@@ -45,7 +45,7 @@ Route::get('/locale/{locale}', function (string $locale) {
     ->name('locale.switch');
 Route::get('/application-form', fn () => redirect('/startuphub', 301));
 Route::get('/startuphub', [PageController::class, 'applicationForm'])->name('application.form');
-Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->name('startup-application.form');
+Route::get('/startup-application', [PageController::class, 'startupApplicationForm'])->middleware('pipeline.moved')->name('startup-application.form');
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms.service');
 Route::get('/the-dome/subscribe', [DomeController::class, 'createSubscribe'])->name('the-dome.subscribe');
@@ -62,21 +62,21 @@ Route::post('/applications', [ApplicationController::class, 'store'])
     ->middleware('throttle:applications-submit')
     ->name('applications.store');
 Route::post('/startup-applications', [ApplicationController::class, 'storeStartup'])
-    ->middleware('throttle:applications-submit')
+    ->middleware(['throttle:applications-submit', 'pipeline.moved'])
     ->name('startup-applications.store');
 Route::get('/applications/lookup/{uid}', [ApplicationController::class, 'lookup'])
-    ->middleware('throttle:10,1')
+    ->middleware(['throttle:10,1', 'pipeline.moved'])
     ->name('applications.lookup');
 Route::get('/applications/status/{uid}', [ApplicationController::class, 'status'])
-    ->middleware('throttle:applications-view')
+    ->middleware(['throttle:applications-view', 'pipeline.moved'])
     ->name('applications.status');
 
 // Agreement
 Route::get('/agreement/{uid}', [AgreementController::class, 'show'])
-    ->middleware('throttle:applications-view')
+    ->middleware(['throttle:applications-view', 'pipeline.moved'])
     ->name('agreement.show');
 Route::post('/agreement/{uid}', [AgreementController::class, 'approve'])
-    ->middleware('throttle:agreement-sign')
+    ->middleware(['throttle:agreement-sign', 'pipeline.moved'])
     ->name('agreement.approve');
 Route::get('/admin/applications/{application}/agreement-pdf', [AgreementController::class, 'downloadPdf'])
     ->middleware(['auth'])

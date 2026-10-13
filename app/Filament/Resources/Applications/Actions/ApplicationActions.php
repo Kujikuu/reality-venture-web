@@ -17,6 +17,7 @@ use App\Mail\StatusUpdateMail;
 use App\Models\Application;
 use App\Services\ApplicationWorkflowService;
 use App\Services\GoogleCalendarService;
+use App\Services\SniperHubIntake;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
@@ -30,9 +31,13 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicationActions
 {
+    /**
+     * Every workflow action starts here, so after cutover they all disappear:
+     * applications are moved and decided in Sniper Hub.
+     */
     public static function make(string $name): Action
     {
-        return Action::make($name);
+        return Action::make($name)->hidden(fn (): bool => SniperHubIntake::pipelineMoved());
     }
 
     public static function advanceToStartup(): Action

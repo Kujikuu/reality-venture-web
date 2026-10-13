@@ -16,6 +16,9 @@ return [
         // Lets Sniper Hub copy application files during the migration. Off after cutover.
         'export_enabled' => (bool) env('SNIPERHUB_EXPORT_ENABLED', false),
         'export_token' => env('SNIPERHUB_EXPORT_TOKEN'),
+        // On at cutover: the pipeline lives in Sniper Hub and this app is read-only for it.
+        'pipeline_moved' => (bool) env('SNIPERHUB_PIPELINE_MOVED', false),
+        'pipeline_moved_at' => env('SNIPERHUB_PIPELINE_MOVED_AT'),
     ],
 
     'dome' => [

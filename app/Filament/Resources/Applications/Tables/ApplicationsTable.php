@@ -6,6 +6,7 @@ use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
 use App\Filament\Exports\ApplicationExporter;
 use App\Filament\Resources\Applications\Actions\ApplicationActions;
+use App\Services\SniperHubIntake;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ExportAction;
@@ -80,7 +81,7 @@ class ApplicationsTable
                     ApplicationActions::sendDemoDayInvite(),
                     ApplicationActions::moveToInvestors(),
                     ApplicationActions::changeStatus(),
-                    DeleteAction::make(),
+                    DeleteAction::make()->hidden(fn (): bool => SniperHubIntake::pipelineMoved()),
                 ]),
             ])
 

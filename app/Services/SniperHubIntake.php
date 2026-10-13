@@ -27,6 +27,32 @@ class SniperHubIntake
     }
 
     /**
+     * After cutover the pipeline lives in Sniper Hub. Applicant pages send
+     * people there, admin actions are hidden and applications can't change.
+     */
+    public static function pipelineMoved(): bool
+    {
+        return (bool) config('services.sniperhub.pipeline_moved');
+    }
+
+    /**
+     * Hub's access page for one applicant, with their UID filled in so they
+     * only type their email. Null when the applicant URL isn't set.
+     */
+    public static function movedAccessUrl(?string $uid): ?string
+    {
+        $base = config('services.sniperhub.applicant_url');
+
+        if (! is_string($base) || $base === '') {
+            return null;
+        }
+
+        $url = rtrim($base, '/').'/access';
+
+        return filled($uid) ? $url.'?'.http_build_query(['uid' => strtoupper(trim((string) $uid))]) : $url;
+    }
+
+    /**
      * Where an applicant whose UID this app doesn't hold should go: Hub's
      * access page for RV. Null until the intake is on and the URL is set.
      */

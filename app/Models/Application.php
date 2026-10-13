@@ -10,6 +10,8 @@ use App\Enums\FundingRound;
 use App\Enums\Industry;
 use App\Enums\InterviewType;
 use App\Enums\ProgramInterest;
+use App\Exceptions\PipelineMovedException;
+use App\Services\SniperHubIntake;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -99,6 +101,15 @@ class Application extends Model
                 $application->uid = static::generateUid();
             }
         });
+
+        // Backstop after cutover: whatever path was missed, nothing changes here.
+        $readOnly = function (Application $application): void {
+            if (SniperHubIntake::pipelineMoved()) {
+                throw PipelineMovedException::forApplication($application->uid);
+            }
+        };
+        static::saving($readOnly);
+        static::deleting($readOnly);
     }
 
     public static function generateUid(): string

@@ -4,6 +4,7 @@ use App\Http\Middleware\EnsureConsultantIsApproved;
 use App\Http\Middleware\EnsureUserIsClient;
 use App\Http\Middleware\EnsureUserIsConsultant;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\PipelineMovedToHub;
 use App\Http\Middleware\SeoMiddleware;
 use App\Http\Middleware\SetLocaleFromPreference;
 use Illuminate\Foundation\Application;
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role.client' => EnsureUserIsClient::class,
             'role.consultant' => EnsureUserIsConsultant::class,
             'consultant.approved' => EnsureConsultantIsApproved::class,
+            'pipeline.moved' => PipelineMovedToHub::class,
         ]);
 
         $middleware->validateCsrfTokens(except: [
