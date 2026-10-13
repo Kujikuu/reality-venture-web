@@ -4,12 +4,16 @@ namespace Tests\Feature;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
+use App\Jobs\SyncApplicationToGoogleSheet;
 use App\Mail\NewApplicationSubmitted;
 use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class StartupApplicationTest extends TestCase
@@ -222,12 +226,12 @@ class StartupApplicationTest extends TestCase
     {
         Mail::fake();
         Http::fake();
-        \Illuminate\Support\Facades\Storage::fake('local');
-        \Illuminate\Support\Facades\Storage::fake('public');
+        Storage::fake('local');
+        Storage::fake('public');
 
         $application = $this->createInitialApplication();
 
-        $file = \Illuminate\Http\UploadedFile::fake()->create('pitch.pdf', 5000, 'application/pdf');
+        $file = UploadedFile::fake()->create('pitch.pdf', 5000, 'application/pdf');
 
         $response = $this->post('/startup-applications', $this->validPayload([
             'referral_param' => $application->uid,
@@ -239,14 +243,14 @@ class StartupApplicationTest extends TestCase
 
         $saved = Application::where('email', 'upload@test.com')->first();
         $this->assertNotNull($saved->attachment_path);
-        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('local')->exists($saved->attachment_path));
-        $this->assertFalse(\Illuminate\Support\Facades\Storage::disk('public')->exists($saved->attachment_path));
+        $this->assertTrue(Storage::disk('local')->exists($saved->attachment_path));
+        $this->assertFalse(Storage::disk('public')->exists($saved->attachment_path));
     }
 
     public function test_rejects_oversized_attachment(): void
     {
         $application = $this->createInitialApplication();
-        $file = \Illuminate\Http\UploadedFile::fake()->create('huge.pdf', 25000, 'application/pdf');
+        $file = UploadedFile::fake()->create('huge.pdf', 25000, 'application/pdf');
 
         $response = $this->post('/startup-applications', $this->validPayload([
             'referral_param' => $application->uid,
@@ -260,7 +264,7 @@ class StartupApplicationTest extends TestCase
     public function test_rejects_invalid_attachment_type(): void
     {
         $application = $this->createInitialApplication();
-        $file = \Illuminate\Http\UploadedFile::fake()->create('doc.docx', 1000, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        $file = UploadedFile::fake()->create('doc.docx', 1000, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
         $response = $this->post('/startup-applications', $this->validPayload([
             'referral_param' => $application->uid,
@@ -377,7 +381,7 @@ class StartupApplicationTest extends TestCase
     {
         Mail::fake();
         Http::fake();
-        \Illuminate\Support\Facades\Queue::fake();
+        Queue::fake();
 
         $application = $this->createInitialApplication();
 
@@ -386,7 +390,7 @@ class StartupApplicationTest extends TestCase
             'email' => 'sheets@test.com',
         ]));
 
-        \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SyncApplicationToGoogleSheet::class);
+        Queue::assertPushed(SyncApplicationToGoogleSheet::class);
     }
 
     public function test_startup_submission_blocks_later_general_with_same_email(): void

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
 use App\Jobs\GenerateSignedAgreementPdf;
 use App\Mail\AgreementSignedConfirmation;
@@ -35,7 +36,7 @@ class AgreementWorkflowTest extends TestCase
 
         $application = Application::factory()->approved()->create([
             'type' => ApplicationType::SignAgreement,
-            'status' => \App\Enums\ApplicationStatus::Approved,
+            'status' => ApplicationStatus::Approved,
         ]);
 
         $response = $this->post(route('agreement.approve', $application->uid), [
@@ -74,7 +75,7 @@ class AgreementWorkflowTest extends TestCase
 
         $application = Application::factory()->approved()->create([
             'type' => ApplicationType::SignAgreement,
-            'status' => \App\Enums\ApplicationStatus::Approved,
+            'status' => ApplicationStatus::Approved,
         ]);
 
         $this->post(route('agreement.approve', $application->uid), [

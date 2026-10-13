@@ -6,6 +6,8 @@ use App\Enums\ConsultantStatus;
 use App\Enums\UserRole;
 use App\Models\ConsultantProfile;
 use App\Models\User;
+use Database\Seeders\SpecializationSeeder;
+use Database\Seeders\TeamConsultantsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,8 +17,8 @@ class TeamConsultantsSeederTest extends TestCase
 
     public function test_team_consultants_seeder_creates_consultant_users_and_profiles(): void
     {
-        $this->seed(\Database\Seeders\SpecializationSeeder::class);
-        $this->seed(\Database\Seeders\TeamConsultantsSeeder::class);
+        $this->seed(SpecializationSeeder::class);
+        $this->seed(TeamConsultantsSeeder::class);
 
         $emails = [
             'yousif@rv.com.sa',
@@ -51,7 +53,7 @@ class TeamConsultantsSeederTest extends TestCase
 
     public function test_team_consultants_seeder_is_idempotent(): void
     {
-        $this->seed(\Database\Seeders\SpecializationSeeder::class);
+        $this->seed(SpecializationSeeder::class);
 
         $emails = [
             'yousif@rv.com.sa',
@@ -64,14 +66,14 @@ class TeamConsultantsSeederTest extends TestCase
             'ahmed@rv.com.sa',
         ];
 
-        $this->seed(\Database\Seeders\TeamConsultantsSeeder::class);
+        $this->seed(TeamConsultantsSeeder::class);
 
         $userIds = User::whereIn('email', $emails)->pluck('id');
         $this->assertCount(count($emails), $userIds);
 
         $firstProfileCount = ConsultantProfile::whereIn('user_id', $userIds)->count();
 
-        $this->seed(\Database\Seeders\TeamConsultantsSeeder::class);
+        $this->seed(TeamConsultantsSeeder::class);
 
         $secondUserIds = User::whereIn('email', $emails)->pluck('id');
         $secondProfileCount = ConsultantProfile::whereIn('user_id', $secondUserIds)->count();

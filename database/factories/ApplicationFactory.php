@@ -4,8 +4,11 @@ namespace Database\Factories;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationType;
+use App\Enums\InterviewType;
+use App\Enums\ProgramInterest;
 use App\Models\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Application>
@@ -20,7 +23,7 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'uid' => 'RV-'.strtoupper(\Illuminate\Support\Str::random(6)),
+            'uid' => 'RV-'.strtoupper(Str::random(6)),
             'type' => ApplicationType::Initial,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
@@ -28,7 +31,7 @@ class ApplicationFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'city' => fake()->city(),
             'social_profile' => fake()->optional()->url(),
-            'program_interest' => fake()->randomElement(\App\Enums\ProgramInterest::cases()),
+            'program_interest' => fake()->randomElement(ProgramInterest::cases()),
             'description' => fake()->paragraphs(2, true),
             'status' => ApplicationStatus::Pending,
             'is_newsletter_subscribed' => fake()->boolean(70),
@@ -76,7 +79,7 @@ class ApplicationFactory extends Factory
     {
         return $this->startupStage()->state(fn (array $attributes) => [
             'type' => ApplicationType::Interview,
-            'interview_type' => fake()->randomElement(\App\Enums\InterviewType::cases()),
+            'interview_type' => fake()->randomElement(InterviewType::cases()),
             'interview_scheduled_at' => fake()->dateTimeBetween('now', '+2 weeks'),
             'interview_url' => fake()->url(),
             'interview_location' => fake()->address(),

@@ -4,6 +4,7 @@ namespace Tests\Feature\Consultants;
 
 use App\Models\ConsultantProfile;
 use App\Models\Review;
+use App\Models\Specialization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -77,7 +78,7 @@ class ConsultantProfileTest extends TestCase
     public function test_profile_includes_specializations(): void
     {
         $profile = ConsultantProfile::factory()->approved()->create();
-        $specialization = \App\Models\Specialization::factory()->create();
+        $specialization = Specialization::factory()->create();
         $profile->specializations()->attach($specialization);
 
         $response = $this->get('/consultants/'.$profile->slug);

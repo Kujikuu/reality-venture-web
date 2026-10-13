@@ -6,13 +6,14 @@ use App\Enums\BookingStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Log;
+use Stripe\PaymentIntent;
 use Stripe\StripeClient;
 
 class StripePaymentService
 {
     public function __construct(private StripeClient $stripe) {}
 
-    public function createPaymentIntent(Booking $booking): \Stripe\PaymentIntent
+    public function createPaymentIntent(Booking $booking): PaymentIntent
     {
         return $this->stripe->paymentIntents->create([
             'amount' => (int) ($booking->total_amount * 100),

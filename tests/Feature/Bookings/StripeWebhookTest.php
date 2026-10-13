@@ -49,7 +49,7 @@ class StripeWebhookTest extends TestCase
     {
         [$client, $consultantUser, $profile, $booking, $payment] = $this->createBookingWithPayment();
 
-        $this->mock(\Stripe\Webhook::class, function ($mock) {
+        $this->mock(Webhook::class, function ($mock) {
             // We'll bypass signature verification and test the handler directly
         });
 

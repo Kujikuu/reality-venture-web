@@ -11,6 +11,7 @@ use App\Mail\GeneralApplicationConfirmation;
 use App\Mail\NewApplicationSubmitted;
 use App\Mail\StartupApplicationConfirmation;
 use App\Models\Application;
+use App\Services\ApplicationWorkflowService;
 use App\Services\SniperHubIntake;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -179,8 +180,8 @@ class ApplicationController extends Controller
                 'status' => $application->status->value,
                 'status_label' => $application->status->label(),
                 'status_label_ar' => $application->status->labelAr(),
-                'recommended_action' => app(\App\Services\ApplicationWorkflowService::class)->recommendedAction($application),
-                'recommended_action_key' => app(\App\Services\ApplicationWorkflowService::class)->recommendedActionKey($application),
+                'recommended_action' => app(ApplicationWorkflowService::class)->recommendedAction($application),
+                'recommended_action_key' => app(ApplicationWorkflowService::class)->recommendedActionKey($application),
             ],
         ]);
     }

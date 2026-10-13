@@ -18,6 +18,7 @@ use App\Models\Application;
 use App\Services\ApplicationWorkflowService;
 use App\Services\GoogleCalendarService;
 use App\Services\SniperHubIntake;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
@@ -96,7 +97,7 @@ class ApplicationActions
             ])
             ->action(function (array $data, Application $record) {
                 $interviewType = InterviewType::from($data['interview_type']);
-                $scheduledAt = \Carbon\Carbon::parse($data['interview_scheduled_at']);
+                $scheduledAt = Carbon::parse($data['interview_scheduled_at']);
                 $meetingUrl = null;
                 $googleEventId = $record->interview_google_event_id;
 
@@ -366,7 +367,7 @@ class ApplicationActions
             ->action(function (array $data, Application $record) {
                 $requirements = ApplicationWorkflowService::normalizeDemoDayRequirements($data['demo_day_requirements'] ?? []);
                 $demoDayType = InterviewType::from($data['demo_day_type']);
-                $scheduledAt = \Carbon\Carbon::parse($data['demo_day_date']);
+                $scheduledAt = Carbon::parse($data['demo_day_date']);
                 $location = $data['demo_day_location'] ?? null;
                 $meetingUrl = null;
                 $googleEventId = $record->demo_day_google_event_id;

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Dashboard;
 
+use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\ConsultantProfile;
 use App\Models\User;
@@ -125,7 +126,7 @@ class ClientDashboardTest extends TestCase
         Booking::factory()->state([
             'client_user_id' => $client->id,
             'consultant_profile_id' => $profile->id,
-            'status' => \App\Enums\BookingStatus::NoShow,
+            'status' => BookingStatus::NoShow,
             'total_amount' => 150.00,
         ])->create();
 

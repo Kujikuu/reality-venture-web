@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Enums\ApplicationType;
+use App\Jobs\SyncApplicationToGoogleSheet;
 use App\Mail\NewApplicationSubmitted;
 use App\Models\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class ApplicationTest extends TestCase
@@ -96,7 +98,7 @@ class ApplicationTest extends TestCase
     public function test_dispatches_google_sheet_sync_job(): void
     {
         Mail::fake();
-        \Illuminate\Support\Facades\Queue::fake();
+        Queue::fake();
 
         $this->post('/applications', [
             'first_name' => 'Test',
@@ -106,7 +108,7 @@ class ApplicationTest extends TestCase
             'description' => 'Testing sheets sync.',
         ]);
 
-        \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SyncApplicationToGoogleSheet::class);
+        Queue::assertPushed(SyncApplicationToGoogleSheet::class);
     }
 
     public function test_linkedin_is_optional(): void

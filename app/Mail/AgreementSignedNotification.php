@@ -7,6 +7,7 @@ use App\Support\BilingualSubject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -38,7 +39,7 @@ class AgreementSignedNotification extends Mailable implements ShouldQueue
     }
 
     /**
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
@@ -47,7 +48,7 @@ class AgreementSignedNotification extends Mailable implements ShouldQueue
         }
 
         return [
-            \Illuminate\Mail\Mailables\Attachment::fromStorageDisk('local', $this->application->agreement_pdf_path)
+            Attachment::fromStorageDisk('local', $this->application->agreement_pdf_path)
                 ->as("agreement-{$this->application->uid}.pdf")
                 ->withMime('application/pdf'),
         ];

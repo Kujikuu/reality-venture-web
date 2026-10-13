@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enums\BannerPosition;
+use Database\Factories\AdBannerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AdBanner extends Model
 {
-    /** @use HasFactory<\Database\Factories\AdBannerFactory> */
+    /** @use HasFactory<AdBannerFactory> */
     use HasFactory;
 
     protected $fillable = [
