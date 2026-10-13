@@ -41,9 +41,7 @@ jobs:
       - name: Install PHP packages
         run: composer install --no-interaction --no-progress --prefer-dist
 
-      # Reports known advisories without failing the build while they are being patched.
-      - name: Security audit (report only)
-        continue-on-error: true
+      - name: Security audit
         run: composer audit
 
       - name: Prepare environment
