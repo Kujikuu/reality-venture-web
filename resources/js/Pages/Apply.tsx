@@ -92,7 +92,11 @@ export default function Apply({ requiresConsent = false }: { requiresConsent?: b
                             </div>
                         )}
                         <p className="text-gray-600 mb-8 leading-relaxed text-sm">
-                            {t("apply:form.successNextStep")}
+                            {t(
+                                flash?.application_via === "hub"
+                                    ? "apply:form.successNextStepHub"
+                                    : "apply:form.successNextStep",
+                            )}
                         </p>
                         <Link
                             href="/"

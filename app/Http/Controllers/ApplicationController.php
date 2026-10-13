@@ -67,6 +67,7 @@ class ApplicationController extends Controller
         return back()->with([
             'success' => 'submitted',
             'application_uid' => $uid,
+            'application_via' => 'hub',
         ]);
     }
 

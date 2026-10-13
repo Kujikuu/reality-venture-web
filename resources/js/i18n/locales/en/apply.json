@@ -50,7 +50,8 @@
     "returnHome": "Return to Home",
     "agreement": "By submitting this form, you agree to our",
     "consentBefore": "I agree to the",
-    "consentAfter": "and allow Reality Venture to use my details to review this application."
+    "consentAfter": "and allow Reality Venture to use my details to review this application.",
+    "successNextStepHub": "We've emailed you this reference and what happens next. Our team reviews every application and will be in touch."
   },
   "submitted": "Application submitted successfully.",
   "validation": {
@@ -71,7 +72,8 @@
     },
     "phone": {
       "required": "Phone number is required.",
-      "format": "Please enter a valid KSA mobile number."
+      "format": "Please enter a valid KSA mobile number.",
+      "formatInternational": "Enter a Saudi mobile like 05XXXXXXXX, or an international number with its country code, like +971 50 123 4567."
     },
     "linkedin": {
       "url": "Please enter a valid URL."
