@@ -18,6 +18,7 @@ use App\Http\Controllers\ConsultantOnboardingController;
 use App\Http\Controllers\ConsultantPayoutController;
 use App\Http\Controllers\ConsultantProfileController;
 use App\Http\Controllers\DomeController;
+use App\Http\Controllers\HubExportFileController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReviewController;
@@ -83,6 +84,12 @@ Route::get('/admin/applications/{application}/agreement-pdf', [AgreementControll
 Route::get('/admin/applications/{application}/attachment', ApplicationAttachmentController::class)
     ->middleware(['auth'])
     ->name('admin.applications.attachment');
+
+// Sniper Hub migration: files by UID, for the Hub's importer only (bearer token)
+Route::get('/hub-export/files/{uid}/{kind}', HubExportFileController::class)
+    ->whereIn('kind', ['pitch', 'agreement'])
+    ->middleware('throttle:hub-export')
+    ->name('hub-export.files');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [DomeController::class, 'subscribe'])->name('newsletter.subscribe');

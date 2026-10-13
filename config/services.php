@@ -11,6 +11,9 @@ return [
         'intake_url' => env('SNIPERHUB_INTAKE_URL'),
         'intake_key' => env('SNIPERHUB_INTAKE_KEY'),
         'timeout' => (int) env('SNIPERHUB_INTAKE_TIMEOUT', 10),
+        // Lets Sniper Hub copy application files during the migration. Off after cutover.
+        'export_enabled' => (bool) env('SNIPERHUB_EXPORT_ENABLED', false),
+        'export_token' => env('SNIPERHUB_EXPORT_TOKEN'),
     ],
 
     'dome' => [

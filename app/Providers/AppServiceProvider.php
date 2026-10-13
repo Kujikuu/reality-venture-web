@@ -45,5 +45,7 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(5)->by('ip:'.$request->ip()),
             Limit::perMinute(5)->by('uid:'.$request->route('uid')),
         ]);
+
+        RateLimiter::for('hub-export', fn (Request $request): Limit => Limit::perMinute(120)->by($request->ip()));
     }
 }
