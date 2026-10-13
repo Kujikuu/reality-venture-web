@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ApplicationController extends Controller
 {
@@ -154,9 +155,13 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function status(string $uid): Response
+    public function status(string $uid): Response|SymfonyResponse
     {
-        $application = Application::where('uid', $uid)->firstOrFail();
+        $application = Application::where('uid', $uid)->first();
+
+        if ($application === null) {
+            return self::toSniperHub();
+        }
 
         return Inertia::render('Application/Status', [
             'application' => [
@@ -172,5 +177,17 @@ class ApplicationController extends Controller
                 'recommended_action_key' => app(\App\Services\ApplicationWorkflowService::class)->recommendedActionKey($application),
             ],
         ]);
+    }
+
+    /**
+     * A UID made by Sniper Hub lives there, not here. Without the Hub
+     * settings it is simply not found.
+     */
+    public static function toSniperHub(): SymfonyResponse
+    {
+        $url = SniperHubIntake::applicantAccessUrl();
+        abort_if($url === null, 404);
+
+        return Inertia::location($url);
     }
 }

@@ -9,6 +9,7 @@ use App\Services\SniperHubIntake;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class PageController extends Controller
 {
@@ -112,7 +113,7 @@ class PageController extends Controller
         ]);
     }
 
-    public function startupApplicationForm(): Response|RedirectResponse
+    public function startupApplicationForm(): Response|RedirectResponse|SymfonyResponse
     {
         $ref = request()->query('ref');
 
@@ -123,6 +124,10 @@ class PageController extends Controller
         }
 
         $application = Application::where('uid', $ref)->first();
+
+        if (! $application && SniperHubIntake::applicantAccessUrl() !== null) {
+            return ApplicationController::toSniperHub();
+        }
 
         if (! $application || ! $application->type->allowsStartupProfileSubmission()) {
             return redirect()

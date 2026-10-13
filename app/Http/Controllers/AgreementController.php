@@ -11,14 +11,19 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AgreementController extends Controller
 {
-    public function show(string $uid): Response
+    public function show(string $uid): Response|SymfonyResponse
     {
-        $application = Application::where('uid', $uid)->firstOrFail();
+        $application = Application::where('uid', $uid)->first();
+
+        if ($application === null) {
+            return ApplicationController::toSniperHub();
+        }
 
         if ($application->type !== ApplicationType::SignAgreement) {
             throw new NotFoundHttpException;

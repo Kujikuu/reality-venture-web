@@ -27,6 +27,19 @@ class SniperHubIntake
     }
 
     /**
+     * Where an applicant whose UID this app doesn't hold should go: Hub's
+     * access page for RV. Null until the intake is on and the URL is set.
+     */
+    public static function applicantAccessUrl(): ?string
+    {
+        $base = config('services.sniperhub.applicant_url');
+
+        return self::isEnabled() && is_string($base) && $base !== ''
+            ? rtrim($base, '/').'/access'
+            : null;
+    }
+
+    /**
      * @param  array<string, mixed>  $data  validated stage 1 fields
      * @return string the application UID
      *
